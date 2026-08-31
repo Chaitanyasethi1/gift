@@ -489,7 +489,7 @@ img {
 .hero-content {
   position: relative;
   z-index: 10;
-  padding: 90px 0 110px;
+  padding: 80px 0 100px;
 }
 .hero-grid {
   display: grid;
@@ -607,6 +607,60 @@ img {
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--dark-text);
+}
+
+/* =========================================
+   4. TRUST / STATS STRIP (Under Hero)
+   ========================================= */
+.stats-strip {
+  background: var(--dark-bg);
+  color: var(--pure-white);
+  border-bottom: 3px solid var(--border-dark);
+  padding: 24px 0;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: #181818;
+  border: 2px solid #333333;
+  border-left: 4px solid var(--primary-red);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary-red);
+  box-shadow: 0 4px 16px rgba(227, 30, 36, 0.25);
+}
+.stat-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+.stat-number {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--pure-white);
+  line-height: 1;
+}
+.stat-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.84rem;
+  color: #cbd5e1;
+  font-weight: 500;
+  margin-top: 3px;
 }
 
 /* =========================================
@@ -741,8 +795,25 @@ section {
   line-height: 1.45;
   margin-bottom: auto;
 }
+
+/* 7. MOQ Note on Product Cards */
+.product-moq-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--primary-red);
+  background: rgba(227, 30, 36, 0.08);
+  border: 1px dashed var(--primary-red);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  margin-top: 6px;
+}
+
 .product-action-bar {
-  margin-top: 16px;
+  margin-top: 14px;
   padding-top: 14px;
   border-top: 2px dashed #e2e8f0;
   display: flex;
@@ -783,6 +854,203 @@ section {
   border-color: var(--border-dark);
   box-shadow: 2px 2px 0 var(--border-dark);
   transform: translate(-1px, -1px);
+}
+
+/* =========================================
+   1. PORTFOLIO / SAMPLE GALLERY SECTION
+   ========================================= */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.gallery-card {
+  background: var(--pure-white);
+  border: 3px solid var(--border-dark);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+.gallery-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-red);
+  border-color: var(--primary-red);
+}
+.gallery-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f1f5f9;
+  border-bottom: 3px solid var(--border-dark);
+}
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.gallery-card:hover .gallery-img {
+  transform: scale(1.05);
+}
+.gallery-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--dark-bg);
+  color: var(--pure-white);
+  border: 2px solid var(--primary-red);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.gallery-info {
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.gallery-title {
+  font-size: 1.25rem;
+  margin-bottom: 6px;
+  color: var(--dark-bg);
+}
+.gallery-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+.gallery-meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.76rem;
+  color: #64748b;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 10px;
+}
+
+/* =========================================
+   2. FAQ ACCORDION SECTION
+   ========================================= */
+.faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.faq-item {
+  background: var(--pure-white);
+  border: 3px solid var(--border-dark);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: var(--transition);
+}
+.faq-item:hover {
+  border-color: var(--primary-red);
+}
+.faq-question {
+  width: 100%;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--dark-bg);
+  transition: color 0.15s ease;
+}
+.faq-question:hover,
+.faq-item.active .faq-question {
+  color: var(--primary-red);
+}
+.faq-toggle-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--light-bg);
+  border: 2px solid var(--border-dark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--dark-bg);
+  flex-shrink: 0;
+  margin-left: 16px;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+.faq-item.active .faq-toggle-icon {
+  transform: rotate(45deg);
+  background: var(--primary-red);
+  color: var(--pure-white);
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+  padding: 0 24px;
+  font-size: 0.98rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+.faq-item.active .faq-answer {
+  max-height: 300px;
+  padding: 0 24px 20px;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 14px;
+}
+
+/* =========================================
+   3. GOOGLE MAP EMBED CONTAINER (Contact Page)
+   ========================================= */
+.map-card-wrap {
+  background: var(--pure-white);
+  border: 4px solid var(--border-dark);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+}
+.map-card-header {
+  background: var(--dark-bg);
+  color: var(--pure-white);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--primary-red);
+}
+.map-card-header h4 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+.map-iframe-container {
+  width: 100%;
+  height: 380px;
+  background: #e2e8f0;
+}
+.map-iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 /* =========================================
@@ -905,7 +1173,6 @@ section {
   gap: 16px;
   margin-bottom: 20px;
 }
-/* Signature Circular Red Contact Badge */
 .contact-icon-badge {
   width: 46px;
   height: 46px;
@@ -1149,6 +1416,48 @@ section {
 }
 
 /* =========================================
+   6. STICKY MOBILE CTA BAR
+   ========================================= */
+.mobile-bottom-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: var(--pure-white);
+  border-top: 3px solid var(--border-dark);
+  padding: 10px 14px;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.18);
+  gap: 10px;
+}
+.mobile-bottom-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 8px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border-dark);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+.mobile-btn-call {
+  background: var(--dark-bg);
+  color: var(--pure-white);
+}
+.mobile-btn-wa {
+  background: #25D366;
+  color: var(--pure-white);
+}
+
+/* =========================================
    FLOATING ACTIONS & TOAST
    ========================================= */
 .floating-actions {
@@ -1258,6 +1567,9 @@ section {
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .why-grid, .steps-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1285,6 +1597,24 @@ section {
   }
 }
 
+@media (max-width: 768px) {
+  .mobile-bottom-bar {
+    display: flex;
+  }
+  body {
+    padding-bottom: 74px;
+  }
+  .floating-actions {
+    bottom: 84px;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 600px) {
   .top-bar-inner {
     flex-direction: column;
@@ -1305,5 +1635,11 @@ section {
   .ribbon-num {
     font-size: 1.1rem;
     padding: 6px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
   }
 }

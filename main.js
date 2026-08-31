@@ -1,7 +1,8 @@
 /**
  * AS PRINT GALLERY — Main JavaScript
- * Handles Navigation Drawer, Product Filtering, Quick WhatsApp Inquiries,
- * Contact Form WhatsApp Dispatch, Clipboard Copying, and Back-to-Top.
+ * Handles Navigation Drawer, Product Category Filtering,
+ * FAQ Accordion, Per-Product WhatsApp Dispatch,
+ * Contact Form Brief Dispatch, Clipboard Copying, and Back-to-Top.
  */
 
 (function () {
@@ -141,7 +142,7 @@
   // 2. Product Catalog Filtering on products.html
   function initProductFilters() {
     const filterBtns = document.querySelectorAll('.filter-tab-btn');
-    const productCards = document.querySelectorAll('.product-card[data-category]');
+    const productCards = document.querySelectorAll('.product-card[data-category], .gallery-card[data-category]');
 
     if (!filterBtns.length || !productCards.length) return;
 
@@ -163,21 +164,52 @@
     });
   }
 
-  // 3. 1-Click WhatsApp Inquire Buttons for Products
+  // 3. 1-Click WhatsApp Inquire Buttons for Products (Product-Specific Message)
   function initProductInquiryButtons() {
     document.querySelectorAll('[data-product-name]').forEach((btn) => {
       btn.addEventListener('click', (e) => {
-        e.preventDefault();
+        // If it's already an anchor with href, allow default or enhance with formatted message
         const productName = btn.getAttribute('data-product-name');
-        const message = `Hello AS Print Gallery! 🖨️
-I am interested in ordering/inquiring about *${productName}*.
-Please share the pricing, standard minimum quantities, and design template details.`;
+        const message = `Hi AS Print Gallery! I'm interested in ${productName}. Please share details, minimum order quantity, and pricing.`;
+        e.preventDefault();
         openWhatsApp(message);
       });
     });
   }
 
-  // 4. Contact Form WhatsApp Dispatch on contact.html
+  // 4. FAQ Accordion Toggle
+  function initFaqAccordion() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    if (!faqItems.length) return;
+
+    faqItems.forEach((item) => {
+      const questionBtn = item.querySelector('.faq-question');
+      if (!questionBtn) return;
+
+      questionBtn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('active');
+
+        // Optional: Close other FAQs for cleaner single-accordion UX
+        faqItems.forEach((other) => {
+          if (other !== item) {
+            other.classList.remove('active');
+            const otherBtn = other.querySelector('.faq-question');
+            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        if (isOpen) {
+          item.classList.remove('active');
+          questionBtn.setAttribute('aria-expanded', 'false');
+        } else {
+          item.classList.add('active');
+          questionBtn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  }
+
+  // 5. Contact Form WhatsApp Dispatch on contact.html
   function initContactForm() {
     const form = document.getElementById('contact-inquiry-form');
     if (!form) return;
@@ -216,7 +248,7 @@ Looking forward to your response!`;
     });
   }
 
-  // 5. Back to Top Button
+  // 6. Back to Top Button
   function initBackToTop() {
     const backToTopBtn = document.getElementById('back-to-top');
     if (!backToTopBtn) return;
@@ -241,6 +273,7 @@ Looking forward to your response!`;
     initNavigation();
     initProductFilters();
     initProductInquiryButtons();
+    initFaqAccordion();
     initContactForm();
     initBackToTop();
     setupClipboardButtons();
