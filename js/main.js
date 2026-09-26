@@ -548,10 +548,29 @@ function initBox3DBuilder() {
     });
   });
 
-  // Custom Text & Color Interactivity
-  if (customBoxText && boxFrontTextDisplay) {
+  // Custom Text & Logo Interactivity
+  if (customBoxText) {
     customBoxText.addEventListener('input', () => {
-      boxFrontTextDisplay.textContent = customBoxText.value;
+      const textSpan = document.getElementById('box-front-text-span');
+      if (textSpan) textSpan.textContent = customBoxText.value;
+    });
+  }
+
+  const customLogoUpload = document.getElementById('custom-box-logo-upload');
+  if (customLogoUpload) {
+    customLogoUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          const logoImg = document.getElementById('box-front-logo-img');
+          if (logoImg) {
+            logoImg.src = evt.target.result;
+            logoImg.style.display = 'block';
+          }
+        };
+        reader.readAsDataURL(file);
+      }
     });
   }
 
