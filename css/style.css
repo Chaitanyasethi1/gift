@@ -157,12 +157,12 @@ button, input, select, textarea {
 }
 
 .trust-sep {
-  color: #CBD5E1;
+  color: #94A3B8;
   font-size: 0.7rem;
 }
 
 .trust-text {
-  color: #475569;
+  color: #F8FAFC;
   font-size: 0.76rem;
 }
 
@@ -207,7 +207,7 @@ button, input, select, textarea {
 }
 
 .announcement-link {
-  color: #CBD5E1;
+  color: #F8FAFC;
   font-size: 0.76rem;
   font-weight: 500;
   display: inline-flex;
@@ -2701,18 +2701,18 @@ button, input, select, textarea {
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  animation: heroFade 15s infinite;
+  animation: heroFade 9s infinite;
 }
 
 .slide-1 { animation-delay: 0s; }
-.slide-2 { animation-delay: 5s; }
-.slide-3 { animation-delay: 10s; }
+.slide-2 { animation-delay: 3s; }
+.slide-3 { animation-delay: 6s; }
 
 @keyframes heroFade {
   0% { opacity: 0; transform: scale(1.05); }
   5% { opacity: 1; transform: scale(1); }
-  33% { opacity: 1; transform: scale(1); }
-  38% { opacity: 0; transform: scale(1.05); }
+  30% { opacity: 1; transform: scale(1); }
+  35% { opacity: 0; transform: scale(1.05); }
   100% { opacity: 0; transform: scale(1.05); }
 }
 
@@ -2940,6 +2940,25 @@ button, input, select, textarea {
   .quickview-grid {
     grid-template-columns: 1fr;
     padding: 20px;
+  }
+  .hero-section {
+    padding: 20px 0 30px;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-features-list {
+    display: none;
+  }
+  .hero-card-specs {
+    display: none;
+  }
+  .hero-image-slider {
+    height: 180px;
   }
   .comparison-grid {
     grid-template-columns: 1fr;
