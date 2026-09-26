@@ -1476,9 +1476,7 @@ function initMainHeroSlider() {
   let currentIdx = 0;
   
   function goToSlide(idx) {
-    slides[currentIdx].style.opacity = '0';
-    slides[currentIdx].style.visibility = 'hidden';
-    slides[currentIdx].style.zIndex = '0';
+    slides[currentIdx].style.display = 'none';
     slides[currentIdx].classList.remove('active');
     if(dots[currentIdx]) {
       dots[currentIdx].style.background = 'rgba(255,255,255,0.4)';
@@ -1486,9 +1484,7 @@ function initMainHeroSlider() {
     
     currentIdx = idx;
     
-    slides[currentIdx].style.opacity = '1';
-    slides[currentIdx].style.visibility = 'visible';
-    slides[currentIdx].style.zIndex = '1';
+    slides[currentIdx].style.display = 'block';
     slides[currentIdx].classList.add('active');
     if(dots[currentIdx]) {
       dots[currentIdx].style.background = '#FFD700';
