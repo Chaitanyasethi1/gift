@@ -3650,9 +3650,9 @@ button, input, select, textarea {
 }
 
 .main-hero-wrapper {
-  height: 75vh;
-  min-height: 500px;
-  max-height: 800px;
+  height: calc(100vh - 110px);
+  min-height: 600px;
+  max-height: none;
 }
 
 @media (max-width: 768px) {
