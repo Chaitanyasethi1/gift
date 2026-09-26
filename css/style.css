@@ -586,18 +586,32 @@ button, input, select, textarea {
   overflow: hidden;
 }
 
+.category-marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  position: relative;
+  /* Add fade masks to edges for a cleaner look */
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
 .category-scroll-wrapper {
   display: flex;
   align-items: center;
-  gap: 16px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding: 4px 0;
+  gap: 30px;
+  padding: 8px 0;
+  width: max-content;
+  animation: scrollMarquee 30s linear infinite;
 }
 
-.category-scroll-wrapper::-webkit-scrollbar {
-  display: none;
+.category-scroll-wrapper:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scrollMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 15px)); }
 }
 
 .category-pill-card {
