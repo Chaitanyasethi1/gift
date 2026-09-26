@@ -515,6 +515,25 @@
                 </div>
               </div>
             </div>
+            
+            <div style="display: flex; gap: 16px; margin-top: 12px; align-items: center; background: var(--off-white); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-light); flex-wrap: wrap;">
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-dark); white-space: nowrap;"><i class="fa-solid fa-arrows-up-down-left-right"></i> Adjust Logo:</span>
+              
+              <div style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 120px;">
+                <label style="font-size: 0.8rem; font-weight: 600;">Size</label>
+                <input type="range" id="logo-size-range" min="10" max="150" value="40" style="flex: 1; cursor: pointer; accent-color: var(--primary);">
+              </div>
+              
+              <div style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 120px;">
+                <label style="font-size: 0.8rem; font-weight: 600;">X-Pos</label>
+                <input type="range" id="logo-x-range" min="-100" max="100" value="0" style="flex: 1; cursor: pointer; accent-color: var(--primary);">
+              </div>
+              
+              <div style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 120px;">
+                <label style="font-size: 0.8rem; font-weight: 600;">Y-Pos</label>
+                <input type="range" id="logo-y-range" min="-100" max="100" value="0" style="flex: 1; cursor: pointer; accent-color: var(--primary);">
+              </div>
+            </div>
           </div>
 
           <!-- 4. Printing Selection -->

@@ -574,6 +574,31 @@ function initBox3DBuilder() {
     });
   }
 
+  // Logo Size & Position Controls
+  const logoSizeRange = document.getElementById('logo-size-range');
+  const logoXRange = document.getElementById('logo-x-range');
+  const logoYRange = document.getElementById('logo-y-range');
+  const textDisplayContainer = document.getElementById('box-front-text-display');
+
+  const updateLogoTransform = () => {
+    if (!textDisplayContainer) return;
+    const size = logoSizeRange ? logoSizeRange.value : 40;
+    const x = logoXRange ? logoXRange.value : 0;
+    const y = logoYRange ? logoYRange.value : 0;
+    
+    const logoImg = document.getElementById('box-front-logo-img');
+    if (logoImg) {
+      logoImg.style.maxHeight = `${size}px`;
+    }
+    
+    textDisplayContainer.style.transform = `translate(${x}px, ${y}px)`;
+  };
+
+  if (logoSizeRange) logoSizeRange.addEventListener('input', updateLogoTransform);
+  if (logoXRange) logoXRange.addEventListener('input', updateLogoTransform);
+  if (logoYRange) logoYRange.addEventListener('input', updateLogoTransform);
+
+
   if (customBoxColor) {
     customBoxColor.addEventListener('input', () => {
       if (!cssBox) return;
