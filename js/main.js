@@ -1477,6 +1477,7 @@ function initMainHeroSlider() {
   
   function goToSlide(idx) {
     slides[currentIdx].style.opacity = '0';
+    slides[currentIdx].style.visibility = 'hidden';
     slides[currentIdx].style.zIndex = '0';
     slides[currentIdx].classList.remove('active');
     if(dots[currentIdx]) {
@@ -1486,6 +1487,7 @@ function initMainHeroSlider() {
     currentIdx = idx;
     
     slides[currentIdx].style.opacity = '1';
+    slides[currentIdx].style.visibility = 'visible';
     slides[currentIdx].style.zIndex = '1';
     slides[currentIdx].classList.add('active');
     if(dots[currentIdx]) {
