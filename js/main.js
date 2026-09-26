@@ -347,6 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateBadgeCounts();
   initMainHeroSlider();
   initTestimonialsSlider();
+  initCookieBanner();
 });
 
 /* =========================================
@@ -1597,4 +1598,30 @@ function initTestimonialsSlider() {
   }
   
   startSlide();
+}
+
+/* =========================================
+   17. COOKIE CONSENT BANNER
+   ========================================= */
+function initCookieBanner() {
+  const banner = document.getElementById('cookie-consent-banner');
+  if (!banner) return;
+  
+  if (!localStorage.getItem('as_cookie_consent')) {
+    banner.style.display = 'block';
+  }
+
+  document.getElementById('cookie-accept-all')?.addEventListener('click', () => {
+    localStorage.setItem('as_cookie_consent', 'accepted');
+    banner.style.display = 'none';
+  });
+
+  document.getElementById('cookie-reject-all')?.addEventListener('click', () => {
+    localStorage.setItem('as_cookie_consent', 'rejected');
+    banner.style.display = 'none';
+  });
+
+  document.getElementById('cookie-customize')?.addEventListener('click', () => {
+    alert('As we only use essential functional cookies (cart, wishlist), no further customization is needed. Non-essential cookies are disabled by default.');
+  });
 }
