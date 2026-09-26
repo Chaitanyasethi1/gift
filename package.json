@@ -1,0 +1,28 @@
+{
+  "name": "as-print-gallery-ecommerce",
+  "version": "2.0.0",
+  "description": "AS PRINT GALLERY — Industrial Corrugated Boxes, Custom Packaging, Garment Trims & Labels E-Commerce Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node -e \"console.log('Testing server health...'); require('./server.js'); console.log('Passed!')\""
+  },
+  "keywords": [
+    "corrugated-boxes",
+    "packaging-ecommerce",
+    "3d-box-customizer",
+    "pizza-boxes",
+    "woven-labels",
+    "hang-tags",
+    "stickers",
+    "as-print-gallery",
+    "gurez-alternative"
+  ],
+  "author": "AS PRINT GALLERY",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

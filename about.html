@@ -2,465 +2,523 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us — AS PRINT GALLERY | Designing & Printing Solutions</title>
-  <meta name="description" content="About AS PRINT GALLERY: A complete designing and printing solutions manufacturing company based in Loni, Ghaziabad. GST: 09AWKPN5910E1ZG. Manufacturing labels, tags, stickers, and packaging boxes.">
-  <meta property="og:title" content="About Us — AS PRINT GALLERY">
-  <meta property="og:description" content="Complete designing & printing manufacturing setup for industrial and retail brands.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>About Our Manufacturing Plant & Infrastructure — AS PRINT GALLERY</title>
+  <meta name="description" content="Discover AS PRINT GALLERY: A complete designing, corrugation, and printing manufacturing setup based in Loni, Ghaziabad. GST: 09AWKPN5910E1ZG. Manufacturing corrugated boxes, food packaging, woven labels, hang tags, and stickers.">
+  <meta property="og:title" content="About Factory — AS PRINT GALLERY">
+  <meta property="og:description" content="Direct factory manufacturing facility for corrugated boxes, apparel trims, and packaging in Ghaziabad (Delhi NCR).">
   <meta property="og:image" content="assets/logo.png">
   <link rel="icon" type="image/png" href="assets/logo.png">
-  <link rel="stylesheet" href="style.css">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Top Announcement / GST & Contact Bar -->
-  <div class="top-bar">
-    <div class="container top-bar-inner">
-      <div class="top-bar-left">
-        <span class="top-bar-badge">GST: 09AWKPN5910E1ZG</span>
-        <span>📍 Ghaziabad (U.P) - 201102</span>
+  <!-- 1. Sleek Top Bar (Single clean row, zero clutter) -->
+  <div class="announcement-bar">
+    <div class="container announcement-inner">
+      <div class="announcement-left">
+        <span class="trust-badge">🏭 DIRECT FACTORY</span>
+        <span class="trust-text">Save 40% vs Middlemen</span>
+        <span class="trust-sep">•</span>
+        <span class="trust-text">⚡ Pan-India Free Delivery over ₹999</span>
+        <span class="trust-sep">•</span>
+        <span class="trust-text">GST: <strong>09AWKPN5910E1ZG</strong></span>
       </div>
-      <div class="top-bar-right">
-        <a href="tel:+918851627221">📞 +91 8851627221</a>
-        <a href="tel:+919911678386">📞 +91 9911678386</a>
-        <a href="mailto:asprintgallery742@gmail.com">✉️ asprintgallery742@gmail.com</a>
+      <div class="announcement-right">
+        <button class="top-pincode-btn" data-open-pincode title="Check Delivery Pincode">
+          <span id="top-pincode-display">📍 Check Pincode</span>
+        </button>
+        <span class="top-sep">|</span>
+        <a href="tel:+918851627221" class="announcement-link">
+          <span>📞</span> +91 8851627221
+        </a>
+        <span class="top-sep">|</span>
+        <a href="https://wa.me/919911678386?text=Hi%20AS%20Print%20Gallery!%20I%20have%20an%20urgent%20packaging%20order." target="_blank" rel="noopener" class="announcement-link">
+          <span>💬</span> WhatsApp
+        </a>
       </div>
     </div>
   </div>
 
-  <!-- Main Site Header -->
+  <!-- 2. Main Sticky Header (Clean, spacious, luxury aesthetic) -->
   <header class="site-header">
-    <nav class="nav container">
+    <div class="container header-inner">
+      
+      <!-- Brand Logo -->
       <a href="index.html" class="brand" aria-label="AS Print Gallery Home">
         <img src="assets/logo.png" alt="AS Print Gallery Logo" class="brand-logo-img">
         <div class="brand-text">
           <div class="brand-name">AS PRINT <span>GALLERY</span></div>
-          <span class="brand-tagline">A Complete Designing & Printing Solutions</span>
+          <span class="brand-tagline">Packaging & Printing Factory</span>
         </div>
       </a>
 
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="products.html">Products</a></li>
-        <li><a href="about.html" class="active">About Us</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-      </ul>
+      <!-- Clean Single-Line Navigation Links (No wrapping, no vertical badges!) -->
+      <nav class="nav-container" aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="index.html#3d-customizer">3D Box Builder <span class="nav-badge-pill-inline">3D</span></a></li>
+          <li><a href="certifications.html">Certifications</a></li>
+          <li><a href="track-order.html">Track Order</a></li>
+          <li><a href="about.html" class="active">About Factory</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
 
-      <div class="nav-actions">
-        <a class="btn-wa-header" href="https://wa.me/919911678386?text=Hello%20AS%20Print%20Gallery!" target="_blank" rel="noopener">
-          <span>💬</span> Chat on WhatsApp
-        </a>
-        <button id="hamburger-btn" class="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+      <!-- Action Buttons: Search, Cart Drawer, Free Sample Kit CTA -->
+      <div class="header-actions">
+        <!-- Live Search Bar with Dropdown -->
+        <div class="header-search-wrap">
+          <div class="search-input-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="site-search-input" placeholder="Search boxes, labels..." autocomplete="off">
+          </div>
+          <div id="search-dropdown" class="search-results-dropdown"></div>
+        </div>
+
+        <button class="header-action-btn" data-open-cart aria-label="View Shopping Cart">
+          <span>🛒</span>
+          <span class="action-badge cart-badge-count">0</span>
+        </button>
+
+        <button class="btn-header-quote" data-open-sample>
+          <span>📦</span> Free Sample Kit
+        </button>
+
+        <button class="hamburger-btn" id="mobile-hamburger-btn" aria-label="Open Mobile Menu">
           <span></span>
           <span></span>
           <span></span>
         </button>
       </div>
-    </nav>
+
+    </div>
   </header>
 
-  <!-- Mobile Navigation Drawer -->
-  <div id="drawer-backdrop" class="drawer-backdrop"></div>
-  <aside id="mobile-drawer" class="mobile-drawer" aria-label="Mobile Navigation Drawer">
-    <div class="drawer-header">
-      <div class="brand">
-        <img src="assets/logo.png" alt="AS Print Gallery Logo" class="brand-logo-img">
-        <div class="brand-text">
-          <div class="brand-name">AS PRINT <span>GALLERY</span></div>
-          <span class="brand-tagline">Designing & Printing</span>
-        </div>
-      </div>
-      <button id="drawer-close-btn" class="drawer-close-btn" aria-label="Close menu">✕</button>
-    </div>
-    <ul class="mobile-nav-links">
-      <li><a href="index.html">Home <span>→</span></a></li>
-      <li><a href="products.html">All 14 Products <span>→</span></a></li>
-      <li><a href="about.html" class="active">About Us <span>→</span></a></li>
-      <li><a href="contact.html">Contact Details <span>→</span></a></li>
-    </ul>
-    <div class="drawer-footer">
-      <a class="btn btn-primary" href="https://wa.me/919911678386" target="_blank" rel="noopener">WhatsApp: +91 9911678386</a>
-      <a class="btn btn-dark" href="tel:+918851627221">Call: +91 8851627221</a>
-    </div>
-  </aside>
-
-  <!-- 1. Page Hero Band -->
-  <div class="page-header-band">
-    <div class="container">
-      <div class="ribbon-badge" style="margin-bottom: 16px;">
-        <span class="ribbon-num">01</span>
-        <span class="ribbon-title">COMPANY OVERVIEW</span>
-      </div>
-      <h1 class="page-header-title">ABOUT AS PRINT GALLERY</h1>
-      <p class="page-header-sub">
-        "A Complete Designing & Printing Solutions" — Industrial manufacturing facility delivering precision apparel labels, stickers, carry bags, and luxury packaging.
+  <!-- 4. Hero Section -->
+  <section class="hero-section" style="padding: 50px 0 60px;">
+    <div class="container" style="max-width: 900px; text-align: center;">
+      <span class="hero-badge-wrap">🏭 MANUFACTURING PLANT OVERVIEW</span>
+      <h1 class="hero-title" style="font-size: clamp(2rem, 3.8vw, 3.2rem);">
+        INSIDE OUR <span>IN-HOUSE PACKAGING</span> FACILITY
+      </h1>
+      <p class="hero-subtitle" style="margin: 0 auto 28px;">
+        Operating automated corrugation lines, precision high-definition offset presses, ultrasonic woven label looms, and die-cutting machines in Ghaziabad (Delhi NCR).
       </p>
-    </div>
-  </div>
-
-  <!-- 5. Reused Stats Strip for Consistency -->
-  <div class="stats-strip">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon">📦</div>
-          <div class="stat-content">
-            <div class="stat-number">14+ PRODUCTS</div>
-            <div class="stat-label">Labels, Stickers, Bags & Boxes</div>
-          </div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">📜</div>
-          <div class="stat-content">
-            <div class="stat-number">GST REGISTERED</div>
-            <div class="stat-label">GSTIN: 09AWKPN5910E1ZG</div>
-          </div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">🎨</div>
-          <div class="stat-content">
-            <div class="stat-number">FREE DESIGN SUPPORT</div>
-            <div class="stat-label">Complimentary Proofs & Mockups</div>
-          </div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">🚚</div>
-          <div class="stat-content">
-            <div class="stat-number">PAN-INDIA DELIVERY</div>
-            <div class="stat-label">Express Doorstep Logistics</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. Company Story Block -->
-  <section class="section-white">
-    <div class="container">
-      <div class="prose-container">
-        
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px; padding-bottom:18px; border-bottom:2px solid var(--border-light);">
-          <img src="assets/logo.png" alt="AS Print Gallery" style="width:72px; height:72px; border-radius:50%; border:2px solid var(--border-dark); padding:2px; background:#fff;">
-          <div>
-            <h3 style="font-size:1.65rem; color:var(--ink-black); margin:0;">AS PRINT GALLERY</h3>
-            <span style="font-family:'Oswald',sans-serif; font-size:0.95rem; font-weight:700; color:var(--primary-red); letter-spacing:1px;">GSTIN: 09AWKPN5910E1ZG</span>
-          </div>
-        </div>
-
-        <p>
-          <strong>AS PRINT GALLERY</strong> is a dedicated printing, labelling, and packaging manufacturing enterprise established in Loni, Ghaziabad (Uttar Pradesh). Driven by our commitment to <em>"A Complete Designing & Printing Solutions"</em>, we manufacture quality branded collateral that powers apparel manufacturers, retail stores, e-commerce brands, cloud kitchens, and industrial packaging networks throughout India.
-        </p>
-
-        <h2>What Makes Us Different: Direct Factory Setup</h2>
-        <p>
-          Unlike retail brokers or print intermediaries, we operate in-house flexo printing, offset machinery, ultrasonic label cutters, automated die-punching setups, and rigid box laminators. By ordering directly with our factory floor, clients benefit from:
-        </p>
-        <ul>
-          <li><strong>Direct Factory Pricing:</strong> No agent commissions, broker markups, or intermediary overheads.</li>
-          <li><strong>Rigorous Quality Control:</strong> Strict paper weight (GSM), color calibration, and adhesive strength checks on every production batch.</li>
-          <li><strong>100% Free Graphic Design Mockups:</strong> Our design studio prepares vector proofs and layout corrections at zero extra charge.</li>
-          <li><strong>Pan-India Doorstep Logistics:</strong> Reliable courier and freight consignment dispatch across all Indian PIN codes.</li>
-        </ul>
-
-        <h2>14 Core Manufactured Product Lines</h2>
-        <ul>
-          <li><strong>Garment Brand Labels:</strong> Printed Care Labels, High-Density Woven Neck Labels, and Heat Transfer Apparel Stickers.</li>
-          <li><strong>Tags & Inserts:</strong> Custom Punch-Hole Hang Tags, Price Cards, and Guarantee Sleeves.</li>
-          <li><strong>Self-Adhesive Stickers:</strong> Chromocote Gumming Stickers, Waterproof Vinyl Stickers, Barcode/QR Inventory Rolls, and Bottle Labels.</li>
-          <li><strong>Retail & Courier Packaging:</strong> Custom Garments Packaging Boxes, Kraft Paper Bags, Branded Envelopes, and Corrugated Master Cartons.</li>
-          <li><strong>Food Packaging:</strong> Custom Corrugated Pizza Delivery Boxes and Gold-Foil Sweet (Mithai) Boxes.</li>
-        </ul>
-
+      <div style="display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+        <span class="gst-verified-pill" style="font-size: 0.85rem; padding: 6px 14px;">
+          ✔ GSTIN: 09AWKPN5910E1ZG
+        </span>
+        <span class="gst-verified-pill" style="font-size: 0.85rem; padding: 6px 14px; background: #FEF3C7; color: #92400E; border-color: #FDE68A;">
+          ⭐ 10,000+ Corporate Clients
+        </span>
       </div>
     </div>
   </section>
 
-  <!-- 3. Why Businesses Trust Us (4-Feature Cards from Home) -->
-  <section class="section-offwhite">
-    <div class="container">
+  <!-- 5. Factory Metrics -->
+  <section class="trust-metrics-section">
+    <div class="container metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon-wrap">🏭</div>
+        <div class="metric-info">
+          <span class="metric-number">15,000+ Sq.Ft</span>
+          <span class="metric-label">Factory Floor Area</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-wrap">⚡</div>
+        <div class="metric-info">
+          <span class="metric-number">50,000 Pcs/Day</span>
+          <span class="metric-label">Corrugation & Box Capacity</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-wrap">🏷️</div>
+        <div class="metric-info">
+          <span class="metric-number">1,00,000+</span>
+          <span class="metric-label">Daily Label Weaving & Printing</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-wrap">🚚</div>
+        <div class="metric-info">
+          <span class="metric-number">28 States</span>
+          <span class="metric-label">Pan-India Courier Network</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. About Story & Technology Setup -->
+  <section style="padding: 70px 0; background: #FFFFFF;">
+    <div class="container" style="max-width: 1000px;">
       
-      <div class="ribbon-badge-wrap">
-        <div class="ribbon-badge">
-          <span class="ribbon-num">02</span>
-          <span class="ribbon-title">WHY BUSINESSES TRUST US</span>
-        </div>
-      </div>
-
-      <div class="section-header-block">
-        <h2 class="section-main-heading">Reliable B2B Manufacturing Standards</h2>
-        <p class="section-desc">We combine industrial capacity with personal craft attention to guarantee error-free print runs.</p>
-      </div>
-
-      <div class="why-grid">
-        <div class="why-card">
-          <div class="why-icon-circle">🎨</div>
-          <h4>Free Design Support</h4>
-          <p>Complimentary artwork creation and digital proofs before printing starts. Zero hidden design charges.</p>
-        </div>
-
-        <div class="why-card">
-          <div class="why-icon-circle">📜</div>
-          <h4>GST Registered Unit</h4>
-          <p>Official GST registered business (09AWKPN5910E1ZG). Proper tax invoicing and corporate compliance.</p>
-        </div>
-
-        <div class="why-card">
-          <div class="why-icon-circle">🏭</div>
-          <h4>Bulk Manufacturing</h4>
-          <p>Direct factory manufacturing setup for labels, stickers, bags, and boxes with wholesale volume pricing.</p>
-        </div>
-
-        <div class="why-card">
-          <div class="why-icon-circle">⚡</div>
-          <h4>Fast Turnaround</h4>
-          <p>Swift production timelines and pan-India courier dispatch with real-time consignment tracking.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. GST Registration & Address Block (Circular Red Icon Badges) -->
-  <section class="section-white">
-    <div class="container">
-      
-      <div class="ribbon-badge-wrap">
-        <div class="ribbon-badge">
-          <span class="ribbon-num">03</span>
-          <span class="ribbon-title">FACTORY & VERIFIED CREDENTIALS</span>
-        </div>
-      </div>
-
-      <div class="contact-grid">
-        <!-- Business Card Style Block with Circular Red Icon Badges -->
-        <div class="business-contact-card">
-          <div class="business-card-header">
-            <img src="assets/logo.png" alt="AS Print Gallery Logo" class="business-card-logo">
-            <div>
-              <h3 style="font-size: 1.6rem; color: var(--ink-black); margin-bottom: 2px;">AS PRINT GALLERY</h3>
-              <div style="font-size:0.85rem; color:var(--primary-red); font-weight:700;">
-                A Complete Designing & Printing Solutions
-              </div>
-            </div>
-          </div>
-
-          <!-- GST Number -->
-          <div class="contact-row-item">
-            <div class="contact-icon-badge">📜</div>
-            <div class="contact-item-details">
-              <div class="contact-item-label">GST Identification Number (GSTIN)</div>
-              <div class="contact-item-value">
-                09AWKPN5910E1ZG (Registered Manufacturing Entity)
-              </div>
-            </div>
-          </div>
-
-          <!-- Factory Address -->
-          <div class="contact-row-item">
-            <div class="contact-icon-badge">📍</div>
-            <div class="contact-item-details">
-              <div class="contact-item-label">Factory Address & Manufacturing Unit</div>
-              <div class="contact-item-value">
-                Kh.No. 2326/2, Shanker Garden, Ashok Vihar, Loni, Ghaziabad (U.P) - 201102
-              </div>
-            </div>
-          </div>
-
-          <!-- Phone Numbers -->
-          <div class="contact-row-item">
-            <div class="contact-icon-badge">📞</div>
-            <div class="contact-item-details">
-              <div class="contact-item-label">Direct Factory Telephone Lines</div>
-              <div class="contact-item-value">
-                <a href="tel:+918851627221">+91 8851627221</a> &nbsp;·&nbsp; 
-                <a href="tel:+919911678386">+91 9911678386</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Email Address -->
-          <div class="contact-row-item" style="margin-bottom: 0;">
-            <div class="contact-icon-badge">✉️</div>
-            <div class="contact-item-details">
-              <div class="contact-item-label">Official Correspondence Email</div>
-              <div class="contact-item-value">
-                <a href="mailto:asprintgallery742@gmail.com">asprintgallery742@gmail.com</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Working Hours & Visit Info -->
-        <div class="social-card">
-          <div>
-            <div style="font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; color:var(--primary-red); font-weight:700; margin-bottom:6px;">
-              Manufacturing Unit Operations
-            </div>
-            <h3>FACTORY TIMINGS & VISITS</h3>
-            <p>
-              We welcome clients for physical print proof approvals, paper GSM inspections, and sample reviews. Please book an appointment before visiting.
-            </p>
-            <div style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
-              <div style="display:flex; justify-content:space-between; padding:10px 14px; background:#222; border-radius:4px; border:1px solid #333;">
-                <span>Monday – Saturday</span>
-                <strong style="color:#fef08a;">10:00 AM – 8:00 PM IST</strong>
-              </div>
-              <div style="display:flex; justify-content:space-between; padding:10px 14px; background:#222; border-radius:4px; border:1px solid #333;">
-                <span>Sunday</span>
-                <span style="color:#fca5a5;">Prior Appointment Only</span>
-              </div>
-              <div style="display:flex; justify-content:space-between; padding:10px 14px; background:#222; border-radius:4px; border:1px solid #333;">
-                <span>WhatsApp Briefs</span>
-                <strong style="color:#4ade80;">Active 24/7</strong>
-              </div>
-            </div>
-          </div>
-
-          <div style="margin-top: 24px;">
-            <a href="https://wa.me/919911678386?text=Hi%20AS%20Print%20Gallery!%20I%20want%20to%20visit%20your%20factory%20for%20sample%20inspection." target="_blank" rel="noopener" class="btn btn-secondary" style="width:100%;">
-              <span>💬</span> Schedule Factory Visit on WhatsApp
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- 6. Red CTA Band -->
-  <div class="red-cta-band">
-    <div class="container cta-inner-split">
-      <div>
-        <h2 class="cta-title">LOOKING FOR RELIABLE PRINTING PARTNERS?</h2>
-        <p class="cta-desc">
-          Send us your logo and product specs on WhatsApp. We will prepare your digital sample mockup for free within 24 hours.
+      <div style="background: var(--off-white); border: 1px solid var(--border-light); border-radius: var(--radius-xl); padding: 40px; margin-bottom: 50px;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: var(--text-dark);">
+          The Story Behind AS PRINT GALLERY
+        </h2>
+        <p style="font-size: 1rem; color: var(--text-body); line-height: 1.7; margin-bottom: 20px;">
+          Established with the founding mission of providing <em>"A Complete Designing & Printing Solutions"</em>, <strong>AS PRINT GALLERY</strong> has evolved into one of North India's most dependable direct manufacturing centers for industrial corrugated boxes, custom food packaging, retail paper bags, garment trims, woven labels, and waterproof stickers.
         </p>
-      </div>
-      <div class="cta-button-group">
-        <a class="btn btn-secondary" href="https://wa.me/919911678386" target="_blank" rel="noopener">
-          <span>💬</span> WhatsApp: +91 9911678386
-        </a>
-        <a class="btn btn-dark" href="contact.html">
-          View All Contact Channels →
-        </a>
-      </div>
-    </div>
-  </div>
+        <p style="font-size: 1rem; color: var(--text-body); line-height: 1.7; margin-bottom: 24px;">
+          Unlike online middlemen, brokers, or retail job-workers who add heavy markups and sub-contract production to unknown printers, we own and control the complete end-to-end production cycle under one roof in Loni, Ghaziabad. From kraft reel corrugation and flute bonding to 6-color offset printing, hot-foil stamping, automated die-cutting, and ultrasonic label sealing, our plant ensures flawless consistency.
+        </p>
 
-  <!-- Shared Site Footer -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+          <div style="background: #FFFFFF; padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+            <div style="font-size: 1.6rem; margin-bottom: 6px;">📐</div>
+            <strong style="color: var(--text-dark);">Zero Volumetric Waste</strong>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Custom sized boxes tailored to your products eliminate dead-air freight charges.</p>
+          </div>
+          <div style="background: #FFFFFF; padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+            <div style="font-size: 1.6rem; margin-bottom: 6px;">💪</div>
+            <strong style="color: var(--text-dark);">Tested Bursting Strength</strong>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Every batch of 3-ply and 5-ply cartons is calibrated to 18-24 BF for zero shipping damage.</p>
+          </div>
+          <div style="background: #FFFFFF; padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+            <div style="font-size: 1.6rem; margin-bottom: 6px;">🎨</div>
+            <strong style="color: var(--text-dark);">Complimentary Pre-Press Proofs</strong>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Our in-house design studio creates 3D visual proofs and die-line guides at zero extra charge.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- In-House Machinery Grid -->
+      <div class="section-head" style="text-align: left; margin-bottom: 30px;">
+        <span class="section-badge">⚙️ Plant Infrastructure</span>
+        <h2 class="section-title">OUR MACHINERY INFRASTRUCTURE</h2>
+        <p class="section-subtitle">Heavy-duty industrial production equipment delivering high speed and flawless precision.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 60px;">
+        <div style="background: #FFFFFF; border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 2rem; margin-bottom: 12px;">📦</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Automated Corrugation Plant</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+            Single-facer and multi-layer corrugating lines manufacturing B, C, and E flutes with uniform starch adhesion and high crush resistance.
+          </p>
+        </div>
+
+        <div style="background: #FFFFFF; border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 2rem; margin-bottom: 12px;">🖨️</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px;">High-Speed Offset & Flexo Presses</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+            Multi-color printing machinery capable of razor-sharp Pantone color matching, vibrant inks, and UV gloss/matte varnish coating.
+          </p>
+        </div>
+
+        <div style="background: #FFFFFF; border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 2rem; margin-bottom: 12px;">🏷️</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Damask Label Looms & Ultrasonic Cutters</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+            High-density woven label looms with laser-guided ultrasonic slitting that seals fabric edges smoothly with zero skin irritation.
+          </p>
+        </div>
+
+        <div style="background: #FFFFFF; border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 2rem; margin-bottom: 12px;">✂️</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Automatic Die-Punching & Creasing</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+            Heavy-duty platen and automatic die-cutters delivering clean folding edges, steam vent punches for pizza boxes, and custom shapes.
+          </p>
+        </div>
+      </div>
+
+      <!-- Factory Visit CTA -->
+      <div style="background: linear-gradient(135deg, #0B0F19 0%, #111827 100%); color: #FFFFFF; border-radius: var(--radius-xl); padding: 36px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <span style="color: #34D399; font-weight: 800; font-size: 0.8rem; text-transform: uppercase;">Direct Factory Visit</span>
+          <h3 style="font-size: 1.5rem; margin: 6px 0; color: #FFFFFF;">Would You Like to Tour Our Facility?</h3>
+          <p style="font-size: 0.9rem; color: #94A3B8; margin: 0;">
+            We welcome corporate buyers, brand managers, and purchase heads to inspect our plant in Loni, Ghaziabad.
+          </p>
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <a href="contact.html" class="btn-primary-hero">
+            <span>📍</span> Get Factory Directions
+          </a>
+          <a href="https://wa.me/919911678386?text=Hi%20AS%20Print%20Gallery!%20I%20would%20like%20to%20schedule%20a%20factory%20visit." target="_blank" rel="noopener" class="btn-glass-hero">
+            <span>💬</span> Book Visit on WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7. RICH MEGA FOOTER -->
   <footer class="site-footer">
     <div class="container">
-      <div class="footer-grid">
-        
-        <div class="footer-column">
-          <div class="brand" style="margin-bottom: 16px;">
-            <img src="assets/logo.png" alt="AS Print Gallery Logo" class="brand-logo-img">
-            <div class="brand-text">
-              <div class="brand-name" style="color:var(--pure-white);">AS PRINT <span style="color:var(--primary-red);">GALLERY</span></div>
-              <span class="brand-tagline" style="color:#fca5a5;">A Complete Designing & Printing Solutions</span>
-            </div>
-          </div>
-          <p style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.6; margin-bottom: 14px;">
-            Industrial manufacturers of printed labels, woven tags, stickers, garment boxes, paper carry bags, corrugated cartons, and custom food packaging.
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <div class="footer-brand-title">AS PRINT <span>GALLERY</span></div>
+          <p class="footer-brand-desc">
+            Direct manufacturing unit for corrugated boxes, food & pizza packaging, apparel labels, hang tags, and waterproof stickers.
           </p>
-          <div style="font-size:0.8rem; background:#1e1e1e; padding:6px 10px; border-radius:4px; display:inline-block; border:1px solid #333;">
-            GST: <strong>09AWKPN5910E1ZG</strong>
+          <div class="footer-gst-card">
+            <strong>GSTIN:</strong> 09AWKPN5910E1ZG<br>
+            <strong>Registration:</strong> Active & Verified Industrial Unit<br>
+            <strong>Location:</strong> Loni, Ghaziabad (U.P) - 201102
           </div>
         </div>
 
-        <div class="footer-column">
-          <h4>Quick Navigation</h4>
-          <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">All 14 Products</a></li>
-            <li><a href="about.html">About Our Company</a></li>
-            <li><a href="contact.html">Contact & Location</a></li>
-            <li><a href="privacy.html">Privacy Policy</a></li>
-            <li><a href="cookies.html">Cookie Policy</a></li>
+        <div class="footer-links-col">
+          <h4>Packaging Solutions</h4>
+          <ul class="footer-links-list">
+            <li><a href="products.html?filter=corrugated">3-Ply Corrugated Boxes</a></li>
+            <li><a href="products.html?filter=corrugated">5-Ply Heavy Master Cartons</a></li>
+            <li><a href="products.html?filter=food">Custom Pizza Boxes</a></li>
+            <li><a href="products.html?filter=food">Mithai & Sweet Gift Boxes</a></li>
+            <li><a href="products.html?filter=packaging">Apparel & Shirt Packaging</a></li>
+            <li><a href="products.html?filter=bags">Kraft Paper Carry Bags</a></li>
+            <li><a href="products.html?filter=bags">Tamper-Proof Paper Envelopes</a></li>
           </ul>
         </div>
 
-        <div class="footer-column">
-          <h4>Manufactured Items</h4>
-          <ul class="footer-links">
-            <li><a href="products.html">Printed & Woven Labels</a></li>
-            <li><a href="products.html">Hang Tags & Garment Boxes</a></li>
-            <li><a href="products.html">Vinyl & Gumming Stickers</a></li>
-            <li><a href="products.html">Barcode & Heat Transfers</a></li>
-            <li><a href="products.html">Kraft Paper Bags & Envelopes</a></li>
-            <li><a href="products.html">Sweet & Pizza Boxes</a></li>
+        <div class="footer-links-col">
+          <h4>Labels & Printing</h4>
+          <ul class="footer-links-list">
+            <li><a href="products.html?filter=label">High-Density Woven Labels</a></li>
+            <li><a href="products.html?filter=label">Satin Wash-Care Labels</a></li>
+            <li><a href="products.html?filter=label">Brand Hang Tags & Tickets</a></li>
+            <li><a href="products.html?filter=sticker">Chromo Gumming Stickers</a></li>
+            <li><a href="products.html?filter=sticker">Waterproof Vinyl Decals</a></li>
+            <li><a href="products.html?filter=sticker">Barcode & Thermal Rolls</a></li>
+            <li><a href="products.html?filter=label">Tagless Heat Transfers</a></li>
           </ul>
         </div>
 
-        <div class="footer-column">
-          <h4>Factory & Contact</h4>
-          <div class="footer-contact-block">
-            <div class="footer-contact-item">
-              <span class="ico">📍</span>
-              <div>
-                <strong>Address:</strong><br>
-                Kh.No. 2326/2, Shanker Garden, Ashok Vihar, Loni, Ghaziabad (U.P) - 201102
-              </div>
+        <div class="footer-links-col">
+          <h4>Factory Hotline</h4>
+          <div class="footer-contact-info">
+            <div>
+              <strong>Sales & Wholesale:</strong><br>
+              <a href="tel:+918851627221">📞 +91 8851627221</a>
             </div>
-            <div class="footer-contact-item">
-              <span class="ico">📞</span>
-              <div>
-                <a href="tel:+918851627221">+91 8851627221</a><br>
-                <a href="tel:+919911678386">+91 9911678386</a>
-              </div>
+            <div>
+              <strong>Technical & WhatsApp:</strong><br>
+              <a href="tel:+919911678386">💬 +91 9911678386</a>
             </div>
-            <div class="footer-contact-item">
-              <span class="ico">✉️</span>
-              <div>
-                <a href="mailto:asprintgallery742@gmail.com">asprintgallery742@gmail.com</a>
-              </div>
-            </div>
-            <div class="footer-contact-item">
-              <span class="ico">🌐</span>
-              <div>
-                Instagram: <a href="https://www.instagram.com/asprintgallery742" target="_blank" rel="noopener">asprintgallery742</a><br>
-                Facebook: As Print Gallery
-              </div>
+            <div>
+              <strong>Email Quotations:</strong><br>
+              <a href="mailto:asprintgallery742@gmail.com">✉️ asprintgallery742@gmail.com</a>
             </div>
           </div>
         </div>
-
       </div>
 
-      <div class="footer-bottom">
-        <span>© 2026 AS PRINT GALLERY. All Rights Reserved. GSTIN: 09AWKPN5910E1ZG.</span>
-        <span><a href="privacy.html">Privacy Policy</a> · <a href="cookies.html">Cookie Policy</a></span>
+      <div class="footer-bottom-row">
+        <div>© 2026 <strong>AS PRINT GALLERY</strong>. All Rights Reserved. Complete Designing & Printing Solutions.</div>
+        <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+          <a href="certifications.html" style="color: #34D399; font-weight: 700;">Certifications</a>
+          <a href="track-order.html" style="color: #94A3B8;">Track Order</a>
+          <a href="shipping-policy.html" style="color: #94A3B8;">Shipping Policy</a>
+          <a href="terms.html" style="color: #94A3B8;">Terms of Sale</a>
+          <a href="returns-refunds.html" style="color: #94A3B8;">Returns & QC</a>
+          <a href="privacy.html" style="color: #94A3B8;">Privacy</a>
+          <a href="cookies.html" style="color: #94A3B8;">Cookies</a>
+        </div>
       </div>
     </div>
   </footer>
 
-  <!-- Sticky Mobile CTA Bar -->
-  <div class="mobile-bottom-bar" aria-label="Mobile Quick Action Bar">
-    <a class="mobile-bottom-btn mobile-btn-call" href="tel:+918851627221">
-      <span>📞</span> Call Factory
-    </a>
-    <a class="mobile-bottom-btn mobile-btn-wa" href="https://wa.me/919911678386?text=Hello%20AS%20Print%20Gallery!%20I%20have%20an%20enquiry." target="_blank" rel="noopener">
-      <span>💬</span> WhatsApp
+  <!-- 8. SLIDE-OUT CART DRAWER -->
+  <div class="cart-drawer-backdrop" id="cart-backdrop"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping Cart Drawer">
+    <div class="cart-header">
+      <div class="cart-title">
+        <span>🛒</span> Your Packaging Cart (<span class="cart-badge-count">0</span>)
+      </div>
+      <button class="cart-close-btn" id="cart-close-btn" aria-label="Close Cart">✕</button>
+    </div>
+    <div class="free-shipping-meter">
+      <div id="cart-shipping-text">Add ₹999 for FREE Pan-India Shipping</div>
+      <div class="shipping-progress-track">
+        <div class="shipping-progress-fill" id="cart-shipping-progress" style="width: 0%;"></div>
+      </div>
+    </div>
+    <div class="cart-items-body" id="cart-items-container"></div>
+    <div class="cart-footer">
+      <div class="coupon-row">
+        <input type="text" class="coupon-input" id="cart-coupon-input" placeholder="Enter coupon (e.g. WELCOME10)">
+        <button class="coupon-apply-btn" id="apply-coupon-btn">Apply</button>
+      </div>
+      <div class="cart-totals-breakdown">
+        <div class="cart-calc-row"><span>Subtotal (Excl. GST)</span><span id="cart-subtotal-val">₹0.00</span></div>
+        <div class="cart-calc-row" id="cart-discount-row" style="display: none; color: #10B981; font-weight: 700;"><span>Discount</span><span id="cart-discount-val">-₹0.00</span></div>
+        <div class="cart-calc-row"><span>Estimated GST (18%)</span><span id="cart-gst-val">₹0.00</span></div>
+        <div class="cart-calc-row final-total"><span>Estimated Grand Total</span><span id="cart-final-total-val" style="color: var(--primary);">₹0.00</span></div>
+      </div>
+      <div class="cart-checkout-actions">
+        <button class="btn-cart-whatsapp" id="btn-cart-whatsapp-checkout"><span>💬</span> Instant WhatsApp Order Checkout</button>
+        <button class="btn-cart-checkout" id="btn-cart-regular-checkout"><span>📦</span> Enter Delivery Details & Order</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 9. QUICK VIEW PRODUCT MODAL -->
+  <div class="modal-backdrop" id="quickview-modal">
+    <div class="modal-window">
+      <button class="modal-close-btn" id="quickview-close-btn">✕</button>
+      <div id="quickview-content-body"></div>
+    </div>
+  </div>
+
+  <!-- 10. DELIVERY PINCODE CHECKER MODAL -->
+  <div class="modal-backdrop" id="pincode-modal">
+    <div class="modal-window" style="max-width: 480px;">
+      <button class="modal-close-btn" id="pincode-close-btn">✕</button>
+      <div class="form-modal-inner">
+        <h3 class="form-modal-title">Check Delivery Availability</h3>
+        <p class="form-modal-sub">Enter your 6-digit Indian PIN code to view delivery speed and courier transit times.</p>
+        <div class="modal-form-grid">
+          <div class="form-field-group">
+            <label>Delivery Pincode</label>
+            <input type="text" id="pincode-input-field" placeholder="e.g. 110001 or 400001" maxlength="6">
+          </div>
+          <button class="btn-primary-hero" id="pincode-check-submit" style="justify-content: center; padding: 12px;">
+            Verify Serviceability →
+          </button>
+          <div id="pincode-result-box" style="display: none; margin-top: 10px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. REQUEST FREE SAMPLE KIT MODAL -->
+  <div class="modal-backdrop" id="sample-modal">
+    <div class="modal-window" style="max-width: 520px;">
+      <button class="modal-close-btn" id="sample-close-btn">✕</button>
+      <div class="form-modal-inner">
+        <h3 class="form-modal-title">Request Physical Sample Swatch Kit</h3>
+        <p class="form-modal-sub">We courier paper swatches, 3-ply/5-ply corrugation flutes, tags, and stickers for your evaluation.</p>
+        <form id="sample-kit-form" class="modal-form-grid">
+          <div class="form-field-group">
+            <label>Brand / Business Name</label>
+            <input type="text" id="sample-company" placeholder="e.g. Acme Apparels" required>
+          </div>
+          <div class="form-field-group">
+            <label>WhatsApp / Mobile Number</label>
+            <input type="tel" id="sample-phone" placeholder="e.g. 9876543210" required>
+          </div>
+          <div class="form-field-group">
+            <label>Products You Are Interested In</label>
+            <select id="sample-products-select">
+              <option value="Corrugated Shipping Boxes (3-Ply & 5-Ply)">Corrugated Shipping Boxes (3-Ply & 5-Ply)</option>
+              <option value="Pizza & Food Packaging Boxes">Pizza & Food Packaging Boxes</option>
+              <option value="Woven & Printed Garment Labels">Woven & Printed Garment Labels</option>
+              <option value="Hang Tags & Gumming Stickers">Hang Tags & Gumming Stickers</option>
+              <option value="Complete Factory Sample Swatch">Complete Factory Swatch Kit (All Products)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary-hero" style="justify-content: center; padding: 12px; margin-top: 8px;">
+            Submit Sample Request 📦
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. DIRECT CHECKOUT MODAL -->
+  <div class="modal-backdrop" id="checkout-modal">
+    <div class="modal-window" style="max-width: 540px;">
+      <button class="modal-close-btn" id="checkout-close-btn">✕</button>
+      <div class="form-modal-inner">
+        <h3 class="form-modal-title">Complete Delivery Information</h3>
+        <p class="form-modal-sub">Submit your dispatch address. Our logistics coordinator will call to confirm dispatch.</p>
+        <form id="checkout-order-form" class="modal-form-grid">
+          <div class="form-field-group">
+            <label>Full Name</label>
+            <input type="text" id="checkout-name" placeholder="Contact Person Name" required>
+          </div>
+          <div class="form-field-group">
+            <label>Mobile Number (For Courier Updates)</label>
+            <input type="tel" id="checkout-phone" placeholder="10-digit Mobile Number" required>
+          </div>
+          <div class="form-field-group">
+            <label>Delivery Address</label>
+            <textarea id="checkout-address" rows="3" placeholder="Building, Street, Landmark, City, State" required></textarea>
+          </div>
+          <div class="form-field-group">
+            <label>Pincode</label>
+            <input type="text" id="checkout-pincode" placeholder="6-digit Pincode" maxlength="6" required>
+          </div>
+          <button type="submit" class="btn-primary-hero" style="justify-content: center; padding: 13px; margin-top: 8px;">
+            Confirm & Send to Factory WhatsApp →
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13. MOBILE NAVIGATION DRAWER -->
+  <div class="cart-drawer-backdrop" id="mobile-nav-backdrop"></div>
+  <aside class="cart-drawer" id="mobile-nav-drawer" style="right: auto; left: 0; transform: translateX(-100%);">
+    <div class="cart-header">
+      <div class="brand">
+        <img src="assets/logo.png" alt="Logo" class="brand-logo-img" style="width: 38px; height: 38px;">
+        <div class="brand-text">
+          <div class="brand-name" style="font-size: 1.15rem;">AS PRINT <span>GALLERY</span></div>
+          <span class="brand-tagline">Menu</span>
+        </div>
+      </div>
+      <button class="cart-close-btn" id="mobile-drawer-close">✕</button>
+    </div>
+    <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+      <a href="index.html" style="font-size: 1.1rem; font-weight: 700;">Home</a>
+      <a href="products.html" style="font-size: 1.1rem; font-weight: 700;">All 14 Products</a>
+      <a href="certifications.html" style="font-size: 1.1rem; font-weight: 700;">Factory Certifications</a>
+      <a href="track-order.html" style="font-size: 1.1rem; font-weight: 700;">Track Your Order</a>
+      <a href="index.html#3d-customizer" style="font-size: 1.1rem; font-weight: 700;">3D Box Customizer</a>
+      <a href="about.html" style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">About Factory</a>
+      <a href="contact.html" style="font-size: 1.1rem; font-weight: 700;">Contact & Location</a>
+    </div>
+  </aside>
+
+  <!-- 14. FLOATING ACTION BUTTONS -->
+  <div class="floating-actions-container">
+    <button class="floating-scrolltop-btn" id="scroll-top-btn" aria-label="Scroll to Top">↑</button>
+    <a href="https://wa.me/919911678386?text=Hi%20AS%20Print%20Gallery!%20I%20have%20an%20inquiry%20about%20your%20factory." 
+       target="_blank" 
+       rel="noopener" 
+       class="floating-wa-btn" 
+       aria-label="Direct WhatsApp Chat">
+      💬
     </a>
   </div>
 
-  <!-- Floating WhatsApp & Back to Top -->
-  <div class="floating-actions">
-    <button id="back-to-top" class="back-to-top" aria-label="Scroll back to top">
-      <span style="font-size:1.1rem; font-weight:bold; color:var(--ink-black);">↑</span>
-    </button>
-    <a class="floating-whatsapp" href="https://wa.me/919911678386?text=Hello%20AS%20Print%20Gallery!" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-      <span class="ping-dot"></span>
-      <svg viewBox="0 0 24 24">
-        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.04 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.04 7.29C8.88 7.29 8.63 7.35 8.41 7.59C8.2 7.83 7.58 8.41 7.58 9.58C7.58 10.75 8.43 11.88 8.55 12.04C8.67 12.2 10.21 14.58 12.58 15.6C13.14 15.84 13.58 15.99 13.92 16.1C14.49 16.28 15.01 16.25 15.42 16.19C15.88 16.12 16.84 15.61 17.04 15.04C17.25 14.47 17.25 13.98 17.19 13.88C17.13 13.78 16.97 13.72 16.71 13.59C16.46 13.46 15.22 12.85 14.99 12.77C14.76 12.69 14.6 12.65 14.43 12.9C14.26 13.15 13.78 13.72 13.63 13.88C13.49 14.05 13.34 14.07 13.09 13.94C12.84 13.81 11.78 13.47 10.53 12.35C9.55 11.48 8.89 10.4 8.76 10.18C8.64 9.95 8.75 9.83 8.88 9.7C9 9.58 9.15 9.38 9.28 9.23C9.41 9.08 9.45 8.98 9.54 8.81C9.62 8.65 9.58 8.5 9.52 8.38C9.46 8.26 8.97 7.07 8.77 6.58C8.57 6.1 8.37 6.16 8.22 6.16L7.75 6.15C7.54 6.15 7.2 6.23 6.91 6.55" />
-      </svg>
-    </a>
-  </div>
+  <!-- 15. MOBILE BOTTOM NAVIGATION BAR -->
+  <nav class="mobile-bottom-nav">
+    <div class="mobile-bottom-nav-inner">
+      <a href="index.html" class="mobile-nav-item">
+        <span class="icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="products.html" class="mobile-nav-item">
+        <span class="icon">📦</span>
+        <span>Shop</span>
+      </a>
+      <a href="index.html#3d-customizer" class="mobile-nav-item">
+        <span class="icon">⚡</span>
+        <span>3D Box</span>
+      </a>
+      <button class="mobile-nav-item" data-open-cart style="background: none; border: none; cursor: pointer;">
+        <span class="icon">🛒</span>
+        <span>Cart</span>
+        <span class="mobile-cart-badge cart-badge-count">0</span>
+      </button>
+      <a href="https://wa.me/919911678386" target="_blank" rel="noopener" class="mobile-nav-item" style="color: #25D366;">
+        <span class="icon">💬</span>
+        <span>Chat</span>
+      </a>
+    </div>
+  </nav>
 
-  <div id="toast-container" class="toast-container"></div>
-  <script src="main.js"></script>
+  <!-- JavaScript Bundle -->
+  <script src="js/main.js"></script>
 </body>
 </html>
