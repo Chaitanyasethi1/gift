@@ -3649,5 +3649,27 @@ button, input, select, textarea {
   }
 }
 
+.main-hero-wrapper {
+  height: 75vh;
+  min-height: 500px;
+  max-height: 800px;
+}
+
+@media (max-width: 768px) {
+  .main-hero-wrapper {
+    height: auto !important;
+    min-height: unset !important;
+    max-height: unset !important;
+    aspect-ratio: 16 / 9;
+  }
+  .main-hero-dot {
+    width: 20px !important;
+    height: 3px !important;
+  }
+  #main-hero-slider > div[style*="bottom"] {
+    bottom: 15px !important;
+  }
+}
+
 @ k e y f r a m e s   f a d e C o m b o   {   f r o m   {   o p a c i t y :   0 ;   t r a n s f o r m :   s c a l e ( 1 . 0 5 ) ;   }   t o   {   o p a c i t y :   1 ;   t r a n s f o r m :   s c a l e ( 1 ) ;   }   }  
  
