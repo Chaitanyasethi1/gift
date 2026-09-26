@@ -1493,7 +1493,7 @@ function initMainHeroSlider() {
 
   let sliderInterval = setInterval(() => {
     goToSlide((currentIdx + 1) % slides.length);
-  }, 4000); // 4 seconds per slide
+  }, 2500); // 2.5 seconds per slide
   
   dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
@@ -1501,7 +1501,7 @@ function initMainHeroSlider() {
       goToSlide(index);
       sliderInterval = setInterval(() => {
         goToSlide((currentIdx + 1) % slides.length);
-      }, 4000);
+      }, 2500);
     });
   });
 }
