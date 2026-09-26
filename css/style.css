@@ -1924,11 +1924,13 @@ button, input, select, textarea {
 }
 
 #mobile-nav-drawer {
-  transform: translateX(-100%);
+  transform: translateX(-100%) !important;
+  left: 0 !important;
+  right: auto !important;
 }
 
 #mobile-nav-drawer.active {
-  transform: translateX(0);
+  transform: translateX(0) !important;
 }
 
 .cart-header {
