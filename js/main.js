@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollTopAndToast();
   initWishlist();
   updateBadgeCounts();
-  initComboSlider();
+  initMainHeroSlider();
 });
 
 /* =========================================
@@ -1466,20 +1466,44 @@ window.removeFromCart = removeFromCart;
 window.openQuickView = openQuickView;
 
 /* =========================================
-   15. COMBO SLIDER AUTO-ROTATION
+   15. MAIN HERO SLIDER AUTO-ROTATION
    ========================================= */
-function initComboSlider() {
-  const slides = document.querySelectorAll('.combo-slide');
+function initMainHeroSlider() {
+  const slides = document.querySelectorAll('.main-hero-slide');
+  const dots = document.querySelectorAll('.main-hero-dot');
   if (!slides || slides.length === 0) return;
 
   let currentIdx = 0;
-  setInterval(() => {
-    slides[currentIdx].style.display = 'none';
+  
+  function goToSlide(idx) {
+    slides[currentIdx].style.opacity = '0';
+    slides[currentIdx].style.zIndex = '0';
     slides[currentIdx].classList.remove('active');
+    if(dots[currentIdx]) {
+      dots[currentIdx].style.background = 'rgba(255,255,255,0.4)';
+    }
     
-    currentIdx = (currentIdx + 1) % slides.length;
+    currentIdx = idx;
     
-    slides[currentIdx].style.display = 'block';
+    slides[currentIdx].style.opacity = '1';
+    slides[currentIdx].style.zIndex = '1';
     slides[currentIdx].classList.add('active');
+    if(dots[currentIdx]) {
+      dots[currentIdx].style.background = '#FFD700';
+    }
+  }
+
+  let sliderInterval = setInterval(() => {
+    goToSlide((currentIdx + 1) % slides.length);
   }, 4000); // 4 seconds per slide
+  
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      clearInterval(sliderInterval);
+      goToSlide(index);
+      sliderInterval = setInterval(() => {
+        goToSlide((currentIdx + 1) % slides.length);
+      }, 4000);
+    });
+  });
 }

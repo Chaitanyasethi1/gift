@@ -107,138 +107,44 @@
   </header>
 
   <!-- 4. Dynamic Hero Section with 3D Interactive Touch -->
-  <section class="hero-section">
-    <div class="hero-glow-blob-1"></div>
-    <div class="hero-glow-blob-2"></div>
-
-    <div class="container hero-grid">
-      <div>
-        <div class="hero-badge-wrap">
-          <span>🏭</span> Factory Direct Unit • Ghaziabad, Delhi NCR
-        </div>
-        <h1 class="hero-title">
-          Industrial Packaging & Printing, <span>Direct from Factory</span>
-        </h1>
-        <p class="hero-subtitle">
-          In-house manufacturing of 3-ply & 5-ply corrugated shipping cartons, food & pizza packaging, woven garment
-          labels, hang tags, and waterproof stickers. Pan-India dispatch at genuine wholesale rates.
-        </p>
-
-        <div class="hero-features-list">
-          <div class="hero-feat-item">
-            <span class="icon">✔</span> Direct Factory Rates (Save 40%)
-          </div>
-          <div class="hero-feat-item">
-            <span class="icon">✔</span> GST Registered: 09AWKPN5910E1ZG
-          </div>
-          <div class="hero-feat-item">
-            <span class="icon">✔</span> Zero Die & Plate Charges on Bulk
-          </div>
-          <div class="hero-feat-item">
-            <span class="icon">✔</span> 48-Hour Rapid Pan-India Dispatch
-          </div>
-        </div>
-
-        <div class="hero-btn-group">
-          <a href="#featured-products" class="btn-primary-hero">
-            Explore Products & Rates →
-          </a>
-          <a href="#3d-customizer" class="btn-glass-hero">
-            Custom 3D Box Builder
-          </a>
-          <a href="https://wa.me/919911678386?text=Hi%20AS%20Print%20Gallery!%20Please%20share%20bulk%20quotation%20and%20catalogue."
-            target="_blank" rel="noopener" class="btn-glass-hero">
-            WhatsApp Quote
-          </a>
+  <section class="hero-section" style="padding: 0; position: relative;">
+    <div id="main-hero-slider" style="position: relative; width: 100%; height: 75vh; min-height: 500px; max-height: 800px; overflow: hidden; background: #000;">
+      
+      <!-- Slide 1 -->
+      <div class="main-hero-slide active" style="position: absolute; inset: 0; opacity: 1; transition: opacity 1.5s ease-in-out;">
+        <img src="assets/hero1.jpg" alt="Premium Custom Rigid Boxes" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65);">
+        <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; z-index: 10; padding: 20px;">
+          <h2 style="font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; margin-bottom: 12px; font-family: 'Inter', sans-serif; letter-spacing: 2px; text-shadow: 0 4px 15px rgba(0,0,0,0.6);">PREMIUM CUSTOM BOXES</h2>
+          <p style="font-size: clamp(1rem, 2vw, 1.25rem); max-width: 700px; margin-bottom: 30px; font-weight: 300; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">Elevate your brand with luxury rigid packaging, crafted in-house with precision.</p>
+          <a href="#featured-products" class="btn-primary-hero" style="font-size: 1rem; padding: 14px 32px; background: transparent; border: 1px solid #FFD700; color: #FFD700; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;" onmouseover="this.style.background='#FFD700'; this.style.color='#0F172A';" onmouseout="this.style.background='transparent'; this.style.color='#FFD700';">Explore Premium Range</a>
         </div>
       </div>
 
-      <!-- Autoplaying Combo Slider Card -->
-      <div style="position: relative; width: 100%;">
-        <div id="combo-slider-container" style="position: relative; overflow: hidden; border-radius: var(--radius-xl); box-shadow: 0 15px 40px rgba(15,23,42,0.08); background: #FFFFFF; border: 1px solid var(--border-light); max-width: 450px; margin: 0 auto;">
-          
-          <!-- Slide 1 -->
-          <div class="combo-slide active" style="display: block; animation: fadeCombo 1s ease;">
-            <div style="position: relative;">
-               <img src="assets/combo1.jpg" alt="Business Branding Combo" style="width: 100%; height: 230px; object-fit: cover; display: block;">
-               <span class="hero-3d-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.95); color: #0F172A; font-weight: 800; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">₹699 ONLY</span>
-            </div>
-            <div style="padding: 24px;">
-              <h3 style="color: #0F172A; font-size: 1.15rem; font-weight: 800; text-transform: uppercase;">Business Branding Combo</h3>
-              <p style="font-size: 0.82rem; color: var(--primary); margin: 6px 0 14px; font-weight: 600;">Give your business a Professional Look!</p>
-              
-              <ul style="list-style: none; padding: 0; margin: 0 0 16px; font-size: 0.85rem; color: #475569; display:flex; flex-direction: column; gap: 6px; font-weight: 500;">
-                <li><span style="color: #10B981; font-weight:bold;">✓</span> 1000 Custom Stickers (1.5" x 1.5")</li>
-                <li><span style="color: #10B981; font-weight:bold;">✓</span> 200 Thank You Cards (3" x 2")</li>
-                <li><span style="color: #10B981; font-weight:bold;">✓</span> 1 Custom Rubber Stamp (1")</li>
-              </ul>
-              
-              <div style="display: flex; gap: 10px; font-size: 0.78rem; font-weight: 700; color: #10B981; margin-bottom: 18px; padding-top: 10px; border-top: 1px dashed var(--border-light);">
-                <span>✨ Free Design</span>
-                <span style="color: #F59E0B;">🚚 Shipping Extra</span>
-              </div>
-              
-              <a href="https://wa.me/919911678386?text=Hi!%20I%20want%20to%20order%20the%20BUSINESS%20BRANDING%20COMBO%20for%20Rs.699" target="_blank" rel="noopener" class="btn-primary-hero" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.95rem; border-radius: var(--radius-lg);">
-                📲 Order Combo Now
-              </a>
-            </div>
-          </div>
-
-          <!-- Slide 2 -->
-          <div class="combo-slide" style="display: none; animation: fadeCombo 1s ease;">
-            <div style="position: relative;">
-               <img src="assets/combo2.jpg" alt="E-Commerce Starter Pack" style="width: 100%; height: 230px; object-fit: cover; display: block;">
-               <span class="hero-3d-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.95); color: #0F172A; font-weight: 800; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">₹1499 ONLY</span>
-            </div>
-            <div style="padding: 24px;">
-              <h3 style="color: #0F172A; font-size: 1.15rem; font-weight: 800; text-transform: uppercase;">E-Commerce Starter Pack</h3>
-              <p style="font-size: 0.82rem; color: var(--primary); margin: 6px 0 14px; font-weight: 600;">Everything you need to ship safely!</p>
-              
-              <ul style="list-style: none; padding: 0; margin: 0 0 16px; font-size: 0.85rem; color: #475569; display:flex; flex-direction: column; gap: 6px; font-weight: 500;">
-                <li><span style="color: #10B981; font-weight:bold;">✓</span> 100 3-Ply Kraft Boxes (10x8x4")</li>
-                <li><span style="color: #10B981; font-weight:bold;">✓</span> 5 Branded Packing Tapes (2")</li>
-                <li><span style="color: #10B981; font-weight:bold;">✓</span> 500 Fragile Warning Labels</li>
-              </ul>
-              
-              <div style="display: flex; gap: 10px; font-size: 0.78rem; font-weight: 700; color: #10B981; margin-bottom: 18px; padding-top: 10px; border-top: 1px dashed var(--border-light);">
-                <span>✨ Free Die/Plate</span>
-                <span style="color: #F59E0B;">🚚 Shipping Extra</span>
-              </div>
-              
-              <a href="https://wa.me/919911678386?text=Hi!%20I%20want%20to%20order%20the%20ECOMMERCE%20STARTER%20PACK%20for%20Rs.1499" target="_blank" rel="noopener" class="btn-primary-hero" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.95rem; border-radius: var(--radius-lg);">
-                📲 Order Combo Now
-              </a>
-            </div>
-          </div>
-
-          <!-- Slide 3 -->
-          <div class="combo-slide" style="display: none; animation: fadeCombo 1s ease;">
-            <div style="position: relative;">
-               <img src="assets/combo3.jpg" alt="Premium Garment Packaging" style="width: 100%; height: 230px; object-fit: cover; display: block;">
-               <span class="hero-3d-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.95); color: #0F172A; font-weight: 800; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">₹1999 ONLY</span>
-            </div>
-            <div style="padding: 24px;">
-              <h3 style="color: #0F172A; font-size: 1.15rem; font-weight: 800; text-transform: uppercase;">Premium Garment Packaging</h3>
-              <p style="font-size: 0.82rem; color: var(--primary); margin: 6px 0 14px; font-weight: 600;">Elevate your clothing brand!</p>
-              
-              <ul style="list-style: none; padding: 0; margin: 0 0 16px; font-size: 0.85rem; color: #475569; display:flex; flex-direction: column; gap: 6px; font-weight: 500;">
-                <li><span style="color: #10B981; font-weight:bold;">✓</span> 500 Custom Hang Tags w/ String</li>
-                <li><span style="color: #10B981; font-weight:bold;">✓</span> 500 Woven Fabric Brand Labels</li>
-                <li><span style="color: #10B981; font-weight:bold;">✓</span> 250 Logo Printed Butter Papers</li>
-              </ul>
-              
-              <div style="display: flex; gap: 10px; font-size: 0.78rem; font-weight: 700; color: #10B981; margin-bottom: 18px; padding-top: 10px; border-top: 1px dashed var(--border-light);">
-                <span>✨ Expert Design</span>
-                <span style="color: #F59E0B;">🚚 Shipping Extra</span>
-              </div>
-              
-              <a href="https://wa.me/919911678386?text=Hi!%20I%20want%20to%20order%20the%20GARMENT%20PACKAGING%20COMBO%20for%20Rs.1999" target="_blank" rel="noopener" class="btn-primary-hero" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.95rem; border-radius: var(--radius-lg);">
-                📲 Order Combo Now
-              </a>
-            </div>
-          </div>
-
+      <!-- Slide 2 -->
+      <div class="main-hero-slide" style="position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease-in-out;">
+        <img src="assets/hero2.jpg" alt="Industrial Packaging Factory" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65);">
+        <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; z-index: 10; padding: 20px;">
+          <h2 style="font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; margin-bottom: 12px; font-family: 'Inter', sans-serif; letter-spacing: 2px; text-shadow: 0 4px 15px rgba(0,0,0,0.6);">INDUSTRIAL PACKAGING</h2>
+          <p style="font-size: clamp(1rem, 2vw, 1.25rem); max-width: 700px; margin-bottom: 30px; font-weight: 300; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">State-of-the-art manufacturing for corrugated cartons and shipping supplies.</p>
+          <a href="https://wa.me/919911678386" target="_blank" rel="noopener" class="btn-primary-hero" style="font-size: 1rem; padding: 14px 32px; background: transparent; border: 1px solid #FFD700; color: #FFD700; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;" onmouseover="this.style.background='#FFD700'; this.style.color='#0F172A';" onmouseout="this.style.background='transparent'; this.style.color='#FFD700';">Request Bulk Quote</a>
         </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="main-hero-slide" style="position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease-in-out;">
+        <img src="assets/hero3.jpg" alt="Custom Hang Tags & Labels" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65);">
+        <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; z-index: 10; padding: 20px;">
+          <h2 style="font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; margin-bottom: 12px; font-family: 'Inter', sans-serif; letter-spacing: 2px; text-shadow: 0 4px 15px rgba(0,0,0,0.6);">CUSTOM TAGS & LABELS</h2>
+          <p style="font-size: clamp(1rem, 2vw, 1.25rem); max-width: 700px; margin-bottom: 30px; font-weight: 300; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">Finely crafted woven labels, hang tags, and luxury stickers for your brand.</p>
+          <a href="#3d-customizer" class="btn-primary-hero" style="font-size: 1rem; padding: 14px 32px; background: transparent; border: 1px solid #FFD700; color: #FFD700; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;" onmouseover="this.style.background='#FFD700'; this.style.color='#0F172A';" onmouseout="this.style.background='transparent'; this.style.color='#FFD700';">View 3D Customizer</a>
+        </div>
+      </div>
+
+      <!-- Navigation Dots -->
+      <div style="position: absolute; bottom: 30px; left: 0; width: 100%; display: flex; justify-content: center; gap: 12px; z-index: 20;">
+        <div class="main-hero-dot" data-slide="0" style="width: 40px; height: 3px; background: #FFD700; cursor: pointer; transition: 0.3s;"></div>
+        <div class="main-hero-dot" data-slide="1" style="width: 40px; height: 3px; background: rgba(255,255,255,0.4); cursor: pointer; transition: 0.3s;"></div>
+        <div class="main-hero-dot" data-slide="2" style="width: 40px; height: 3px; background: rgba(255,255,255,0.4); cursor: pointer; transition: 0.3s;"></div>
       </div>
     </div>
   </section>
