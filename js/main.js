@@ -346,6 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initWishlist();
   updateBadgeCounts();
   initMainHeroSlider();
+  initTestimonialsSlider();
 });
 
 /* =========================================
@@ -1548,4 +1549,52 @@ function initMainHeroSlider() {
       }, 2500);
     });
   });
+}
+
+/* =========================================
+   16. TESTIMONIALS SLIDER AUTO-ROTATION
+   ========================================= */
+function initTestimonialsSlider() {
+  const track = document.getElementById('testi-slider-track');
+  if (!track) return;
+  const cards = track.querySelectorAll('.testimonial-card');
+  const dotsContainer = document.getElementById('testi-dots');
+  if (cards.length <= 1) return;
+
+  let currentIdx = 0;
+
+  cards.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.style.width = '12px';
+    dot.style.height = '12px';
+    dot.style.borderRadius = '50%';
+    dot.style.background = i === 0 ? 'var(--primary)' : '#ccc';
+    dot.style.cursor = 'pointer';
+    dot.style.transition = 'background 0.3s ease';
+    dot.addEventListener('click', () => {
+      clearInterval(autoSlide);
+      goToSlide(i);
+      startSlide();
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.children;
+
+  function goToSlide(idx) {
+    currentIdx = idx;
+    track.style.transform = `translateX(-${currentIdx * 100}%)`;
+    Array.from(dots).forEach((dot, i) => {
+      dot.style.background = i === currentIdx ? 'var(--primary)' : '#ccc';
+    });
+  }
+
+  let autoSlide;
+  function startSlide() {
+    autoSlide = setInterval(() => {
+      goToSlide((currentIdx + 1) % cards.length);
+    }, 4000);
+  }
+  
+  startSlide();
 }
