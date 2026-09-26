@@ -436,6 +436,11 @@ function initBox3DBuilder() {
   const cssBox = document.getElementById('css-3d-interactive-box');
   const canvasViewport = document.getElementById('canvas-3d-viewport');
 
+  // Custom Branding
+  const customBoxText = document.getElementById('custom-box-text');
+  const customBoxColor = document.getElementById('custom-box-color');
+  const boxFrontTextDisplay = document.getElementById('box-front-text-display');
+
   let config = {
     length: parseFloat(lengthInput?.value || 10),
     width: parseFloat(widthInput?.value || 8),
@@ -534,10 +539,33 @@ function initBox3DBuilder() {
       
       if (cssBox) {
         cssBox.className = `css-3d-box theme-${color}`;
+        // Clear custom inline color
+        const faces = cssBox.querySelectorAll('.box-face');
+        faces.forEach(f => f.style.backgroundColor = '');
       }
       calculateBoxPricing();
     });
   });
+
+  // Custom Text & Color Interactivity
+  if (customBoxText && boxFrontTextDisplay) {
+    customBoxText.addEventListener('input', () => {
+      boxFrontTextDisplay.textContent = customBoxText.value;
+    });
+  }
+
+  if (customBoxColor) {
+    customBoxColor.addEventListener('input', () => {
+      if (!cssBox) return;
+      colorBtns.forEach(b => b.classList.remove('active')); // Deselect predefined themes
+      const faces = cssBox.querySelectorAll('.box-face');
+      faces.forEach(f => {
+        f.style.backgroundColor = customBoxColor.value;
+      });
+      // Set to custom theme state for pricing (optional, maybe keep last multiplier)
+      cssBox.className = `css-3d-box`; // Remove theme class
+    });
+  }
 
   // Printing Selector
   printBtns.forEach(btn => {
