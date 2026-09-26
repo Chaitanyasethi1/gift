@@ -719,9 +719,9 @@ function initProductGrid() {
             ${STATE.wishlist.includes(p.id) ? '❤️' : '🤍'}
           </button>
 
-          <div class="product-quick-overlay">
-            <button class="btn-quick-view" data-quickview="${p.id}">
-              🔍 Quick View
+          <div class="product-quick-overlay" onclick="document.querySelector('.btn-quick-view[data-quickview=\'${p.id}\']').click();" style="cursor:pointer;">
+            <button class="btn-quick-view" data-quickview="${p.id}" title="Quick View" aria-label="Quick View">
+              👁️
             </button>
           </div>
         </div>
