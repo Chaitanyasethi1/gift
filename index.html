@@ -153,36 +153,91 @@
         </div>
       </div>
 
-      <!-- Factory Specification Card in Hero -->
-      <div>
-        <div class="hero-visual-card">
-          <span class="hero-3d-badge">Factory Direct Specification</span>
-          <div class="hero-image-slider">
-            <img src="assets/images/asprint_hero_1.jpg" alt="AS Print Gallery Boxes" class="hero-slide slide-1">
-            <img src="assets/images/asprint_hero_2.jpg" alt="Premium Packaging" class="hero-slide slide-2">
-            <img src="assets/images/asprint_hero_3.jpg" alt="Hang Tags and Labels" class="hero-slide slide-3">
+      <!-- Autoplaying Combo Slider Card -->
+      <div style="position: relative; width: 100%;">
+        <div id="combo-slider-container" style="position: relative; overflow: hidden; border-radius: var(--radius-xl); box-shadow: 0 15px 40px rgba(15,23,42,0.08); background: #FFFFFF; border: 1px solid var(--border-light); max-width: 450px; margin: 0 auto;">
+          
+          <!-- Slide 1 -->
+          <div class="combo-slide active" style="display: block; animation: fadeCombo 1s ease;">
+            <div style="position: relative;">
+               <img src="assets/combo1.jpg" alt="Business Branding Combo" style="width: 100%; height: 230px; object-fit: cover; display: block;">
+               <span class="hero-3d-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.95); color: #0F172A; font-weight: 800; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">₹699 ONLY</span>
+            </div>
+            <div style="padding: 24px;">
+              <h3 style="color: #0F172A; font-size: 1.15rem; font-weight: 800; text-transform: uppercase;">Business Branding Combo</h3>
+              <p style="font-size: 0.82rem; color: var(--primary); margin: 6px 0 14px; font-weight: 600;">Give your business a Professional Look!</p>
+              
+              <ul style="list-style: none; padding: 0; margin: 0 0 16px; font-size: 0.85rem; color: #475569; display:flex; flex-direction: column; gap: 6px; font-weight: 500;">
+                <li><span style="color: #10B981; font-weight:bold;">✓</span> 1000 Custom Stickers (1.5" x 1.5")</li>
+                <li><span style="color: #10B981; font-weight:bold;">✓</span> 200 Thank You Cards (3" x 2")</li>
+                <li><span style="color: #10B981; font-weight:bold;">✓</span> 1 Custom Rubber Stamp (1")</li>
+              </ul>
+              
+              <div style="display: flex; gap: 10px; font-size: 0.78rem; font-weight: 700; color: #10B981; margin-bottom: 18px; padding-top: 10px; border-top: 1px dashed var(--border-light);">
+                <span>✨ Free Design</span>
+                <span style="color: #F59E0B;">🚚 Shipping Extra</span>
+              </div>
+              
+              <a href="https://wa.me/919911678386?text=Hi!%20I%20want%20to%20order%20the%20BUSINESS%20BRANDING%20COMBO%20for%20Rs.699" target="_blank" rel="noopener" class="btn-primary-hero" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.95rem; border-radius: var(--radius-lg);">
+                📲 Order Combo Now
+              </a>
+            </div>
           </div>
-          <h3 style="color: #0F172A; font-size: 1.25rem; margin-top: 14px; font-weight: 700;">
-            Premium Corrugated & Custom Printing
-          </h3>
-          <p style="font-size: 0.82rem; color: #64748B; margin-top: 4px;">
-            Manufactured in-house • Rigid boxes, labels, tags & kraft packaging
-          </p>
 
-          <div class="hero-card-specs">
-            <div class="hero-spec-item">
-              <span class="hero-spec-label">Starting From</span>
-              <span class="hero-spec-value" style="color: #34D399;">₹6.80/pc</span>
+          <!-- Slide 2 -->
+          <div class="combo-slide" style="display: none; animation: fadeCombo 1s ease;">
+            <div style="position: relative;">
+               <img src="assets/combo2.jpg" alt="E-Commerce Starter Pack" style="width: 100%; height: 230px; object-fit: cover; display: block;">
+               <span class="hero-3d-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.95); color: #0F172A; font-weight: 800; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">₹1499 ONLY</span>
             </div>
-            <div class="hero-spec-item">
-              <span class="hero-spec-label">Paper Quality</span>
-              <span class="hero-spec-value">18-24 BF Kraft</span>
-            </div>
-            <div class="hero-spec-item">
-              <span class="hero-spec-label">Min. Order</span>
-              <span class="hero-spec-value">100 Pcs</span>
+            <div style="padding: 24px;">
+              <h3 style="color: #0F172A; font-size: 1.15rem; font-weight: 800; text-transform: uppercase;">E-Commerce Starter Pack</h3>
+              <p style="font-size: 0.82rem; color: var(--primary); margin: 6px 0 14px; font-weight: 600;">Everything you need to ship safely!</p>
+              
+              <ul style="list-style: none; padding: 0; margin: 0 0 16px; font-size: 0.85rem; color: #475569; display:flex; flex-direction: column; gap: 6px; font-weight: 500;">
+                <li><span style="color: #10B981; font-weight:bold;">✓</span> 100 3-Ply Kraft Boxes (10x8x4")</li>
+                <li><span style="color: #10B981; font-weight:bold;">✓</span> 5 Branded Packing Tapes (2")</li>
+                <li><span style="color: #10B981; font-weight:bold;">✓</span> 500 Fragile Warning Labels</li>
+              </ul>
+              
+              <div style="display: flex; gap: 10px; font-size: 0.78rem; font-weight: 700; color: #10B981; margin-bottom: 18px; padding-top: 10px; border-top: 1px dashed var(--border-light);">
+                <span>✨ Free Die/Plate</span>
+                <span style="color: #F59E0B;">🚚 Shipping Extra</span>
+              </div>
+              
+              <a href="https://wa.me/919911678386?text=Hi!%20I%20want%20to%20order%20the%20ECOMMERCE%20STARTER%20PACK%20for%20Rs.1499" target="_blank" rel="noopener" class="btn-primary-hero" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.95rem; border-radius: var(--radius-lg);">
+                📲 Order Combo Now
+              </a>
             </div>
           </div>
+
+          <!-- Slide 3 -->
+          <div class="combo-slide" style="display: none; animation: fadeCombo 1s ease;">
+            <div style="position: relative;">
+               <img src="assets/combo3.jpg" alt="Premium Garment Packaging" style="width: 100%; height: 230px; object-fit: cover; display: block;">
+               <span class="hero-3d-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.95); color: #0F172A; font-weight: 800; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">₹1999 ONLY</span>
+            </div>
+            <div style="padding: 24px;">
+              <h3 style="color: #0F172A; font-size: 1.15rem; font-weight: 800; text-transform: uppercase;">Premium Garment Packaging</h3>
+              <p style="font-size: 0.82rem; color: var(--primary); margin: 6px 0 14px; font-weight: 600;">Elevate your clothing brand!</p>
+              
+              <ul style="list-style: none; padding: 0; margin: 0 0 16px; font-size: 0.85rem; color: #475569; display:flex; flex-direction: column; gap: 6px; font-weight: 500;">
+                <li><span style="color: #10B981; font-weight:bold;">✓</span> 500 Custom Hang Tags w/ String</li>
+                <li><span style="color: #10B981; font-weight:bold;">✓</span> 500 Woven Fabric Brand Labels</li>
+                <li><span style="color: #10B981; font-weight:bold;">✓</span> 250 Logo Printed Butter Papers</li>
+              </ul>
+              
+              <div style="display: flex; gap: 10px; font-size: 0.78rem; font-weight: 700; color: #10B981; margin-bottom: 18px; padding-top: 10px; border-top: 1px dashed var(--border-light);">
+                <span>✨ Expert Design</span>
+                <span style="color: #F59E0B;">🚚 Shipping Extra</span>
+              </div>
+              
+              <a href="https://wa.me/919911678386?text=Hi!%20I%20want%20to%20order%20the%20GARMENT%20PACKAGING%20COMBO%20for%20Rs.1999" target="_blank" rel="noopener" class="btn-primary-hero" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.95rem; border-radius: var(--radius-lg);">
+                📲 Order Combo Now
+              </a>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

@@ -345,6 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollTopAndToast();
   initWishlist();
   updateBadgeCounts();
+  initComboSlider();
 });
 
 /* =========================================
@@ -1463,3 +1464,22 @@ window.closeCartDrawer = closeCartDrawer;
 window.updateCartQty = updateCartQty;
 window.removeFromCart = removeFromCart;
 window.openQuickView = openQuickView;
+
+/* =========================================
+   15. COMBO SLIDER AUTO-ROTATION
+   ========================================= */
+function initComboSlider() {
+  const slides = document.querySelectorAll('.combo-slide');
+  if (!slides || slides.length === 0) return;
+
+  let currentIdx = 0;
+  setInterval(() => {
+    slides[currentIdx].style.display = 'none';
+    slides[currentIdx].classList.remove('active');
+    
+    currentIdx = (currentIdx + 1) % slides.length;
+    
+    slides[currentIdx].style.display = 'block';
+    slides[currentIdx].classList.add('active');
+  }, 4000); // 4 seconds per slide
+}
