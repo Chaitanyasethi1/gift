@@ -17,6 +17,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Force HTTPS in Production (checks x-forwarded-proto from load balancers)
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV === 'production') {
+    if (req.headers['x-forwarded-proto'] !== 'https' && req.secure === false) {
+      return res.redirect(`https://${req.headers.host}${req.url}`);
+    }
+  }
+  next();
+});
+
 // Serve static assets from standard directories
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
