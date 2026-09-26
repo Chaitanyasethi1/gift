@@ -41,7 +41,7 @@
     .action-link.delete { color: #EF4444; }
 
     /* Supabase setup banner */
-    .setup-banner { background: #EFF6FF; border: 1px solid #BFDBFE; padding: 20px; border-radius: 8px; margin-bottom: 24px; display: flex; gap: 16px; align-items: flex-start; }
+    .setup-banner { background: #EFF6FF; border: 1px solid #BFDBFE; padding: 20px; border-radius: 8px; margin-bottom: 24px; display: flex; gap: 16px; align-items: flex-start; display: none; }
     .setup-icon { font-size: 24px; }
     .setup-text h3 { margin: 0 0 8px 0; color: #1E3A8A; font-size: 1.1rem; }
     .setup-text p { margin: 0 0 12px 0; color: #3B82F6; font-size: 0.9rem; line-height: 1.5; }
@@ -113,41 +113,10 @@ create table products (
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="admin-product-table">
             <tr>
-              <td><img src="assets/corrugated_box.jpg" style="width:40px; height:40px; border-radius:4px; object-fit:cover;"></td>
-              <td style="font-weight:600;">3-Ply Custom Corrugated Shipping Carton</td>
-              <td>Corrugated Boxes</td>
-              <td>₹6.80</td>
-              <td>100 pcs</td>
-              <td><span class="status">Active</span></td>
-              <td>
-                <a href="#" class="action-link">Edit</a>
-                <a href="#" class="action-link delete">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td><img src="assets/boxes.jpg" style="width:40px; height:40px; border-radius:4px; object-fit:cover;"></td>
-              <td style="font-weight:600;">5-Ply Heavy Duty Export Carton</td>
-              <td>Corrugated Boxes</td>
-              <td>₹18.50</td>
-              <td>50 pcs</td>
-              <td><span class="status">Active</span></td>
-              <td>
-                <a href="#" class="action-link">Edit</a>
-                <a href="#" class="action-link delete">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td><img src="assets/pizza_box.jpg" style="width:40px; height:40px; border-radius:4px; object-fit:cover;"></td>
-              <td style="font-weight:600;">Custom Printed Pizza Boxes (3-Ply)</td>
-              <td>Food Packaging</td>
-              <td>₹8.50</td>
-              <td>500 pcs</td>
-              <td><span class="status">Active</span></td>
-              <td>
-                <a href="#" class="action-link">Edit</a>
-                <a href="#" class="action-link delete">Delete</a>
+              <td colspan="7" style="text-align: center; padding: 40px; color: #64748B;">
+                Loading products from Supabase...
               </td>
             </tr>
           </tbody>
@@ -155,5 +124,115 @@ create table products (
       </div>
     </div>
   </div>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script>
+    // Initialize Supabase with the keys provided
+    const _supabaseUrl = 'https://jwsfjyxarfhogmdiiars.supabase.co';
+    const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3c2ZqeXhhcmZob2dtZGlpYXJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY1NTYsImV4cCI6MjEwNjAwMjU1Nn0.XbB8twZh_elDVapx1YlO4QLsVAEiUIYgZW9ctiE9FCE';
+    const supabase = window.supabase.createClient(_supabaseUrl, _supabaseKey);
+
+    const tbody = document.getElementById('admin-product-table');
+    const setupBanner = document.getElementById('supabase-setup');
+
+    async function loadAdminProducts() {
+      try {
+        const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+        
+        if (error) {
+          if (error.code === '42P01') { // Table doesn't exist
+            setupBanner.style.display = 'flex';
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 30px; color: red;">Database table missing. Please run the SQL query above.</td></tr>`;
+          } else {
+            console.error("Supabase Error:", error);
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 30px; color: red;">Error connecting: ${error.message}</td></tr>`;
+          }
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          tbody.innerHTML = `
+            <tr><td colspan="7" style="text-align:center; padding: 40px;">
+              <h3 style="margin-top:0;">Database is Empty</h3>
+              <p style="color: #64748B; margin-bottom: 20px;">Your products table was created successfully, but it has no data.</p>
+              <button class="btn" onclick="seedDatabase()" id="seed-btn">Insert 14 Default Products</button>
+            </td></tr>
+          `;
+          return;
+        }
+
+        renderTable(data);
+
+      } catch (err) {
+        console.error("Exception:", err);
+      }
+    }
+
+    function renderTable(data) {
+      tbody.innerHTML = '';
+      data.forEach(p => {
+        tbody.innerHTML += `
+          <tr>
+            <td><img src="${p.image_url || 'assets/boxes.jpg'}" style="width:40px; height:40px; border-radius:4px; object-fit:cover;"></td>
+            <td style="font-weight:600;">${p.title}</td>
+            <td>${p.category}</td>
+            <td>₹${p.price}</td>
+            <td>${p.moq} pcs</td>
+            <td><span class="status" style="background: ${p.is_active ? '#D1FAE5' : '#FEE2E2'}; color: ${p.is_active ? '#065F46' : '#991B1B'}">${p.is_active ? 'Active' : 'Draft'}</span></td>
+            <td>
+              <a href="#" class="action-link" style="color:#64748B;">Edit</a>
+              <a href="#" class="action-link delete" onclick="deleteProduct('${p.id}')">Delete</a>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    async function seedDatabase() {
+      const btn = document.getElementById('seed-btn');
+      btn.innerText = "Inserting Data (Please Wait)...";
+      btn.disabled = true;
+
+      // Seed data mapped from STATE.products
+      const seedData = [
+        { title: '3-Ply Custom Corrugated Shipping Carton', category: 'corrugated', price: 6.80, moq: 100, image_url: 'assets/corrugated_box.jpg' },
+        { title: '5-Ply Heavy-Duty Master Cartons', category: 'corrugated', price: 18.50, moq: 50, image_url: 'assets/boxes.jpg' },
+        { title: 'Custom Printed Pizza Packaging Boxes', category: 'food', price: 8.50, moq: 500, image_url: 'assets/pizza_box.jpg' },
+        { title: 'Luxury Rigid Magnet Boxes (Gift & Jewelry)', category: 'packaging', price: 145.00, moq: 25, image_url: 'assets/box2.jpg' },
+        { title: 'High-Density Woven Garment Labels', category: 'label', price: 1.20, moq: 1000, image_url: 'assets/logo.png' },
+        { title: 'Kraft Paper Shopping Bags (Twisted Handle)', category: 'bags', price: 14.50, moq: 200, image_url: 'assets/shopping_bag.jpg' },
+        { title: 'Tamper-Evident Courier Envelopes (POD)', category: 'bags', price: 3.20, moq: 500, image_url: 'assets/courier.jpg' },
+        { title: 'Waterproof Vinyl Gumming Stickers (Die-Cut)', category: 'sticker', price: 0.80, moq: 1000, image_url: 'assets/sticker.jpg' },
+        { title: 'Premium Thick Cardboard Hang Tags', category: 'label', price: 2.50, moq: 1000, image_url: 'assets/hangtag.jpg' },
+        { title: 'White Duplex Sweet & Bakery Boxes', category: 'food', price: 12.00, moq: 300, image_url: 'assets/sweetbox.jpg' },
+        { title: 'E-Commerce Die-Cut Mailer Boxes', category: 'corrugated', price: 11.50, moq: 250, image_url: 'assets/boxes.jpg' },
+        { title: 'Custom Printed BOPP Packaging Tape', category: 'packaging', price: 55.00, moq: 144, image_url: 'assets/tape.jpg' },
+        { title: 'Mono Cartons for Pharmaceuticals & FMCG', category: 'packaging', price: 4.50, moq: 1000, image_url: 'assets/monocarton.jpg' },
+        { title: 'Custom Printed Wrapping Tissue Paper', category: 'packaging', price: 3.80, moq: 500, image_url: 'assets/tissue.jpg' }
+      ];
+
+      const { data, error } = await supabase.from('products').insert(seedData);
+      
+      if (error) {
+        alert("Error inserting data: " + error.message);
+        btn.innerText = "Error!";
+      } else {
+        alert("Success! 14 products added to Supabase.");
+        loadAdminProducts();
+      }
+    }
+
+    async function deleteProduct(id) {
+      if(confirm("Delete this product permanently?")) {
+        await supabase.from('products').delete().eq('id', id);
+        loadAdminProducts();
+      }
+    }
+
+    // Load products on page boot
+    window.onload = loadAdminProducts;
+  </script>
 </body>
 </html>
