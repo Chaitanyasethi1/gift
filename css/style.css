@@ -1923,6 +1923,14 @@ button, input, select, textarea {
   transform: translateX(0);
 }
 
+#mobile-nav-drawer {
+  transform: translateX(-100%);
+}
+
+#mobile-nav-drawer.active {
+  transform: translateX(0);
+}
+
 .cart-header {
   display: flex;
   justify-content: space-between;
