@@ -172,16 +172,22 @@ create table products (
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <script>
-    // Initialize Supabase with the keys provided
-    const _supabaseUrl = 'https://jwsfjyxarfhogmdiiars.supabase.co';
-    const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3c2ZqeXhhcmZob2dtZGlpYXJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY1NTYsImV4cCI6MjEwNjAwMjU1Nn0.XbB8twZh_elDVapx1YlO4QLsVAEiUIYgZW9ctiE9FCE';
-    const supabase = window.supabase.createClient(_supabaseUrl, _supabaseKey);
-
+    let supabase;
     const tbody = document.getElementById('admin-product-table');
     const setupBanner = document.getElementById('supabase-setup');
 
+    try {
+      const _supabaseUrl = 'https://jwsfjyxarfhogmdiiars.supabase.co';
+      const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3c2ZqeXhhcmZob2dtZGlpYXJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY1NTYsImV4cCI6MjEwNjAwMjU1Nn0.XbB8twZh_elDVapx1YlO4QLsVAEiUIYgZW9ctiE9FCE';
+      supabase = window.supabase.createClient(_supabaseUrl, _supabaseKey);
+    } catch (e) {
+      console.error("Supabase CDN blocked or failed:", e);
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 40px; color: red;">Error: Supabase library failed to load. Are you using an Adblocker?</td></tr>`;
+    }
+
     async function loadAdminProducts() {
       try {
+        if (!supabase) return;
         const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
         
         if (error) {
@@ -275,8 +281,8 @@ create table products (
       }
     }
 
-    // Load products on page boot
-    window.onload = loadAdminProducts;
+    // Load products immediately since script is at the bottom
+    loadAdminProducts();
   </script>
 </body>
 </html>
