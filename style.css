@@ -13,8 +13,8 @@
   --brand-gold: #D97706;
   --brand-gold-light: #FEF3C7;
   
-  --dark-slate: #0F172A;
-  --dark-header: #0F172A;
+  --dark-slate: var(--primary);
+  --dark-header: var(--primary);
   --dark-card: #1E293B;
   --dark-border: #334155;
   
@@ -116,7 +116,7 @@ button, input, select, textarea {
    TOP ANNOUNCEMENT BAR (SLIM, SLEEK, REFINED)
    ========================================= */
 .announcement-bar {
-  background: #0F172A;
+  background: var(--primary);
   color: #F8FAFC;
   padding: 6px 0;
   min-height: 34px;
@@ -768,7 +768,7 @@ button, input, select, textarea {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #0F172A;
+  background: var(--primary);
   color: #FFFFFF;
   font-weight: 600;
   font-size: 0.88rem;
@@ -1324,7 +1324,7 @@ button, input, select, textarea {
 }
 
 .btn-add-custom-cart {
-  background: #0F172A;
+  background: var(--primary);
   color: #FFFFFF;
   font-weight: 600;
   font-size: 0.88rem;
@@ -1400,7 +1400,7 @@ button, input, select, textarea {
 }
 
 .filter-tab-pill.active {
-  background: #0F172A;
+  background: var(--primary);
   border-color: #0F172A;
   color: #FFFFFF;
   box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
@@ -1539,7 +1539,7 @@ button, input, select, textarea {
 }
 
 .btn-quick-view {
-  background: #0F172A;
+  background: var(--primary);
   color: #FFFFFF;
   border: none;
   border-radius: 50%;
@@ -1684,7 +1684,7 @@ button, input, select, textarea {
 }
 
 .btn-card-cart {
-  background: #0F172A;
+  background: var(--primary);
   color: #FFFFFF;
   border: none;
   font-weight: 600;
@@ -2736,7 +2736,7 @@ button, input, select, textarea {
 }
 
 .floating-scrolltop-btn:hover {
-  background: #0F172A;
+  background: var(--primary);
   color: #FFFFFF;
   transform: translateY(-2px);
 }
