@@ -187,19 +187,29 @@ create table products (
 
     async function loadAdminProducts() {
       try {
-        if (!supabase) return;
-        const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+        const _url = 'https://jwsfjyxarfhogmdiiars.supabase.co/rest/v1/products?select=*&order=created_at.desc';
+        const _key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3c2ZqeXhhcmZob2dtZGlpYXJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY1NTYsImV4cCI6MjEwNjAwMjU1Nn0.XbB8twZh_elDVapx1YlO4QLsVAEiUIYgZW9ctiE9FCE';
         
-        if (error) {
-          if (error.code === '42P01' || error.code === 'PGRST205') { // Table doesn't exist
+        const res = await fetch(_url, {
+          headers: {
+            'apikey': _key,
+            'Authorization': 'Bearer ' + _key
+          }
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          const errCode = errData.code || '';
+          if (errCode === '42P01' || errCode === 'PGRST205' || res.status === 404) {
             setupBanner.style.display = 'flex';
             tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 40px; color: #EF4444; font-weight: 500;">Database table missing. Please run the SQL query above.</td></tr>`;
           } else {
-            console.error("Supabase Error:", error);
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 30px; color: red;">Error connecting: ${error.message || JSON.stringify(error)}</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 30px; color: red;">Error connecting: ${res.statusText} - ${JSON.stringify(errData)}</td></tr>`;
           }
           return;
         }
+
+        const data = await res.json();
 
         if (!data || data.length === 0) {
           tbody.innerHTML = `
