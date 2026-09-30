@@ -330,7 +330,46 @@ const STATE = {
 };
 
 // DOM Content Loaded Handler
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // Fetch from Supabase
+  try {
+    const supabaseUrl = 'https://jwsfjyxarfhogmdiiars.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3c2ZqeXhhcmZob2dtZGlpYXJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY1NTYsImV4cCI6MjEwNjAwMjU1Nn0.XbB8twZh_elDVapx1YlO4QLsVAEiUIYgZW9ctiE9FCE';
+    const res = await fetch(`${supabaseUrl}/rest/v1/products?select=*&is_active=eq.true`, {
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`
+      }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.length > 0) {
+        STATE.products = data.map(p => ({
+          id: p.id,
+          title: p.title,
+          category: p.category,
+          categoryLabel: p.category.toUpperCase(),
+          image: p.image_url || 'assets/boxes.jpg',
+          price: parseFloat(p.price) || 0,
+          moq: parseInt(p.moq) || 100,
+          badge: 'FACTORY',
+          badgeClass: 'factory-direct',
+          rating: 4.9,
+          reviews: Math.floor(Math.random() * 500) + 50,
+          specs: ['High Quality', 'Pan-India', 'Direct Factory'],
+          desc: p.title,
+          tiers: [
+            { qty: p.moq, rate: parseFloat(p.price) },
+            { qty: p.moq * 5, rate: parseFloat((p.price * 0.9).toFixed(2)) },
+            { qty: p.moq * 10, rate: parseFloat((p.price * 0.85).toFixed(2)) }
+          ]
+        }));
+      }
+    }
+  } catch (err) {
+    console.warn("Using offline catalog: " + err.message);
+  }
+
   initLiveSearch();
   initCartDrawer();
   initBox3DBuilder();
