@@ -185,12 +185,12 @@ create table products (
         const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
         
         if (error) {
-          if (error.code === '42P01') { // Table doesn't exist
+          if (error.code === '42P01' || error.code === 'PGRST205') { // Table doesn't exist
             setupBanner.style.display = 'flex';
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 30px; color: red;">Database table missing. Please run the SQL query above.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 40px; color: #EF4444; font-weight: 500;">Database table missing. Please run the SQL query above.</td></tr>`;
           } else {
             console.error("Supabase Error:", error);
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 30px; color: red;">Error connecting: ${error.message}</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 30px; color: red;">Error connecting: ${error.message || JSON.stringify(error)}</td></tr>`;
           }
           return;
         }
@@ -210,6 +210,7 @@ create table products (
 
       } catch (err) {
         console.error("Exception:", err);
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 30px; color: red;">Exception: ${err.message}</td></tr>`;
       }
     }
 

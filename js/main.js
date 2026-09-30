@@ -330,8 +330,31 @@ const STATE = {
 };
 
 // DOM Content Loaded Handler
-document.addEventListener('DOMContentLoaded', async () => {
-  // Fetch from Supabase
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize UI immediately so the site doesn't get stuck
+  initLiveSearch();
+  initCartDrawer();
+  initBox3DBuilder();
+  initProductGrid(); // Initial render with fallback data
+  initQuickViewModal();
+  initPincodeChecker();
+  initSampleKitModal();
+  initCheckoutModal();
+  initFaqAccordion();
+  initRecentOrdersTicker();
+  initMobileNavigation();
+  initScrollTopAndToast();
+  initWishlist();
+  updateBadgeCounts();
+  initMainHeroSlider();
+  initTestimonialsSlider();
+  initCookieBanner();
+
+  // Now fetch live data in the background
+  fetchLiveProducts();
+});
+
+async function fetchLiveProducts() {
   try {
     const supabaseUrl = 'https://jwsfjyxarfhogmdiiars.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3c2ZqeXhhcmZob2dtZGlpYXJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MjY1NTYsImV4cCI6MjEwNjAwMjU1Nn0.XbB8twZh_elDVapx1YlO4QLsVAEiUIYgZW9ctiE9FCE';
@@ -364,30 +387,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             { qty: p.moq * 10, rate: parseFloat((p.price * 0.85).toFixed(2)) }
           ]
         }));
+        // Re-render the grid with live data
+        initProductGrid();
       }
     }
   } catch (err) {
     console.warn("Using offline catalog: " + err.message);
   }
-
-  initLiveSearch();
-  initCartDrawer();
-  initBox3DBuilder();
-  initProductGrid();
-  initQuickViewModal();
-  initPincodeChecker();
-  initSampleKitModal();
-  initCheckoutModal();
-  initFaqAccordion();
-  initRecentOrdersTicker();
-  initMobileNavigation();
-  initScrollTopAndToast();
-  initWishlist();
-  updateBadgeCounts();
-  initMainHeroSlider();
-  initTestimonialsSlider();
-  initCookieBanner();
-});
+}
 
 /* =========================================
    1. LIVE SEARCH & AUTOCOMPLETE
