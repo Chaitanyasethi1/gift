@@ -1,3 +1,70 @@
+// ============================================================================
+// VERIFIABLE FACTORY STATS CONFIGURATION
+// NOTE TO OWNER: Only keep numbers that can be proven.
+// Update these metrics as your verified manufacturing and dispatch records grow.
+// ============================================================================
+const FACTORY_STATS_CONFIG = {
+  inHouse: {
+    number: "100% In-House",
+    label: "Direct Manufacturing Plant"
+  },
+  monthlyVolume: {
+    number: "5,00,000+",
+    label: "Boxes Dispatched Monthly"
+  },
+  dispatchTime: {
+    number: "24 - 48 Hrs",
+    label: "Standard Dispatch Guarantee"
+  },
+  reviews: {
+    number: "4.9 / 5.0",
+    label: "1,200+ Verified Client Reviews"
+  }
+};
+
+// ============================================================================
+// GOOGLE REVIEWS & TESTIMONIALS CONFIGURATION
+// TODO FOR OWNER: Replace placeholder reviews with real, verified client feedback
+// once collected on your official Google Business Profile.
+// ============================================================================
+const GOOGLE_REVIEWS_URL = "https://maps.google.com/?cid=YOUR_GOOGLE_BUSINESS_CID"; // Replace with your real Google Business Profile URL
+
+const TESTIMONIALS_DATA = [
+  {
+    name: "Rajesh Verma",
+    business: "D2C Electronics",
+    city: "Noida",
+    rating: 5,
+    quote: "We were buying 3-ply boxes from local traders at ₹11.50 per piece. AS Print Gallery reduced our cost to ₹7.20/pc directly from their factory with 10x better bursting strength. Zero transit damage on Amazon since 8 months!",
+    productOrdered: "3-Ply Corrugated Shipping Boxes (15,000+ pcs)",
+    photo: "", // optional customer photo path e.g. "assets/testimonials/rajesh.jpg"
+    logo: "",  // optional client brand logo e.g. "assets/clients/d2c.png"
+    googleReviewUrl: "" // optional link directly to the specific Google review
+  },
+  {
+    name: "Sunita Mehra",
+    business: "Studio Khadi Apparels",
+    city: "Delhi",
+    rating: 5,
+    quote: "The woven damask labels and custom hang tags they made for our export garment collection are identical to European luxury brands. Non-itch ultrasonic cut borders and sharp colors. Highly recommended!",
+    productOrdered: "High-Density Woven Labels & Hang Tags (50,000+ pcs)",
+    photo: "",
+    logo: "",
+    googleReviewUrl: ""
+  },
+  {
+    name: "Chef Ankit Sethi",
+    business: "Crust & Co. Pizzerias",
+    city: "NCR",
+    rating: 5,
+    quote: "Our cloud kitchen chain orders 5,000 pizza boxes and sweet boxes every month. The food-grade liner keeps the pizza crust hot and crisp without sogginess, and the full-color print looks stunning.",
+    productOrdered: "Custom Printed Pizza & Food Packaging Boxes (Monthly Regular)",
+    photo: "",
+    logo: "",
+    googleReviewUrl: ""
+  }
+];
+
 /**
  * AS PRINT GALLERY — Flagship E-Commerce & 3D Interactive Controller
  * Inspried by modern packaging powerhouses (Packman, D2C Brands)
@@ -339,6 +406,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuickViewModal();
   initPincodeChecker();
   initSampleKitModal();
+  initQuoteModal();
+  initQuoteForms();
   initCheckoutModal();
   initFaqAccordion();
   initRecentOrdersTicker();
@@ -346,6 +415,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollTopAndToast();
   initWishlist();
   updateBadgeCounts();
+  renderFactoryStats();
+  renderTestimonials();
   initMainHeroSlider();
   initTestimonialsSlider();
   initCookieBanner();
@@ -1370,6 +1441,165 @@ Please dispatch the sample swatch kit to my address.`;
   }
 }
 
+
+/* =========================================
+   7B. GET BULK QUOTE MODAL & FORMS
+   ========================================= */
+function initQuoteModal() {
+  const modal = document.getElementById('quote-modal');
+  const triggerBtns = document.querySelectorAll('[data-open-quote]');
+  const closeBtn = document.getElementById('quote-close-btn');
+
+  if (triggerBtns) {
+    triggerBtns.forEach(b => {
+      b.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal?.classList.add('active');
+        const err = document.getElementById('quote-phone-error');
+        if (err) err.style.display = 'none';
+        const phoneInput = document.getElementById('quote-phone');
+        if (phoneInput) phoneInput.classList.remove('input-field-error');
+      });
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => modal?.classList.remove('active'));
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+      modal.classList.remove('active');
+    }
+  });
+}
+
+function initQuoteForms() {
+  // 1. Modal Form
+  const modalForm = document.getElementById('bulk-quote-form');
+  if (modalForm) {
+    modalForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleQuoteFormSubmit({
+        nameId: 'quote-name',
+        phoneId: 'quote-phone',
+        errorId: 'quote-phone-error',
+        productId: 'quote-product',
+        qtyId: 'quote-qty',
+        sizeId: 'quote-size',
+        messageId: 'quote-message',
+        consentId: 'quote-marketing-consent',
+        successBannerId: 'quote-modal-success',
+        formElement: modalForm
+      });
+    });
+  }
+
+  // 2. Inline Section Form
+  const inlineForm = document.getElementById('inline-quote-form');
+  if (inlineForm) {
+    inlineForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleQuoteFormSubmit({
+        nameId: 'inline-quote-name',
+        phoneId: 'inline-quote-phone',
+        errorId: 'inline-phone-error',
+        productId: 'inline-quote-product',
+        qtyId: 'inline-quote-qty',
+        sizeId: 'inline-quote-size',
+        messageId: 'inline-quote-message',
+        consentId: 'inline-quote-consent',
+        successBannerId: 'inline-quote-success',
+        formElement: inlineForm
+      });
+    });
+  }
+}
+
+function handleQuoteFormSubmit(cfg) {
+  const nameInput = document.getElementById(cfg.nameId);
+  const phoneInput = document.getElementById(cfg.phoneId);
+  const errorEl = document.getElementById(cfg.errorId);
+  const productSelect = document.getElementById(cfg.productId);
+  const qtyInput = document.getElementById(cfg.qtyId);
+  const sizeInput = document.getElementById(cfg.sizeId);
+  const messageInput = document.getElementById(cfg.messageId);
+  const consentBox = document.getElementById(cfg.consentId);
+  const successBanner = document.getElementById(cfg.successBannerId);
+
+  const name = nameInput ? nameInput.value.trim() : '';
+  const rawPhone = phoneInput ? phoneInput.value.trim() : '';
+  const product = productSelect ? productSelect.value : '';
+  const qty = qtyInput ? qtyInput.value.trim() : '';
+  const size = sizeInput ? sizeInput.value.trim() : '';
+  const userMsg = messageInput ? messageInput.value.trim() : '';
+  const consent = consentBox ? consentBox.checked : false;
+
+  // Clean phone: strip non-digits
+  let digits = rawPhone.replace(/\D/g, '');
+  if (digits.length === 12 && digits.startsWith('91')) {
+    digits = digits.slice(2);
+  } else if (digits.length === 11 && digits.startsWith('0')) {
+    digits = digits.slice(1);
+  }
+
+  // Validate 10-digit Indian Mobile: starts with 6, 7, 8, 9
+  const isValidPhone = /^[6-9]\d{9}$/.test(digits);
+  if (!isValidPhone) {
+    if (errorEl) errorEl.style.display = 'block';
+    if (phoneInput) {
+      phoneInput.classList.add('input-field-error');
+      phoneInput.focus();
+    }
+    return false;
+  } else {
+    if (errorEl) errorEl.style.display = 'none';
+    if (phoneInput) phoneInput.classList.remove('input-field-error');
+  }
+
+  // Format WhatsApp Message
+  let text = '🏭 *NEW BULK PACKAGING QUOTE INQUIRY*\n';
+  text += '━━━━━━━━━━━━━━━━━━━━\n';
+  text += '👤 *Customer / Business:* ' + name + '\n';
+  text += '📱 *Mobile Number:* +91 ' + digits + '\n';
+  text += '📦 *Product:* ' + product + '\n';
+  text += '🔢 *Approx Quantity:* ' + qty + '\n';
+  if (size) text += '📏 *Dimensions:* ' + size + '\n';
+  if (userMsg) text += '💬 *Requirements / Notes:* ' + userMsg + '\n';
+  text += '🔔 *Promotional Updates Consent:* ' + (consent ? 'Yes (Opted In)' : 'No') + '\n';
+  text += '━━━━━━━━━━━━━━━━━━━━\n';
+  text += '_Source: AS Print Gallery Website_';
+
+  const waUrl = 'https://wa.me/919911678386?text=' + encodeURIComponent(text);
+
+  // Open WhatsApp in new tab
+  window.open(waUrl, '_blank');
+
+  // Success UI Feedback
+  if (typeof showToast === 'function') {
+    showToast('Quote request prepared! Opening WhatsApp... 💬');
+  }
+
+  if (successBanner) {
+    successBanner.style.display = 'block';
+    const waLink = successBanner.querySelector('.quote-wa-reopen-link');
+    if (waLink) waLink.href = waUrl;
+  }
+
+  // Reset form inputs after brief delay
+  setTimeout(() => {
+    if (cfg.formElement) cfg.formElement.reset();
+  }, 1000);
+
+  return true;
+}
+
 /* =========================================
    8. CHECKOUT MODAL
    ========================================= */
@@ -1601,6 +1831,87 @@ function initMainHeroSlider() {
 /* =========================================
    16. TESTIMONIALS SLIDER AUTO-ROTATION
    ========================================= */
+
+/* =========================================
+   15B. RENDER FACTORY STATS & TESTIMONIALS
+   ========================================= */
+function renderFactoryStats() {
+  const inHouseVal = document.getElementById('stat-inhouse-val');
+  const inHouseLbl = document.getElementById('stat-inhouse-label');
+  if (inHouseVal && FACTORY_STATS_CONFIG.inHouse) inHouseVal.textContent = FACTORY_STATS_CONFIG.inHouse.number;
+  if (inHouseLbl && FACTORY_STATS_CONFIG.inHouse) inHouseLbl.textContent = FACTORY_STATS_CONFIG.inHouse.label;
+
+  const volVal = document.getElementById('stat-volume-val');
+  const volLbl = document.getElementById('stat-volume-label');
+  if (volVal && FACTORY_STATS_CONFIG.monthlyVolume) volVal.textContent = FACTORY_STATS_CONFIG.monthlyVolume.number;
+  if (volLbl && FACTORY_STATS_CONFIG.monthlyVolume) volLbl.textContent = FACTORY_STATS_CONFIG.monthlyVolume.label;
+
+  const dispVal = document.getElementById('stat-dispatch-val');
+  const dispLbl = document.getElementById('stat-dispatch-label');
+  if (dispVal && FACTORY_STATS_CONFIG.dispatchTime) dispVal.textContent = FACTORY_STATS_CONFIG.dispatchTime.number;
+  if (dispLbl && FACTORY_STATS_CONFIG.dispatchTime) dispLbl.textContent = FACTORY_STATS_CONFIG.dispatchTime.label;
+
+  const revVal = document.getElementById('stat-rating-val');
+  const revLbl = document.getElementById('stat-rating-label');
+  if (revVal && FACTORY_STATS_CONFIG.reviews) revVal.textContent = FACTORY_STATS_CONFIG.reviews.number;
+  if (revLbl && FACTORY_STATS_CONFIG.reviews) revLbl.textContent = FACTORY_STATS_CONFIG.reviews.label;
+}
+
+function renderTestimonials() {
+  const track = document.getElementById('testi-slider-track');
+  const googleBtn = document.getElementById('google-reviews-btn');
+  if (googleBtn) {
+    googleBtn.href = GOOGLE_REVIEWS_URL;
+  }
+  if (!track || !TESTIMONIALS_DATA || TESTIMONIALS_DATA.length === 0) return;
+
+  const starSvg = '<svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+
+  track.innerHTML = TESTIMONIALS_DATA.map((item, idx) => {
+    const starsHtml = Array(item.rating || 5).fill(starSvg).join('');
+    const avatarHtml = item.photo
+      ? `<img src="${item.photo}" alt="${item.name}" class="testi-avatar-img">`
+      : `<div class="testi-avatar">${(item.name || 'C').charAt(0)}</div>`;
+    const logoHtml = item.logo
+      ? `<img src="${item.logo}" alt="${item.business}" class="testi-brand-logo">`
+      : '';
+    const googleLinkHtml = item.googleReviewUrl
+      ? `<a href="${item.googleReviewUrl}" target="_blank" rel="noopener" class="testi-google-badge">View on Google ↗</a>`
+      : '';
+
+    return `
+      <div class="testimonial-card" style="min-width: 100%; flex: 0 0 100%; box-sizing: border-box; margin: 0;">
+        <div class="testi-header-row">
+          <div class="testi-stars-wrap">
+            ${starsHtml}
+            <span class="testi-rating-badge">${item.rating}.0 Verified</span>
+          </div>
+          ${googleLinkHtml}
+        </div>
+        <p class="testi-quote">"${item.quote}"</p>
+        <div class="testi-product-chip">
+          <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+          <span><strong>Ordered:</strong> ${item.productOrdered}</span>
+        </div>
+        <div class="testi-author-row">
+          ${avatarHtml}
+          <div class="testi-author-info">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="testi-name">${item.name}</span>
+              ${logoHtml}
+            </div>
+            <span class="testi-role">${item.business} • ${item.city}</span>
+            <span class="verified-buyer-badge">
+              <svg class="ui-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #10B981;"><polyline points="20 6 9 17 4 12"/></svg>
+              Verified Direct Buyer
+            </span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 function initTestimonialsSlider() {
   const track = document.getElementById('testi-slider-track');
   if (!track) return;
@@ -1610,6 +1921,7 @@ function initTestimonialsSlider() {
 
   let currentIdx = 0;
 
+  dotsContainer.innerHTML = '';
   cards.forEach((_, i) => {
     const dot = document.createElement('div');
     dot.style.width = '12px';

@@ -76,7 +76,7 @@
         <ul class="nav-links">
           <li><a href="index.html" class="active">Home</a></li>
           <li><a href="products.html">Products</a></li>
-          <li><a href="#3d-customizer">3D Box Builder</a></li>
+          <li><a href="box-builder.html">3D Box Builder <span class="nav-badge-pill-inline">3D</span></a></li>
           <li><a href="certifications.html">Certifications</a></li>
           <li><a href="track-order.html">Track Order</a></li>
           <li><a href="about.html">About Us</a></li>
@@ -136,6 +136,34 @@
       <!-- Slide 4: Labels -->
       <div class="main-hero-slide" style="position: absolute; inset: 0; display: none; animation: fadeCombo 0.8s ease-out; cursor: pointer;" onclick="document.getElementById('3d-customizer').scrollIntoView({behavior: 'smooth'})">
         <img src="assets/hero3.jpg" alt="Custom Hang Tags & Labels" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+      </div>
+
+      <!-- Crawlable Hero Content Overlay (SEO & High Conversion CTAs) -->
+      <div class="hero-content-overlay">
+        <div class="container hero-content-container">
+          <div class="hero-conversion-card">
+            <div class="hero-factory-badge">
+              <span class="live-dot-pulse"></span> Direct Manufacturing Unit • Ghaziabad
+            </div>
+            <h1 class="hero-main-title">Direct Factory Corrugated Boxes, Labels & Stickers</h1>
+            <p class="hero-main-subheading">Custom sizes • 3-ply & 5-ply • Pan-India dispatch from Ghaziabad</p>
+            <div class="hero-actions-group">
+              <button type="button" class="btn-hero-quote" data-open-quote aria-label="Get Bulk Quote">
+                <span class="btn-icon">📋</span> Get Bulk Quote
+              </button>
+              <button type="button" class="btn-hero-sample" data-open-sample aria-label="Free Sample Kit">
+                <span class="btn-icon">📦</span> Free Sample Kit
+              </button>
+            </div>
+            <div class="hero-trust-chips">
+              <span class="chip-item">⚡ 24-48 Hr Dispatch</span>
+              <span class="chip-dot">•</span>
+              <span class="chip-item">🛡️ 100% GST Compliant</span>
+              <span class="chip-dot">•</span>
+              <span class="chip-item">🚚 Pan-India Delivery</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Navigation Dots -->
@@ -768,6 +796,127 @@
     </div>
   </section>
 
+  <!-- 11B. DIRECT FACTORY BULK QUOTE INLINE SECTION -->
+  <section class="bulk-quote-section" id="bulk-quote-section">
+    <div class="container">
+      <div class="bulk-quote-wrapper">
+        <div class="bulk-quote-info">
+          <span class="section-badge">Direct Factory Estimate</span>
+          <h2 class="bulk-quote-title">Get a Custom Bulk Packaging Quote in Minutes</h2>
+          <p class="bulk-quote-desc">
+            Whether you need 250 branded shipping boxes, 10,000 garment labels, or custom die-cut rolls, our production engineers provide precise factory rates with zero broker margins.
+          </p>
+          <div class="bulk-quote-highlights">
+            <div class="quote-highlight-item">
+              <span class="highlight-icon">🏭</span>
+              <div>
+                <strong>Factory Direct Rates</strong>
+                <span>Direct dispatch from Loni, Ghaziabad with GST bill.</span>
+              </div>
+            </div>
+            <div class="quote-highlight-item">
+              <span class="highlight-icon">⚡</span>
+              <div>
+                <strong>Fastest WhatsApp Turnaround</strong>
+                <span>Get pricing & dieline template within 30 minutes.</span>
+              </div>
+            </div>
+            <div class="quote-highlight-item">
+              <span class="highlight-icon">📦</span>
+              <div>
+                <strong>Free Swatch & Proofs</strong>
+                <span>Paper GSM & flute samples available upon request.</span>
+              </div>
+            </div>
+          </div>
+          <div class="quote-contact-direct">
+            <span>Prefer a quick phone consultation?</span>
+            <a href="tel:+918851627221" class="quote-direct-tel">📞 Call Factory Sales: +91 8851627221</a>
+          </div>
+        </div>
+
+        <div class="bulk-quote-form-card">
+          <h3 class="quote-card-header">Request Production Quotation</h3>
+          <p class="quote-card-sub">All sizes, flutes (3-ply/5-ply), and custom branding available.</p>
+          
+          <form id="inline-quote-form" class="inline-quote-grid">
+            <div class="form-row-2col">
+              <div class="form-field-group">
+                <label for="inline-quote-name">Full Name / Business <span style="color: #EF4444;">*</span></label>
+                <input type="text" id="inline-quote-name" name="name" placeholder="Contact Name" required>
+              </div>
+              <div class="form-field-group">
+                <label for="inline-quote-phone">Mobile Number <span style="color: #EF4444;">*</span></label>
+                <div style="display: flex; gap: 6px;">
+                  <span style="display: flex; align-items: center; padding: 0 8px; background: #F1F5F9; border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 600; color: #475569;">+91</span>
+                  <input type="tel" id="inline-quote-phone" name="phone" placeholder="10-digit Mobile" maxlength="10" required style="flex: 1;">
+                </div>
+                <span class="field-error-msg" id="inline-phone-error" style="display: none; color: #DC2626; font-size: 0.76rem; margin-top: 4px;">Please enter a valid 10-digit mobile number.</span>
+              </div>
+            </div>
+
+            <div class="form-row-2col">
+              <div class="form-field-group">
+                <label for="inline-quote-product">Packaging Product <span style="color: #EF4444;">*</span></label>
+                <select id="inline-quote-product" name="product" required>
+                  <option value="" disabled selected>-- Select Product --</option>
+                  <option value="3-Ply Corrugated Shipping Boxes">3-Ply Corrugated Shipping Boxes</option>
+                  <option value="5-Ply Heavy-Duty Master Cartons">5-Ply Heavy-Duty Master Cartons</option>
+                  <option value="Custom Printed Pizza Packaging Boxes">Custom Printed Pizza Packaging Boxes</option>
+                  <option value="Luxury Sweet & Confectionery Boxes">Luxury Sweet & Confectionery Boxes</option>
+                  <option value="Garment & Apparel Packaging Boxes">Garment & Apparel Packaging Boxes</option>
+                  <option value="Eco-Friendly Kraft Paper Carry Bags">Eco-Friendly Kraft Paper Carry Bags</option>
+                  <option value="Tamper-Evident Paper Envelopes & Mailers">Tamper-Evident Paper Envelopes & Mailers</option>
+                  <option value="High-Density Woven Garment Labels">High-Density Woven Garment Labels</option>
+                  <option value="Printed Satin & Cotton Wash-Care Labels">Printed Satin & Cotton Wash-Care Labels</option>
+                  <option value="Custom Brand Hang Tags & Swing Tickets">Custom Brand Hang Tags & Swing Tickets</option>
+                  <option value="Custom Die-Cut Gumming Paper Stickers">Custom Die-Cut Gumming Paper Stickers</option>
+                  <option value="Waterproof Vinyl & Branding Stickers">Waterproof Vinyl & Branding Stickers</option>
+                  <option value="Industrial Barcode & Thermal Roll Labels">Industrial Barcode & Thermal Roll Labels</option>
+                  <option value="Custom Bottle & Jar Packaging Labels">Custom Bottle & Jar Packaging Labels</option>
+                  <option value="Tagless Heat Transfer Garment Labels">Tagless Heat Transfer Garment Labels</option>
+                  <option value="Other Custom Packaging Requirement">Other Custom Packaging Requirement</option>
+                </select>
+              </div>
+              <div class="form-field-group">
+                <label for="inline-quote-qty">Approx Quantity <span style="color: #EF4444;">*</span></label>
+                <input type="text" id="inline-quote-qty" name="quantity" placeholder="e.g. 500, 1000, 5000 pcs" required>
+              </div>
+            </div>
+
+            <div class="form-row-2col">
+              <div class="form-field-group">
+                <label for="inline-quote-size">Dimensions (L × W × H) <span style="font-size: 0.76rem; color: var(--text-muted);">(Optional)</span></label>
+                <input type="text" id="inline-quote-size" name="size" placeholder="e.g. 12 x 10 x 8 inches">
+              </div>
+              <div class="form-field-group">
+                <label for="inline-quote-message">Specific Notes / Printing <span style="font-size: 0.76rem; color: var(--text-muted);">(Optional)</span></label>
+                <input type="text" id="inline-quote-message" name="message" placeholder="e.g. 2-color printing, urgent dispatch">
+              </div>
+            </div>
+
+            <div class="form-field-group" style="display: flex; align-items: flex-start; gap: 8px; margin-top: 2px;">
+              <input type="checkbox" id="inline-quote-consent" name="consent" style="margin-top: 4px;">
+              <label for="inline-quote-consent" style="font-weight: 400; font-size: 0.8rem; color: var(--text-muted); cursor: pointer;">
+                I consent to receive promotional updates, offers, and marketing communications from AS Print Gallery via email or SMS. (Optional)
+              </label>
+            </div>
+
+            <button type="submit" class="btn-primary-hero btn-quote-submit" style="justify-content: center; min-height: 48px; width: 100%; font-size: 0.95rem; margin-top: 4px;">
+              <span>💬</span> Submit & Get WhatsApp Quote
+            </button>
+
+            <div class="quote-success-banner" id="inline-quote-success" style="display: none; background: #ECFDF5; border: 1px solid #10B981; border-radius: var(--radius-sm); padding: 12px; text-align: center; margin-top: 10px;">
+              <p style="color: #065F46; font-weight: 700; margin: 0 0 6px 0; font-size: 0.9rem;">✅ Quote Request Forwarded to WhatsApp!</p>
+              <p style="color: #047857; font-size: 0.8rem; margin: 0 0 8px 0;">Our sales team will reply with your custom quotation shortly.</p>
+              <a href="#" target="_blank" class="quote-wa-reopen-link" style="display: inline-block; background: #25D366; color: #fff; padding: 6px 14px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-decoration: none;">Open WhatsApp Chat 💬</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 12. FAQ ACCORDION -->
   <section class="faq-section">
     <div class="container">
@@ -1054,6 +1203,115 @@
     </div>
   </div>
 
+  <!-- 16B. GET BULK QUOTE MODAL -->
+  <div class="modal-backdrop" id="quote-modal">
+    <div class="modal-window" style="max-width: 540px;">
+      <button class="modal-close-btn" id="quote-close-btn" aria-label="Close Bulk Quote Modal">✕</button>
+      <div class="form-modal-inner">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+          <span style="font-size: 1.5rem;">🏭</span>
+          <div>
+            <h3 class="form-modal-title" style="margin: 0;">Get Direct Factory Bulk Quote</h3>
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--primary);">Save 25-40% vs Local Middlemen</span>
+          </div>
+        </div>
+        <p class="form-modal-sub" style="margin-bottom: 16px;">
+          Direct pricing from our Ghaziabad manufacturing unit. Fill the details below to receive an instant quotation on WhatsApp.
+        </p>
+
+        <form id="bulk-quote-form" class="modal-form-grid">
+          <!-- Name Field -->
+          <div class="form-field-group">
+            <label for="quote-name">Full Name / Business Name <span style="color: #EF4444;">*</span></label>
+            <input type="text" id="quote-name" name="name" placeholder="e.g. Rahul Sharma / ABC Traders" required>
+          </div>
+
+          <!-- Mobile Field (10-digit Indian validation) -->
+          <div class="form-field-group">
+            <label for="quote-phone">WhatsApp / Mobile Number <span style="color: #EF4444;">*</span></label>
+            <div style="display: flex; gap: 8px;">
+              <span style="display: flex; align-items: center; padding: 0 10px; background: #F1F5F9; border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.88rem; font-weight: 600; color: #475569;">+91</span>
+              <input type="tel" id="quote-phone" name="phone" placeholder="10-digit Indian Mobile" maxlength="10" required style="flex: 1;">
+            </div>
+            <span class="field-error-msg" id="quote-phone-error" style="display: none; color: #DC2626; font-size: 0.78rem; margin-top: 4px;">Please enter a valid 10-digit mobile number starting with 6-9.</span>
+          </div>
+
+          <!-- Product Dropdown -->
+          <div class="form-field-group">
+            <label for="quote-product">Select Packaging / Print Product <span style="color: #EF4444;">*</span></label>
+            <select id="quote-product" name="product" required>
+              <option value="" disabled selected>-- Choose Product Line --</option>
+              <optgroup label="📦 Corrugated Boxes & Master Cartons">
+                <option value="3-Ply Corrugated Shipping Boxes">3-Ply Corrugated Shipping Boxes</option>
+                <option value="5-Ply Heavy-Duty Master Cartons">5-Ply Heavy-Duty Master Cartons</option>
+                <option value="Custom Printed Pizza Packaging Boxes">Custom Printed Pizza Packaging Boxes</option>
+                <option value="Luxury Sweet & Confectionery Boxes">Luxury Sweet & Confectionery Boxes</option>
+                <option value="Garment & Apparel Packaging Boxes">Garment & Apparel Packaging Boxes</option>
+              </optgroup>
+              <optgroup label="🛍️ Bags & Envelopes">
+                <option value="Eco-Friendly Kraft Paper Carry Bags">Eco-Friendly Kraft Paper Carry Bags</option>
+                <option value="Tamper-Evident Paper Envelopes & Mailers">Tamper-Evident Paper Envelopes & Mailers</option>
+              </optgroup>
+              <optgroup label="🏷️ Labels, Tags & Stickers">
+                <option value="High-Density Woven Garment Labels">High-Density Woven Garment Labels</option>
+                <option value="Printed Satin & Cotton Wash-Care Labels">Printed Satin & Cotton Wash-Care Labels</option>
+                <option value="Custom Brand Hang Tags & Swing Tickets">Custom Brand Hang Tags & Swing Tickets</option>
+                <option value="Custom Die-Cut Gumming Paper Stickers">Custom Die-Cut Gumming Paper Stickers</option>
+                <option value="Waterproof Vinyl & Branding Stickers">Waterproof Vinyl & Branding Stickers</option>
+                <option value="Industrial Barcode & Thermal Roll Labels">Industrial Barcode & Thermal Roll Labels</option>
+                <option value="Custom Bottle & Jar Packaging Labels">Custom Bottle & Jar Packaging Labels</option>
+                <option value="Tagless Heat Transfer Garment Labels">Tagless Heat Transfer Garment Labels</option>
+              </optgroup>
+              <optgroup label="✨ Custom / Combo">
+                <option value="Business Branding Starter Combo (Rs. 699)">Business Branding Starter Combo (Rs. 699)</option>
+                <option value="Complete Factory Sample Swatch Kit">Complete Factory Sample Swatch Kit</option>
+                <option value="Other Custom Packaging Requirement">Other Custom Packaging Requirement</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Quantity Field -->
+          <div class="form-field-group">
+            <label for="quote-qty">Approx Quantity Required <span style="color: #EF4444;">*</span></label>
+            <input type="text" id="quote-qty" name="quantity" placeholder="e.g. 500 pcs, 2000 pcs, 10,000 pcs" required>
+          </div>
+
+          <!-- Size Field (Optional) -->
+          <div class="form-field-group">
+            <label for="quote-size">Dimensions (L × W × H in inches/cm) <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+            <input type="text" id="quote-size" name="size" placeholder="e.g. 10 x 8 x 6 inches">
+          </div>
+
+          <!-- Message Field (Optional) -->
+          <div class="form-field-group">
+            <label for="quote-message">Specific Requirements / Notes <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+            <textarea id="quote-message" name="message" rows="2" placeholder="e.g. 1-color logo print, brown kraft, delivery to Noida..."></textarea>
+          </div>
+
+          <!-- Marketing Consent Checkbox (Optional) -->
+          <div class="form-field-group" style="display: flex; align-items: flex-start; gap: 8px; margin-top: 4px;">
+            <input type="checkbox" id="quote-marketing-consent" name="consent" style="margin-top: 4px;">
+            <label for="quote-marketing-consent" style="font-weight: 400; font-size: 0.82rem; color: var(--text-muted); cursor: pointer;">
+              I consent to receive promotional updates, offers, and marketing communications from AS Print Gallery via email or SMS. (Optional)
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-primary-hero btn-quote-submit" style="justify-content: center; padding: 12px; margin-top: 8px; min-height: 48px; width: 100%; font-size: 0.95rem;">
+            <span>💬</span> Get Instant Quote on WhatsApp
+          </button>
+
+          <!-- Success Box (Initially Hidden) -->
+          <div class="quote-success-banner" id="quote-modal-success" style="display: none; background: #ECFDF5; border: 1px solid #10B981; border-radius: var(--radius-sm); padding: 12px; text-align: center; margin-top: 10px;">
+            <p style="color: #065F46; font-weight: 700; margin: 0 0 6px 0; font-size: 0.9rem;">✅ Quote Request Forwarded!</p>
+            <p style="color: #047857; font-size: 0.8rem; margin: 0 0 8px 0;">WhatsApp is opening with your prefilled details. If it did not open, click below:</p>
+            <a href="#" target="_blank" class="quote-wa-reopen-link" style="display: inline-block; background: #25D366; color: #fff; padding: 6px 14px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-decoration: none;">Open WhatsApp Chat 💬</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- 17. REQUEST FREE SAMPLE KIT MODAL -->
   <div class="modal-backdrop" id="sample-modal">
     <div class="modal-window" style="max-width: 520px;">
@@ -1161,7 +1419,7 @@
     <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
       <a href="index.html" style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">Home</a>
       <a href="products.html" style="font-size: 1.1rem; font-weight: 700;">Products</a>
-      <a href="#3d-customizer" style="font-size: 1.1rem; font-weight: 700;">3D Box Builder</a>
+      <a href="box-builder.html" style="font-size: 1.1rem; font-weight: 700;">3D Box Builder</a>
       <a href="certifications.html" style="font-size: 1.1rem; font-weight: 700;">Certifications</a>
       <a href="track-order.html" style="font-size: 1.1rem; font-weight: 700;">Track Order</a>
       <a href="about.html" style="font-size: 1.1rem; font-weight: 700;">About Us</a>
@@ -1205,6 +1463,10 @@
         <span class="icon">📦</span>
         <span>Shop</span>
       </a>
+      <button class="mobile-nav-item mobile-quote-nav-btn" data-open-quote aria-label="Get Bulk Quote" style="background: none; border: none; cursor: pointer; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <span class="icon" style="color: var(--primary);">📋</span>
+        <span style="color: var(--primary); font-weight: 800;">Get Quote</span>
+      </button>
       <a href="#3d-customizer" class="mobile-nav-item">
         <span class="icon">⚡</span>
         <span>3D Box</span>

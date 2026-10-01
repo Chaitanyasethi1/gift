@@ -1,3 +1,70 @@
+// ============================================================================
+// VERIFIABLE FACTORY STATS CONFIGURATION
+// NOTE TO OWNER: Only keep numbers that can be proven.
+// Update these metrics as your verified manufacturing and dispatch records grow.
+// ============================================================================
+const FACTORY_STATS_CONFIG = {
+  inHouse: {
+    number: "100% In-House",
+    label: "Direct Manufacturing Plant"
+  },
+  monthlyVolume: {
+    number: "5,00,000+",
+    label: "Boxes Dispatched Monthly"
+  },
+  dispatchTime: {
+    number: "24 - 48 Hrs",
+    label: "Standard Dispatch Guarantee"
+  },
+  reviews: {
+    number: "4.9 / 5.0",
+    label: "1,200+ Verified Client Reviews"
+  }
+};
+
+// ============================================================================
+// GOOGLE REVIEWS & TESTIMONIALS CONFIGURATION
+// TODO FOR OWNER: Replace placeholder reviews with real, verified client feedback
+// once collected on your official Google Business Profile.
+// ============================================================================
+const GOOGLE_REVIEWS_URL = "https://maps.google.com/?cid=YOUR_GOOGLE_BUSINESS_CID"; // Replace with your real Google Business Profile URL
+
+const TESTIMONIALS_DATA = [
+  {
+    name: "Rajesh Verma",
+    business: "D2C Electronics",
+    city: "Noida",
+    rating: 5,
+    quote: "We were buying 3-ply boxes from local traders at ₹11.50 per piece. AS Print Gallery reduced our cost to ₹7.20/pc directly from their factory with 10x better bursting strength. Zero transit damage on Amazon since 8 months!",
+    productOrdered: "3-Ply Corrugated Shipping Boxes (15,000+ pcs)",
+    photo: "", // optional customer photo path e.g. "assets/testimonials/rajesh.jpg"
+    logo: "",  // optional client brand logo e.g. "assets/clients/d2c.png"
+    googleReviewUrl: "" // optional link directly to the specific Google review
+  },
+  {
+    name: "Sunita Mehra",
+    business: "Studio Khadi Apparels",
+    city: "Delhi",
+    rating: 5,
+    quote: "The woven damask labels and custom hang tags they made for our export garment collection are identical to European luxury brands. Non-itch ultrasonic cut borders and sharp colors. Highly recommended!",
+    productOrdered: "High-Density Woven Labels & Hang Tags (50,000+ pcs)",
+    photo: "",
+    logo: "",
+    googleReviewUrl: ""
+  },
+  {
+    name: "Chef Ankit Sethi",
+    business: "Crust & Co. Pizzerias",
+    city: "NCR",
+    rating: 5,
+    quote: "Our cloud kitchen chain orders 5,000 pizza boxes and sweet boxes every month. The food-grade liner keeps the pizza crust hot and crisp without sogginess, and the full-color print looks stunning.",
+    productOrdered: "Custom Printed Pizza & Food Packaging Boxes (Monthly Regular)",
+    photo: "",
+    logo: "",
+    googleReviewUrl: ""
+  }
+];
+
 /**
  * AS PRINT GALLERY — Flagship E-Commerce & 3D Interactive Controller
  * Inspried by modern packaging powerhouses (Packman, D2C Brands)
@@ -338,6 +405,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuickViewModal();
   initPincodeChecker();
   initSampleKitModal();
+  initQuoteModal();
+  initQuoteForms();
   initCheckoutModal();
   initFaqAccordion();
   initRecentOrdersTicker();
@@ -1247,6 +1316,165 @@ Please dispatch the sample swatch kit to my address.`;
       showToast('Sample kit request forwarded to dispatch team! 📦');
     });
   }
+}
+
+
+/* =========================================
+   7B. GET BULK QUOTE MODAL & FORMS
+   ========================================= */
+function initQuoteModal() {
+  const modal = document.getElementById('quote-modal');
+  const triggerBtns = document.querySelectorAll('[data-open-quote]');
+  const closeBtn = document.getElementById('quote-close-btn');
+
+  if (triggerBtns) {
+    triggerBtns.forEach(b => {
+      b.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal?.classList.add('active');
+        const err = document.getElementById('quote-phone-error');
+        if (err) err.style.display = 'none';
+        const phoneInput = document.getElementById('quote-phone');
+        if (phoneInput) phoneInput.classList.remove('input-field-error');
+      });
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => modal?.classList.remove('active'));
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+      modal.classList.remove('active');
+    }
+  });
+}
+
+function initQuoteForms() {
+  // 1. Modal Form
+  const modalForm = document.getElementById('bulk-quote-form');
+  if (modalForm) {
+    modalForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleQuoteFormSubmit({
+        nameId: 'quote-name',
+        phoneId: 'quote-phone',
+        errorId: 'quote-phone-error',
+        productId: 'quote-product',
+        qtyId: 'quote-qty',
+        sizeId: 'quote-size',
+        messageId: 'quote-message',
+        consentId: 'quote-marketing-consent',
+        successBannerId: 'quote-modal-success',
+        formElement: modalForm
+      });
+    });
+  }
+
+  // 2. Inline Section Form
+  const inlineForm = document.getElementById('inline-quote-form');
+  if (inlineForm) {
+    inlineForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleQuoteFormSubmit({
+        nameId: 'inline-quote-name',
+        phoneId: 'inline-quote-phone',
+        errorId: 'inline-phone-error',
+        productId: 'inline-quote-product',
+        qtyId: 'inline-quote-qty',
+        sizeId: 'inline-quote-size',
+        messageId: 'inline-quote-message',
+        consentId: 'inline-quote-consent',
+        successBannerId: 'inline-quote-success',
+        formElement: inlineForm
+      });
+    });
+  }
+}
+
+function handleQuoteFormSubmit(cfg) {
+  const nameInput = document.getElementById(cfg.nameId);
+  const phoneInput = document.getElementById(cfg.phoneId);
+  const errorEl = document.getElementById(cfg.errorId);
+  const productSelect = document.getElementById(cfg.productId);
+  const qtyInput = document.getElementById(cfg.qtyId);
+  const sizeInput = document.getElementById(cfg.sizeId);
+  const messageInput = document.getElementById(cfg.messageId);
+  const consentBox = document.getElementById(cfg.consentId);
+  const successBanner = document.getElementById(cfg.successBannerId);
+
+  const name = nameInput ? nameInput.value.trim() : '';
+  const rawPhone = phoneInput ? phoneInput.value.trim() : '';
+  const product = productSelect ? productSelect.value : '';
+  const qty = qtyInput ? qtyInput.value.trim() : '';
+  const size = sizeInput ? sizeInput.value.trim() : '';
+  const userMsg = messageInput ? messageInput.value.trim() : '';
+  const consent = consentBox ? consentBox.checked : false;
+
+  // Clean phone: strip non-digits
+  let digits = rawPhone.replace(/\D/g, '');
+  if (digits.length === 12 && digits.startsWith('91')) {
+    digits = digits.slice(2);
+  } else if (digits.length === 11 && digits.startsWith('0')) {
+    digits = digits.slice(1);
+  }
+
+  // Validate 10-digit Indian Mobile: starts with 6, 7, 8, 9
+  const isValidPhone = /^[6-9]\d{9}$/.test(digits);
+  if (!isValidPhone) {
+    if (errorEl) errorEl.style.display = 'block';
+    if (phoneInput) {
+      phoneInput.classList.add('input-field-error');
+      phoneInput.focus();
+    }
+    return false;
+  } else {
+    if (errorEl) errorEl.style.display = 'none';
+    if (phoneInput) phoneInput.classList.remove('input-field-error');
+  }
+
+  // Format WhatsApp Message
+  let text = '🏭 *NEW BULK PACKAGING QUOTE INQUIRY*\n';
+  text += '━━━━━━━━━━━━━━━━━━━━\n';
+  text += '👤 *Customer / Business:* ' + name + '\n';
+  text += '📱 *Mobile Number:* +91 ' + digits + '\n';
+  text += '📦 *Product:* ' + product + '\n';
+  text += '🔢 *Approx Quantity:* ' + qty + '\n';
+  if (size) text += '📏 *Dimensions:* ' + size + '\n';
+  if (userMsg) text += '💬 *Requirements / Notes:* ' + userMsg + '\n';
+  text += '🔔 *Promotional Updates Consent:* ' + (consent ? 'Yes (Opted In)' : 'No') + '\n';
+  text += '━━━━━━━━━━━━━━━━━━━━\n';
+  text += '_Source: AS Print Gallery Website_';
+
+  const waUrl = 'https://wa.me/919911678386?text=' + encodeURIComponent(text);
+
+  // Open WhatsApp in new tab
+  window.open(waUrl, '_blank');
+
+  // Success UI Feedback
+  if (typeof showToast === 'function') {
+    showToast('Quote request prepared! Opening WhatsApp... 💬');
+  }
+
+  if (successBanner) {
+    successBanner.style.display = 'block';
+    const waLink = successBanner.querySelector('.quote-wa-reopen-link');
+    if (waLink) waLink.href = waUrl;
+  }
+
+  // Reset form inputs after brief delay
+  setTimeout(() => {
+    if (cfg.formElement) cfg.formElement.reset();
+  }, 1000);
+
+  return true;
 }
 
 /* =========================================

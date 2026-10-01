@@ -1,28 +1,24 @@
 {
   "name": "as-print-gallery-ecommerce",
   "version": "2.0.0",
-  "description": "AS PRINT GALLERY — Industrial Corrugated Boxes, Custom Packaging, Garment Trims & Labels E-Commerce Platform",
-  "main": "server.js",
+  "description": "AS PRINT GALLERY — Direct Factory Corrugated Boxes, Custom Packaging, Garment Trims & Labels E-Commerce Platform",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
-    "test": "node -e \"console.log('Testing server health...'); require('./server.js'); console.log('Passed!')\""
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "keywords": [
-    "corrugated-boxes",
-    "packaging-ecommerce",
-    "3d-box-customizer",
-    "pizza-boxes",
-    "woven-labels",
-    "hang-tags",
-    "stickers",
-    "as-print-gallery",
-    "gurez-alternative"
-  ],
   "author": "AS PRINT GALLERY",
   "license": "UNLICENSED",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "@types/node": "^26.6.3",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
   }
 }
