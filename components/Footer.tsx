@@ -32,6 +32,7 @@ export const Footer: React.FC = () => {
               <strong>Location:</strong> {siteConfig.address.area}, {siteConfig.address.city} ({siteConfig.address.state}) - {siteConfig.address.pincode}
             </div>
           </div>
+        </div>
 
           {/* Copyright Row */}
         <div className="footer-bottom-row" style={{ marginTop: '30px' }}>
