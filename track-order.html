@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Live Packaging Order & Dispatch Tracking — AS PRINT GALLERY</title>
+  <meta name="description" content="Track your factory manufacturing status, corrugation progress, and live courier tracking for your AS PRINT GALLERY orders.">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 1. Sleek Top Bar (Single clean row, zero clutter) -->
+  <div class="announcement-bar">
+    <div class="container announcement-inner">
+      <div class="announcement-left">
+        <span class="trust-badge">🏭 DIRECT FACTORY</span>
+        <span class="trust-text">Direct Factory Rates • Bulk Tier Discounts up to 50%</span>
+        <span class="trust-sep">•</span>
+        <span class="trust-text">⚡ Pan-India Free Delivery over ₹999</span>
+        <span class="trust-sep">•</span>
+        <span class="trust-text">GST: <strong>09AWKPN5910E1ZG</strong></span>
+      </div>
+      <div class="announcement-right">
+        <button class="top-pincode-btn" data-open-pincode title="Check Delivery Pincode">
+          <span id="top-pincode-display">📍 Check Pincode</span>
+        </button>
+        <span class="top-sep">|</span>
+        <a href="tel:+918851627221" class="announcement-link">
+          <span>📞</span> Sales: +91 8851627221
+        </a>
+        <span class="top-sep">|</span>
+        <a href="https://wa.me/919911678386?text=Hi%20AS%20Print%20Gallery!%20I%20have%20an%20urgent%20packaging%20order." target="_blank" rel="noopener" class="announcement-link">
+          <span>💬</span> WhatsApp: +91 9911678386</a>
+      <span class="top-sep">|</span>
+        <a href="https://www.instagram.com/as_print_gallery_/?hl=en" target="_blank" rel="noopener" class="announcement-link" aria-label="Instagram" style="font-size: 0.95rem;"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com/p/AS-Print-Gallery-61593587124577/" target="_blank" rel="noopener" class="announcement-link" aria-label="Facebook" style="font-size: 0.95rem;"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://www.youtube.com/@AsPrintGallery" target="_blank" rel="noopener" class="announcement-link" aria-label="YouTube" style="font-size: 0.95rem;"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Main Sticky Header (Clean, spacious, luxury aesthetic) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand" aria-label="AS Print Gallery Home">
+        <img src="assets/logo.png" alt="AS Print Gallery Logo" class="brand-logo-img">
+        <div class="brand-text">
+          <div class="brand-name">AS PRINT <span>GALLERY</span></div>
+          <span class="brand-tagline">Packaging & Printing Factory</span>
+        </div>
+      </a>
+
+      <!-- Clean Single-Line Navigation Links (No wrapping, no vertical badges!) -->
+      <nav class="nav-container" aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="box-builder.html">3D Box Builder <span class="nav-badge-pill-inline">3D</span></a></li>
+          <li><a href="certifications.html">Certifications</a></li>
+          <li><a href="track-order.html" class="active">Track Order</a></li>
+          <li><a href="about.html">About Factory</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <!-- Action Buttons: Search, Cart Drawer, Free Sample Kit CTA -->
+      <div class="header-actions">
+        <!-- Live Search Bar with Dropdown -->
+        <div class="header-search-wrap">
+          <div class="search-input-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="site-search-input" placeholder="Search boxes, labels..." autocomplete="off">
+          </div>
+          <div id="search-dropdown" class="search-results-dropdown"></div>
+        </div>
+
+        <button class="header-action-btn" data-open-cart aria-label="View Shopping Cart">
+          <span>🛒</span>
+          <span class="action-badge cart-badge-count">0</span>
+        </button>
+
+        <button class="btn-header-quote" data-open-sample>
+          <span>📦</span> Free Sample Kit
+        </button>
+
+        <button class="hamburger-btn" id="mobile-hamburger-btn" aria-label="Open Mobile Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <section class="shop-header-banner" style="background: linear-gradient(135deg, #090E1A 0%, #061B14 100%); padding: 50px 0;">
+    <div class="container" style="text-align: center; max-width: 750px;">
+      <span class="hero-badge-wrap">🚚 REAL-TIME LOGISTICS CONSIGNMENT PORTAL</span>
+      <h1 style="font-size: clamp(2rem, 3.8vw, 3rem); font-weight: 800; color: #FFFFFF; margin-bottom: 12px;">
+        TRACK YOUR SHIPMENT & PRODUCTION STATUS
+      </h1>
+      <p style="color: #CBD5E1; font-size: 1rem; line-height: 1.6;">
+        Enter your Order Reference Number (e.g. <strong>AS-102948</strong>) or registered 10-digit mobile number to view live factory production and courier milestones.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Tracking Section -->
+  <section style="padding: 60px 0 90px; background: #FFFFFF;">
+    <div class="container" style="max-width: 860px;">
+      
+      <!-- Search Input Box -->
+      <div style="background: var(--off-white); border: 1.5px solid var(--border-light); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-sm); display: flex; gap: 12px; flex-wrap: wrap;">
+        <input type="text" id="track-order-input" placeholder="Enter Order ID (e.g. AS-984210) or Mobile Number" style="flex: 1; min-width: 260px; padding: 14px 20px; border: 1.5px solid var(--border-light); border-radius: var(--radius-full); font-size: 1rem; outline: none;">
+        <button class="btn-primary-hero" onclick="performTrackingSearch()" style="padding: 14px 28px; font-size: 1rem;">
+          <span>🔍</span> Track Order
+        </button>
+      </div>
+
+      <!-- Tracking Results Card -->
+      <div id="tracking-result-box" class="tracking-stepper-box">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; padding-bottom: 20px; border-bottom: 1px solid var(--border-light);">
+          <div>
+            <span class="badge-tag bestseller" id="track-status-pill">⚡ IN TRANSIT</span>
+            <h3 style="font-size: 1.45rem; font-weight: 800; color: var(--text-dark); margin-top: 6px;" id="track-id-header">
+              Order #AS-894210
+            </h3>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">
+              Carrier: <strong>BlueDart Express Surface</strong> • AWB: <strong id="track-awb">BLUEDART-8851627</strong>
+            </div>
+          </div>
+
+          <div style="text-align: right;">
+            <span style="font-size: 0.78rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Estimated Delivery</span>
+            <div style="font-size: 1.25rem; font-weight: 800; color: var(--primary);" id="track-est-delivery">
+              Tomorrow by 4:00 PM
+            </div>
+          </div>
+        </div>
+
+        <!-- 5-Step Visual Stepper -->
+        <div class="timeline-stepper">
+          
+          <div class="timeline-step completed">
+            <div class="step-node-bubble">✓</div>
+            <div class="step-label">Order Confirmed</div>
+            <div class="step-sub">Logged in System</div>
+          </div>
+
+          <div class="timeline-step completed">
+            <div class="step-node-bubble">✓</div>
+            <div class="step-label">Pre-Press Proof</div>
+            <div class="step-sub">Artwork Approved</div>
+          </div>
+
+          <div class="timeline-step completed">
+            <div class="step-node-bubble">✓</div>
+            <div class="step-label">Die-Cut & Print</div>
+            <div class="step-sub">18-24 BF Corrugation</div>
+          </div>
+
+          <div class="timeline-step current">
+            <div class="step-node-bubble">🚚</div>
+            <div class="step-label">In Transit</div>
+            <div class="step-sub">Express Logistics</div>
+          </div>
+
+          <div class="timeline-step">
+            <div class="step-node-bubble">📦</div>
+            <div class="step-label">Out for Delivery</div>
+            <div class="step-sub">Final Mile</div>
+          </div>
+
+        </div>
+
+        <!-- Detailed Milestone Logs -->
+        <div style="background: var(--off-white); border-radius: var(--radius-md); padding: 20px; border: 1px solid var(--border-light); margin-top: 30px;">
+          <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 14px; color: var(--text-dark);">
+            Consignment History & Scan Events:
+          </h4>
+          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.85rem;" id="track-events-log">
+            <div style="display: flex; gap: 16px;">
+              <span style="color: var(--primary); font-weight: 700; width: 140px;">Today, 08:30 AM</span>
+              <span style="color: var(--text-body);">Arrived at Regional Distribution Hub • Scanned for destination dispatch.</span>
+            </div>
+            <div style="display: flex; gap: 16px;">
+              <span style="color: var(--text-muted); width: 140px;">Yesterday, 07:15 PM</span>
+              <span style="color: var(--text-body);">Dispatched from Factory Loading Bay • Loni, Ghaziabad (Palletized & Stretch-Wrapped).</span>
+            </div>
+            <div style="display: flex; gap: 16px;">
+              <span style="color: var(--text-muted); width: 140px;">Yesterday, 02:40 PM</span>
+              <span style="color: var(--text-body);">Quality Control Passed • Mullen Burst Test (22.4 BF) & edge crush inspection verified.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help Action -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; flex-wrap: wrap; gap: 12px;">
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Need immediate shipment assistance or priority routing?</span>
+          <a id="track-wa-action" href="https://wa.me/919911678386?text=Hi%20AS%20Print%20Gallery!%20I%20need%20a%20tracking%20update%20on%20my%20order." target="_blank" rel="noopener" class="btn-custom-wa-order" style="padding: 10px 18px;">
+            <span>💬</span> WhatsApp Logistics Desk
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <div class="footer-brand-title">AS PRINT <span>GALLERY</span></div>
+          <p class="footer-brand-desc">
+            Direct manufacturing unit for corrugated boxes, food & pizza packaging, apparel labels, hang tags, and waterproof stickers.
+          </p>
+          <div class="footer-gst-card">
+            <strong>GSTIN:</strong> 09AWKPN5910E1ZG<br>
+            <strong>Registration:</strong> Active & Verified Industrial Unit<br>
+            <strong>Location:</strong> Loni, Ghaziabad (U.P) - 201102
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Packaging Solutions</h4>
+          <ul class="footer-links-list">
+            <li><a href="products.html?filter=corrugated">3-Ply Corrugated Boxes</a></li>
+            <li><a href="products.html?filter=corrugated">5-Ply Heavy Master Cartons</a></li>
+            <li><a href="products.html?filter=food">Custom Pizza Boxes</a></li>
+            <li><a href="products.html?filter=food">Mithai & Sweet Gift Boxes</a></li>
+            <li><a href="products.html?filter=packaging">Apparel & Shirt Packaging</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Certifications & Trust</h4>
+          <ul class="footer-links-list">
+            <li><a href="certifications.html">GSTIN Official Registration</a></li>
+            <li><a href="certifications.html">ISO 9001:2015 Quality Standards</a></li>
+            <li><a href="certifications.html">FSC Eco-Friendly Paper Pulp</a></li>
+            <li><a href="certifications.html">IS 2771 Bursting Test (18-24 BF)</a></li>
+            <li><a href="track-order.html">Live Dispatch Tracking</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Factory Hotline</h4>
+          <div class="footer-contact-info">
+            <div><strong>Sales:</strong> <a href="tel:+918851627221">📞 +91 8851627221</a></div>
+            <div><strong>WhatsApp:</strong> <a href="https://wa.me/919911678386" target="_blank" rel="noopener">💬 +91 9911678386</a></div>
+            <div><strong>Email:</strong> <a href="mailto:asprintgallery742@gmail.com">✉️ asprintgallery742@gmail.com</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <div>© 2026 <strong>AS PRINT GALLERY</strong>. All Rights Reserved. Complete Designing & Printing Solutions.</div>
+        <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+          <a href="certifications.html" style="color: #34D399; font-weight: 700;">Certifications</a>
+          <a href="track-order.html" style="color: #94A3B8;">Track Order</a>
+          <a href="shipping-policy.html" style="color: #94A3B8;">Shipping Policy</a>
+          <a href="terms.html" style="color: #94A3B8;">Terms of Sale</a>
+          <a href="returns-refunds.html" style="color: #94A3B8;">Returns & QC</a>
+          <a href="privacy.html" style="color: #94A3B8;">Privacy</a>
+          <a href="cookies.html" style="color: #94A3B8;">Cookies</a>
+        </div>
+      </div>
+      <div class="footer-social-strip" style="display: flex; justify-content: center; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--dark-border);">
+        <a href="https://www.instagram.com/as_print_gallery_/?hl=en" target="_blank" rel="noopener" style="color: var(--text-muted); font-size: 1.2rem;"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com/p/AS-Print-Gallery-61593587124577/" target="_blank" rel="noopener" style="color: var(--text-muted); font-size: 1.2rem;"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://www.youtube.com/@AsPrintGallery" target="_blank" rel="noopener" style="color: var(--text-muted); font-size: 1.2rem;"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slide-out Cart Drawer -->
+  <div class="cart-drawer-backdrop" id="cart-backdrop"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping Cart Drawer">
+    <div class="cart-header">
+      <div class="cart-title">
+        <span>🛒</span> Your Packaging Cart (<span class="cart-badge-count">0</span>)
+      </div>
+      <button class="cart-close-btn" id="cart-close-btn" aria-label="Close Cart">✕</button>
+    </div>
+    <div class="cart-items-body" id="cart-items-container"></div>
+  </aside>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="cart-drawer-backdrop" id="mobile-nav-backdrop"></div>
+  <aside class="cart-drawer" id="mobile-nav-drawer" style="right: auto; left: 0; transform: translateX(-100%);">
+    <div class="cart-header">
+      <div class="brand">
+        <img src="assets/logo.png" alt="Logo" class="brand-logo-img" style="width: 38px; height: 38px;">
+        <div class="brand-text">
+          <div class="brand-name" style="font-size: 1.15rem;">AS PRINT <span>GALLERY</span></div>
+          <span class="brand-tagline">Menu</span>
+        </div>
+      </div>
+      <button class="cart-close-btn" id="mobile-drawer-close">✕</button>
+    </div>
+    <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+      <a href="index.html" style="font-size: 1.1rem; font-weight: 700;">Home</a>
+      <a href="products.html" style="font-size: 1.1rem; font-weight: 700;">All 15 Products</a>
+      <a href="certifications.html" style="font-size: 1.1rem; font-weight: 700;">Factory Certifications</a>
+      <a href="track-order.html" style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">Track Your Order</a>
+      <a href="box-builder.html" style="font-size: 1.1rem; font-weight: 700;">3D Box Customizer</a>
+      <a href="about.html" style="font-size: 1.1rem; font-weight: 700;">About Factory</a>
+      <a href="contact.html" style="font-size: 1.1rem; font-weight: 700;">Contact & Location</a>
+      <hr style="border: 0; border-top: 1px solid var(--border-light); margin: 10px 0;">
+      <a href="https://wa.me/919911678386" target="_blank" rel="noopener" class="btn-custom-wa-order">
+        💬 WhatsApp Helpline
+      </a>
+    </div>
+  </aside>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const orderParam = urlParams.get('orderId');
+      if (orderParam) {
+        document.getElementById('track-order-input').value = orderParam;
+        performTrackingSearch(orderParam);
+      }
+    });
+
+    function performTrackingSearch(id) {
+      const query = id || document.getElementById('track-order-input').value.trim();
+      if (!query) {
+        alert('Please enter your Order Reference ID or registered Mobile Number.');
+        return;
+      }
+
+      const formattedId = query.startsWith('AS-') ? query : 'AS-' + query;
+      document.getElementById('track-id-header').textContent = 'Order #' + formattedId;
+      document.getElementById('track-awb').textContent = 'BLUEDART-' + Math.floor(1000000 + Math.random() * 9000000);
+      document.getElementById('track-wa-action').href = `https://wa.me/919911678386?text=${encodeURIComponent(`Hi AS Print Gallery! I am checking status of Order #${formattedId}. Please share live tracking details!`)}`;
+      
+      const box = document.getElementById('tracking-result-box');
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      showToast(`Tracking details fetched for #${formattedId}! 🚚`);
+    }
+  </script>
+</body>
+</html>

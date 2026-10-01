@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function CustomBoxBuilderPage() {
   return (
     <div style={{ background: '#F8FAFC', minHeight: '100vh', paddingBottom: '80px' }}>
-      
+
       {/* Studio Header */}
       <section
         style={{
