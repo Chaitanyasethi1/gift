@@ -10,6 +10,8 @@ import { ShoppingCartIcon, WhatsAppIcon, XIcon, CheckCircleIcon } from './Icons'
 interface ProductGridProps {
   initialFilter?: string;
   showAllButton?: boolean;
+  limit?: number;
+  hideTabs?: boolean;
 }
 
 const CATEGORIES = [
@@ -22,19 +24,24 @@ const CATEGORIES = [
   { id: 'bags', label: '🛍️ Bags & Envelopes' }
 ];
 
-export const ProductGrid: React.FC<ProductGridProps> = ({ initialFilter = 'all', showAllButton = true }) => {
+export const ProductGrid: React.FC<ProductGridProps> = ({ initialFilter = 'all', showAllButton = true, limit, hideTabs = false }) => {
   const [selectedCategory, setSelectedCategory] = useState(initialFilter);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const { addToCart, setIsQuoteModalOpen, setSelectedQuoteProduct } = useCart();
 
-  const filteredProducts = selectedCategory === 'all'
+  let filteredProducts = selectedCategory === 'all'
     ? PRODUCTS
     : PRODUCTS.filter((p) => p.category === selectedCategory);
 
+  if (limit) {
+    filteredProducts = filteredProducts.slice(0, limit);
+  }
+
   return (
     <>
-      <div className="filter-tabs-wrapper">
-        {CATEGORIES.map((cat) => (
+      {!hideTabs && (
+        <div className="filter-tabs-wrapper">
+          {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
             type="button"
@@ -44,7 +51,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ initialFilter = 'all',
             {cat.label}
           </button>
         ))}
-      </div>
+        </div>
+      )}
 
       <div className="products-grid" id="products-grid-container">
         {filteredProducts.map((product) => (

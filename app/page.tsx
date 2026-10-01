@@ -46,46 +46,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. Bestsellers & New Arrivals */}
-      <section className="products-section" id="featured-products">
+      {/* 2. Trending Now */}
+      <section className="products-section" style={{ paddingBottom: '20px' }}>
         <div className="container">
-          <div className="section-head" style={{ position: 'relative' }}>
-            <span className="section-badge">New Arrivals & Bestsellers</span>
-            <h2 className="section-title">Trending Packaging Solutions</h2>
-            
-            {/* Spinning Sale Badge */}
-            <div style={{ 
-              position: 'absolute', 
-              right: '20px', 
-              top: '-20px', 
-              width: '80px', 
-              height: '80px', 
-              animation: 'spin 8s linear infinite', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              background: 'var(--primary)', 
-              color: '#FFF', 
-              borderRadius: '50%', 
-              fontWeight: 'bold', 
-              fontSize: '14px', 
-              boxShadow: '0 4px 10px rgba(169, 21, 59, 0.4)' 
-            }}>
-              SALE!
+          <div className="section-head" style={{ textAlign: 'left', marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+            <div>
+              <h2 className="section-title" style={{ fontSize: '1.8rem', display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
+                🔥 Trending Now
+              </h2>
             </div>
-            
-            <style>{`
-              @keyframes spin {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
-              }
-            `}</style>
+            <Link href="/products" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none', fontSize: '0.9rem' }}>
+              View All &rarr;
+            </Link>
           </div>
-          <ProductGrid initialFilter="all" showAllButton={true} />
+          <ProductGrid initialFilter="all" showAllButton={false} limit={4} hideTabs={true} />
         </div>
       </section>
 
-      {/* 3. Zero Plastic Envelopes Auto-Scroll */}
+      {/* 3. Best Deals */}
+      <section className="products-section" style={{ paddingTop: '20px', paddingBottom: '40px', background: '#FAFAFC' }}>
+        <div className="container">
+          <div className="section-head" style={{ textAlign: 'left', marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+            <div>
+              <h2 className="section-title" style={{ fontSize: '1.8rem', display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
+                🎁 Best Deals
+              </h2>
+            </div>
+            <Link href="/products" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none', fontSize: '0.9rem' }}>
+              View All &rarr;
+            </Link>
+          </div>
+          <ProductGrid initialFilter="corrugated" showAllButton={false} limit={4} hideTabs={true} />
+        </div>
+      </section>
+
+      {/* 4. Zero Plastic Envelopes Auto-Scroll */}
       <section style={{ padding: '60px 0', background: '#0F172A', overflow: 'hidden' }}>
         <div className="container" style={{ textAlign: 'center', marginBottom: '30px' }}>
           <span className="section-badge" style={{ background: '#10B981', color: '#FFF', border: 'none' }}>Zero Plastic</span>
@@ -95,7 +90,6 @@ export default function HomePage() {
         
         <div style={{ width: '100%', display: 'flex', overflow: 'hidden' }}>
           <div style={{ display: 'flex', gap: '20px', padding: '0 20px', animation: 'scroll 15s linear infinite', width: 'max-content' }}>
-            {/* Duplicate for infinite effect */}
             {[...Array(2)].map((_, i) => (
               <React.Fragment key={i}>
                 <Link href="/products?filter=bags" style={{ display: 'block', width: '280px', background: '#1E293B', borderRadius: '12px', padding: '20px', textDecoration: 'none', color: '#FFF', flexShrink: 0, border: '1px solid #334155' }}>
@@ -123,22 +117,6 @@ export default function HomePage() {
             100% { transform: translateX(-50%); }
           }
         `}</style>
-      </section>
-
-      {/* 4. Track / About links */}
-      <section style={{ padding: '40px 0', background: '#FFFFFF' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
-            <Link href="/track-order" style={{ background: '#0F172A', color: '#FFF', padding: '30px', borderRadius: '12px', textAlign: 'center', textDecoration: 'none' }}>
-              <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🚚</div>
-              <h3 style={{ margin: 0, fontWeight: 700, color: '#FFF' }}>Track Your Order</h3>
-            </Link>
-            <Link href="/about" style={{ background: 'var(--primary)', color: '#FFF', padding: '30px', borderRadius: '12px', textAlign: 'center', textDecoration: 'none' }}>
-              <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🏭</div>
-              <h3 style={{ margin: 0, fontWeight: 700, color: '#FFF' }}>About Our Factory</h3>
-            </Link>
-          </div>
-        </div>
       </section>
       
       <QuoteModal isInline={true} />

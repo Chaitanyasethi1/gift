@@ -73,6 +73,21 @@ export const Header: React.FC = () => {
 
   return (
     <>
+      {/* 0. Sale Marquee Top Bar */}
+      <div style={{ background: '#E11D48', color: '#FFF', fontSize: '0.85rem', fontWeight: 600, padding: '6px 0', overflow: 'hidden', display: 'flex' }}>
+        <div style={{ display: 'flex', whiteSpace: 'nowrap', animation: 'marquee 25s linear infinite' }}>
+          {[...Array(6)].map((_, i) => (
+            <span key={i} style={{ padding: '0 40px' }}>⚡ MEGA FACTORY SALE: Flat 20% OFF on all Corrugated Cartons! Use code AS20 ⚡</span>
+          ))}
+        </div>
+        <style>{`
+          @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+        `}</style>
+      </div>
+
       {/* 1. Sleek Top Bar (Single clean row, zero clutter) */}
       <div className="announcement-bar">
         <div className="container announcement-inner">
