@@ -65,9 +65,7 @@ export const Header: React.FC = () => {
   }, [pathname]);
 
   const navLinks = [
-    { label: 'Home', href: '/' },
-    { label: 'All Products', href: '/products' },
-    { label: '3D Box Builder', href: '/custom-box-builder', badge: '3D' },
+    { label: 'Customize Print', href: '/custom-box-builder', badge: '3D' },
     { label: 'Track Order', href: '/track-order' },
     { label: 'About Factory', href: '/about' },
     { label: 'Contact Us', href: '/contact' }

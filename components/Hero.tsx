@@ -42,25 +42,6 @@ const slides: Slide[] = [
 
 export const Hero: React.FC = () => {
   const { setIsQuoteModalOpen, setIsSampleModalOpen } = useCart();
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 4500);
-    return () => clearInterval(timer);
-  }, []);
-
-  const handleSlideClick = (slide: Slide) => {
-    if (slide.linkType === 'whatsapp' && slide.target) {
-      window.open(slide.target, '_blank');
-    } else if (slide.linkType === 'scroll' && slide.target) {
-      const el = document.getElementById(slide.target);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
 
   return (
     <>
@@ -68,42 +49,17 @@ export const Hero: React.FC = () => {
         <div
           id="main-hero-slider"
           className="main-hero-wrapper"
-          style={{ position: 'relative', width: '100%', overflow: 'hidden', background: '#000', minHeight: '480px' }}
+          style={{ position: 'relative', width: '100%', overflow: 'hidden', background: '#0F172A', minHeight: '480px' }}
         >
-          {/* Background Slides */}
-          {slides.map((slide, index) => {
-            const isActive = index === currentSlide;
-            return (
-              <div
-                key={index}
-                className={`main-hero-slide ${isActive ? 'active' : ''}`}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  display: isActive ? 'block' : 'none',
-                  animation: 'fadeCombo 0.8s ease-out',
-                  cursor: 'pointer'
-                }}
-                onClick={() => handleSlideClick(slide)}
-              >
-                <img
-                  src={slide.image}
-                  alt={slide.alt}
-                  style={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover'
-                  }}
-                />
-              </div>
-            );
-          })}
+          {/* Static Background instead of slider */}
+          <div style={{ position: 'absolute', inset: 0, opacity: 0.1 }}>
+             <img src="/assets/hero2.jpg" alt="Background" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          </div>
 
           {/* Crawlable Hero Content Overlay */}
-          <div className="hero-content-overlay">
-            <div className="container hero-content-container">
-              <div className="hero-conversion-card">
+          <div className="hero-content-overlay" style={{ position: 'relative', zIndex: 10, background: 'transparent' }}>
+            <div className="container hero-content-container" style={{ justifyContent: 'flex-start' }}>
+              <div className="hero-conversion-card" style={{ maxWidth: '600px', margin: '40px 0' }}>
                 <div className="hero-factory-badge">
                   <span className="live-dot-pulse"></span> Direct Manufacturing Unit • Ghaziabad
                 </div>
@@ -150,40 +106,6 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Slider Dots */}
-          <div
-            style={{
-              position: 'absolute',
-              bottom: '24px',
-              left: 0,
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '12px',
-              zIndex: 20
-            }}
-          >
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                className="main-hero-dot"
-                onClick={() => setCurrentSlide(i)}
-                aria-label={`Slide ${i + 1}`}
-                style={{
-                  width: '40px',
-                  height: '4px',
-                  border: 'none',
-                  padding: 0,
-                  background: currentSlide === i ? '#FFD700' : 'rgba(255,255,255,0.4)',
-                  cursor: 'pointer',
-                  transition: '0.3s',
-                  boxShadow: '0 2px 5px rgba(0,0,0,0.5)'
-                }}
-              />
-            ))}
           </div>
         </div>
       </section>
