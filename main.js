@@ -1,6 +1,6 @@
 /**
  * AS PRINT GALLERY — Flagship E-Commerce & 3D Interactive Controller
- * Inspried by modern packaging powerhouses (Gurez, Packman, D2C Brands)
+ * Inspried by modern packaging powerhouses (Packman, D2C Brands)
  */
 
 // Global State
@@ -955,7 +955,7 @@ function renderCartDrawer() {
       <div class="empty-cart-state">
         <div class="empty-cart-icon">🛒</div>
         <h3>Your Cart is Empty</h3>
-        <p style="font-size: 0.85rem; margin-top: 6px;">Explore our 14 factory-manufactured packaging products.</p>
+        <p style="font-size: 0.85rem; margin-top: 6px;">Explore our 15 factory-manufactured packaging products.</p>
         <a href="products.html" class="btn-primary-hero" style="margin-top: 18px; font-size: 0.85rem; padding: 10px 20px;">
           Start Shopping →
         </a>
