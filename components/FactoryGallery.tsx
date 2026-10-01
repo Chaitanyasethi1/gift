@@ -17,36 +17,44 @@ export const FactoryGallery: React.FC = () => {
 
         {/* Plant Highlights Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '40px' }}>
-          <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', padding: '24px', boxShadow: 'var(--shadow-sm)' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '12px' }}>📦</div>
-            <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Automated Corrugation Plant</h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-              Single-facer and multi-layer corrugating lines manufacturing B, C, and E flutes with uniform starch adhesion and high crush resistance.
-            </p>
+          <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+            <img src="/assets/factory_hero.jpg" alt="Automated Corrugation Plant" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+            <div style={{ padding: '24px' }}>
+              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Automated Corrugation Plant</h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                Single-facer and multi-layer corrugating lines manufacturing B, C, and E flutes with uniform starch adhesion and high crush resistance.
+              </p>
+            </div>
           </div>
 
-          <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', padding: '24px', boxShadow: 'var(--shadow-sm)' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🖨️</div>
-            <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>High-Speed Offset &amp; Flexo Presses</h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-              Multi-color printing machinery capable of razor-sharp Pantone color matching, vibrant inks, and UV gloss/matte varnish coating.
-            </p>
+          <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+            <img src="/assets/corrugated_box.jpg" alt="High-Speed Offset & Flexo Presses" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+            <div style={{ padding: '24px' }}>
+              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>High-Speed Offset &amp; Flexo Presses</h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                Multi-color printing machinery capable of razor-sharp Pantone color matching, vibrant inks, and UV gloss/matte varnish coating.
+              </p>
+            </div>
           </div>
 
-          <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', padding: '24px', boxShadow: 'var(--shadow-sm)' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🏷️</div>
-            <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Damask Label Looms &amp; Ultrasonic Cutters</h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-              High-density woven label looms with laser-guided ultrasonic slitting that seals fabric edges smoothly with zero skin irritation.
-            </p>
+          <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+            <img src="/assets/woven_label.jpg" alt="Damask Label Looms" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+            <div style={{ padding: '24px' }}>
+              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Damask Label Looms &amp; Ultrasonic Cutters</h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                High-density woven label looms with laser-guided ultrasonic slitting that seals fabric edges smoothly with zero skin irritation.
+              </p>
+            </div>
           </div>
 
-          <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', padding: '24px', boxShadow: 'var(--shadow-sm)' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '12px' }}>✂️</div>
-            <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Automatic Die-Punching &amp; Creasing</h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-              Heavy-duty platen and automatic die-cutters delivering clean folding edges, steam vent punches for pizza boxes, and custom shapes.
-            </p>
+          <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+            <img src="/assets/boxes.jpg" alt="Automatic Die-Punching" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+            <div style={{ padding: '24px' }}>
+              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Automatic Die-Punching &amp; Creasing</h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                Heavy-duty platen and automatic die-cutters delivering clean folding edges, steam vent punches for pizza boxes, and custom shapes.
+              </p>
+            </div>
           </div>
         </div>
 

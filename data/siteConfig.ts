@@ -118,14 +118,14 @@ export const siteConfig = {
   // Founder & Visionary Section
   // NOTE TO OWNER: Update founder name, title, quote, and bio here
   founder: {
-    name: "Mayank Arora",
-    role: "FOUNDER & DIRECTOR",
+    name: "Nafees Ahmed",
+    role: "FOUNDER & MANAGING DIRECTOR",
     eyebrow: "THE VISIONARY",
     quotePrefix: "We are not just selling boxes; we are ",
     quoteAccent: "reviving",
     quoteSuffix: " trust & precision in packaging.",
     bio: "At AS Print Gallery, our mission goes beyond packaging manufacturing. We are dedicated to providing direct, honest, and high-precision packaging solutions to businesses across India, eliminating middlemen markups and delivering factory-certified quality for every single carton. Every box engineered tells a story of reliability, built for the modern enterprise.",
-    image: "/assets/founder.jpg",
+    image: "/assets/nafees_ahmed.jpg",
     ctaText: "READ OUR STORY",
     ctaLink: "#factory-story"
   }

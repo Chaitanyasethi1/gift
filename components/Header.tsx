@@ -68,7 +68,6 @@ export const Header: React.FC = () => {
     { label: 'Home', href: '/' },
     { label: 'All Products', href: '/products' },
     { label: '3D Box Builder', href: '/custom-box-builder', badge: '3D' },
-    { label: 'Certifications', href: '/certifications' },
     { label: 'Track Order', href: '/track-order' },
     { label: 'About Factory', href: '/about' },
     { label: 'Contact Us', href: '/contact' }
