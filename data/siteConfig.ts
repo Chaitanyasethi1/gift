@@ -17,9 +17,9 @@ export const siteConfig = {
 
   // Normalized phones
   phones: {
-    salesDisplay: "+91 8851627221",
-    salesRaw: "918851627221",
-    salesTel: "tel:+918851627221",
+    salesDisplay: "+91 9911678386",
+    salesRaw: "919911678386",
+    salesTel: "tel:+919911678386",
     whatsappDisplay: "+91 9911678386",
     whatsappRaw: "919911678386",
     whatsappTel: "tel:+919911678386"
@@ -27,8 +27,8 @@ export const siteConfig = {
 
   // Contact Channels
   contact: {
-    salesPhone: "+91 8851627221",
-    salesPhoneRaw: "918851627221",
+    salesPhone: "+91 9911678386",
+    salesPhoneRaw: "919911678386",
     whatsappPhone: "+91 9911678386",
     whatsappPhoneRaw: "919911678386",
     email: "asprintgallery742@gmail.com",
