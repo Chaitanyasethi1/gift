@@ -11,11 +11,11 @@ import { CookieBanner } from '@/components/CookieBanner';
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'Corrugated Box Manufacturer & Printing Factory | AS Print Gallery',
+    default: 'AS Print Gallery | All types of Printing and packaging solutions',
     template: '%s | AS Print Gallery'
   },
   description:
-    'Direct factory manufacturer in Ghaziabad for 3-ply and 5-ply corrugated boxes, custom food packaging, woven garment labels, hang tags, and waterproof stickers. Pan-India dispatch.',
+    'All types of Printing and packaging solutions. Direct factory manufacturer for custom food packaging, woven garment labels, hang tags, and waterproof stickers.',
   alternates: {
     canonical: '/'
   },
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_IN',
     url: siteConfig.url,
-    title: 'Corrugated Box Manufacturer & Printing Factory | AS Print Gallery',
+    title: 'AS Print Gallery | All types of Printing and packaging solutions',
     description:
-      'Direct factory manufacturer in Ghaziabad for 3-ply and 5-ply corrugated boxes, custom food packaging, woven garment labels, hang tags, and waterproof stickers.',
+      'All types of Printing and packaging solutions. Direct factory manufacturer for custom food packaging, woven garment labels, hang tags, and waterproof stickers.',
     siteName: siteConfig.name,
     images: [
       {
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Corrugated Box Manufacturer & Printing Factory | AS Print Gallery',
+    title: 'AS Print Gallery | All types of Printing and packaging solutions',
     description:
-      'Direct factory rates on corrugated boxes, food packaging, woven labels, and custom stickers from Ghaziabad.',
+      'All types of Printing and packaging solutions. Direct factory manufacturer for custom food packaging, woven garment labels, hang tags, and waterproof stickers.',
     images: [`${siteConfig.url}/assets/combo_banner_new.jpg`]
   },
   icons: {
