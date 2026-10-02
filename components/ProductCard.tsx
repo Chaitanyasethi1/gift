@@ -1,186 +1,75 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Product } from '@/data/products';
-import { useCart } from '@/context/CartContext';
-import { ShoppingCartIcon, WhatsAppIcon, FileTextIcon, StarIcon, EyeIcon } from './Icons';
+import { StarIcon } from './Icons';
 
 interface ProductCardProps {
   product: Product;
   onQuickView?: (product: Product) => void;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }) => {
-  const { addToCart, setIsQuoteModalOpen, setSelectedQuoteProduct } = useCart();
-  const [isWishlisted, setIsWishlisted] = useState(false);
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const originalPrice = ((product.startingAt || product.price) * 1.5).toFixed(2); // Fake original price for UI
+  const currentPrice = (product.startingAt || product.price).toFixed(2);
 
-  const handleGetQuote = (e: React.MouseEvent) => {
+  const handleAddClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setSelectedQuoteProduct(product.title);
-    setIsQuoteModalOpen(true);
+    alert("Coming soon!");
   };
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    addToCart({
-      id: product.id,
-      title: product.title,
-      price: product.price,
-      image: product.image,
-      specs: product.specs,
-      dimensions: product.dimensions
-    }, product.moq || 1);
-  };
-
-  const waMessage = encodeURIComponent(
-    `Hi AS Print Gallery! I want to get a direct factory quote for "${product.title}" (MOQ: ${product.moq} pcs). Please share pricing and dispatch timeline.`
-  );
 
   return (
-    <div className="product-card" data-id={product.id} data-category={product.category}>
-      <div className="product-thumb-wrap">
-        <Link href={`/products/${product.slug}`} aria-label={product.title}>
+    <div style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: '12px', overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative', transition: 'box-shadow 0.2s' }} className="minimal-product-card">
+      <Link href={`/products/${product.slug}`} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', height: '100%' }}>
+        {/* Image Area */}
+        <div style={{ position: 'relative', width: '100%', paddingTop: '100%', background: '#F8FAFC', borderBottom: '1px solid #F1F5F9' }}>
           <img
             src={product.image}
             alt={product.title}
-            className="product-img"
             loading="lazy"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', padding: '16px' }}
           />
-        </Link>
-
-        {product.badge && (
-          <div className="product-badge-overlay">
-            <span className={`badge-tag ${product.badgeClass || 'bestseller'}`}>{product.badge}</span>
+          {/* Rating Badge */}
+          <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: '#65A34A', color: '#fff', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
+             {product.rating.toFixed(1)} <StarIcon size={10} filled={true} color="#fff" />
           </div>
-        )}
+        </div>
 
-        <button
-          type="button"
-          className={`btn-wishlist-toggle ${isWishlisted ? 'active' : ''}`}
-          onClick={(e) => {
-            e.preventDefault();
-            setIsWishlisted(!isWishlisted);
-          }}
-          aria-label={isWishlisted ? 'Remove from Wishlist' : 'Save to Wishlist'}
-        >
-          {isWishlisted ? '❤️' : '🤍'}
-        </button>
-
-        {onQuickView && (
-          <div
-            className="product-quick-overlay"
-            onClick={() => onQuickView(product)}
-            style={{ cursor: 'pointer' }}
-          >
-            <button
-              type="button"
-              className="btn-quick-view"
-              title="Quick View"
-              aria-label={`Quick View ${product.title}`}
+        {/* Text Area */}
+        <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+          <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#1E293B', margin: '0 0 4px 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+            {product.title}
+          </h3>
+          <p style={{ fontSize: '0.8rem', color: '#64748B', margin: '0 0 16px 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {product.categoryLabel || 'AS Print Gallery'}
+          </p>
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+              <span style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0F172A' }}>₹{currentPrice}</span>
+              <span style={{ fontSize: '0.75rem', color: '#94A3B8', textDecoration: 'line-through' }}>₹{originalPrice}</span>
+            </div>
+            
+            <button 
+              onClick={handleAddClick}
+              style={{ background: '#65A34A', color: '#fff', border: 'none', padding: '6px 16px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s' }}
+              className="btn-add-minimal"
             >
-              <EyeIcon size={16} />
+              ADD
             </button>
           </div>
-        )}
-      </div>
-
-      <div className="product-details">
-        <div className="product-cat-label">{product.categoryLabel}</div>
-        <h3 className="product-title" title={product.title}>
-          <Link href={`/products/${product.slug}`}>{product.title}</Link>
-        </h3>
-
-        <div className="product-rating-row">
-          <span className="star-icons" style={{ display: 'inline-flex', gap: '2px', color: '#F59E0B' }}>
-            {[...Array(5)].map((_, i) => (
-              <StarIcon key={i} size={13} filled={true} />
-            ))}
-          </span>
-          <span className="rating-score">{product.rating.toFixed(1)}</span>
-          <span className="reviews-count">({product.reviews})</span>
         </div>
-
-        {product.specs && product.specs.length > 0 && (
-          <div className="product-specs-chips">
-            {product.specs.slice(0, 3).map((s, idx) => (
-              <span key={idx} className="spec-chip">
-                {s}
-              </span>
-            ))}
-          </div>
-        )}
-
-        <div className="product-pricing-row">
-          <div className="price-main">
-            <span className="price-from-label">Starting at</span>
-            <div className="price-amount">
-              ₹{(product.startingAt || product.price).toFixed(2)}{' '}
-              <span className="unit">/ pc</span>
-            </div>
-          </div>
-          <div className="moq-tag">MOQ: {product.moq} pcs</div>
-        </div>
-
-        <div className="product-card-actions" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-          <button
-            type="button"
-            className="btn-card-cart"
-            onClick={handleAddToCart}
-            style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
-          >
-            <ShoppingCartIcon size={14} /> Add to Cart
-          </button>
-          <button
-            type="button"
-            className="btn-card-quote"
-            onClick={handleGetQuote}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              background: '#0F172A',
-              color: '#FFFFFF',
-              border: '1px solid #334155',
-              borderRadius: 'var(--radius-sm, 6px)',
-              padding: '8px 10px',
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              cursor: 'pointer'
-            }}
-          >
-            <FileTextIcon size={14} /> Get Quote
-          </button>
-        </div>
-
-        <div style={{ marginTop: '8px' }}>
-          <a
-            className="btn-card-wa"
-            href={`https://wa.me/919911678386?text=${waMessage}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              width: '100%',
-              padding: '7px 0',
-              borderRadius: 'var(--radius-sm, 6px)',
-              background: 'rgba(37, 211, 102, 0.08)',
-              color: '#16A34A',
-              fontWeight: 700,
-              fontSize: '0.82rem',
-              border: '1px solid rgba(37, 211, 102, 0.3)',
-              textDecoration: 'none'
-            }}
-          >
-            <WhatsAppIcon size={14} color="#16A34A" /> WhatsApp Enquiry
-          </a>
-        </div>
-      </div>
+      </Link>
+      
+      <style>{`
+        .minimal-product-card:hover {
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .btn-add-minimal:hover {
+          background: #4d8236 !important;
+        }
+      `}</style>
     </div>
   );
 };

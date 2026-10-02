@@ -1,66 +1,81 @@
 import React from 'react';
 import Link from 'next/link';
+import { MailIcon, MapPinIcon, PhoneIcon } from './Icons';
 import { siteConfig } from '@/data/siteConfig';
-import { 
-  PhoneIcon, 
-  WhatsAppIcon, 
-  MailIcon, 
-  MapPinIcon, 
-  InstagramIcon, 
-  FacebookIcon, 
-  YoutubeIcon 
-} from './Icons';
 
-export const Footer: React.FC = () => {
+export function Footer() {
   return (
-    <footer className="site-footer">
-      <div className="container">
-        <div className="footer-top-grid">
+    <footer style={{ background: '#1C1C1C', color: '#FFFFFF', paddingTop: '60px', paddingBottom: '20px' }}>
+      <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px', marginBottom: '40px' }}>
+        
+        {/* Quick Links */}
+        <div>
+          <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px' }}>Quick Links</h4>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <li><Link href="/shipping-policy" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Shipping Policy</Link></li>
+            <li><Link href="/terms" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Terms & Conditions</Link></li>
+            <li><Link href="/returns-refunds" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Cancellation/Refund Policy</Link></li>
+            <li><Link href="/about" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>About Us</Link></li>
+            <li><Link href="/contact" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Contact Us</Link></li>
+            <li><Link href="#" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Blogs</Link></li>
+            <li><Link href="#" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Sitemap</Link></li>
+          </ul>
+        </div>
 
-          {/* Brand Summary */}
-          <div className="footer-brand-col">
-            <div className="footer-brand-title">
-              AS PRINT <span>GALLERY</span>
-            </div>
-            <p className="footer-brand-desc">
-              A Complete Designing &amp; Printing Solutions — Direct manufacturing unit for heavy-duty corrugated shipping
-              cartons, food &amp; pizza packaging, apparel trims, woven labels, hang tags, and waterproof stickers.
-            </p>
-            <div className="footer-gst-card">
-              <strong>GSTIN:</strong> {siteConfig.gstin}<br />
-              <strong>Registration:</strong> Active &amp; Verified Industrial Unit<br />
-              <strong>Location:</strong> {siteConfig.address.area}, {siteConfig.address.city} ({siteConfig.address.state}) - {siteConfig.address.pincode}
-            </div>
+        {/* Contact Us */}
+        <div>
+          <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px' }}>Contact Us</h4>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', color: '#D1D5DB', fontSize: '0.9rem', lineHeight: 1.5 }}>
+              <MapPinIcon size={18} />
+              <span>{siteConfig.contact.address}</span>
+            </li>
+            <li style={{ display: 'flex', gap: '12px', alignItems: 'center', color: '#D1D5DB', fontSize: '0.9rem' }}>
+              <PhoneIcon size={18} />
+              <span>{siteConfig.contact.phone.join(', ')}</span>
+            </li>
+            <li style={{ display: 'flex', gap: '12px', alignItems: 'center', color: '#D1D5DB', fontSize: '0.9rem' }}>
+              <MailIcon size={18} />
+              <a href={`mailto:${siteConfig.contact.email}`} style={{ color: 'inherit', textDecoration: 'none' }}>{siteConfig.contact.email}</a>
+            </li>
+          </ul>
+        </div>
+
+        {/* Find Our App (Empty Space or App links) */}
+        <div>
+          <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px' }}>Find Our App On Mobile</h4>
+          {/* QR Codes removed as requested */}
+          <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+             <div style={{ background: '#000', border: '1px solid #333', padding: '8px 12px', borderRadius: '6px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+               🍎 App Store
+             </div>
+             <div style={{ background: '#000', border: '1px solid #333', padding: '8px 12px', borderRadius: '6px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+               ▶️ Google Play
+             </div>
           </div>
         </div>
 
-          {/* Copyright Row */}
-        <div className="footer-bottom-row" style={{ marginTop: '30px' }}>
-          <div>
-            &copy; 2026 <strong>AS PRINT GALLERY</strong>. All Rights Reserved. Complete Designing &amp; Printing Solutions.
+        {/* Payment Methods */}
+        <div>
+          <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px' }}>Payment Methods</h4>
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '30px' }}>
+             <div style={{ width: '40px', height: '25px', background: '#fff', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontSize: '0.7rem', fontWeight: 'bold' }}>VISA</div>
+             <div style={{ width: '40px', height: '25px', background: '#fff', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontSize: '0.7rem', fontWeight: 'bold' }}>MC</div>
+             <div style={{ width: '40px', height: '25px', background: '#fff', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontSize: '0.7rem', fontWeight: 'bold' }}>UPI</div>
           </div>
-          <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
-            <Link href="/about" style={{ color: 'var(--primary)', fontWeight: 700 }}>About Us</Link>
-            <Link href="/custom-box-builder" style={{ color: 'var(--primary)', fontWeight: 700 }}>Customize Print</Link>
-            <Link href="/track-order" style={{ color: 'var(--text-muted)' }}>Track Order</Link>
-            <Link href="/shipping-policy" style={{ color: 'var(--text-muted)' }}>Shipping Policy</Link>
-            <Link href="/terms" style={{ color: 'var(--text-muted)' }}>Terms of Sale</Link>
-            <Link href="/privacy" style={{ color: 'var(--text-muted)' }}>Privacy</Link>
+          <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '15px' }}>Keep In Touch</h4>
+          <div style={{ display: 'flex', gap: '15px' }}>
+             <span>📷</span>
+             <span>📘</span>
+             <span>📺</span>
+             <span>📌</span>
           </div>
         </div>
+      </div>
 
-        <div className="footer-social-strip" style={{ display: 'flex', justifyContent: 'center', gap: '18px', marginTop: '15px', paddingTop: '15px', borderTop: '1px solid var(--dark-border)' }}>
-          <a href={siteConfig.socialLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ color: 'var(--text-muted)' }}>
-            <InstagramIcon size={18} />
-          </a>
-          <a href={siteConfig.socialLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" style={{ color: 'var(--text-muted)' }}>
-            <FacebookIcon size={18} />
-          </a>
-          <a href={siteConfig.socialLinks.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" style={{ color: 'var(--text-muted)' }}>
-            <YoutubeIcon size={18} />
-          </a>
-        </div>
+      <div style={{ borderTop: '1px solid #333', paddingTop: '20px', textAlign: 'center', color: '#6B7280', fontSize: '0.85rem' }}>
+         © 2024-25 | All rights reserved
       </div>
     </footer>
   );
-};
+}
