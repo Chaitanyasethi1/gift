@@ -28,11 +28,11 @@ export function Footer() {
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', color: '#D1D5DB', fontSize: '0.9rem', lineHeight: 1.5 }}>
               <MapPinIcon size={18} />
-              <span>{siteConfig.contact.address}</span>
+              <span>{`${siteConfig.contact.address.street}, ${siteConfig.contact.address.city}, ${siteConfig.contact.address.state} - ${siteConfig.contact.address.pincode}`}</span>
             </li>
             <li style={{ display: 'flex', gap: '12px', alignItems: 'center', color: '#D1D5DB', fontSize: '0.9rem' }}>
               <PhoneIcon size={18} />
-              <span>{siteConfig.contact.phone.join(', ')}</span>
+              <span>{siteConfig.contact.salesPhone}, {siteConfig.contact.whatsappPhone}</span>
             </li>
             <li style={{ display: 'flex', gap: '12px', alignItems: 'center', color: '#D1D5DB', fontSize: '0.9rem' }}>
               <MailIcon size={18} />

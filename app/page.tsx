@@ -63,10 +63,10 @@ export default function HomePage() {
               { id: 'hang-tags', title: 'Hang Tags', sub: 'Premium Tags', img: '/assets/hang_tags.jpg' },
               { id: 'food-boxes', title: 'Food & Pizza Boxes', sub: 'Food Safe', img: '/assets/pizza_box.jpg' }
             ].map(cat => (
-              <Link key={cat.title} href="/shop" style={{ textDecoration: 'none', display: 'block', group: 'true' }} className="premium-cat-card">
+              <Link key={cat.title} href="/shop" style={{ textDecoration: 'none', display: 'block' }} className="premium-cat-card group">
                 <div style={{ background: '#F8FAFC', borderRadius: '12px', padding: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px', marginBottom: '16px', overflow: 'hidden', position: 'relative' }}>
                   {/* We use an image if it exists, else fallback to a premium placeholder text */}
-                  <img src={cat.img} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'contain', transition: 'transform 0.4s ease' }} className="cat-img" onError={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='block'; }} />
+                  <img src={cat.img} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'contain', transition: 'transform 0.4s ease' }} className="cat-img" onError={(e) => { e.currentTarget.style.display='none'; if (e.currentTarget.nextElementSibling) { (e.currentTarget.nextElementSibling as HTMLElement).style.display='block'; } }} />
                   <div style={{ display: 'none', color: '#94A3B8', fontSize: '0.8rem', fontWeight: 500, letterSpacing: '1px' }}>IMAGE PENDING</div>
                 </div>
                 <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#0F172A', marginBottom: '4px', letterSpacing: '-0.3px' }}>{cat.title}</h3>
