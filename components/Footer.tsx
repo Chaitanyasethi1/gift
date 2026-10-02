@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
             &copy; 2026 <strong>AS PRINT GALLERY</strong>. All Rights Reserved. Complete Designing &amp; Printing Solutions.
           </div>
           <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
-            <Link href="/about" style={{ color: 'var(--primary)', fontWeight: 700 }}>About Factory</Link>
+            <Link href="/about" style={{ color: 'var(--primary)', fontWeight: 700 }}>About Us</Link>
             <Link href="/custom-box-builder" style={{ color: 'var(--primary)', fontWeight: 700 }}>Customize Print</Link>
             <Link href="/track-order" style={{ color: 'var(--text-muted)' }}>Track Order</Link>
             <Link href="/shipping-policy" style={{ color: 'var(--text-muted)' }}>Shipping Policy</Link>

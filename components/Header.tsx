@@ -67,7 +67,7 @@ export const Header: React.FC = () => {
   const navLinks = [
     { label: 'Customize Print', href: '/custom-box-builder', badge: '3D' },
     { label: 'Track Order', href: '/track-order' },
-    { label: 'About Factory', href: '/about' },
+    { label: 'About Us', href: '/about' },
     { label: 'Contact Us', href: '/contact' }
   ];
 
@@ -146,8 +146,8 @@ export const Header: React.FC = () => {
               height={44}
             />
             <div className="brand-text">
-              <div className="brand-name">AS PRINT <span>GALLERY</span></div>
-              <span className="brand-tagline">Packaging & Printing Factory</span>
+              <div className="brand-name" style={{ fontFamily: "'Swiss 721 BT', 'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: 800 }}>AS PRINT <span>GALLERY</span></div>
+              <span className="brand-tagline">All types of Printing and packaging solutions</span>
             </div>
           </Link>
 
