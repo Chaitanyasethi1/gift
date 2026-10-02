@@ -45,6 +45,7 @@ interface CartContextType {
   setSelectedQuoteProduct: (product: string) => void;
   toastMessage: string | null;
   showToast: (msg: string) => void;
+  isLoaded: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -149,7 +150,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
   const discount = appliedCoupon ? subtotal * appliedCoupon.rate : 0;
   const taxableAmount = Math.max(0, subtotal - discount);
-  const gstAmount = taxableAmount * 0.18; // 18% GST standard
+  const gstAmount = 0; // taxableAmount * 0.18; // 18% GST standard
   const finalTotal = taxableAmount + gstAmount;
 
   return (
@@ -178,7 +179,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       selectedQuoteProduct,
       setSelectedQuoteProduct,
       toastMessage,
-      showToast
+      showToast,
+      isLoaded
     }}>
       {children}
     </CartContext.Provider>

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { siteConfig } from '@/data/siteConfig';
-import { XIcon, WhatsAppIcon, ShieldCheckIcon } from './Icons';
+import { XIcon, ShieldCheckIcon } from './Icons';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -11,7 +11,7 @@ interface CheckoutModalProps {
 }
 
 export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
-  const { cart, subtotal, discount, gstAmount, finalTotal, appliedCoupon } = useCart();
+  const { cart, subtotal, discount, gstAmount, finalTotal, appliedCoupon, clearCart } = useCart();
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -19,64 +19,131 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
   const [pincode, setPincode] = useState('');
   const [gstin, setGstin] = useState('');
   const [consent, setConsent] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape' && !isProcessing) onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, isProcessing]);
+
+  useEffect(() => {
+    if (isOpen) {
+      const scriptId = 'razorpay-checkout-js';
+      if (!document.getElementById(scriptId)) {
+        const script = document.createElement('script');
+        script.id = scriptId;
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.async = true;
+        document.body.appendChild(script);
+      }
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const initiateRazorpayPayment = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsProcessing(true);
+    setMessage('');
 
-    let itemsList = cart
-      .map(
-        (item, i) =>
-          `${i + 1}. *${item.title}*\n   Qty: ${item.qty} pcs | ₹${(item.price * item.qty).toFixed(2)}${
-            item.dimensions ? `\n   Dimensions: ${item.dimensions}` : ''
-          }`
-      )
-      .join('\n\n');
-
-    let text = `📦 *FACTORY ORDER & DISPATCH DETAILS — AS PRINT GALLERY*\n\n`;
-    text += `*CUSTOMER & DISPATCH ADDRESS:*\n`;
-    text += `• Name: ${name.trim()}\n`;
-    text += `• Phone: +91 ${phone.trim()}\n`;
-    text += `• Delivery Address: ${address.trim()}\n`;
-    text += `• Pincode: ${pincode.trim()}\n`;
-    if (gstin.trim()) {
-      text += `• GSTIN (Tax Invoice): ${gstin.trim().toUpperCase()}\n`;
-    }
-    text += `\n*ORDER ITEMS:*\n${itemsList}\n\n`;
-    text += `──────────────\n`;
-    text += `Subtotal: ₹${subtotal.toFixed(2)}\n`;
-    if (appliedCoupon) {
-      text += `Discount (${appliedCoupon.code}): -₹${discount.toFixed(2)}\n`;
-    }
-    text += `GST (18%): ₹${gstAmount.toFixed(2)}\n`;
-    text += `*Final Amount: ₹${finalTotal.toFixed(2)}*\n\n`;
-    text += `Please share bank transfer / UPI invoice payment details to initiate production dispatch.`;
-
-    const url = `https://wa.me/${siteConfig.phones.whatsappRaw}?text=${encodeURIComponent(text)}`;
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'checkout_submit', {
-        event_category: 'Ecommerce',
-        value: finalTotal
+    try {
+      const amountPaise = Math.round(finalTotal * 100);
+      
+      const orderResponse = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: amountPaise, currency: 'INR', receipt: 'receipt_' + Date.now() })
       });
+      
+      const orderData = await orderResponse.json();
+      
+      if (!orderResponse.ok || orderData.error) {
+        throw new Error(orderData.error || 'Failed to create order');
+      }
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, 
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: siteConfig.name,
+        description: 'Packaging Order Checkout',
+        order_id: orderData.id,
+        handler: async function (response: any) {
+          try {
+            setMessage('Verifying payment...');
+            const verifyRes = await fetch('/api/verify-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              })
+            });
+            const verifyData = await verifyRes.json();
+            
+            if (verifyRes.ok && verifyData.success) {
+              setMessage('Payment successful! Your order has been placed.');
+              setTimeout(() => {
+                clearCart();
+                onClose();
+              }, 3000);
+            } else {
+              setMessage('Payment verification failed. Invalid signature.');
+            }
+          } catch (err) {
+            console.error(err);
+            setMessage('Payment verification error.');
+          } finally {
+            setIsProcessing(false);
+          }
+        },
+        modal: {
+          ondismiss: function() {
+            setIsProcessing(false);
+            setMessage('Payment cancelled by user.');
+          }
+        },
+        prefill: {
+          name: name,
+          contact: phone
+        },
+        notes: {
+          address: address,
+          pincode: pincode
+        },
+        theme: {
+          color: '#E11D48'
+        }
+      };
+
+      const rzp1 = new (window as any).Razorpay(options);
+      
+      rzp1.on('payment.failed', function (response: any){
+        console.error(response.error);
+        setMessage(`Payment failed: ${response.error.description}`);
+        setIsProcessing(false);
+      });
+      
+      rzp1.open();
+    } catch (err: any) {
+      console.error(err);
+      setMessage(err.message || 'Payment initiation failed.');
+      setIsProcessing(false);
     }
-    window.open(url, '_blank');
-    onClose();
   };
 
   return (
     <div
       className="modal-backdrop active"
-      onClick={onClose}
+      onClick={() => {
+        if (!isProcessing) onClose();
+      }}
       style={{ display: 'flex' }}
     >
       <div
@@ -87,18 +154,21 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
         <button
           type="button"
           className="modal-close-btn"
-          onClick={onClose}
+          onClick={() => {
+            if (!isProcessing) onClose();
+          }}
           aria-label="Close Checkout Modal"
+          disabled={isProcessing}
         >
           <XIcon size={18} />
         </button>
         <div className="form-modal-inner">
-          <h3 className="form-modal-title">Complete Delivery Information</h3>
+          <h3 className="form-modal-title">Secure Checkout</h3>
           <p className="form-modal-sub">
-            Submit your dispatch address. Our logistics coordinator will call to confirm dispatch.
+            Please enter your delivery details to proceed with the payment.
           </p>
 
-          <form onSubmit={handleSubmit} className="modal-form-grid">
+          <form onSubmit={initiateRazorpayPayment} className="modal-form-grid">
             <div className="form-field-group">
               <label htmlFor="chk-name">Full Name <span style={{ color: '#EF4444' }}>*</span></label>
               <input
@@ -108,6 +178,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                disabled={isProcessing}
               />
             </div>
             <div className="form-field-group">
@@ -119,6 +190,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
+                disabled={isProcessing}
               />
             </div>
             <div className="form-field-group">
@@ -130,6 +202,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 required
+                disabled={isProcessing}
               />
             </div>
             <div className="form-field-group">
@@ -142,6 +215,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 value={pincode}
                 onChange={(e) => setPincode(e.target.value)}
                 required
+                disabled={isProcessing}
               />
             </div>
             <div className="form-field-group">
@@ -152,6 +226,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 placeholder="e.g. 09AWKPN5910E1ZG"
                 value={gstin}
                 onChange={(e) => setGstin(e.target.value)}
+                disabled={isProcessing}
               />
             </div>
             <div className="form-field-group" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginTop: '10px' }}>
@@ -161,6 +236,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 checked={consent}
                 onChange={(e) => setConsent(e.target.checked)}
                 style={{ marginTop: '4px' }}
+                disabled={isProcessing}
               />
               <label
                 htmlFor="chk-consent"
@@ -169,12 +245,20 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 I consent to receive promotional updates, offers, and marketing communications from AS Print Gallery via email or SMS. (Optional)
               </label>
             </div>
+            
+            {message && (
+              <div style={{ padding: '10px', marginTop: '10px', background: message.includes('failed') || message.includes('error') ? '#FEE2E2' : '#ECFDF5', color: message.includes('failed') || message.includes('error') ? '#B91C1C' : '#047857', borderRadius: '4px', fontSize: '0.9rem', textAlign: 'center' }}>
+                {message}
+              </div>
+            )}
+            
             <button
               type="submit"
               className="btn-primary-hero"
-              style={{ justifyContent: 'center', padding: '13px', marginTop: '8px' }}
+              style={{ justifyContent: 'center', padding: '13px', marginTop: '8px', background: isProcessing ? '#94A3B8' : '#E11D48' }}
+              disabled={isProcessing}
             >
-              <WhatsAppIcon size={16} color="#000000" /> Confirm &amp; Send to Factory WhatsApp &rarr;
+              <ShieldCheckIcon size={16} color="#FFFFFF" /> {isProcessing ? 'Processing Payment...' : `Pay Securely ₹${finalTotal.toFixed(2)}`}
             </button>
           </form>
         </div>

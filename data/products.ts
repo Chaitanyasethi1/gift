@@ -42,9 +42,9 @@ export const PRODUCTS: Product[] = [
     category: 'corrugated',
     categoryLabel: 'Corrugated Boxes',
     image: '/assets/corrugated_box.jpg',
-    price: 6.80,
-    startingAt: 5.40,
-    moq: 100,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'BESTSELLER',
     badgeClass: 'bestseller',
     rating: 4.9,
@@ -54,10 +54,10 @@ export const PRODUCTS: Product[] = [
     desc: 'High-bursting strength 3-ply brown corrugated cardboard shipping boxes for Amazon, Flipkart, eCommerce, and retail logistics dispatch.',
     fullDesc: 'Manufactured with high-bursting index kraft liner and resilient fluting to safeguard retail consignments during courier transit. Virgin kraft paper outer protects against atmospheric humidity and stacking crush.',
     tiers: [
-      { qty: 100, rate: 8.50 },
-      { qty: 500, rate: 7.20 },
-      { qty: 1000, rate: 6.80 },
-      { qty: 5000, rate: 5.40 }
+      { qty: 100, rate: 1 },
+      { qty: 500, rate: 1 },
+      { qty: 1000, rate: 1 },
+      { qty: 5000, rate: 1 }
     ]
   },
   {
@@ -67,9 +67,9 @@ export const PRODUCTS: Product[] = [
     category: 'corrugated',
     categoryLabel: 'Corrugated Boxes',
     image: '/assets/boxes.jpg',
-    price: 15.50,
-    startingAt: 12.50,
-    moq: 50,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'HEAVY FREIGHT',
     badgeClass: 'popular',
     rating: 4.9,
@@ -79,10 +79,10 @@ export const PRODUCTS: Product[] = [
     desc: 'Dual-wall master shipper cartons built for bulk exports, heavy industrial hardware, ceramic goods, and long-haul inter-state transport.',
     fullDesc: 'Built with double-wall A/B or B/C flute matrix for extreme stacking rigidity (ECT 44+ lbs/in). Ideal for master packing of multiple smaller boxes or heavy machinery components.',
     tiers: [
-      { qty: 50, rate: 18.00 },
-      { qty: 250, rate: 16.50 },
-      { qty: 500, rate: 15.50 },
-      { qty: 2500, rate: 12.50 }
+      { qty: 50, rate: 1 },
+      { qty: 250, rate: 1 },
+      { qty: 500, rate: 1 },
+      { qty: 2500, rate: 1 }
     ]
   },
   {
@@ -92,9 +92,9 @@ export const PRODUCTS: Product[] = [
     category: 'food',
     categoryLabel: 'Food & Bakery Boxes',
     image: '/assets/pizza_box.jpg',
-    price: 5.80,
-    startingAt: 4.20,
-    moq: 250,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'FOOD GRADE',
     badgeClass: 'popular',
     rating: 4.8,
@@ -104,10 +104,10 @@ export const PRODUCTS: Product[] = [
     desc: 'Steam-vented, oil-resistant food board pizza delivery boxes. Customized with high-resolution full-color brand graphics.',
     fullDesc: 'Specially engineered for cloud kitchens and pizzeria chains. Food-grade inner barrier prevents grease seepage and sogginess while corner vents evacuate condensation to keep crusts crisp.',
     tiers: [
-      { qty: 250, rate: 7.20 },
-      { qty: 1000, rate: 6.10 },
-      { qty: 2500, rate: 5.50 },
-      { qty: 10000, rate: 4.20 }
+      { qty: 250, rate: 1 },
+      { qty: 1000, rate: 1 },
+      { qty: 2500, rate: 1 },
+      { qty: 10000, rate: 1 }
     ]
   },
   {
@@ -117,9 +117,9 @@ export const PRODUCTS: Product[] = [
     category: 'food',
     categoryLabel: 'Food & Bakery Boxes',
     image: '/assets/sweet_box.jpg',
-    price: 18.00,
-    startingAt: 14.00,
-    moq: 100,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'FESTIVE PACK',
     badgeClass: 'factory-rate',
     rating: 4.9,
@@ -129,10 +129,10 @@ export const PRODUCTS: Product[] = [
     desc: 'Premium rigid & folding confectionery gift boxes with metallic gold foiling, emboss detailing, and food-safe inner partition cavities.',
     fullDesc: 'Perfect for Haldiram-style sweets, artisanal chocolates, and luxury corporate gifting. Features sturdy duplex and kappa board with velvet or satin finish choices.',
     tiers: [
-      { qty: 100, rate: 22.00 },
-      { qty: 500, rate: 19.50 },
-      { qty: 1000, rate: 17.50 },
-      { qty: 5000, rate: 14.00 }
+      { qty: 100, rate: 1 },
+      { qty: 500, rate: 1 },
+      { qty: 1000, rate: 1 },
+      { qty: 5000, rate: 1 }
     ]
   },
   {
@@ -142,9 +142,9 @@ export const PRODUCTS: Product[] = [
     category: 'packaging',
     categoryLabel: 'Garment Packaging',
     image: '/assets/factory_hero.jpg',
-    price: 14.50,
-    startingAt: 11.50,
-    moq: 100,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'LUXURY RETRACTABLE',
     badgeClass: 'popular',
     rating: 4.8,
@@ -154,10 +154,10 @@ export const PRODUCTS: Product[] = [
     desc: 'Elegant apparel presentation boxes for shirts, sarees, kurtas, and luxury fabrics. Matte coated with crisp logo debossing.',
     fullDesc: 'Die-cut from pure white SBS virgin paperboard. Features dust-free edge trims, magnetic closures, and quick-fold mechanisms for retail fashion packaging.',
     tiers: [
-      { qty: 100, rate: 18.50 },
-      { qty: 500, rate: 15.50 },
-      { qty: 1000, rate: 13.50 },
-      { qty: 5000, rate: 11.50 }
+      { qty: 100, rate: 1 },
+      { qty: 500, rate: 1 },
+      { qty: 1000, rate: 1 },
+      { qty: 5000, rate: 1 }
     ]
   },
   {
@@ -167,9 +167,9 @@ export const PRODUCTS: Product[] = [
     category: 'bags',
     categoryLabel: 'Bags & Envelopes',
     image: '/assets/bags.jpg',
-    price: 4.80,
-    startingAt: 3.80,
-    moq: 200,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'BIO-DEGRADABLE',
     badgeClass: 'popular',
     rating: 4.9,
@@ -179,10 +179,10 @@ export const PRODUCTS: Product[] = [
     desc: 'Sustainable brown and bleached white kraft shopping bags with twisted handles. Replace single-use plastics with 100% bio-compostable paper.',
     fullDesc: 'Reinforced bottom patch with hot-melt glue ensures handles and bases will not tear under heavy grocery, garment, or boutique retail weight.',
     tiers: [
-      { qty: 200, rate: 6.20 },
-      { qty: 500, rate: 5.10 },
-      { qty: 1000, rate: 4.50 },
-      { qty: 5000, rate: 3.80 }
+      { qty: 200, rate: 1 },
+      { qty: 500, rate: 1 },
+      { qty: 1000, rate: 1 },
+      { qty: 5000, rate: 1 }
     ]
   },
   {
@@ -192,9 +192,9 @@ export const PRODUCTS: Product[] = [
     category: 'bags',
     categoryLabel: 'Bags & Envelopes',
     image: '/assets/paper_envelope.jpg',
-    price: 3.80,
-    startingAt: 2.90,
-    moq: 250,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'TAMPER PROOF',
     badgeClass: 'factory-rate',
     rating: 4.7,
@@ -204,10 +204,10 @@ export const PRODUCTS: Product[] = [
     desc: 'Eco-friendly courier mailing envelopes with strong self-adhesive tamper-proof destruction tape. Ideal for documents, apparel, and books.',
     fullDesc: 'Any unauthorized opening tears the paper fibers visibly. Eliminates plastic poly mailers while offering superior branding print surface.',
     tiers: [
-      { qty: 250, rate: 4.80 },
-      { qty: 1000, rate: 3.90 },
-      { qty: 2500, rate: 3.40 },
-      { qty: 10000, rate: 2.90 }
+      { qty: 250, rate: 1 },
+      { qty: 1000, rate: 1 },
+      { qty: 2500, rate: 1 },
+      { qty: 10000, rate: 1 }
     ]
   },
   {
@@ -217,9 +217,9 @@ export const PRODUCTS: Product[] = [
     category: 'label',
     categoryLabel: 'Labels & Hang Tags',
     image: '/assets/woven_label.jpg',
-    price: 1.10,
-    startingAt: 0.85,
-    moq: 1000,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'TOP SELLER',
     badgeClass: 'bestseller',
     rating: 4.9,
@@ -229,10 +229,10 @@ export const PRODUCTS: Product[] = [
     desc: 'Luxury woven damask neck labels for apparel brands, designers, and exporters. Woven on computerized jacquard looms with ultrasonic soft edges.',
     fullDesc: 'Non-itch, skin-safe micro-polyester yarns with exceptional detail for tiny text, washing symbols, and intricate crests.',
     tiers: [
-      { qty: 1000, rate: 1.35 },
-      { qty: 2500, rate: 1.10 },
-      { qty: 5000, rate: 0.95 },
-      { qty: 20000, rate: 0.85 }
+      { qty: 1000, rate: 1 },
+      { qty: 2500, rate: 1 },
+      { qty: 5000, rate: 1 },
+      { qty: 20000, rate: 1 }
     ]
   },
   {
@@ -242,9 +242,9 @@ export const PRODUCTS: Product[] = [
     category: 'label',
     categoryLabel: 'Labels & Hang Tags',
     image: '/assets/labels.jpg',
-    price: 0.65,
-    startingAt: 0.45,
-    moq: 1000,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: '50+ WASH TESTED',
     badgeClass: 'popular',
     rating: 4.8,
@@ -254,10 +254,10 @@ export const PRODUCTS: Product[] = [
     desc: 'Silky smooth woven-edge satin and organic cotton wash-care instruction tags. Wash-tested to survive 50+ launderings without fading.',
     fullDesc: 'Compliant with international textile tagging regulations for fiber content, care icons, origin, and importer GST/factory details.',
     tiers: [
-      { qty: 1000, rate: 0.80 },
-      { qty: 2500, rate: 0.65 },
-      { qty: 5000, rate: 0.55 },
-      { qty: 20000, rate: 0.45 }
+      { qty: 1000, rate: 1 },
+      { qty: 2500, rate: 1 },
+      { qty: 5000, rate: 1 },
+      { qty: 20000, rate: 1 }
     ]
   },
   {
@@ -267,9 +267,9 @@ export const PRODUCTS: Product[] = [
     category: 'label',
     categoryLabel: 'Labels & Hang Tags',
     image: '/assets/tags.jpg',
-    price: 1.15,
-    startingAt: 0.75,
-    moq: 500,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'LUXURY BOARD',
     badgeClass: 'popular',
     rating: 4.9,
@@ -279,10 +279,10 @@ export const PRODUCTS: Product[] = [
     desc: 'Heavyweight apparel swing tags with matte velvet touch, spot UV highlights, metal eyelets, and wax cords for boutique fashion houses.',
     fullDesc: 'Gives garments a high-end designer showroom appearance. Options include black-core boards, textured krafts, and foil stamping.',
     tiers: [
-      { qty: 500, rate: 1.60 },
-      { qty: 1000, rate: 1.25 },
-      { qty: 2500, rate: 0.95 },
-      { qty: 10000, rate: 0.75 }
+      { qty: 500, rate: 1 },
+      { qty: 1000, rate: 1 },
+      { qty: 2500, rate: 1 },
+      { qty: 10000, rate: 1 }
     ]
   },
   {
@@ -292,9 +292,9 @@ export const PRODUCTS: Product[] = [
     category: 'sticker',
     categoryLabel: 'Stickers & Rolls',
     image: '/assets/gumming.jpg',
-    price: 0.55,
-    startingAt: 0.35,
-    moq: 1000,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'STRONG TACK',
     badgeClass: 'popular',
     rating: 4.8,
@@ -304,10 +304,10 @@ export const PRODUCTS: Product[] = [
     desc: 'High-tack self-adhesive chromo gumming stickers for box sealing, product branding, packaging labels, and invoice envelopes.',
     fullDesc: 'Bonds instantly to cardboard, kraft paper, glass, and plastic without lifting at edges. Fast automatic dispensing available.',
     tiers: [
-      { qty: 1000, rate: 0.70 },
-      { qty: 2500, rate: 0.55 },
-      { qty: 5000, rate: 0.45 },
-      { qty: 20000, rate: 0.35 }
+      { qty: 1000, rate: 1 },
+      { qty: 2500, rate: 1 },
+      { qty: 5000, rate: 1 },
+      { qty: 20000, rate: 1 }
     ]
   },
   {
@@ -317,9 +317,9 @@ export const PRODUCTS: Product[] = [
     category: 'sticker',
     categoryLabel: 'Stickers & Rolls',
     image: '/assets/stickers.jpg',
-    price: 1.80,
-    startingAt: 1.20,
-    moq: 250,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: '100% WATERPROOF',
     badgeClass: 'factory-rate',
     rating: 4.9,
@@ -329,10 +329,10 @@ export const PRODUCTS: Product[] = [
     desc: 'Weatherproof vinyl decals, transparent branding stickers, and refrigerated packaging labels resistant to water, oils, and deep-freeze.',
     fullDesc: 'UV-cured pigment inks will not bleed in rain, moisture, or cold storage. Perfect for cosmetics, beverages, and laptop decals.',
     tiers: [
-      { qty: 250, rate: 2.50 },
-      { qty: 1000, rate: 1.95 },
-      { qty: 2500, rate: 1.55 },
-      { qty: 10000, rate: 1.20 }
+      { qty: 250, rate: 1 },
+      { qty: 1000, rate: 1 },
+      { qty: 2500, rate: 1 },
+      { qty: 10000, rate: 1 }
     ]
   },
   {
@@ -342,9 +342,9 @@ export const PRODUCTS: Product[] = [
     category: 'sticker',
     categoryLabel: 'Stickers & Rolls',
     image: '/assets/barcode_sticker.jpg',
-    price: 195.00,
-    startingAt: 160.00,
-    moq: 10,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'PRINTER COMPLIANT',
     badgeClass: 'popular',
     rating: 4.8,
@@ -354,10 +354,10 @@ export const PRODUCTS: Product[] = [
     desc: 'High-density barcode labels on rolls for Zebra, TVS, TSC, and desktop thermal printers. Perfect for Amazon FBA & courier shipping bills.',
     fullDesc: 'Crisp scan readability without head wear. Jam-free sensor gap spacing and high thermal sensitivity.',
     tiers: [
-      { qty: 10, rate: 220.00 },
-      { qty: 50, rate: 195.00 },
-      { qty: 100, rate: 180.00 },
-      { qty: 500, rate: 160.00 }
+      { qty: 10, rate: 1 },
+      { qty: 50, rate: 1 },
+      { qty: 100, rate: 1 },
+      { qty: 500, rate: 1 }
     ]
   },
   {
@@ -367,9 +367,9 @@ export const PRODUCTS: Product[] = [
     category: 'label',
     categoryLabel: 'Labels & Hang Tags',
     image: '/assets/bottle_label.jpg',
-    price: 0.95,
-    startingAt: 0.65,
-    moq: 500,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'OIL RESISTANT',
     badgeClass: 'popular',
     rating: 4.8,
@@ -379,10 +379,10 @@ export const PRODUCTS: Product[] = [
     desc: 'High-adhesion wrap-around product labels for honey jars, cosmetic bottles, food jars, and chemicals with curved glass grip.',
     fullDesc: 'Engineered specifically for cylindrical glass and HDPE plastic bottles so edges never flag or buckle over time.',
     tiers: [
-      { qty: 500, rate: 1.30 },
-      { qty: 1000, rate: 1.05 },
-      { qty: 2500, rate: 0.85 },
-      { qty: 10000, rate: 0.65 }
+      { qty: 500, rate: 1 },
+      { qty: 1000, rate: 1 },
+      { qty: 2500, rate: 1 },
+      { qty: 10000, rate: 1 }
     ]
   },
   {
@@ -392,9 +392,9 @@ export const PRODUCTS: Product[] = [
     category: 'label',
     categoryLabel: 'Labels & Hang Tags',
     image: '/assets/heat_transfer.jpg',
-    price: 1.30,
-    startingAt: 0.95,
-    moq: 1000,
+    price: 1,
+    startingAt: 1,
+    moq: 1,
     badge: 'ZERO-ITCH',
     badgeClass: 'popular',
     rating: 4.9,
@@ -404,10 +404,10 @@ export const PRODUCTS: Product[] = [
     desc: 'Direct-to-fabric heat seal neck prints for activewear, sportswear, innerwear, and t-shirts. 100% tagless comfort.',
     fullDesc: 'Transfers in 10-12 seconds at 150°C. Stretchable rubberized ink does not crack when fabric is pulled and endures heavy domestic washing.',
     tiers: [
-      { qty: 1000, rate: 1.60 },
-      { qty: 2500, rate: 1.35 },
-      { qty: 5000, rate: 1.15 },
-      { qty: 20000, rate: 0.95 }
+      { qty: 1000, rate: 1 },
+      { qty: 2500, rate: 1 },
+      { qty: 5000, rate: 1 },
+      { qty: 20000, rate: 1 }
     ]
   }
 ];

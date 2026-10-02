@@ -261,10 +261,10 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
                 className="btn-cart-checkout"
                 onClick={() => {
                   setIsCartOpen(false);
-                  if (onOpenCheckoutModal) onOpenCheckoutModal();
+                  window.location.href = '/checkout';
                 }}
               >
-                <PackageIcon size={16} /> Enter Delivery Details &amp; Order
+                <PackageIcon size={16} /> Checkout securely
               </button>
             </div>
           </div>
