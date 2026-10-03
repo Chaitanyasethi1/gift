@@ -68,10 +68,9 @@ export function Header() {
       <header style={{ background: '#F5F5F5', padding: '15px 0' }}>
         <div className="container header-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px' }}>
           
-          {/* Logo (PDF Implementation) */}
-          <Link href="/" className="logo-container" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, width: '220px', height: '70px', overflow: 'hidden', borderRadius: '8px' }}>
-             <embed src="/logo.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" width="100%" height="100%" style={{ pointerEvents: 'none', overflow: 'hidden', objectFit: 'contain' }} />
-             <div style={{ position: 'absolute', inset: 0, zIndex: 10, background: 'transparent' }}></div>
+          {/* Logo (PNG Implementation) */}
+          <Link href="/" className="logo-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, width: '220px', height: '70px', overflow: 'hidden' }}>
+             <img src="/logo.png" alt="AS Print Gallery Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </Link>
 
           {/* Center: Search & Bulk Order */}
