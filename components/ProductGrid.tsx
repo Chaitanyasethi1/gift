@@ -2,20 +2,19 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { PRODUCTS, Product } from '@/data/products';
 import { ProductCard } from './ProductCard';
 import { useCart } from '@/context/CartContext';
 import { ShoppingCartIcon, WhatsAppIcon, XIcon, CheckCircleIcon } from './Icons';
 
 interface ProductGridProps {
-  initialFilter?: string;
+  products: any[];
   showAllButton?: boolean;
   limit?: number;
   hideTabs?: boolean;
 }
 
 const CATEGORIES = [
-  { id: 'all', label: `All ${PRODUCTS.length} Products` },
+  { id: 'all', label: 'All Products' },
   { id: 'corrugated', label: '📦 Corrugated Cartons' },
   { id: 'food', label: '🍕 Food & Bakery Boxes' },
   { id: 'packaging', label: '👔 Garment Boxes' },
@@ -24,14 +23,16 @@ const CATEGORIES = [
   { id: 'bags', label: '🛍️ Bags & Envelopes' }
 ];
 
-export const ProductGrid: React.FC<ProductGridProps> = ({ initialFilter = 'all', showAllButton = true, limit, hideTabs = false }) => {
-  const [selectedCategory, setSelectedCategory] = useState(initialFilter);
-  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+export const ProductGrid: React.FC<ProductGridProps> = ({ products = [], showAllButton = true, limit, hideTabs = false }) => {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [quickViewProduct, setQuickViewProduct] = useState<any | null>(null);
   const { addToCart, setIsQuoteModalOpen, setSelectedQuoteProduct } = useCart();
 
-  let filteredProducts = selectedCategory === 'all'
-    ? PRODUCTS
-    : PRODUCTS.filter((p) => p.category === selectedCategory);
+  // Assuming category string mapping or similar, for MVP we just show all if categories aren't strictly mapped
+  let filteredProducts = products;
+  // if (selectedCategory !== 'all') {
+  //   filteredProducts = products.filter((p) => p.category_slug === selectedCategory);
+  // }
 
   if (limit) {
     filteredProducts = filteredProducts.slice(0, limit);
@@ -54,20 +55,26 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ initialFilter = 'all',
         </div>
       )}
 
-      <div className="products-grid" id="products-grid-container">
-        {filteredProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onQuickView={(p) => setQuickViewProduct(p)}
-          />
-        ))}
-      </div>
+      {filteredProducts.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '40px', color: '#64748B' }}>
+          No products found in this category yet.
+        </div>
+      ) : (
+        <div className="products-grid" id="products-grid-container">
+          {filteredProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onQuickView={(p) => setQuickViewProduct(p)}
+            />
+          ))}
+        </div>
+      )}
 
       {showAllButton && (
         <div style={{ textAlign: 'center', marginTop: '48px' }}>
-          <Link href="/products" className="btn-primary-hero" style={{ display: 'inline-flex', padding: '14px 34px' }}>
-            View Full {PRODUCTS.length}-Product Catalogue with Specs &rarr;
+          <Link href="/shop" className="btn-primary-hero" style={{ display: 'inline-flex', padding: '14px 34px' }}>
+            View Full Catalogue &rarr;
           </Link>
         </div>
       )}
@@ -87,35 +94,22 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ initialFilter = 'all',
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', padding: '12px' }}>
               <div>
                 <img
-                  src={quickViewProduct.image}
-                  alt={quickViewProduct.title}
+                  src={quickViewProduct.images?.[0] || 'https://via.placeholder.com/400'}
+                  alt={quickViewProduct.name}
                   style={{ width: '100%', borderRadius: 'var(--radius-md, 8px)', objectFit: 'cover', maxHeight: '340px' }}
                 />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--primary)', letterSpacing: '0.5px' }}>
-                  {quickViewProduct.categoryLabel}
-                </span>
-                <h3 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--text-dark)' }}>{quickViewProduct.title}</h3>
+                <h3 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--text-dark)' }}>{quickViewProduct.name}</h3>
                 <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                  {quickViewProduct.desc}
+                  {quickViewProduct.description}
                 </p>
 
-                <div style={{ background: '#F8FAFC', padding: '12px', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
-                  <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '6px' }}>Specifications:</div>
-                  <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.8rem', color: '#64748B' }}>
-                    {quickViewProduct.specs.map((s, idx) => (
-                      <li key={idx} style={{ marginBottom: '4px' }}>{s}</li>
-                    ))}
-                  </ul>
-                </div>
-
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                  <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Starting at:</span>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Price:</span>
                   <span style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--primary)' }}>
-                    ₹{(quickViewProduct.startingAt || quickViewProduct.price).toFixed(2)}
+                    ₹{quickViewProduct.selling_price}
                   </span>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>/ pc (MOQ: {quickViewProduct.moq} pcs)</span>
                 </div>
 
                 <div style={{ display: 'flex', gap: '10px', marginTop: 'auto', paddingTop: '10px' }}>
@@ -125,10 +119,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ initialFilter = 'all',
                     onClick={() => {
                       addToCart({
                         id: quickViewProduct.id,
-                        title: quickViewProduct.title,
-                        price: quickViewProduct.price,
-                        image: quickViewProduct.image,
-                        specs: quickViewProduct.specs
+                        title: quickViewProduct.name,
+                        price: quickViewProduct.selling_price,
+                        image: quickViewProduct.images?.[0] || '',
+                        specs: []
                       }, quickViewProduct.moq || 1);
                       setQuickViewProduct(null);
                     }}
@@ -140,7 +134,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ initialFilter = 'all',
                     type="button"
                     className="btn-outline-hero"
                     onClick={() => {
-                      setSelectedQuoteProduct(quickViewProduct.title);
+                      setSelectedQuoteProduct(quickViewProduct.name);
                       setQuickViewProduct(null);
                       setIsQuoteModalOpen(true);
                     }}

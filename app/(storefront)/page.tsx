@@ -3,8 +3,17 @@ import Link from 'next/link';
 import { ProductGrid } from '@/components/ProductGrid';
 import { ComboSlider } from '@/components/ComboSlider';
 import { CountdownTimer } from '@/components/CountdownTimer';
+import { createClient } from '@/utils/supabase/server';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = createClient();
+  const { data: products } = await supabase.from('products').select('*, categories(name)').eq('is_active', true);
+
+  const hotDeals = products?.filter(p => p.flag_hot_deal) || [];
+  const megaSale = products?.filter(p => p.flag_mega_sale) || [];
+  const newArrivals = products?.filter(p => p.flag_new_arrival) || [];
+  const bestSellers = products?.filter(p => p.flag_best_seller) || [];
+
   return (
     <>
       {/* 3. Hero Combo Banner */}
@@ -98,7 +107,7 @@ export default function HomePage() {
             </div>
             <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
           </div>
-          <ProductGrid initialFilter="all" showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={hotDeals} showAllButton={false} limit={4} hideTabs={true} />
         </div>
       </section>
 
@@ -112,7 +121,7 @@ export default function HomePage() {
             </div>
             <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
           </div>
-          <ProductGrid initialFilter="all" showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={megaSale} showAllButton={false} limit={4} hideTabs={true} />
         </div>
       </section>
 
@@ -123,7 +132,7 @@ export default function HomePage() {
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🌟 New Arrivals</h2>
             <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
           </div>
-          <ProductGrid initialFilter="all" showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={newArrivals} showAllButton={false} limit={4} hideTabs={true} />
         </div>
       </section>
 
@@ -134,7 +143,7 @@ export default function HomePage() {
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>🏆 Best Sellers</h2>
             <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
           </div>
-          <ProductGrid initialFilter="all" showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={bestSellers} showAllButton={false} limit={4} hideTabs={true} />
         </div>
       </section>
 

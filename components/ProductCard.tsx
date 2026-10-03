@@ -2,17 +2,16 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Product } from '@/data/products';
 import { StarIcon } from './Icons';
 
 interface ProductCardProps {
-  product: Product;
-  onQuickView?: (product: Product) => void;
+  product: any;
+  onQuickView?: (product: any) => void;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const originalPrice = ((product.startingAt || product.price) * 1.5).toFixed(2); // Fake original price for UI
-  const currentPrice = (product.startingAt || product.price).toFixed(2);
+  const originalPrice = product.mrp ? product.mrp.toFixed(2) : (product.selling_price * 1.5).toFixed(2);
+  const currentPrice = (product.selling_price || 0).toFixed(2);
 
   const handleAddClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -25,24 +24,26 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Image Area */}
         <div style={{ position: 'relative', width: '100%', paddingTop: '100%', background: '#F8FAFC', borderBottom: '1px solid #F1F5F9' }}>
           <img
-            src={product.image}
-            alt={product.title}
+            src={product.images?.[0] || 'https://via.placeholder.com/400'}
+            alt={product.name}
             loading="lazy"
             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', padding: '16px' }}
           />
           {/* Rating Badge */}
-          <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: '#65A34A', color: '#fff', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
-             {product.rating.toFixed(1)} <StarIcon size={10} filled={true} color="#fff" />
-          </div>
+          {product.rating && (
+            <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: '#65A34A', color: '#fff', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
+              {Number(product.rating).toFixed(1)} <StarIcon size={10} filled={true} color="#fff" />
+            </div>
+          )}
         </div>
 
         {/* Text Area */}
         <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
           <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#1E293B', margin: '0 0 4px 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-            {product.title}
+            {product.name}
           </h3>
           <p style={{ fontSize: '0.8rem', color: '#64748B', margin: '0 0 16px 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {product.categoryLabel || 'AS Print Gallery'}
+            {product.categories?.name || 'AS Print Gallery'}
           </p>
           
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
