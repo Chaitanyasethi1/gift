@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const posters = [
-  { id: 1, img: '/assets/hero1.jpg', alt: 'AS Print Gallery Banner 1' },
-  { id: 2, img: '/assets/hero2.jpg', alt: 'AS Print Gallery Banner 2' }
+  { id: 1, img: '/assets/hero1.png', alt: 'AS Print Gallery Banner 1' },
+  { id: 2, img: '/assets/hero2.png', alt: 'AS Print Gallery Banner 2' }
 ];
 
 export const ComboSlider: React.FC = () => {
