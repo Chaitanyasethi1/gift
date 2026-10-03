@@ -24,6 +24,8 @@ interface ProductDetailClientProps {
 export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product }) => {
   const { addToCart, setIsQuoteModalOpen, setSelectedQuoteProduct } = useCart();
   const [selectedQty, setSelectedQty] = useState(product.moq || 100);
+  const [selectedSize, setSelectedSize] = useState<string | null>(product.sizes && product.sizes.length > 0 ? product.sizes[0] : null);
+  const [uploadedLogo, setUploadedLogo] = useState<File | null>(null);
 
   // Determine current unit rate based on tiers
   const activeTier = product.tiers && product.tiers.length > 0
@@ -42,7 +44,9 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
       price: currentRate,
       image: product.image,
       specs: product.specs,
-      dimensions: product.dimensions
+      dimensions: product.dimensions,
+      size: selectedSize,
+      logo: uploadedLogo ? uploadedLogo.name : null
     }, selectedQty);
   };
 
@@ -187,6 +191,52 @@ Please confirm stock availability, GST invoice details, and dispatch timeline.`
                 MOQ: <strong>{product.moq} pcs</strong>
               </span>
             </div>
+
+            {/* Size Selector */}
+            {product.sizes && product.sizes.length > 0 && (
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#1E293B', marginBottom: '8px' }}>
+                  Select Size:
+                </label>
+                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                  {product.sizes.map((size: string) => (
+                    <button
+                      key={size}
+                      type="button"
+                      onClick={() => setSelectedSize(size)}
+                      style={{
+                        padding: '8px 16px',
+                        border: `2px solid ${selectedSize === size ? 'var(--primary)' : '#CBD5E1'}`,
+                        background: selectedSize === size ? 'rgba(184, 27, 84, 0.05)' : '#fff',
+                        color: selectedSize === size ? 'var(--primary)' : '#475569',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Logo / Design Upload */}
+            {(product as any).allowLogoUpload && (
+              <div style={{ marginBottom: '24px', padding: '16px', border: '1px dashed #94A3B8', borderRadius: '8px', background: '#F8FAFC' }}>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#1E293B', marginBottom: '8px' }}>
+                  Upload Your Logo/Design (Optional):
+                </label>
+                <input 
+                  type="file" 
+                  accept="image/*,.pdf,.ai,.eps" 
+                  onChange={(e) => setUploadedLogo(e.target.files ? e.target.files[0] : null)}
+                  style={{ fontSize: '0.85rem', width: '100%' }}
+                />
+                <p style={{ fontSize: '0.75rem', color: '#64748B', marginTop: '6px', marginBottom: 0 }}>Supported formats: PNG, JPG, PDF, AI. We will send a digital proof before printing.</p>
+              </div>
+            )}
 
             {/* Subtotal Display */}
             <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '8px', border: '1px solid #E2E8F0', marginBottom: '24px' }}>

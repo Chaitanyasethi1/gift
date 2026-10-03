@@ -76,6 +76,8 @@ export default async function ProductDetailPage({ params }: Props) {
     price: product.selling_price,
     startingAt: product.selling_price,
     moq: product.moq || 100,
+    sizes: product.sizes || [],
+    allowLogoUpload: product.allow_logo_upload || false,
     specs: [
       `MRP: ₹${product.mrp}`,
       `Selling Price: ₹${product.selling_price}`,
@@ -83,9 +85,9 @@ export default async function ProductDetailPage({ params }: Props) {
       `Customization: Printing Available`
     ],
     tiers: product.bulk_pricing || [
-      { minQty: 100, price: product.selling_price },
-      { minQty: 500, price: product.selling_price * 0.95 },
-      { minQty: 1000, price: product.selling_price * 0.9 }
+      { qty: 1, rate: product.selling_price || 0 },
+      { qty: 100, rate: (product.selling_price || 0) * 0.95 },
+      { qty: 500, rate: (product.selling_price || 0) * 0.9 }
     ]
   };
 

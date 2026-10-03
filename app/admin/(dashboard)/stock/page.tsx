@@ -14,7 +14,8 @@ export default function StockProductsPage() {
   
   const defaultItem = { 
     name: '', slug: '', category_id: '', mrp: 0, selling_price: 0, stock_quantity: 0, is_active: true, images: [] as string[],
-    flag_hot_deal: false, flag_mega_sale: false, flag_new_arrival: false, flag_best_seller: false
+    flag_hot_deal: false, flag_mega_sale: false, flag_new_arrival: false, flag_best_seller: false,
+    sizes: '', allow_logo_upload: false
   };
   const [newItem, setNewItem] = useState(defaultItem);
   const [isSaving, setIsSaving] = useState(false);
@@ -54,6 +55,8 @@ export default function StockProductsPage() {
       flag_mega_sale: item.flag_mega_sale || false,
       flag_new_arrival: item.flag_new_arrival || false,
       flag_best_seller: item.flag_best_seller || false,
+      sizes: item.sizes ? item.sizes.join(', ') : '',
+      allow_logo_upload: item.allow_logo_upload || false
     });
     setIsModalOpen(true);
   }
@@ -91,7 +94,14 @@ export default function StockProductsPage() {
     setIsSaving(true);
     const slug = newItem.slug || newItem.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
     
-    const payload = { ...newItem, slug, category_id: newItem.category_id ? newItem.category_id : null };
+    const sizesArray = newItem.sizes ? newItem.sizes.split(',').map(s => s.trim()).filter(Boolean) : [];
+    
+    const payload = { 
+      ...newItem, 
+      slug, 
+      category_id: newItem.category_id ? newItem.category_id : null,
+      sizes: sizesArray
+    };
 
     let error;
     if (editingId) {
@@ -210,9 +220,19 @@ export default function StockProductsPage() {
               </div>
 
               <div>
+                <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#64748b' }}>Available Sizes (comma separated)</label>
+                <input type="text" placeholder="e.g. 10x10, 12x12, 14x14" value={newItem.sizes} onChange={e => setNewItem({...newItem, sizes: e.target.value})} style={{ width: '100%', padding: '10px', border: '1px solid #e2e8f0', borderRadius: '6px' }} />
+              </div>
+
+              <div style={{ display: 'flex', gap: '20px', background: '#f8fafc', padding: '15px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                  <input type="checkbox" checked={newItem.allow_logo_upload} onChange={e => setNewItem({...newItem, allow_logo_upload: e.target.checked})} />
+                  <span style={{ fontSize: '0.95rem', color: '#3b82f6', fontWeight: 'bold' }}>Enable Logo/Design Upload for Customer</span>
+                </label>
+                
                 <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
                   <input type="checkbox" checked={newItem.is_active} onChange={e => setNewItem({...newItem, is_active: e.target.checked})} />
-                  <span style={{ fontSize: '0.9rem', color: '#10b981', fontWeight: 'bold' }}>Active on Website</span>
+                  <span style={{ fontSize: '0.95rem', color: '#10b981', fontWeight: 'bold' }}>Active on Website</span>
                 </label>
               </div>
 
