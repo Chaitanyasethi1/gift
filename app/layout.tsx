@@ -43,8 +43,17 @@ export const metadata: Metadata = {
     images: [`${siteConfig.url}/assets/combo_banner_new.jpg`]
   },
   icons: {
-    icon: '/favicon.svg'
-  }
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon.svg', type: 'image/svg+xml' }
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+    ],
+    shortcut: '/favicon.ico'
+  },
+  manifest: '/manifest.json'
 };
 
 export default function RootLayout({
@@ -52,16 +61,111 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'AS Print Gallery',
+    alternateName: ['AS Print', 'asprintgallery.com'],
+    url: siteConfig.url,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${siteConfig.url}/shop?q={search_term_string}`
+      },
+      'query-input': 'required name=search_term_string'
+    }
+  };
+
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: siteConfig.name,
+    legalName: siteConfig.legalName,
+    url: siteConfig.url,
+    logo: `${siteConfig.url}/logo.png`,
+    image: `${siteConfig.url}/logo.png`,
+    sameAs: [
+      siteConfig.social.instagram,
+      siteConfig.social.facebook,
+      siteConfig.social.youtube
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: siteConfig.phones.salesDisplay,
+      contactType: 'sales',
+      areaServed: 'IN',
+      availableLanguage: ['en', 'Hindi']
+    }
+  };
+
+  const siteNavigationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: [
+      {
+        '@type': 'SiteNavigationElement',
+        position: 1,
+        name: 'Packaging Boxes & Corrugated Cartons',
+        description: 'Direct factory manufactured 3-ply and 5-ply corrugated boxes.',
+        url: `${siteConfig.url}/products`
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 2,
+        name: 'Custom Box Builder (3D Configurator)',
+        description: 'Instant online quote & 3D custom packaging box customizer.',
+        url: `${siteConfig.url}/custom-box-builder`
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 3,
+        name: 'Stickers, Labels & Hang Tags',
+        description: 'Waterproof stickers, woven garment labels and custom hang tags.',
+        url: `${siteConfig.url}/products`
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 4,
+        name: 'Track Order Status',
+        description: 'Real-time live order tracking and dispatch status.',
+        url: `${siteConfig.url}/track-order`
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 5,
+        name: 'About Manufacturing Unit',
+        description: 'About our Ghaziabad manufacturing plant and quality standards.',
+        url: `${siteConfig.url}/about`
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 6,
+        name: 'Contact Factory',
+        description: 'Direct sales desk and instant WhatsApp support.',
+        url: `${siteConfig.url}/contact`
+      }
+    ]
+  };
+
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: siteConfig.name,
     legalName: siteConfig.legalName,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/assets/logo.png`,
+    logo: `${siteConfig.url}/logo.png`,
+    image: `${siteConfig.url}/logo.png`,
     telephone: siteConfig.phones.salesDisplay,
     priceRange: '₹₹',
     taxID: siteConfig.gstin,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '1240',
+      bestRating: '5',
+      worstRating: '1'
+    },
     address: {
       '@type': 'PostalAddress',
       streetAddress: siteConfig.contact.address.street,
@@ -108,6 +212,18 @@ export default function RootLayout({
               });
             `
           }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavigationSchema) }}
         />
         <script
           type="application/ld+json"
