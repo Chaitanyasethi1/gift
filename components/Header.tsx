@@ -13,7 +13,53 @@ export function Header() {
           .dark-nav-container { overflow-x: auto !important; white-space: nowrap !important; justify-content: flex-start !important; padding: 12px 15px !important; gap: 20px !important; }
           .dark-nav-container::-webkit-scrollbar { display: none; }
         }
+        }
+        
+        /* Premium Button & Marquee */
+        .bulk-order-btn {
+          background: linear-gradient(135deg, #10B981 0%, #047857 100%);
+          color: #fff;
+          padding: 10px 28px;
+          border-radius: 30px;
+          text-decoration: none;
+          font-weight: 800;
+          font-size: 0.95rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          flex-shrink: 0;
+          box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+          transition: all 0.3s ease;
+          border: 1px solid rgba(255,255,255,0.2);
+          width: max-content;
+        }
+        .bulk-order-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+          background: linear-gradient(135deg, #059669 0%, #065F46 100%);
+        }
+        
+        .marquee {
+          display: flex;
+          white-space: nowrap;
+          animation: marquee 20s linear infinite;
+        }
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
       `}</style>
+      
+      {/* Top Announcement Bar */}
+      <div style={{ background: '#E11D48', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '8px 0', overflow: 'hidden', display: 'flex', width: '100%' }}>
+        <div className="marquee">
+          <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>⚡ MEGA FACTORY SALE: Flat 20% OFF on all Corrugated Cartons! Use code AS20 ⚡</span>
+          <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>⚡ MEGA FACTORY SALE: Flat 20% OFF on all Corrugated Cartons! Use code AS20 ⚡</span>
+          <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>⚡ MEGA FACTORY SALE: Flat 20% OFF on all Corrugated Cartons! Use code AS20 ⚡</span>
+          <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>⚡ MEGA FACTORY SALE: Flat 20% OFF on all Corrugated Cartons! Use code AS20 ⚡</span>
+        </div>
+      </div>
       
       {/* Main Header */}
       <header style={{ background: '#F5F5F5', padding: '15px 0' }}>
@@ -34,7 +80,7 @@ export function Header() {
               <input type="text" placeholder="Search..." style={{ flex: 1, width: '100%', padding: '8px 10px', border: 'none', outline: 'none', fontSize: '0.95rem' }} />
             </div>
             
-            <a href="https://wa.me/919911678386?text=Hi,%20I%20need%20a%20bulk%20order%20quote" target="_blank" rel="noreferrer" style={{ background: '#73C86B', color: '#fff', padding: '10px 24px', borderRadius: '30px', textDecoration: 'none', fontWeight: 700, fontSize: '0.9rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', flexShrink: 0, boxShadow: '0 4px 6px rgba(115, 200, 107, 0.2)', width: 'max-content' }}>
+            <a href="https://wa.me/919911678386?text=Hi,%20I%20need%20a%20bulk%20order%20quote" target="_blank" rel="noreferrer" className="bulk-order-btn">
               💬 BULK ORDER
             </a>
           </div>
