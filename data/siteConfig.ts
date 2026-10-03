@@ -11,7 +11,9 @@ export const siteConfig = {
   legalName: "AS Print Gallery Packaging & Printing Unit",
   tagline: "Direct Factory Corrugated Boxes, Labels & Stickers",
   subheading: "Custom sizes • 3-ply & 5-ply • Pan-India dispatch from Ghaziabad",
-  url: "https://asprintgallery.com",
+  url: "https://www.asprintgallery.com",
+  googleAnalyticsId: "G-RNM182BSEZ",
+  googleAnalyticsStreamId: "16012660107",
   gstin: "09AWKPN5910E1ZG",
   hsnCodes: "4819 (Cartons/Boxes), 4821 (Labels/Tags)",
 
