@@ -52,25 +52,26 @@ export default function HomePage() {
             <h2 className="section-title" style={{ fontSize: '2.2rem', fontWeight: 700, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>Our Popular Categories</h2>
             <Link href="/shop" style={{ color: '#B91C1C', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}>View All <span style={{ fontSize: '1.2rem' }}>&rarr;</span></Link>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '24px' }}>
+          <div className="circular-cat-container" style={{ display: 'flex', gap: '30px', overflowX: 'auto', paddingBottom: '20px', scrollbarWidth: 'none' }}>
             {[
-              { id: 'boxes', title: 'Packaging Boxes', sub: 'Corrugated 3/5/7 Ply', img: '/assets/corrugated_box.jpg' },
-              { id: 'bags', title: 'Paper Bag', sub: 'Kraft & Imported', img: '/assets/kraft_bag.jpg' },
-              { id: 'lifafa', title: 'Paper Lifafa', sub: 'Plain & Printed', img: '/assets/lifafa.jpg' },
-              { id: 'stickers', title: 'Stickers', sub: 'Roll & Sheet Form', img: '/assets/stickers.jpg' },
-              { id: 'printed-labels', title: 'Printed Labels', sub: 'Product Branding', img: '/assets/printed_labels.jpg' },
-              { id: 'woven-labels', title: 'Woven Labels', sub: 'Clothing Tags', img: '/assets/woven_labels.jpg' },
-              { id: 'hang-tags', title: 'Hang Tags', sub: 'Premium Tags', img: '/assets/hang_tags.jpg' },
-              { id: 'food-boxes', title: 'Food & Pizza Boxes', sub: 'Food Safe', img: '/assets/pizza_box.jpg' }
+              { id: 'hot-deals', title: 'Hot Deals', img: '/assets/hot_deals.jpg', isSpecial: true },
+              { id: 'sale', title: 'Sale', img: '/assets/sale.jpg', isSpecial: true },
+              { id: 'new-arrivals', title: 'New Arrivals', img: '/assets/new_arrivals.jpg', isSpecial: true },
+              { id: 'boxes', title: 'Packaging Boxes', img: '/assets/corrugated_box.jpg' },
+              { id: 'bags', title: 'Paper Bag', img: '/assets/kraft_bag.jpg' },
+              { id: 'lifafa', title: 'Paper Lifafa', img: '/assets/lifafa.jpg' },
+              { id: 'stickers', title: 'Stickers', img: '/assets/stickers.jpg' },
+              { id: 'printed-labels', title: 'Printed Labels', img: '/assets/printed_labels.jpg' },
+              { id: 'woven-labels', title: 'Woven Labels', img: '/assets/woven_labels.jpg' },
+              { id: 'hang-tags', title: 'Hang Tags', img: '/assets/hang_tags.jpg' },
+              { id: 'food-boxes', title: 'Food & Pizza Boxes', img: '/assets/pizza_box.jpg' }
             ].map(cat => (
-              <Link key={cat.title} href="/shop" style={{ textDecoration: 'none', display: 'block' }} className="premium-cat-card group">
-                <div style={{ background: '#F8FAFC', borderRadius: '12px', padding: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px', marginBottom: '16px', overflow: 'hidden', position: 'relative' }}>
-                  {/* We use an image if it exists, else fallback to a premium placeholder text */}
-                  <img src={cat.img} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'contain', transition: 'transform 0.4s ease' }} className="cat-img" />
-                  <div style={{ display: 'none', color: '#94A3B8', fontSize: '0.8rem', fontWeight: 500, letterSpacing: '1px' }}>IMAGE PENDING</div>
+              <Link key={cat.title} href="/shop" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '100px', flexShrink: 0 }} className="circular-cat-item">
+                <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: cat.isSpecial ? '#FEE2E2' : '#F1F5F9', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '12px', border: cat.isSpecial ? '2px solid #EF4444' : '2px solid transparent', transition: 'all 0.3s ease' }} className="cat-img-wrapper">
+                  <img src={cat.img} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <div style={{ display: 'none', color: cat.isSpecial ? '#EF4444' : '#64748B', fontSize: '1.5rem', fontWeight: 700 }}>✨</div>
                 </div>
-                <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#0F172A', marginBottom: '4px', letterSpacing: '-0.3px' }}>{cat.title}</h3>
-                <p style={{ fontSize: '0.9rem', color: '#64748B', margin: 0 }}>{cat.sub}</p>
+                <h3 style={{ fontSize: '0.85rem', fontWeight: 600, color: cat.isSpecial ? '#B91C1C' : '#0F172A', margin: 0, textAlign: 'center', lineHeight: 1.2 }}>{cat.title}</h3>
               </Link>
             ))}
           </div>
@@ -78,8 +79,9 @@ export default function HomePage() {
       </section>
       
       <style>{`
-        .premium-cat-card:hover .cat-img {
-          transform: scale(1.08);
+        .circular-cat-item:hover .cat-img-wrapper {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
       `}</style>
 

@@ -58,22 +58,41 @@ export function Header() {
       <nav style={{ background: '#222222', color: '#fff' }}>
         <div className="container dark-nav-container" style={{ display: 'flex', justifyContent: 'center', gap: '40px', padding: '14px 0' }}>
           
-          <div className="nav-item">
+          <div className="nav-item group">
              <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
                Packing Material <span style={{ fontSize: '0.7rem' }}>▼</span>
              </Link>
+             <div className="dropdown-menu">
+               <Link href="/shop">Corrugated Boxes</Link>
+               <Link href="/shop">Pizza & Food Boxes</Link>
+               <Link href="/shop">Courier Bags</Link>
+               <Link href="/shop">Bubble Wrap & Tapes</Link>
+             </div>
           </div>
 
-          <div className="nav-item">
+          <div className="nav-item group">
              <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
                Paper Bags <span style={{ fontSize: '0.7rem' }}>▼</span>
              </Link>
+             <div className="dropdown-menu">
+               <Link href="/shop">Kraft Paper Bags</Link>
+               <Link href="/shop">Imported Paper Bags</Link>
+               <Link href="/shop">Printed Carrier Bags</Link>
+               <Link href="/shop">Custom Logo Bags</Link>
+             </div>
           </div>
 
-          <div className="nav-item">
+          <div className="nav-item group">
              <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
                Labels & Stickers <span style={{ fontSize: '0.7rem' }}>▼</span>
              </Link>
+             <div className="dropdown-menu">
+               <Link href="/shop">Roll Form Stickers</Link>
+               <Link href="/shop">Sheet Form Stickers</Link>
+               <Link href="/shop">Die-Cut Labels</Link>
+               <Link href="/shop">Holographic Stickers</Link>
+               <Link href="/shop">Woven Labels & Tags</Link>
+             </div>
           </div>
 
           <div className="nav-item">
@@ -93,11 +112,43 @@ export function Header() {
       
       <style>{`
         .nav-item {
+          position: relative;
           cursor: pointer;
-          transition: opacity 0.2s;
         }
-        .nav-item:hover {
-          opacity: 0.8;
+        .nav-item .dropdown-menu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          background: #ffffff;
+          min-width: 200px;
+          box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+          padding: 10px 0;
+          z-index: 50;
+          border-radius: 6px;
+          border: 1px solid #e5e7eb;
+          margin-top: 14px;
+        }
+        .nav-item.group:hover .dropdown-menu {
+          display: block;
+          animation: fadeIn 0.2s ease;
+        }
+        .dropdown-menu a {
+          display: block;
+          padding: 8px 20px;
+          color: #374151;
+          text-decoration: none;
+          font-size: 0.9rem;
+          font-weight: 500;
+          transition: background 0.2s, color 0.2s;
+        }
+        .dropdown-menu a:hover {
+          background: #f3f4f6;
+          color: #65A34A;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-5px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </>
