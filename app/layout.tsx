@@ -10,11 +10,55 @@ const roboto = Roboto({ subsets: ['latin'], weight: ['300', '400', '500', '700',
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'AS Print Gallery | All types of Printing and packaging solutions',
+    default: 'AS Print Gallery | Corrugated Box Manufacturer, Stickers & Packaging Solutions',
     template: '%s | AS Print Gallery'
   },
   description:
-    'All types of Printing and packaging solutions. Direct factory manufacturer for custom food packaging, woven garment labels, hang tags, and waterproof stickers.',
+    'Direct factory manufacturer for custom corrugated boxes (3-ply & 5-ply), waterproof vinyl stickers, woven garment labels, hang tags, pizza boxes & kraft paper bags. Best wholesale factory prices with Pan-India dispatch from Ghaziabad / Delhi NCR.',
+  keywords: [
+    'stickers',
+    'custom stickers',
+    'waterproof vinyl stickers',
+    'packaging stickers',
+    'packaging boxes',
+    'corrugated boxes',
+    'corrugated box manufacturer',
+    'corrugated box manufacturer ghaziabad',
+    'corrugated box manufacturer delhi',
+    '3 ply corrugated boxes',
+    '5 ply master cartons',
+    'custom printed pizza boxes',
+    'food packaging boxes',
+    'garment boxes',
+    'woven labels',
+    'woven garment labels',
+    'satin wash care labels',
+    'hang tags',
+    'clothing brand tags',
+    'kraft paper bags',
+    'paper courier mailers',
+    'custom tape',
+    'bubble wrap wholesale',
+    'custom box builder',
+    'as print gallery',
+    'packaging manufacturer delhi ncr',
+    'printing and packaging solutions india'
+  ],
+  authors: [{ name: 'AS Print Gallery', url: siteConfig.url }],
+  creator: 'AS Print Gallery',
+  publisher: 'AS Print Gallery',
+  category: 'Packaging & Printing Services',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1
+    }
+  },
   alternates: {
     canonical: '/'
   },
@@ -22,9 +66,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_IN',
     url: siteConfig.url,
-    title: 'AS Print Gallery | All types of Printing and packaging solutions',
+    title: 'AS Print Gallery | Direct Factory Packaging Boxes & Custom Stickers',
     description:
-      'All types of Printing and packaging solutions. Direct factory manufacturer for custom food packaging, woven garment labels, hang tags, and waterproof stickers.',
+      'Direct factory manufacturer for custom corrugated boxes, waterproof vinyl stickers, woven labels & packaging solutions. Wholesale prices with fast Pan-India dispatch.',
     siteName: siteConfig.name,
     images: [
       {
@@ -37,9 +81,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AS Print Gallery | All types of Printing and packaging solutions',
+    title: 'AS Print Gallery | Direct Factory Packaging Boxes & Custom Stickers',
     description:
-      'All types of Printing and packaging solutions. Direct factory manufacturer for custom food packaging, woven garment labels, hang tags, and waterproof stickers.',
+      'Direct factory manufacturer for custom corrugated boxes, waterproof vinyl stickers, woven labels & packaging solutions. Wholesale prices with fast Pan-India dispatch.',
     images: [`${siteConfig.url}/assets/combo_banner_new.jpg`]
   },
   icons: {

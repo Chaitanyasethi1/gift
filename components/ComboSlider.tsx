@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const posters = [
-  { id: 1, img: '/assets/hero1.png', alt: 'AS Print Gallery Banner 1' },
-  { id: 2, img: '/assets/hero2.png', alt: 'AS Print Gallery Banner 2' }
+  { id: 1, img: '/assets/hero1.png', alt: 'Corrugated Boxes Manufacturer AS Print Gallery', link: '/products' },
+  { id: 2, img: '/assets/hero2.png', alt: 'All Types of Custom Packaging Available AS Print Gallery', link: '/custom-box-builder' }
 ];
 
 export const ComboSlider: React.FC = () => {
@@ -24,11 +24,14 @@ export const ComboSlider: React.FC = () => {
         {/* Animated Image Wrapper */}
         <div className="hero-slider-wrapper" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
           {posters.map((poster, idx) => (
-            <div 
+            <Link
               key={poster.id}
+              href={poster.link}
               style={{
                 display: idx === currentIndex ? 'block' : 'none',
                 width: '100%',
+                textDecoration: 'none',
+                cursor: 'pointer',
                 animation: 'fadeIn 0.5s ease-in-out'
               }}
             >
@@ -37,7 +40,7 @@ export const ComboSlider: React.FC = () => {
                 alt={poster.alt} 
                 className="hero-slider-img"
               />
-            </div>
+            </Link>
           ))}
         </div>
 
