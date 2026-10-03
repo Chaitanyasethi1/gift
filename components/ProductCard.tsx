@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { StarIcon } from './Icons';
 import { useCart } from '@/context/CartContext';
+import { useRouter } from 'next/navigation';
 
 interface ProductCardProps {
   product: any;
@@ -12,8 +13,11 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
-  const originalPrice = product.mrp ? product.mrp.toFixed(2) : (product.selling_price * 1.5).toFixed(2);
-  const currentPrice = (product.selling_price || 0).toFixed(2);
+  const router = useRouter();
+  const sellingPrice = Number(product?.selling_price || 0);
+  const mrp = Number(product?.mrp || 0);
+  const originalPrice = mrp > 0 ? mrp.toFixed(2) : (sellingPrice * 1.5).toFixed(2);
+  const currentPrice = sellingPrice.toFixed(2);
 
   const handleAddClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -26,7 +30,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       specs: []
     }, product.moq || 1);
     
-    // Show a visual confirmation (optional, but good for UX)
     const btn = e.currentTarget as HTMLButtonElement;
     const originalText = btn.innerText;
     btn.innerText = "ADDED ✓";
@@ -37,9 +40,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     }, 1500);
   };
 
+  const handleCardClick = () => {
+    router.push(`/products/${product.slug}`);
+  };
+
   return (
-    <div style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: '12px', overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative', transition: 'box-shadow 0.2s' }} className="minimal-product-card">
-      <Link href={`/products/${product.slug}`} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div 
+      onClick={handleCardClick}
+      style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: '12px', overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative', transition: 'box-shadow 0.2s', cursor: 'pointer' }} 
+      className="minimal-product-card"
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         {/* Image Area */}
         <div style={{ position: 'relative', width: '100%', paddingTop: '100%', background: '#F8FAFC', borderBottom: '1px solid #F1F5F9' }}>
           <img
@@ -80,7 +91,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </button>
           </div>
         </div>
-      </Link>
+      </div>
       
       <style>{`
         .minimal-product-card:hover {
