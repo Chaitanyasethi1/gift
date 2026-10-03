@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 type ProductType = 'box' | 'bag' | 'sticker' | 'card';
 
@@ -16,6 +16,37 @@ export default function BoxBuilderPage() {
   const [logoSize, setLogoSize] = useState(50);
   const [logoX, setLogoX] = useState(0);
   const [logoY, setLogoY] = useState(0);
+
+  // Rotation state
+  const [rotX, setRotX] = useState(-20);
+  const [rotY, setRotY] = useState(-45);
+  const isDraggingRef = useRef(false);
+  const startPosRef = useRef({ x: 0, y: 0 });
+
+  const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
+    isDraggingRef.current = true;
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    startPosRef.current = { x: clientX, y: clientY };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDraggingRef.current) return;
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    
+    const deltaX = clientX - startPosRef.current.x;
+    const deltaY = clientY - startPosRef.current.y;
+    
+    setRotY((prev) => prev + deltaX * 0.5);
+    setRotX((prev) => Math.max(-90, Math.min(90, prev - deltaY * 0.5)));
+    
+    startPosRef.current = { x: clientX, y: clientY };
+  };
+
+  const handleMouseUp = () => {
+    isDraggingRef.current = false;
+  };
 
   // Simple pricing logic based on type and dimensions
   const getPrice = () => {
@@ -54,7 +85,7 @@ export default function BoxBuilderPage() {
       
       return (
         <div className="scene" style={{ width: wPx, height: hPx }}>
-          <div className="cube" style={{ transformOrigin: 'center center' }}>
+          <div className="cube" style={{ transformOrigin: 'center center', transform: `translateZ(-100px) rotateX(${rotX}deg) rotateY(${rotY}deg)` }}>
             {/* Front */}
             <div className="face front" style={{ width: wPx, height: hPx, transform: `rotateY(0deg) translateZ(${dPx/2}px)` }}>
               <div style={{ transform: `translate(${logoX}px, ${logoY}px)`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -127,9 +158,18 @@ export default function BoxBuilderPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px' }}>
         
         {/* Visualizer Pane */}
-        <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '16px', height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-           <div style={{ position: 'absolute', top: '15px', left: '15px', background: '#fff', padding: '5px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 600, boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-             Live Preview
+        <div 
+          style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '16px', height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden', cursor: 'grab' }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          onTouchStart={handleMouseDown}
+          onTouchMove={handleMouseMove}
+          onTouchEnd={handleMouseUp}
+        >
+           <div style={{ position: 'absolute', top: '15px', left: '15px', background: '#fff', padding: '5px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 600, boxShadow: '0 2px 4px rgba(0,0,0,0.05)', zIndex: 10 }}>
+             Live Preview (Drag to Rotate)
            </div>
            {renderVisualizer()}
         </div>
@@ -218,12 +258,6 @@ export default function BoxBuilderPage() {
           height: 100%;
           position: relative;
           transform-style: preserve-3d;
-          transform: translateZ(-100px) rotateX(-20deg) rotateY(-45deg);
-          animation: rotate 15s infinite linear;
-        }
-        @keyframes rotate {
-          0% { transform: translateZ(-100px) rotateX(-20deg) rotateY(0deg); }
-          100% { transform: translateZ(-100px) rotateX(-20deg) rotateY(360deg); }
         }
         .face {
           position: absolute;
