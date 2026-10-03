@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+import { CountdownTimer } from './CountdownTimer';
+
 const combos = [
   {
     id: 1,
@@ -44,36 +46,39 @@ export const ComboSlider: React.FC = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % combos.length);
-    }, 3000);
+    }, 4000); // Increased time slightly for better readability
     return () => clearInterval(timer);
   }, []);
 
   const currentCombo = combos[currentIndex];
 
   return (
-    <section style={{ padding: '30px 20px', background: 'linear-gradient(135deg, #FFF9F2 0%, #FFF5ED 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-      <div className="container combo-hero-container" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '30px', background: '#fff', borderRadius: '16px', padding: '30px 40px', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01)', minHeight: '350px', position: 'relative' }}>
+    <section style={{ padding: '20px 15px', background: 'linear-gradient(135deg, #FFF9F2 0%, #FFF5ED 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+      <div className="container combo-hero-container" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '20px', background: '#fff', borderRadius: '12px', padding: '20px 30px', boxShadow: '0 4px 15px -5px rgba(0, 0, 0, 0.05)', minHeight: '300px', position: 'relative' }}>
         
         {/* Animated Content Wrapper */}
-        <div key={currentCombo.id} className="combo-slide-in" style={{ display: 'flex', flexWrap: 'wrap', width: '100%', gap: '30px', alignItems: 'center' }}>
-          <div className="combo-hero-text" style={{ flex: '1 1 350px' }}>
-            <span style={{ background: '#DC2626', color: '#fff', padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Limited Time Offer</span>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: 700, color: '#0F172A', marginTop: '12px', lineHeight: 1.2, letterSpacing: '-0.5px' }}>
+        <div key={currentCombo.id} className="combo-slide-in" style={{ display: 'flex', flexWrap: 'wrap', width: '100%', gap: '20px', alignItems: 'center' }}>
+          <div className="combo-hero-text" style={{ flex: '1 1 300px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px', flexWrap: 'wrap' }}>
+              <span style={{ background: '#DC2626', color: '#fff', padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Limited Time Offer</span>
+              <CountdownTimer days={20} />
+            </div>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0F172A', marginTop: '4px', lineHeight: 1.2, letterSpacing: '-0.5px' }}>
               {currentCombo.title}<br/>
               <span style={{ color: '#DC2626' }}>{currentCombo.price}</span>
             </h1>
-            <ul style={{ margin: '15px 0', padding: 0, listStyle: 'none', gap: '8px', display: 'flex', flexDirection: 'column', color: '#334155' }}>
+            <ul style={{ margin: '10px 0', padding: 0, listStyle: 'none', gap: '6px', display: 'flex', flexDirection: 'column', color: '#334155' }}>
               {currentCombo.features.map((feature, i) => (
-                <li key={i} style={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <li key={i} style={{ fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <span style={{ color: '#10B981' }}>✓</span> {feature}
                 </li>
               ))}
             </ul>
-            <p style={{ color: '#64748B', fontSize: '0.8rem', marginBottom: '20px' }}>Design Charges FREE • Shipping Charges Extra</p>
-            <Link href="/shop" style={{ display: 'inline-block', background: '#B91C1C', color: '#fff', padding: '10px 24px', borderRadius: '6px', fontWeight: 600, fontSize: '0.95rem', transition: 'background 0.2s', boxShadow: '0 4px 6px -1px rgba(185, 28, 28, 0.2)' }}>Order Now &rarr;</Link>
+            <p style={{ color: '#64748B', fontSize: '0.75rem', marginBottom: '15px' }}>Design Charges FREE • Shipping Charges Extra</p>
+            <Link href="/shop" style={{ display: 'inline-block', background: '#B91C1C', color: '#fff', padding: '8px 20px', borderRadius: '6px', fontWeight: 600, fontSize: '0.9rem', transition: 'background 0.2s', boxShadow: '0 4px 6px -1px rgba(185, 28, 28, 0.2)' }}>Order Now &rarr;</Link>
           </div>
-          <div style={{ flex: '1 1 300px', textAlign: 'center' }}>
-             <img src={currentCombo.img} alt={currentCombo.title} style={{ maxWidth: '100%', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', objectFit: 'cover', height: '280px', width: '100%' }} />
+          <div style={{ flex: '1 1 250px', textAlign: 'center' }}>
+             <img src={currentCombo.img} alt={currentCombo.title} style={{ maxWidth: '100%', borderRadius: '10px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', objectFit: 'cover', height: '220px', width: '100%' }} />
           </div>
         </div>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ProductGrid } from '@/components/ProductGrid';
 import { ComboSlider } from '@/components/ComboSlider';
+import { CountdownTimer } from '@/components/CountdownTimer';
 
 export default function HomePage() {
   return (
@@ -9,17 +10,15 @@ export default function HomePage() {
       {/* 3. Hero Combo Banner */}
       <ComboSlider />
 
-
-
       {/* 5. Popular Categories */}
-      <section style={{ padding: '70px 0', background: '#FFFFFF' }}>
+      <section style={{ padding: '40px 0', background: '#FFFFFF' }}>
         <div className="container">
-          <div className="cat-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
-            <h2 className="section-title" style={{ fontSize: '2.2rem', fontWeight: 700, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>Our Popular Categories</h2>
+          <div className="cat-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '30px' }}>
+            <h2 className="section-title" style={{ fontSize: '1.8rem', fontWeight: 700, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>Our Popular Categories</h2>
             <Link href="/shop" style={{ color: '#B91C1C', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}>View All <span style={{ fontSize: '1.2rem' }}>&rarr;</span></Link>
           </div>
-          <div className="marquee-wrapper" style={{ overflow: 'hidden', whiteSpace: 'nowrap', padding: '10px 0 30px 0', position: 'relative' }}>
-            <div className="marquee-content" style={{ display: 'inline-flex', gap: '30px' }}>
+          <div className="marquee-wrapper" style={{ overflow: 'hidden', whiteSpace: 'nowrap', padding: '10px 0 20px 0', position: 'relative' }}>
+            <div className="marquee-content" style={{ display: 'inline-flex', gap: '20px' }}>
               {[
                 { id: 'hot-deals', title: 'Hot Deals', emoji: '🔥', isSpecial: true },
                 { id: 'sale', title: 'Sale', emoji: '🏷️', isSpecial: true },
@@ -36,11 +35,11 @@ export default function HomePage() {
                 { id: 'bubble-wrap', title: 'Bubble Wrap', emoji: '🫧' },
                 { id: 'courier-bags', title: 'Courier Bags', emoji: '📨' }
               ].map((cat, idx) => (
-                <Link key={`${cat.title}-${idx}`} href="/shop" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '90px', flexShrink: 0 }} className="circular-cat-item">
-                  <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '12px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2.5rem' }} className="cat-img-wrapper">
+                <Link key={`${cat.title}-${idx}`} href="/shop" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '70px', flexShrink: 0 }} className="circular-cat-item">
+                  <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '8px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2rem' }} className="cat-img-wrapper">
                     {cat.emoji}
                   </div>
-                  <h3 style={{ fontSize: '0.85rem', fontWeight: 600, color: cat.isSpecial ? '#B91C1C' : '#0F172A', margin: 0, textAlign: 'center', lineHeight: 1.2, whiteSpace: 'normal' }}>{cat.title}</h3>
+                  <h3 style={{ fontSize: '0.75rem', fontWeight: 600, color: cat.isSpecial ? '#B91C1C' : '#0F172A', margin: 0, textAlign: 'center', lineHeight: 1.2, whiteSpace: 'normal' }}>{cat.title}</h3>
                 </Link>
               ))}
               {/* Duplicate for infinite marquee effect */}
@@ -60,11 +59,11 @@ export default function HomePage() {
                 { id: 'bubble-wrap-2', title: 'Bubble Wrap', emoji: '🫧' },
                 { id: 'courier-bags-2', title: 'Courier Bags', emoji: '📨' }
               ].map((cat, idx) => (
-                <Link key={`${cat.title}-dup-${idx}`} href="/shop" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '90px', flexShrink: 0 }} className="circular-cat-item">
-                  <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '12px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2.5rem' }} className="cat-img-wrapper">
+                <Link key={`${cat.title}-dup-${idx}`} href="/shop" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '70px', flexShrink: 0 }} className="circular-cat-item">
+                  <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '8px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2rem' }} className="cat-img-wrapper">
                     {cat.emoji}
                   </div>
-                  <h3 style={{ fontSize: '0.85rem', fontWeight: 600, color: cat.isSpecial ? '#B91C1C' : '#0F172A', margin: 0, textAlign: 'center', lineHeight: 1.2, whiteSpace: 'normal' }}>{cat.title}</h3>
+                  <h3 style={{ fontSize: '0.75rem', fontWeight: 600, color: cat.isSpecial ? '#B91C1C' : '#0F172A', margin: 0, textAlign: 'center', lineHeight: 1.2, whiteSpace: 'normal' }}>{cat.title}</h3>
                 </Link>
               ))}
             </div>
@@ -74,8 +73,8 @@ export default function HomePage() {
       
       <style>{`
         .circular-cat-item:hover .cat-img-wrapper {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+          transform: translateY(-3px);
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .marquee-content {
           animation: marquee 20s linear infinite;
@@ -89,12 +88,51 @@ export default function HomePage() {
         }
       `}</style>
 
-      {/* 6. Best Sellers */}
-      <section style={{ padding: '40px 0 60px 0', background: '#FAFAFC' }}>
+      {/* Hot Deals */}
+      <section style={{ padding: '20px 0', background: '#FAFAFC' }}>
         <div className="container">
-           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-            <h2 style={{ fontSize: '2rem', fontWeight: 800 }}>Best Sellers</h2>
-            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700 }}>View All &rarr;</Link>
+           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🔥 Hot Deals</h2>
+              <CountdownTimer days={3} />
+            </div>
+            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
+          </div>
+          <ProductGrid initialFilter="all" showAllButton={false} limit={4} hideTabs={true} />
+        </div>
+      </section>
+
+      {/* Sale */}
+      <section style={{ padding: '20px 0', background: '#FFFFFF' }}>
+        <div className="container">
+           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🏷️ Mega Sale</h2>
+              <CountdownTimer days={12} />
+            </div>
+            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
+          </div>
+          <ProductGrid initialFilter="all" showAllButton={false} limit={4} hideTabs={true} />
+        </div>
+      </section>
+
+      {/* New Arrivals */}
+      <section style={{ padding: '20px 0', background: '#FAFAFC' }}>
+        <div className="container">
+           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🌟 New Arrivals</h2>
+            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
+          </div>
+          <ProductGrid initialFilter="all" showAllButton={false} limit={4} hideTabs={true} />
+        </div>
+      </section>
+
+      {/* 6. Best Sellers */}
+      <section style={{ padding: '20px 0 40px 0', background: '#FFFFFF' }}>
+        <div className="container">
+           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>🏆 Best Sellers</h2>
+            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
           </div>
           <ProductGrid initialFilter="all" showAllButton={false} limit={4} hideTabs={true} />
         </div>
