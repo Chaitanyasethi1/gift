@@ -29,6 +29,7 @@ export async function POST(req: Request) {
     return NextResponse.json(order);
   } catch (error: any) {
     console.error('Error in create-order API:', error);
-    return NextResponse.json({ error: error.message || 'Failed to create order' }, { status: 500 });
+    const errMessage = error?.error?.description || error.message || 'Failed to create order';
+    return NextResponse.json({ error: errMessage }, { status: 500 });
   }
 }
