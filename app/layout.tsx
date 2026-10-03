@@ -97,7 +97,7 @@ export default function RootLayout({
       </head>
       <body>
         <CartProvider>
-          <LayoutWrapper>{children}</LayoutWrapper>
+          {children}
         </CartProvider>
       </body>
     </html>
