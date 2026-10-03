@@ -49,11 +49,11 @@ export const FactoryGallery: React.FC = () => {
 
           <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '30px', textAlign: 'center' }}>
             <div style={{ fontSize: '3rem', marginBottom: '15px' }}>📄</div>
-            <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Company Profile & Logo</h3>
+            <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Company Catalogue</h3>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: '20px' }}>
-              Download our official company logo and profile for your records and vendor onboarding process.
+              Download our official company catalogue to explore our premium product range and printing solutions.
             </p>
-            <a href="/assets/LOGO.pdf" download="AS_Print_Gallery_LOGO.pdf" className="btn-primary-hero" style={{ padding: '10px 20px', borderRadius: '6px' }}>
+            <a href="/AS_PRINT_GALLERY_CATALOGUE.pdf" download="AS_PRINT_GALLERY_CATALOGUE.pdf" className="btn-primary-hero" style={{ padding: '10px 20px', borderRadius: '6px' }}>
               Download PDF
             </a>
           </div>
