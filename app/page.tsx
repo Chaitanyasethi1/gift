@@ -1,29 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { ProductGrid } from '@/components/ProductGrid';
+import { ComboSlider } from '@/components/ComboSlider';
 
 export default function HomePage() {
   return (
     <>
       {/* 3. Hero Combo Banner */}
-      <section style={{ padding: '30px 20px', background: 'linear-gradient(135deg, #FFF9F2 0%, #FFF5ED 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div className="container combo-hero-container" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '30px', background: '#fff', borderRadius: '16px', padding: '30px 40px', boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01)' }}>
-          <div className="combo-hero-text" style={{ flex: '1 1 350px' }}>
-            <span style={{ background: '#DC2626', color: '#fff', padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Limited Time Offer</span>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: 700, color: '#0F172A', marginTop: '12px', lineHeight: 1.2, letterSpacing: '-0.5px' }}>Business Branding Combo<br/><span style={{ color: '#DC2626' }}>₹699 Only</span></h1>
-            <ul style={{ margin: '15px 0', padding: 0, listStyle: 'none', gap: '8px', display: 'flex', flexDirection: 'column', color: '#334155' }}>
-              <li style={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{ color: '#10B981' }}>✓</span> 1000 Premium Stickers</li>
-              <li style={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{ color: '#10B981' }}>✓</span> 200 Thank You Cards</li>
-              <li style={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{ color: '#10B981' }}>✓</span> 1 Custom Rubber Stamp</li>
-            </ul>
-            <p style={{ color: '#64748B', fontSize: '0.8rem', marginBottom: '20px' }}>Design Charges FREE • Shipping Charges Extra</p>
-            <Link href="/shop" style={{ display: 'inline-block', background: '#B91C1C', color: '#fff', padding: '10px 24px', borderRadius: '6px', fontWeight: 600, fontSize: '0.95rem', transition: 'background 0.2s', boxShadow: '0 4px 6px -1px rgba(185, 28, 28, 0.2)' }}>Order Now &rarr;</Link>
-          </div>
-          <div style={{ flex: '1 1 300px', textAlign: 'center' }}>
-             <img src="/assets/combo_banner_new.jpg" alt="Combo Offer" style={{ maxWidth: '100%', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
-          </div>
-        </div>
-      </section>
+      <ComboSlider />
 
       {/* 4. Trust Strip */}
       <section style={{ borderBottom: '1px solid #E2E8F0', padding: '20px 0', background: '#FAFAFC' }}>
