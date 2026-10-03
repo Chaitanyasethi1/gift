@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { logout } from '@/app/admin/login/actions';
 
 export const metadata = {
   title: 'Admin Panel | AS Print Gallery',
@@ -42,10 +43,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <header style={{ background: '#fff', padding: '15px 30px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '20px' }}>
           <div style={{ fontWeight: 600, color: '#475569' }}>Admin User</div>
-          <form action="/admin/login/actions" method="POST" onSubmit={(e) => {
-            e.preventDefault();
-            import('@/app/admin/login/actions').then(m => m.logout());
-          }}>
+          <form action={logout}>
             <button type="submit" style={{ padding: '8px 16px', background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', borderRadius: '6px', fontWeight: 600, cursor: 'pointer' }}>
               Logout
             </button>
