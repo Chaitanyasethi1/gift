@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { Outfit } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/data/siteConfig';
 import { CartProvider } from '@/context/CartContext';
 
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
+const roboto = Roboto({ subsets: ['latin'], weight: ['300', '400', '500', '700', '900'], variable: '--font-roboto' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -90,13 +90,13 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={outfit.variable}>
+    <html lang="en" className={roboto.variable}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
-        <style dangerouslySetInnerHTML={{ __html: `body { font-family: 'Outfit', sans-serif !important; }` }} />
+        <style dangerouslySetInnerHTML={{ __html: `body, * { font-family: var(--font-roboto), sans-serif !important; }` }} />
       </head>
       <body>
         <CartProvider>
