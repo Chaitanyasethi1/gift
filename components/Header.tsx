@@ -60,38 +60,77 @@ export function Header() {
           
           <div className="nav-item group">
              <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
-               Packing Material <span style={{ fontSize: '0.7rem' }}>▼</span>
-             </Link>
-             <div className="dropdown-menu">
-               <Link href="/shop">Corrugated Boxes</Link>
-               <Link href="/shop">Pizza & Food Boxes</Link>
-               <Link href="/shop">Courier Bags</Link>
-               <Link href="/shop">Bubble Wrap & Tapes</Link>
-             </div>
-          </div>
-
-          <div className="nav-item group">
-             <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
                Paper Bags <span style={{ fontSize: '0.7rem' }}>▼</span>
              </Link>
              <div className="dropdown-menu">
                <Link href="/shop">Kraft Paper Bags</Link>
-               <Link href="/shop">Imported Paper Bags</Link>
-               <Link href="/shop">Printed Carrier Bags</Link>
-               <Link href="/shop">Custom Logo Bags</Link>
+               <Link href="/shop">Printed Paper Bags</Link>
+               <Link href="/shop">Handle Paper Bags</Link>
+               <Link href="/shop">Pizza Paper Bags</Link>
              </div>
           </div>
 
           <div className="nav-item group">
              <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
-               Labels & Stickers <span style={{ fontSize: '0.7rem' }}>▼</span>
+               Packaging Boxes <span style={{ fontSize: '0.7rem' }}>▼</span>
              </Link>
              <div className="dropdown-menu">
-               <Link href="/shop">Roll Form Stickers</Link>
-               <Link href="/shop">Sheet Form Stickers</Link>
-               <Link href="/shop">Die-Cut Labels</Link>
-               <Link href="/shop">Holographic Stickers</Link>
-               <Link href="/shop">Woven Labels & Tags</Link>
+               <Link href="/shop">Corrugated Boxes</Link>
+               <Link href="/shop">Garment Boxes</Link>
+               <Link href="/shop">Gift Boxes</Link>
+               <Link href="/shop">Sweet Boxes</Link>
+               <Link href="/shop">Pizza Boxes</Link>
+               <Link href="/shop">Custom Printed Boxes</Link>
+             </div>
+          </div>
+
+          <div className="nav-item group">
+             <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+               Labels & Tags <span style={{ fontSize: '0.7rem' }}>▼</span>
+             </Link>
+             <div className="dropdown-menu">
+               <Link href="/shop">Woven Labels</Link>
+               <Link href="/shop">Satin Labels</Link>
+               <Link href="/shop">Printed Labels</Link>
+               <Link href="/shop">Hang Tags</Link>
+               <Link href="/shop">Barcode Stickers</Link>
+             </div>
+          </div>
+
+          <div className="nav-item group">
+             <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+               Stickers <span style={{ fontSize: '0.7rem' }}>▼</span>
+             </Link>
+             <div className="dropdown-menu">
+               <Link href="/shop">Product Stickers</Link>
+               <Link href="/shop">Round Stickers</Link>
+               <Link href="/shop">Custom Stickers</Link>
+               <Link href="/shop">Packaging Labels</Link>
+             </div>
+          </div>
+
+          <div className="nav-item group">
+             <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+               Branding & Marketing <span style={{ fontSize: '0.7rem' }}>▼</span>
+             </Link>
+             <div className="dropdown-menu">
+               <Link href="/shop">Visiting Cards</Link>
+               <Link href="/shop">Thank You Cards</Link>
+               <Link href="/shop">Rubber Stamps</Link>
+               <Link href="/shop">Letterheads</Link>
+               <Link href="/shop">QR Code Cards</Link>
+             </div>
+          </div>
+
+          <div className="nav-item group">
+             <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+               Disposable Products <span style={{ fontSize: '0.7rem' }}>▼</span>
+             </Link>
+             <div className="dropdown-menu">
+               <Link href="/shop">Paper Dona</Link>
+               <Link href="/shop">Paper Plates</Link>
+               <Link href="/shop">Silver Dona</Link>
+               <Link href="/shop">Silver Plates</Link>
              </div>
           </div>
 
