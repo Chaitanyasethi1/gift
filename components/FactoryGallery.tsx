@@ -18,21 +18,21 @@ export const FactoryGallery: React.FC = () => {
         {/* Plant Highlights Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '40px' }}>
           <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-            <img src="/assets/factory_hero.jpg" alt="Automated Corrugation Plant" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+            <img src="/assets/factory-machine.jpg" alt="High-Speed Slitting & Printing Machines" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
             <div style={{ padding: '24px' }}>
-              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Automated Corrugation Plant</h3>
+              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>High-Speed Slitting & Printing</h3>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                Single-facer and multi-layer corrugating lines manufacturing B, C, and E flutes with uniform starch adhesion and high crush resistance.
+                Advanced machinery for precise slitting, winding, and printing with razor-sharp accuracy for all your custom packaging needs.
               </p>
             </div>
           </div>
 
           <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-            <img src="/assets/corrugated_box.jpg" alt="High-Speed Offset & Flexo Presses" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+            <img src="/assets/factory-rolls.jpg" alt="Raw Material Storage" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
             <div style={{ padding: '24px' }}>
-              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>High-Speed Offset &amp; Flexo Presses</h3>
+              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Massive Raw Material Inventory</h3>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                Multi-color printing machinery capable of razor-sharp Pantone color matching, vibrant inks, and UV gloss/matte varnish coating.
+                Bulk storage of high-GSM Kraft paper rolls ensuring uninterrupted production and consistent bursting strength for all corrugated boxes.
               </p>
             </div>
           </div>
@@ -40,21 +40,22 @@ export const FactoryGallery: React.FC = () => {
           <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
             <img src="/assets/woven_label.jpg" alt="Damask Label Looms" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
             <div style={{ padding: '24px' }}>
-              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Damask Label Looms &amp; Ultrasonic Cutters</h3>
+              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Damask Label Looms & Ultrasonic Cutters</h3>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
                 High-density woven label looms with laser-guided ultrasonic slitting that seals fabric edges smoothly with zero skin irritation.
               </p>
             </div>
           </div>
 
-          <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-            <img src="/assets/boxes.jpg" alt="Automatic Die-Punching" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
-            <div style={{ padding: '24px' }}>
-              <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Automatic Die-Punching &amp; Creasing</h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                Heavy-duty platen and automatic die-cutters delivering clean folding edges, steam vent punches for pizza boxes, and custom shapes.
-              </p>
-            </div>
+          <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '30px', textAlign: 'center' }}>
+            <div style={{ fontSize: '3rem', marginBottom: '15px' }}>📄</div>
+            <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Company Profile & Logo</h3>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: '20px' }}>
+              Download our official company logo and profile for your records and vendor onboarding process.
+            </p>
+            <a href="/assets/LOGO.pdf" download="AS_Print_Gallery_LOGO.pdf" className="btn-primary-hero" style={{ padding: '10px 20px', borderRadius: '6px' }}>
+              Download PDF
+            </a>
           </div>
         </div>
 
