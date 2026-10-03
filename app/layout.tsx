@@ -2,11 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { siteConfig } from '@/data/siteConfig';
 import { CartProvider } from '@/context/CartContext';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { GlobalModals } from '@/components/GlobalModals';
-import { StickyMobileBar } from '@/components/StickyMobileBar';
-import { CookieBanner } from '@/components/CookieBanner';
+import { LayoutWrapper } from '@/components/LayoutWrapper';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -101,12 +97,7 @@ export default function RootLayout({
       </head>
       <body>
         <CartProvider>
-          <Header />
-          <main id="main-content">{children}</main>
-          <Footer />
-          <GlobalModals />
-          <StickyMobileBar />
-          <CookieBanner />
+          <LayoutWrapper>{children}</LayoutWrapper>
         </CartProvider>
       </body>
     </html>
