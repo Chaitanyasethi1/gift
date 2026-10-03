@@ -32,7 +32,7 @@ export default async function HomePage() {
                 { id: 'hot-deals', title: 'Hot Deals', emoji: '🔥', isSpecial: true },
                 { id: 'sale', title: 'Sale', emoji: '🏷️', isSpecial: true },
                 { id: 'new-arrivals', title: 'New Arrivals', emoji: '🌟', isSpecial: true },
-                { id: 'boxes', title: 'Packaging Boxes', emoji: '📦' },
+                { id: 'boxes', title: 'Packaging Boxes', image: '/assets/packaging_boxes_cat.jpg' },
                 { id: 'bags', title: 'Paper Bags', emoji: '🛍️' },
                 { id: 'lifafa', title: 'Paper Lifafa', emoji: '✉️' },
                 { id: 'stickers', title: 'Stickers', emoji: '🏵️' },
@@ -46,7 +46,11 @@ export default async function HomePage() {
               ].map((cat, idx) => (
                 <Link key={`${cat.title}-${idx}`} href="/shop" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '70px', flexShrink: 0 }} className="circular-cat-item">
                   <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '8px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2rem' }} className="cat-img-wrapper">
-                    {cat.emoji}
+                    {cat.image ? (
+                      <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      cat.emoji
+                    )}
                   </div>
                   <h3 style={{ fontSize: '0.75rem', fontWeight: 600, color: cat.isSpecial ? '#B91C1C' : '#0F172A', margin: 0, textAlign: 'center', lineHeight: 1.2, whiteSpace: 'normal' }}>{cat.title}</h3>
                 </Link>
@@ -56,7 +60,7 @@ export default async function HomePage() {
                 { id: 'hot-deals-2', title: 'Hot Deals', emoji: '🔥', isSpecial: true },
                 { id: 'sale-2', title: 'Sale', emoji: '🏷️', isSpecial: true },
                 { id: 'new-arrivals-2', title: 'New Arrivals', emoji: '🌟', isSpecial: true },
-                { id: 'boxes-2', title: 'Packaging Boxes', emoji: '📦' },
+                { id: 'boxes-2', title: 'Packaging Boxes', image: '/assets/packaging_boxes_cat.jpg' },
                 { id: 'bags-2', title: 'Paper Bags', emoji: '🛍️' },
                 { id: 'lifafa-2', title: 'Paper Lifafa', emoji: '✉️' },
                 { id: 'stickers-2', title: 'Stickers', emoji: '🏵️' },
@@ -70,7 +74,11 @@ export default async function HomePage() {
               ].map((cat, idx) => (
                 <Link key={`${cat.title}-dup-${idx}`} href="/shop" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '70px', flexShrink: 0 }} className="circular-cat-item">
                   <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '8px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2rem' }} className="cat-img-wrapper">
-                    {cat.emoji}
+                    {cat.image ? (
+                      <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      cat.emoji
+                    )}
                   </div>
                   <h3 style={{ fontSize: '0.75rem', fontWeight: 600, color: cat.isSpecial ? '#B91C1C' : '#0F172A', margin: 0, textAlign: 'center', lineHeight: 1.2, whiteSpace: 'normal' }}>{cat.title}</h3>
                 </Link>
