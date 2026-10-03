@@ -35,11 +35,7 @@ export const ComboSlider: React.FC = () => {
               <img 
                 src={poster.img} 
                 alt={poster.alt} 
-                style={{ 
-                  width: '100%', 
-                  height: 'auto',
-                  objectFit: 'cover'
-                }} 
+                className="hero-slider-img"
               />
             </div>
           ))}
@@ -70,6 +66,19 @@ export const ComboSlider: React.FC = () => {
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
+        }
+        .hero-slider-img {
+          width: 100%;
+          height: 100%;
+          max-height: 450px;
+          object-fit: cover;
+          object-position: center;
+          display: block;
+        }
+        @media (max-width: 768px) {
+          .hero-slider-img {
+            max-height: 220px;
+          }
         }
       `}</style>
     </section>
