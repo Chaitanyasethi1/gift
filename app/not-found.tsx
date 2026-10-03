@@ -25,7 +25,7 @@ export default function NotFound() {
             <PackageIcon size={16} /> View All 15 Products
           </Link>
           <Link href="/#3d-customizer" className="btn-outline-hero">
-            <BoxIcon size={16} /> 3D Box Builder
+            <BoxIcon size={16} /> Customize
           </Link>
         </div>
       </div>

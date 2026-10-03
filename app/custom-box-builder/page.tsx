@@ -32,7 +32,7 @@ export default function CustomBoxBuilderPage() {
           <div style={{ fontSize: '0.85rem', color: '#94A3B8', marginBottom: '16px' }}>
             <Link href="/" style={{ color: '#CBD5E1', textDecoration: 'none' }}>Home</Link>
             <span style={{ margin: '0 8px' }}>/</span>
-            <span style={{ color: '#F1F5F9' }}>3D Box Builder &amp; Customizer</span>
+            <span style={{ color: '#F1F5F9' }}>Customize</span>
           </div>
 
           <span

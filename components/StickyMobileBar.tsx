@@ -122,7 +122,7 @@ export const StickyMobileBar: React.FC = () => {
             <span className="icon" style={{ display: 'inline-flex' }}>
               <BoxIcon size={18} />
             </span>
-            <span>3D Box</span>
+            <span>Customize</span>
           </Link>
 
           <button

@@ -97,7 +97,7 @@ export function Header() {
 
           <div className="nav-item">
              <Link href="/3d-box-builder" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700 }}>
-               3D Box Builder
+               Customize
              </Link>
           </div>
           
