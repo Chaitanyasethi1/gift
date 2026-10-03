@@ -11,6 +11,7 @@
   "author": "AS PRINT GALLERY",
   "license": "UNLICENSED",
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.117.2",
     "@types/node": "^26.6.3",
     "@types/react": "^18.3.12",
