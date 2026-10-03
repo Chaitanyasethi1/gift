@@ -80,17 +80,27 @@ export default function CheckoutPage() {
               body: JSON.stringify({
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature
+                razorpay_signature: response.razorpay_signature,
+                customer_name: name,
+                customer_phone: phone,
+                shipping_address: address,
+                pincode: pincode,
+                gstin: gstin,
+                cart: cart,
+                subtotal: subtotal,
+                gstAmount: gstAmount,
+                finalTotal: finalTotal,
+                discount: discount
               })
             });
             const verifyData = await verifyRes.json();
             
             if (verifyRes.ok && verifyData.success) {
-              setMessage('Payment successful! Your order has been placed.');
+              setMessage(`Payment successful! Your Order ID is: ${verifyData.orderNumber}`);
               setTimeout(() => {
                 clearCart();
-                router.push('/');
-              }, 3000);
+                router.push(`/order-success/${verifyData.orderId}`);
+              }, 2000);
             } else {
               setMessage('Payment verification failed. Invalid signature.');
             }
