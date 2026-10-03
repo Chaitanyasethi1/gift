@@ -11,6 +11,7 @@ export default function StockProductsPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [newItem, setNewItem] = useState({ name: '', slug: '', mrp: 0, selling_price: 0, stock_quantity: 0, is_active: true, images: [] as string[] });
   const [isSaving, setIsSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   async function fetchProducts() {
     setLoading(true);
@@ -42,6 +43,28 @@ export default function StockProductsPage() {
     setEditingId(null);
     setNewItem({ name: '', slug: '', mrp: 0, selling_price: 0, stock_quantity: 0, is_active: true, images: [] });
     setIsModalOpen(true);
+  }
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    try {
+      setUploadingImage(true);
+      if (!e.target.files || e.target.files.length === 0) return;
+      const file = e.target.files[0];
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage.from('product-images').upload(filePath, file);
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from('product-images').getPublicUrl(filePath);
+      
+      setNewItem({ ...newItem, images: [data.publicUrl] });
+    } catch (error: any) {
+      alert('Error uploading image: ' + error.message);
+    } finally {
+      setUploadingImage(false);
+    }
   }
 
   async function handleSaveItem(e: React.FormEvent) {
@@ -91,10 +114,22 @@ export default function StockProductsPage() {
                 <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#64748b' }}>Product Name</label>
                 <input required type="text" value={newItem.name} onChange={e => setNewItem({...newItem, name: e.target.value})} style={{ width: '100%', padding: '10px', border: '1px solid #e2e8f0', borderRadius: '6px' }} />
               </div>
+              
               <div>
-                <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#64748b' }}>Image URL (e.g. /assets/pizza_box.jpg or https://...)</label>
-                <input type="text" value={newItem.images[0] || ''} onChange={e => setNewItem({...newItem, images: [e.target.value]})} style={{ width: '100%', padding: '10px', border: '1px solid #e2e8f0', borderRadius: '6px' }} />
+                <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#64748b' }}>Product Image</label>
+                {newItem.images[0] && (
+                  <img src={newItem.images[0]} alt="Preview" style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px', marginBottom: '10px' }} />
+                )}
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handleImageUpload} 
+                  disabled={uploadingImage}
+                  style={{ width: '100%', padding: '10px', border: '1px solid #e2e8f0', borderRadius: '6px', background: '#f8fafc' }} 
+                />
+                {uploadingImage && <span style={{ fontSize: '0.8rem', color: '#3b82f6' }}>Uploading...</span>}
               </div>
+
               <div style={{ display: 'flex', gap: '10px' }}>
                 <div style={{ flex: 1 }}>
                   <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#64748b' }}>MRP (₹)</label>
@@ -117,7 +152,7 @@ export default function StockProductsPage() {
               </div>
               <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                 <button type="button" onClick={() => setIsModalOpen(false)} style={{ flex: 1, padding: '10px', border: '1px solid #e2e8f0', background: '#fff', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>Cancel</button>
-                <button type="submit" disabled={isSaving} style={{ flex: 1, padding: '10px', border: 'none', background: '#10b981', color: '#fff', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>
+                <button type="submit" disabled={isSaving || uploadingImage} style={{ flex: 1, padding: '10px', border: 'none', background: '#10b981', color: '#fff', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>
                   {isSaving ? 'Saving...' : 'Save Product'}
                 </button>
               </div>
