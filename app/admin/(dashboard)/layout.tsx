@@ -7,7 +7,17 @@ export const metadata = {
   robots: 'noindex, nofollow'
 };
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+import { redirect } from 'next/navigation';
+import { createClient } from '@/utils/supabase/server';
+
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect('/admin/login');
+  }
+
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc', position: 'relative', zIndex: 100 }}>
       {/* Sidebar */}
