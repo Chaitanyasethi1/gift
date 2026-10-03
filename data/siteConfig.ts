@@ -33,12 +33,12 @@ export const siteConfig = {
     whatsappPhoneRaw: "919911678386",
     email: "asprintgallery742@gmail.com",
     address: {
-      street: "Plot No. 12, Industrial Area, Loni",
-      city: "Ghaziabad",
+      street: "Kh No. 2326/2, Shankar Garden, Ashok Vihar",
+      city: "Loni, Ghaziabad",
       state: "Uttar Pradesh",
       pincode: "201102",
       country: "India",
-      landmark: "Near Tronica City Industrial Area"
+      landmark: ""
     },
     googleMapsUrl: "https://maps.google.com/?q=Loni+Ghaziabad+201102"
   },
@@ -49,8 +49,8 @@ export const siteConfig = {
   },
 
   address: {
-    full: "Plot No. 12, Industrial Area, Loni, Ghaziabad, Uttar Pradesh - 201102, India",
-    area: "Loni Industrial Area",
+    full: "Kh No. 2326/2, Shankar Garden, Ashok Vihar, Loni, Ghaziabad, Uttar Pradesh - 201102, India",
+    area: "Ashok Vihar",
     city: "Ghaziabad",
     state: "Uttar Pradesh",
     pincode: "201102",
