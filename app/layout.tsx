@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
+import { Outfit } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/data/siteConfig';
 import { CartProvider } from '@/context/CartContext';
-import { LayoutWrapper } from '@/components/LayoutWrapper';
+
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -88,12 +90,13 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className={outfit.variable}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
+        <style dangerouslySetInnerHTML={{ __html: `body { font-family: 'Outfit', sans-serif !important; }` }} />
       </head>
       <body>
         <CartProvider>
