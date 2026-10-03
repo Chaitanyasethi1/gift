@@ -93,19 +93,22 @@ export default function RootLayout({
   return (
     <html lang="en" className={roboto.variable}>
       <head>
-        <Script
+        <script
+          async
           src="https://www.googletagmanager.com/gtag/js?id=G-RNM182BSEZ"
-          strategy="afterInteractive"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-RNM182BSEZ');
-          `}
-        </Script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-RNM182BSEZ', {
+                page_path: window.location.pathname,
+              });
+            `
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
