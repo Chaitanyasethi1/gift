@@ -55,7 +55,7 @@ export default function StockProductsPage() {
       flag_mega_sale: item.flag_mega_sale || false,
       flag_new_arrival: item.flag_new_arrival || false,
       flag_best_seller: item.flag_best_seller || false,
-      sizes: item.sizes ? item.sizes.join(', ') : '',
+      sizes: Array.isArray(item.sizes) ? item.sizes.join(', ') : (item.sizes || ''),
       allow_logo_upload: item.allow_logo_upload || false
     });
     setIsModalOpen(true);
@@ -94,13 +94,13 @@ export default function StockProductsPage() {
     setIsSaving(true);
     const slug = newItem.slug || newItem.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
     
-    const sizesArray = newItem.sizes ? newItem.sizes.split(',').map(s => s.trim()).filter(Boolean) : [];
+    const sizesString = newItem.sizes ? newItem.sizes.split(',').map(s => s.trim()).filter(Boolean).join(', ') : '';
     
     const payload = { 
       ...newItem, 
       slug, 
       category_id: newItem.category_id ? newItem.category_id : null,
-      sizes: sizesArray
+      sizes: sizesString
     };
 
     let error;
