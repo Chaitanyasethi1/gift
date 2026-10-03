@@ -229,7 +229,7 @@ export default function CheckoutPage() {
               </div>
               
               {message && (
-                <div style={{ gridColumn: '1 / -1', padding: '12px', marginTop: '10px', background: message.includes('failed') || message.includes('error') ? '#FEE2E2' : '#ECFDF5', color: message.includes('failed') || message.includes('error') ? '#B91C1C' : '#047857', borderRadius: '6px', fontSize: '0.9rem', textAlign: 'center', fontWeight: 600 }}>
+                <div style={{ gridColumn: '1 / -1', padding: '12px', marginTop: '10px', background: (message.toLowerCase().includes('fail') || message.toLowerCase().includes('error')) ? '#FEE2E2' : '#ECFDF5', color: (message.toLowerCase().includes('fail') || message.toLowerCase().includes('error')) ? '#B91C1C' : '#047857', borderRadius: '6px', fontSize: '0.9rem', textAlign: 'center', fontWeight: 600 }}>
                   {message}
                 </div>
               )}
