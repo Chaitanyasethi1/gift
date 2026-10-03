@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc', position: 'relative', zIndex: 100 }}>
       {/* Sidebar */}
       <aside style={{ width: '250px', background: '#1e293b', color: '#fff', display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '20px', fontSize: '1.2rem', fontWeight: 800, borderBottom: '1px solid #334155' }}>
