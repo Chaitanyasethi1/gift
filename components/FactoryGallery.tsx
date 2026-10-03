@@ -18,7 +18,7 @@ export const FactoryGallery: React.FC = () => {
         {/* Plant Highlights Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '40px' }}>
           <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-            <img src="/assets/factory-machine.jpg" alt="High-Speed Slitting & Printing Machines" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+            <img src="/assets/factory-rolls.jpg" alt="High-Speed Slitting & Printing Machines" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
             <div style={{ padding: '24px' }}>
               <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>High-Speed Slitting & Printing</h3>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
@@ -28,7 +28,7 @@ export const FactoryGallery: React.FC = () => {
           </div>
 
           <div style={{ background: 'var(--off-white)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg, 12px)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-            <img src="/assets/factory-rolls.jpg" alt="Raw Material Storage" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+            <img src="/assets/factory-machine.jpg" alt="Raw Material Storage" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
             <div style={{ padding: '24px' }}>
               <h3 style={{ fontSize: '1.15rem', marginBottom: '8px', color: 'var(--text-dark)' }}>Massive Raw Material Inventory</h3>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
