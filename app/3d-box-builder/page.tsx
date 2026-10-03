@@ -12,6 +12,11 @@ export default function BoxBuilderPage() {
   const [depth, setDepth] = useState(10);
   const [quantity, setQuantity] = useState(100);
 
+  const [logoSrc, setLogoSrc] = useState<string | null>(null);
+  const [logoSize, setLogoSize] = useState(50);
+  const [logoX, setLogoX] = useState(0);
+  const [logoY, setLogoY] = useState(0);
+
   // Simple pricing logic based on type and dimensions
   const getPrice = () => {
     let basePrice = 0;
@@ -27,44 +32,89 @@ export default function BoxBuilderPage() {
     return Math.max(total, 0).toFixed(2);
   };
 
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        if (typeof evt.target?.result === 'string') {
+          setLogoSrc(evt.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const renderVisualizer = () => {
     if (type === 'box') {
+      const scale = 8; // pixel multiplier
+      const wPx = Math.max(40, width * scale);
+      const hPx = Math.max(40, height * scale);
+      const dPx = Math.max(40, depth * scale);
+      
       return (
-        <div className="scene">
-          <div className="cube">
-            <div className="face front">{text}</div>
-            <div className="face back"></div>
-            <div className="face right"></div>
-            <div className="face left"></div>
-            <div className="face top"></div>
-            <div className="face bottom"></div>
+        <div className="scene" style={{ width: wPx, height: hPx }}>
+          <div className="cube" style={{ transformOrigin: 'center center' }}>
+            {/* Front */}
+            <div className="face front" style={{ width: wPx, height: hPx, transform: `rotateY(0deg) translateZ(${dPx/2}px)` }}>
+              <div style={{ transform: `translate(${logoX}px, ${logoY}px)`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                {logoSrc && <img src={logoSrc} alt="Logo" style={{ maxWidth: '100%', maxHeight: '100%', width: `${logoSize}px`, objectFit: 'contain' }} />}
+                <div style={{ fontSize: '1rem', textAlign: 'center' }}>{text}</div>
+              </div>
+            </div>
+            {/* Back */}
+            <div className="face back" style={{ width: wPx, height: hPx, transform: `rotateY(180deg) translateZ(${dPx/2}px)` }}></div>
+            {/* Right */}
+            <div className="face right" style={{ width: dPx, height: hPx, transform: `rotateY(90deg) translateZ(${wPx/2}px)` }}></div>
+            {/* Left */}
+            <div className="face left" style={{ width: dPx, height: hPx, transform: `rotateY(-90deg) translateZ(${wPx/2}px)` }}></div>
+            {/* Top */}
+            <div className="face top" style={{ width: wPx, height: dPx, transform: `rotateX(90deg) translateZ(${hPx/2}px)` }}></div>
+            {/* Bottom */}
+            <div className="face bottom" style={{ width: wPx, height: dPx, transform: `rotateX(-90deg) translateZ(${hPx/2}px)` }}></div>
           </div>
         </div>
       );
     }
     
     if (type === 'bag') {
+      const scale = 8;
+      const wPx = Math.max(80, width * scale);
+      const hPx = Math.max(100, height * scale);
       return (
-        <div style={{ position: 'relative', width: '180px', height: '240px', background: '#D2B48C', borderRadius: '4px 4px 10px 10px', boxShadow: 'inset -10px -10px 20px rgba(0,0,0,0.1), 0 10px 20px rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-           {/* Handle */}
-           <div style={{ position: 'absolute', top: '-30px', width: '60px', height: '40px', border: '6px solid #8B4513', borderBottom: 'none', borderRadius: '30px 30px 0 0' }}></div>
-           <div style={{ color: '#5C4033', fontWeight: 800, fontSize: '1.2rem', textAlign: 'center', padding: '10px' }}>{text}</div>
+        <div style={{ position: 'relative', width: wPx, height: hPx, background: '#D2B48C', borderRadius: '4px 4px 10px 10px', boxShadow: 'inset -10px -10px 20px rgba(0,0,0,0.1), 0 10px 20px rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', overflow: 'hidden' }}>
+           <div style={{ position: 'absolute', top: '-30px', width: '60%', height: '40px', border: '6px solid #8B4513', borderBottom: 'none', borderRadius: '30px 30px 0 0' }}></div>
+           <div style={{ transform: `translate(${logoX}px, ${logoY}px)`, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+             {logoSrc && <img src={logoSrc} alt="Logo" style={{ width: `${logoSize}px`, objectFit: 'contain' }} />}
+             <div style={{ color: '#5C4033', fontWeight: 800, fontSize: '1.2rem', textAlign: 'center', padding: '10px' }}>{text}</div>
+           </div>
         </div>
       );
     }
 
     if (type === 'sticker') {
+      const scale = 10;
+      const wPx = Math.max(60, width * scale);
       return (
-        <div style={{ width: '150px', height: '150px', background: '#FFF', borderRadius: '50%', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid #E2E8F0' }}>
-          <div style={{ color: '#0F172A', fontWeight: 800, fontSize: '1.2rem', textAlign: 'center', padding: '10px' }}>{text}</div>
+        <div style={{ width: wPx, height: wPx, background: '#FFF', borderRadius: '50%', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid #E2E8F0', overflow: 'hidden' }}>
+           <div style={{ transform: `translate(${logoX}px, ${logoY}px)`, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+             {logoSrc && <img src={logoSrc} alt="Logo" style={{ width: `${logoSize}px`, objectFit: 'contain' }} />}
+             <div style={{ color: '#0F172A', fontWeight: 800, fontSize: '1rem', textAlign: 'center', padding: '10px' }}>{text}</div>
+           </div>
         </div>
       );
     }
 
     if (type === 'card') {
+      const scale = 12;
+      const wPx = Math.max(100, width * scale);
+      const hPx = Math.max(60, height * scale);
       return (
-        <div style={{ width: '220px', height: '140px', background: '#FFF', borderRadius: '8px', boxShadow: '0 8px 20px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E2E8F0', backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0%, rgba(233, 226, 226, 0.28) 90.2%)' }}>
-          <div style={{ color: '#0F172A', fontWeight: 800, fontSize: '1.4rem', textAlign: 'center', fontFamily: 'serif' }}>{text}</div>
+        <div style={{ width: wPx, height: hPx, background: '#FFF', borderRadius: '8px', boxShadow: '0 8px 20px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E2E8F0', backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0%, rgba(233, 226, 226, 0.28) 90.2%)', overflow: 'hidden' }}>
+           <div style={{ transform: `translate(${logoX}px, ${logoY}px)`, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+             {logoSrc && <img src={logoSrc} alt="Logo" style={{ width: `${logoSize}px`, objectFit: 'contain' }} />}
+             <div style={{ color: '#0F172A', fontWeight: 800, fontSize: '1.2rem', textAlign: 'center', fontFamily: 'serif' }}>{text}</div>
+           </div>
         </div>
       );
     }
@@ -96,9 +146,30 @@ export default function BoxBuilderPage() {
              <button onClick={() => setType('card')} style={btnStyle(type === 'card')}>✉️ Thank You Card</button>
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '8px', color: '#475569' }}>Custom Text / Brand Name</label>
-            <input type="text" value={text} onChange={(e) => setText(e.target.value)} style={{ width: '100%', padding: '10px 15px', borderRadius: '8px', border: '1px solid #CBD5E1', outline: 'none' }} />
+          <div style={{ display: 'flex', gap: '15px', marginBottom: '20px', flexWrap: 'wrap' }}>
+            <div style={{ flex: 1, minWidth: '150px' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '8px', color: '#475569' }}>Custom Text / Brand Name</label>
+              <input type="text" value={text} onChange={(e) => setText(e.target.value)} style={{ width: '100%', padding: '10px 15px', borderRadius: '8px', border: '1px solid #CBD5E1', outline: 'none' }} />
+            </div>
+            <div style={{ flex: 1, minWidth: '150px' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '8px', color: '#475569' }}>Upload Logo</label>
+              <input type="file" accept="image/*" onChange={handleLogoUpload} style={{ width: '100%', padding: '7px 10px', borderRadius: '8px', border: '1px dashed #CBD5E1', outline: 'none', background: '#F8FAFC', cursor: 'pointer', fontSize: '0.85rem' }} />
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', gap: '15px', marginBottom: '20px', background: '#FAFAFC', padding: '15px', borderRadius: '8px', border: '1px solid #E2E8F0', flexWrap: 'wrap' }}>
+            <div style={{ flex: 1, minWidth: '100px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: '4px' }}>Logo Size: {logoSize}px</label>
+              <input type="range" min="10" max="200" value={logoSize} onChange={(e) => setLogoSize(Number(e.target.value))} style={{ width: '100%' }} />
+            </div>
+            <div style={{ flex: 1, minWidth: '100px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: '4px' }}>Move X</label>
+              <input type="range" min="-100" max="100" value={logoX} onChange={(e) => setLogoX(Number(e.target.value))} style={{ width: '100%' }} />
+            </div>
+            <div style={{ flex: 1, minWidth: '100px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: '4px' }}>Move Y</label>
+              <input type="range" min="-100" max="100" value={logoY} onChange={(e) => setLogoY(Number(e.target.value))} style={{ width: '100%' }} />
+            </div>
           </div>
 
           <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
@@ -140,9 +211,7 @@ export default function BoxBuilderPage() {
       <style>{`
         /* 3D Cube CSS */
         .scene {
-          width: 200px;
-          height: 200px;
-          perspective: 600px;
+          perspective: 1200px;
         }
         .cube {
           width: 100%;
@@ -158,8 +227,6 @@ export default function BoxBuilderPage() {
         }
         .face {
           position: absolute;
-          width: 200px;
-          height: 200px;
           border: 2px solid #8B4513;
           background: rgba(210, 180, 140, 0.9);
           display: flex;
@@ -167,15 +234,10 @@ export default function BoxBuilderPage() {
           justify-content: center;
           font-weight: bold;
           color: #5C4033;
-          font-size: 1.5rem;
           box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
         }
-        .front  { transform: rotateY(  0deg) translateZ(100px); }
-        .right  { transform: rotateY( 90deg) translateZ(100px); }
-        .back   { transform: rotateY(180deg) translateZ(100px); }
-        .left   { transform: rotateY(-90deg) translateZ(100px); }
-        .top    { transform: rotateX( 90deg) translateZ(100px); background: rgba(222, 196, 161, 0.9); }
-        .bottom { transform: rotateX(-90deg) translateZ(100px); background: rgba(139, 69, 19, 0.9); }
+        .top { background: rgba(222, 196, 161, 0.9); }
+        .bottom { background: rgba(139, 69, 19, 0.9); }
       `}</style>
     </div>
   );
