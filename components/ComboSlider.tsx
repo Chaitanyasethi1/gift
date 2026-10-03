@@ -22,7 +22,7 @@ export const ComboSlider: React.FC = () => {
       <div style={{ width: '100%', position: 'relative' }}>
         
         {/* Animated Image Wrapper */}
-        <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <div className="hero-slider-wrapper" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
           {posters.map((poster, idx) => (
             <div 
               key={poster.id}
@@ -67,17 +67,20 @@ export const ComboSlider: React.FC = () => {
           from { opacity: 0; }
           to { opacity: 1; }
         }
+        .hero-slider-wrapper {
+          max-width: 1600px;
+          margin: 0 auto;
+        }
         .hero-slider-img {
           width: 100%;
-          height: 100%;
-          max-height: 450px;
+          height: 300px;
           object-fit: cover;
           object-position: center;
           display: block;
         }
         @media (max-width: 768px) {
           .hero-slider-img {
-            max-height: 220px;
+            height: 180px;
           }
         }
       `}</style>
