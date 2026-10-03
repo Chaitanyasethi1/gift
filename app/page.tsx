@@ -9,25 +9,7 @@ export default function HomePage() {
       {/* 3. Hero Combo Banner */}
       <ComboSlider />
 
-      {/* 4. Trust Strip */}
-      <section style={{ borderBottom: '1px solid #E2E8F0', padding: '20px 0', background: '#FAFAFC' }}>
-        <div className="container trust-strip-container" style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', gap: '15px' }}>
-          {[
-            { icon: '✨', title: 'Custom Printing', sub: 'As per your needs' },
-            { icon: '🏆', title: 'High Quality', sub: 'Premium finish' },
-            { icon: '🚀', title: 'Fast Delivery', sub: 'On time delivery' },
-            { icon: '💬', title: 'Support', sub: 'Call / WhatsApp' }
-          ].map(t => (
-            <div key={t.title} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ fontSize: '2rem' }}>{t.icon}</div>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: '1rem', color: '#0F172A' }}>{t.title}</div>
-                <div style={{ fontSize: '0.85rem', color: '#64748B' }}>{t.sub}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
       {/* 5. Popular Categories */}
       <section style={{ padding: '70px 0', background: '#FFFFFF' }}>
