@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { StarIcon } from './Icons';
+import { useCart } from '@/context/CartContext';
 
 interface ProductCardProps {
   product: any;
@@ -10,12 +11,30 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const { addToCart } = useCart();
   const originalPrice = product.mrp ? product.mrp.toFixed(2) : (product.selling_price * 1.5).toFixed(2);
   const currentPrice = (product.selling_price || 0).toFixed(2);
 
   const handleAddClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    alert("Coming soon!");
+    e.stopPropagation();
+    addToCart({
+      id: product.id,
+      title: product.name,
+      price: product.selling_price,
+      image: product.images?.[0] || '',
+      specs: []
+    }, product.moq || 1);
+    
+    // Show a visual confirmation (optional, but good for UX)
+    const btn = e.currentTarget as HTMLButtonElement;
+    const originalText = btn.innerText;
+    btn.innerText = "ADDED ✓";
+    btn.style.background = "#0F172A";
+    setTimeout(() => {
+      btn.innerText = originalText;
+      btn.style.background = "#65A34A";
+    }, 1500);
   };
 
   return (
