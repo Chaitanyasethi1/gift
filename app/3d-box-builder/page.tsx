@@ -7,9 +7,9 @@ type ProductType = 'box' | 'bag' | 'sticker' | 'card';
 export default function BoxBuilderPage() {
   const [type, setType] = useState<ProductType>('box');
   const [text, setText] = useState('YOUR LOGO');
-  const [width, setWidth] = useState(20);
+  const [width, setWidth] = useState(15);
   const [height, setHeight] = useState(15);
-  const [depth, setDepth] = useState(10);
+  const [depth, setDepth] = useState(15);
   const [quantity, setQuantity] = useState(100);
 
   const [logoSrc, setLogoSrc] = useState<string | null>(null);
