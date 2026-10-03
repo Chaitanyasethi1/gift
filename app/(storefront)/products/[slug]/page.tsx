@@ -4,14 +4,14 @@ import { notFound } from 'next/navigation';
 import { siteConfig } from '@/data/siteConfig';
 import { ProductDetailClient } from '@/components/ProductDetailClient';
 import { createClient } from '@/utils/supabase/server';
+import { supabase as supabaseAdmin } from '@/lib/supabase';
 
 interface Props {
   params: { slug: string };
 }
 
 export async function generateStaticParams() {
-  const supabase = createClient();
-  const { data } = await supabase.from('products').select('slug');
+  const { data } = await supabaseAdmin.from('products').select('slug');
   return (data || []).map((product) => ({
     slug: product.slug
   }));
