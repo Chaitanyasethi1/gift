@@ -17,22 +17,53 @@ import {
   PlusIcon
 } from './Icons';
 
+interface SizeVariantItem {
+  size: string;
+  price: number;
+  mrp?: number;
+}
+
 interface ProductDetailClientProps {
-  product: Product;
+  product: Product & {
+    variants?: SizeVariantItem[];
+    allowLogoUpload?: boolean;
+  };
 }
 
 export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product }) => {
   const { addToCart, setIsQuoteModalOpen, setSelectedQuoteProduct } = useCart();
-  const [selectedQty, setSelectedQty] = useState(product.moq || 100);
-  const [selectedSize, setSelectedSize] = useState<string | null>(product.sizes && product.sizes.length > 0 ? product.sizes[0] : null);
+  
+  // Extract variants if available
+  const variantList: SizeVariantItem[] = Array.isArray((product as any).variants) && (product as any).variants.length > 0
+    ? (product as any).variants
+    : (product.sizes || []).map((s: string) => ({ size: s, price: product.price, mrp: (product as any).mrp || product.price * 1.5 }));
+
+  const [selectedVariant, setSelectedVariant] = useState<SizeVariantItem | null>(
+    variantList.length > 0 ? variantList[0] : null
+  );
+
+  const [selectedQty, setSelectedQty] = useState(product.moq || 50);
   const [uploadedLogo, setUploadedLogo] = useState<File | null>(null);
 
-  // Determine current unit rate based on tiers
-  const activeTier = product.tiers && product.tiers.length > 0
-    ? [...product.tiers].reverse().find((t) => selectedQty >= t.qty) || product.tiers[0]
-    : { rate: product.price, qty: product.moq };
+  // Active base price for the selected size
+  const activeBasePrice = selectedVariant ? selectedVariant.price : product.price;
 
-  const currentRate = activeTier ? activeTier.rate : product.price;
+  // Determine active tier based on selected quantity
+  const tiers = product.tiers && product.tiers.length > 0
+    ? product.tiers
+    : [
+        { qty: 50, rate: activeBasePrice, label: '50 pcs Pack' },
+        { qty: 200, rate: activeBasePrice * 0.95, label: '200 pcs Pack' },
+        { qty: 500, rate: activeBasePrice * 0.90, label: '500 pcs Pack' },
+        { qty: 1000, rate: activeBasePrice * 0.85, label: '1000 pcs Bulk Rate' }
+      ];
+
+  const activeTier = [...tiers].reverse().find((t) => selectedQty >= t.qty) || tiers[0];
+
+  // Calculate unit rate (apply discount proportion or direct tier rate)
+  const discountMultiplier = activeTier && product.price > 0 ? (activeTier.rate / product.price) : 1;
+  const currentRate = Math.max(1, activeBasePrice * (discountMultiplier > 0 ? discountMultiplier : 1));
+
   const subtotal = currentRate * selectedQty;
   const gst = subtotal * 0.18;
   const grandTotal = subtotal + gst;
@@ -45,7 +76,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
       image: product.image,
       specs: product.specs,
       dimensions: product.dimensions,
-      size: selectedSize,
+      size: selectedVariant ? selectedVariant.size : null,
       logo: uploadedLogo ? uploadedLogo.name : null
     }, selectedQty);
   };
@@ -56,12 +87,13 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   };
 
   const waMessage = encodeURIComponent(
-    `Hello AS Print Gallery! I am interested in purchasing:
+    `Hello AS Print Gallery! I want to order:
 📦 *Product:* ${product.title}
-• Quantity: ${selectedQty} pcs
-• Quoted Tier Rate: ₹${currentRate.toFixed(2)}/pc
+• Selected Size: ${selectedVariant ? selectedVariant.size : 'Standard'}
+• Quantity / Pack: ${selectedQty} pcs
+• Applied Unit Rate: ₹${currentRate.toFixed(2)} / pc
 • Estimated Subtotal: ₹${subtotal.toFixed(2)} (Excl. GST)
-Please confirm stock availability, GST invoice details, and dispatch timeline.`
+Please confirm order and delivery timeline.`
   );
 
   return (
@@ -71,7 +103,7 @@ Please confirm stock availability, GST invoice details, and dispatch timeline.`
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: '#94A3B8', marginBottom: '24px' }}>
           <Link href="/" style={{ color: '#64748B', textDecoration: 'none' }}>Home</Link>
           <span>/</span>
-          <Link href="/products" style={{ color: '#64748B', textDecoration: 'none' }}>Products</Link>
+          <Link href="/shop" style={{ color: '#64748B', textDecoration: 'none' }}>Products</Link>
           <span>/</span>
           <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{product.title}</span>
         </div>
@@ -120,54 +152,108 @@ Please confirm stock availability, GST invoice details, and dispatch timeline.`
                   <StarIcon key={i} size={15} filled={true} />
                 ))}
               </div>
-              <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#334155' }}>{product.rating.toFixed(1)}</span>
-              <span style={{ fontSize: '0.82rem', color: '#64748B' }}>({product.reviews} verified orders)</span>
+              <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#334155' }}>{product.rating ? product.rating.toFixed(1) : '4.9'}</span>
+              <span style={{ fontSize: '0.82rem', color: '#64748B' }}>({product.reviews || 120} verified orders)</span>
             </div>
 
             <p style={{ fontSize: '0.95rem', color: 'var(--text-body)', lineHeight: 1.6, marginBottom: '24px' }}>
               {product.fullDesc || product.desc}
             </p>
 
-            {/* Wholesale Pricing Tiers */}
+            {/* 1. SIZE SELECTION (Size ke hisab se rate) */}
+            {variantList.length > 0 && (
+              <div style={{ marginBottom: '24px', background: '#F8FAFC', padding: '16px', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
+                <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.88rem', fontWeight: 800, color: '#0F172A', marginBottom: '10px' }}>
+                  <span>📏 1. Choose Size:</span>
+                  {selectedVariant && (
+                    <span style={{ color: '#10B981', fontWeight: 700, fontSize: '0.82rem' }}>
+                      Base: ₹{selectedVariant.price} {selectedVariant.mrp ? `(MRP: ₹${selectedVariant.mrp})` : ''}
+                    </span>
+                  )}
+                </label>
+                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                  {variantList.map((v) => {
+                    const isSelected = selectedVariant?.size === v.size;
+                    return (
+                      <button
+                        key={v.size}
+                        type="button"
+                        onClick={() => setSelectedVariant(v)}
+                        style={{
+                          padding: '10px 16px',
+                          border: `2px solid ${isSelected ? '#10B981' : '#CBD5E1'}`,
+                          background: isSelected ? '#ECFDF5' : '#FFFFFF',
+                          color: isSelected ? '#065F46' : '#334155',
+                          borderRadius: '8px',
+                          fontWeight: 700,
+                          fontSize: '0.9rem',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '2px',
+                          boxShadow: isSelected ? '0 2px 8px rgba(16, 185, 129, 0.2)' : 'none'
+                        }}
+                      >
+                        <span>{v.size}</span>
+                        {v.price > 0 && (
+                          <span style={{ fontSize: '0.75rem', color: isSelected ? '#059669' : '#64748B', fontWeight: 600 }}>
+                            ₹{v.price}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* 2. PACK SIZES & BULK TIER PRICING */}
             <div style={{ marginBottom: '24px' }}>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#1E293B', marginBottom: '8px' }}>
-                Wholesale Quantity Tier Pricing (Direct Factory Rates):
+              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#0F172A', marginBottom: '8px' }}>
+                📦 2. Select Pack Size / Quantity (Bulk Factory Discounts):
               </label>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))', gap: '10px' }}>
-                {product.tiers.map((tier) => {
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '10px' }}>
+                {tiers.map((tier) => {
                   const isTierActive = activeTier.qty === tier.qty;
+                  const tierEffectiveRate = activeBasePrice * (product.price > 0 ? (tier.rate / product.price) : 1);
                   return (
                     <div
                       key={tier.qty}
                       onClick={() => setSelectedQty(tier.qty)}
                       style={{
-                        padding: '10px',
-                        borderRadius: '6px',
-                        border: `1.5px solid ${isTierActive ? 'var(--primary)' : '#CBD5E1'}`,
-                        background: isTierActive ? 'rgba(184, 27, 84, 0.05)' : '#FFFFFF',
+                        padding: '12px 10px',
+                        borderRadius: '8px',
+                        border: `2px solid ${isTierActive ? '#B91C1C' : '#E2E8F0'}`,
+                        background: isTierActive ? '#FEF2F2' : '#FFFFFF',
                         cursor: 'pointer',
                         textAlign: 'center',
-                        transition: 'all 0.2s'
+                        transition: 'all 0.2s',
+                        boxShadow: isTierActive ? '0 4px 10px rgba(185, 28, 28, 0.15)' : '0 1px 3px rgba(0,0,0,0.03)'
                       }}
                     >
-                      <div style={{ fontSize: '0.78rem', color: '#64748B', fontWeight: 600 }}>{tier.qty}+ pcs</div>
-                      <div style={{ fontSize: '1.05rem', fontWeight: 800, color: isTierActive ? 'var(--primary)' : '#0F172A', marginTop: '2px' }}>
-                        ₹{tier.rate.toFixed(2)}
+                      <div style={{ fontSize: '0.85rem', color: '#1E293B', fontWeight: 800 }}>
+                        {tier.qty} pcs Pack
                       </div>
-                      <div style={{ fontSize: '0.7rem', color: '#94A3B8' }}>/ pc</div>
+                      <div style={{ fontSize: '1.15rem', fontWeight: 900, color: isTierActive ? '#B91C1C' : '#0F172A', marginTop: '3px' }}>
+                        ₹{tierEffectiveRate.toFixed(2)}
+                      </div>
+                      <div style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600 }}>per pc</div>
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            {/* Quantity Selector */}
+            {/* Quantity Custom Adjuster */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', border: '1.5px solid #CBD5E1', borderRadius: '6px' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#334155' }}>Custom Qty:</span>
+              <div style={{ display: 'flex', alignItems: 'center', border: '1.5px solid #CBD5E1', borderRadius: '8px', background: '#fff' }}>
                 <button
                   type="button"
                   onClick={() => setSelectedQty(Math.max(product.moq || 10, selectedQty - 50))}
-                  style={{ padding: '8px 12px', background: '#F1F5F9', border: 'none', cursor: 'pointer' }}
+                  style={{ padding: '8px 14px', background: '#F1F5F9', border: 'none', cursor: 'pointer', borderRadius: '6px 0 0 6px' }}
                   aria-label="Decrease quantity"
                 >
                   <MinusIcon size={14} />
@@ -176,57 +262,27 @@ Please confirm stock availability, GST invoice details, and dispatch timeline.`
                   type="number"
                   value={selectedQty}
                   onChange={(e) => setSelectedQty(Math.max(1, parseInt(e.target.value) || product.moq || 10))}
-                  style={{ width: '80px', textAlign: 'center', border: 'none', fontWeight: 800, fontSize: '0.95rem', outline: 'none' }}
+                  style={{ width: '90px', textAlign: 'center', border: 'none', fontWeight: 800, fontSize: '1rem', outline: 'none' }}
                 />
                 <button
                   type="button"
                   onClick={() => setSelectedQty(selectedQty + 50)}
-                  style={{ padding: '8px 12px', background: '#F1F5F9', border: 'none', cursor: 'pointer' }}
+                  style={{ padding: '8px 14px', background: '#F1F5F9', border: 'none', cursor: 'pointer', borderRadius: '0 6px 6px 0' }}
                   aria-label="Increase quantity"
                 >
                   <PlusIcon size={14} />
                 </button>
               </div>
               <span style={{ fontSize: '0.82rem', color: '#64748B' }}>
-                MOQ: <strong>{product.moq} pcs</strong>
+                MOQ: <strong>{product.moq || 50} pcs</strong>
               </span>
             </div>
-
-            {/* Size Selector */}
-            {product.sizes && product.sizes.length > 0 && (
-              <div style={{ marginBottom: '24px' }}>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#1E293B', marginBottom: '8px' }}>
-                  Select Size:
-                </label>
-                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                  {product.sizes.map((size: string) => (
-                    <button
-                      key={size}
-                      type="button"
-                      onClick={() => setSelectedSize(size)}
-                      style={{
-                        padding: '8px 16px',
-                        border: `2px solid ${selectedSize === size ? 'var(--primary)' : '#CBD5E1'}`,
-                        background: selectedSize === size ? 'rgba(184, 27, 84, 0.05)' : '#fff',
-                        color: selectedSize === size ? 'var(--primary)' : '#475569',
-                        borderRadius: '6px',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        transition: 'all 0.2s'
-                      }}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Logo / Design Upload */}
             {(product as any).allowLogoUpload && (
               <div style={{ marginBottom: '24px', padding: '16px', border: '1px dashed #94A3B8', borderRadius: '8px', background: '#F8FAFC' }}>
                 <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#1E293B', marginBottom: '8px' }}>
-                  Upload Your Logo/Design (Optional):
+                  🎨 Upload Your Brand Logo/Design (Optional):
                 </label>
                 <input 
                   type="file" 
@@ -238,16 +294,27 @@ Please confirm stock availability, GST invoice details, and dispatch timeline.`
               </div>
             )}
 
-            {/* Subtotal Display */}
-            <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '8px', border: '1px solid #E2E8F0', marginBottom: '24px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                <span style={{ fontSize: '0.9rem', color: '#475569' }}>Rate: <strong>₹{currentRate.toFixed(2)}/pc</strong> &times; {selectedQty} pcs</span>
-                <span style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--primary)' }}>
-                  ₹{subtotal.toFixed(2)}
-                </span>
-              </div>
-              <div style={{ fontSize: '0.78rem', color: '#64748B', marginTop: '4px', textAlign: 'right' }}>
-                +18% GST: ₹{gst.toFixed(2)} | Total: ₹{grandTotal.toFixed(2)}
+            {/* Live Subtotal Display */}
+            <div style={{ background: '#F8FAFC', padding: '18px 20px', borderRadius: '10px', border: '1.5px solid #E2E8F0', marginBottom: '24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                <div>
+                  <div style={{ fontSize: '0.9rem', color: '#475569' }}>
+                    Rate: <strong style={{ color: '#0F172A' }}>₹{currentRate.toFixed(2)}/pc</strong> &times; {selectedQty} pcs
+                  </div>
+                  {selectedVariant && (
+                    <div style={{ fontSize: '0.8rem', color: '#10B981', fontWeight: 700, marginTop: '2px' }}>
+                      Size: {selectedVariant.size}
+                    </div>
+                  )}
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <span style={{ fontSize: '1.5rem', fontWeight: 900, color: '#B91C1C' }}>
+                    ₹{subtotal.toFixed(2)}
+                  </span>
+                  <div style={{ fontSize: '0.78rem', color: '#64748B', marginTop: '2px' }}>
+                    +18% GST: ₹{gst.toFixed(2)} | <strong>Total: ₹{grandTotal.toFixed(2)}</strong>
+                  </div>
+                </div>
               </div>
             </div>
 

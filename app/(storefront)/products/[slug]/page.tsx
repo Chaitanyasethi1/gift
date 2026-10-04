@@ -75,8 +75,9 @@ export default async function ProductDetailPage({ params }: Props) {
     image: product.images?.[0] || 'https://via.placeholder.com/600',
     price: product.selling_price,
     startingAt: product.selling_price,
-    moq: product.moq || 100,
+    moq: product.moq || 50,
     sizes: product.sizes || [],
+    variants: product.variants || [],
     allowLogoUpload: product.allow_logo_upload || false,
     specs: [
       `MRP: ₹${product.mrp}`,
@@ -84,11 +85,14 @@ export default async function ProductDetailPage({ params }: Props) {
       `Stock Available: ${product.stock_quantity}`,
       `Customization: Printing Available`
     ],
-    tiers: product.bulk_pricing || [
-      { qty: 1, rate: product.selling_price || 0 },
-      { qty: 100, rate: (product.selling_price || 0) * 0.95 },
-      { qty: 500, rate: (product.selling_price || 0) * 0.9 }
-    ]
+    tiers: product.bulk_pricing && product.bulk_pricing.length > 0
+      ? product.bulk_pricing
+      : [
+          { qty: 50, rate: product.selling_price || 0, label: '50 pcs Pack' },
+          { qty: 200, rate: Math.round((product.selling_price || 0) * 0.95), label: '200 pcs Pack' },
+          { qty: 500, rate: Math.round((product.selling_price || 0) * 0.90), label: '500 pcs Pack' },
+          { qty: 1000, rate: Math.round((product.selling_price || 0) * 0.85), label: '1000 pcs Pack' }
+        ]
   };
 
   const productSchema = {
