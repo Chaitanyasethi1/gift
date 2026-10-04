@@ -75,20 +75,14 @@ export const ComboSlider: React.FC = () => {
           to { opacity: 1; }
         }
         .hero-slider-wrapper {
-          max-width: 1600px;
+          width: 100%;
+          max-width: 100%;
           margin: 0 auto;
         }
         .hero-slider-img {
           width: 100%;
-          height: 300px;
-          object-fit: cover;
-          object-position: center;
+          height: auto;
           display: block;
-        }
-        @media (max-width: 768px) {
-          .hero-slider-img {
-            height: 180px;
-          }
         }
       `}</style>
     </section>
