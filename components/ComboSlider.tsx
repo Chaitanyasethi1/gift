@@ -3,12 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const posters = [
-  { id: 1, img: '/assets/hero_banner_1.jpg', alt: 'Custom Stickers Printing AS Print Gallery', link: '/products' },
-  { id: 2, img: '/assets/hero_banner_2.jpg', alt: 'Corrugated Packaging Boxes AS Print Gallery', link: '/custom-box-builder' },
-  { id: 3, img: '/assets/hero_banner_3.jpg', alt: 'Direct Factory Packaging & Printing AS Print Gallery', link: '/products' },
-  { id: 4, img: '/assets/hero_banner_4.jpg', alt: 'Custom Food & Garment Packaging AS Print Gallery', link: '/products' },
-  { id: 5, img: '/assets/hero_banner_5.jpg', alt: 'Woven Labels & Brand Hang Tags AS Print Gallery', link: '/products' },
-  { id: 6, img: '/assets/hero_banner_6.jpg', alt: 'Wholesale Packaging Solutions AS Print Gallery', link: '/custom-box-builder' }
+  { id: 1, img: '/assets/banner_woven_labels.png', alt: 'Woven Labels - AS Print Gallery', link: '/shop' },
+  { id: 2, img: '/assets/banner_corrugated_box.png', alt: 'Corrugated Box - AS Print Gallery', link: '/shop' },
+  { id: 3, img: '/assets/banner_custom_stickers.png', alt: 'Custom Stickers - AS Print Gallery', link: '/shop' },
+  { id: 4, img: '/assets/banner_satin_labels.png', alt: 'Printed Satin Labels - AS Print Gallery', link: '/shop' },
+  { id: 5, img: '/assets/banner_custom_packaging.png', alt: 'Custom Packaging Boxes - AS Print Gallery', link: '/shop' }
 ];
 
 export const ComboSlider: React.FC = () => {
@@ -17,74 +16,139 @@ export const ComboSlider: React.FC = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % posters.length);
-    }, 4000); 
+    }, 4500);
     return () => clearInterval(timer);
   }, []);
 
+  const prev = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentIndex((currentIndex - 1 + posters.length) % posters.length);
+  };
+
+  const next = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentIndex((currentIndex + 1) % posters.length);
+  };
+
   return (
-    <section style={{ padding: '0', background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+    <section style={{ padding: 0, background: '#f8fafc', position: 'relative', width: '100%', overflow: 'hidden' }}>
       <div style={{ width: '100%', position: 'relative' }}>
-        
-        {/* Animated Image Wrapper */}
-        <div className="hero-slider-wrapper" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
-          {posters.map((poster, idx) => (
-            <Link
-              key={poster.id}
-              href={poster.link}
+        {posters.map((poster, idx) => (
+          <Link
+            key={poster.id}
+            href={poster.link}
+            style={{
+              display: idx === currentIndex ? 'block' : 'none',
+              width: '100%',
+              textDecoration: 'none',
+              animation: 'fadeSlide 0.4s ease-in-out'
+            }}
+          >
+            <img
+              src={poster.img}
+              alt={poster.alt}
               style={{
-                display: idx === currentIndex ? 'block' : 'none',
                 width: '100%',
-                textDecoration: 'none',
-                cursor: 'pointer',
-                animation: 'fadeIn 0.5s ease-in-out'
+                height: 'auto',
+                display: 'block',
+                maxHeight: '480px',
+                objectFit: 'contain'
               }}
-            >
-              <img 
-                src={poster.img} 
-                alt={poster.alt} 
-                className="hero-slider-img"
-              />
-            </Link>
-          ))}
-        </div>
+            />
+          </Link>
+        ))}
+
+        {/* Navigation Arrows */}
+        <button
+          onClick={prev}
+          aria-label="Previous Slide"
+          style={arrowStyle('left')}
+          className="slider-arrow-btn"
+        >
+          &#10094;
+        </button>
+        <button
+          onClick={next}
+          aria-label="Next Slide"
+          style={arrowStyle('right')}
+          className="slider-arrow-btn"
+        >
+          &#10095;
+        </button>
 
         {/* Indicators */}
-        <div style={{ position: 'absolute', bottom: '15px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px' }}>
+        <div style={{ position: 'absolute', bottom: '15px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px', zIndex: 10 }}>
           {posters.map((_, idx) => (
-            <div 
-              key={idx} 
-              onClick={() => setCurrentIndex(idx)} 
-              style={{ 
-                width: '12px', 
-                height: '12px', 
-                borderRadius: '50%', 
-                background: idx === currentIndex ? '#FFFFFF' : 'rgba(255, 255, 255, 0.5)',
-                border: '1px solid rgba(0,0,0,0.2)',
-                cursor: 'pointer', 
-                transition: 'all 0.3s' 
-              }} 
+            <div
+              key={idx}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setCurrentIndex(idx);
+              }}
+              style={{
+                width: idx === currentIndex ? '24px' : '10px',
+                height: '10px',
+                borderRadius: '5px',
+                background: idx === currentIndex ? '#65A34A' : 'rgba(255, 255, 255, 0.7)',
+                border: '1px solid rgba(0,0,0,0.15)',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+              }}
             />
           ))}
         </div>
-
       </div>
 
       <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
+        @keyframes fadeSlide {
+          from { opacity: 0.6; }
           to { opacity: 1; }
         }
-        .hero-slider-wrapper {
-          width: 100%;
-          max-width: 100%;
-          margin: 0 auto;
+        .slider-arrow-btn {
+          opacity: 0.75;
+          transition: all 0.2s ease;
         }
-        .hero-slider-img {
-          width: 100%;
-          height: auto;
-          display: block;
+        .slider-arrow-btn:hover {
+          opacity: 1 !important;
+          transform: translateY(-50%) scale(1.1) !important;
+          background: rgba(0, 0, 0, 0.75) !important;
+        }
+        @media (max-width: 768px) {
+          .slider-arrow-btn {
+            width: 32px !important;
+            height: 32px !important;
+            font-size: 1rem !important;
+          }
         }
       `}</style>
     </section>
   );
 };
+
+function arrowStyle(position: 'left' | 'right'): React.CSSProperties {
+  return {
+    position: 'absolute',
+    top: '50%',
+    [position]: '15px',
+    transform: 'translateY(-50%)',
+    background: 'rgba(0,0,0,0.5)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '50%',
+    width: '42px',
+    height: '42px',
+    cursor: 'pointer',
+    fontSize: '1.2rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10,
+    boxShadow: '0 4px 10px rgba(0,0,0,0.25)'
+  };
+}
+
+
