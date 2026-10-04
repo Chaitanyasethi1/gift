@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
-const posters = [
+const basePosters = [
   { id: 1, img: '/assets/banner_woven_labels.png', alt: 'Woven Labels - AS Print Gallery', link: '/shop' },
   { id: 2, img: '/assets/banner_corrugated_box.png', alt: 'Corrugated Box - AS Print Gallery', link: '/shop' },
   { id: 3, img: '/assets/banner_custom_stickers.png', alt: 'Custom Stickers - AS Print Gallery', link: '/shop' },
@@ -10,76 +10,119 @@ const posters = [
   { id: 5, img: '/assets/banner_custom_packaging.png', alt: 'Custom Packaging Boxes - AS Print Gallery', link: '/shop' }
 ];
 
+// Infinite loop slides: [cloneLast, ...basePosters, cloneFirst]
+const extendedSlides = [
+  { ...basePosters[basePosters.length - 1], uniqueKey: 'clone-last' },
+  ...basePosters.map((p) => ({ ...p, uniqueKey: `real-${p.id}` })),
+  { ...basePosters[0], uniqueKey: 'clone-first' }
+];
+
 export const ComboSlider: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // Start at index 1 (the first real slide)
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const startTimer = () => {
+  const startAutoSlide = () => {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % posters.length);
-    }, 2000); // 2 seconds auto slide
+      setIsTransitioning(true);
+      setCurrentIndex((prev) => prev + 1);
+    }, 2000); // Continuous auto slide every 2 seconds
   };
 
   useEffect(() => {
-    startTimer();
+    startAutoSlide();
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, []);
 
-  const prev = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev - 1 + posters.length) % posters.length);
-    startTimer();
+  // Handle seamless infinite loop jump when animation ends
+  const handleTransitionEnd = () => {
+    if (currentIndex === extendedSlides.length - 1) {
+      // Reached clone of first slide -> snap instantly back to real first slide
+      setIsTransitioning(false);
+      setCurrentIndex(1);
+    } else if (currentIndex === 0) {
+      // Reached clone of last slide -> snap instantly back to real last slide
+      setIsTransitioning(false);
+      setCurrentIndex(basePosters.length);
+    }
   };
 
-  const next = (e: React.MouseEvent) => {
+  const handlePrev = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setCurrentIndex((prev) => (prev + 1) % posters.length);
-    startTimer();
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev - 1);
+    startAutoSlide();
   };
 
-  const goToSlide = (idx: number, e: React.MouseEvent) => {
+  const handleNext = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setCurrentIndex(idx);
-    startTimer();
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
+    startAutoSlide();
   };
+
+  const handleDotClick = (targetRealIdx: number, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsTransitioning(true);
+    setCurrentIndex(targetRealIdx + 1);
+    startAutoSlide();
+  };
+
+  // Compute active real dot index (0 to 4)
+  const activeDotIndex =
+    currentIndex === 0
+      ? basePosters.length - 1
+      : currentIndex === extendedSlides.length - 1
+      ? 0
+      : currentIndex - 1;
 
   return (
     <section
-      style={{ padding: 0, background: '#f8fafc', position: 'relative', width: '100%', overflow: 'hidden' }}
+      style={{
+        padding: 0,
+        background: '#f8fafc',
+        position: 'relative',
+        width: '100%',
+        overflow: 'hidden'
+      }}
       onMouseEnter={() => {
         if (timerRef.current) clearInterval(timerRef.current);
       }}
       onMouseLeave={() => {
-        startTimer();
+        startAutoSlide();
       }}
     >
       <div style={{ width: '100%', position: 'relative', overflow: 'hidden' }}>
         
-        {/* Horizontal Sliding Track */}
+        {/* Continuous Horizontal Sliding Track */}
         <div
+          onTransitionEnd={handleTransitionEnd}
           style={{
             display: 'flex',
-            width: `${posters.length * 100}%`,
-            transform: `translateX(-${(currentIndex * 100) / posters.length}%)`,
-            transition: 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)'
+            width: `${extendedSlides.length * 100}%`,
+            transform: `translateX(-${(currentIndex * 100) / extendedSlides.length}%)`,
+            transition: isTransitioning
+              ? 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)'
+              : 'none'
           }}
         >
-          {posters.map((poster) => (
+          {extendedSlides.map((slide, idx) => (
             <div
-              key={poster.id}
+              key={`${slide.uniqueKey}-${idx}`}
               style={{
-                width: `${100 / posters.length}%`,
+                width: `${100 / extendedSlides.length}%`,
                 flexShrink: 0
               }}
             >
               <Link
-                href={poster.link}
+                href={slide.link}
                 style={{
                   display: 'block',
                   width: '100%',
@@ -88,8 +131,8 @@ export const ComboSlider: React.FC = () => {
                 }}
               >
                 <img
-                  src={poster.img}
-                  alt={poster.alt}
+                  src={slide.img}
+                  alt={slide.alt}
                   style={{
                     width: '100%',
                     height: 'auto',
@@ -105,7 +148,7 @@ export const ComboSlider: React.FC = () => {
 
         {/* Navigation Arrows */}
         <button
-          onClick={prev}
+          onClick={handlePrev}
           aria-label="Previous Slide"
           style={arrowStyle('left')}
           className="slider-arrow-btn"
@@ -113,7 +156,7 @@ export const ComboSlider: React.FC = () => {
           &#10094;
         </button>
         <button
-          onClick={next}
+          onClick={handleNext}
           aria-label="Next Slide"
           style={arrowStyle('right')}
           className="slider-arrow-btn"
@@ -122,16 +165,29 @@ export const ComboSlider: React.FC = () => {
         </button>
 
         {/* Indicators */}
-        <div style={{ position: 'absolute', bottom: '15px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px', zIndex: 10 }}>
-          {posters.map((_, idx) => (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '15px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            gap: '8px',
+            zIndex: 10
+          }}
+        >
+          {basePosters.map((_, idx) => (
             <div
               key={idx}
-              onClick={(e) => goToSlide(idx, e)}
+              onClick={(e) => handleDotClick(idx, e)}
               style={{
-                width: idx === currentIndex ? '26px' : '10px',
+                width: idx === activeDotIndex ? '26px' : '10px',
                 height: '10px',
                 borderRadius: '5px',
-                background: idx === currentIndex ? '#65A34A' : 'rgba(255, 255, 255, 0.75)',
+                background:
+                  idx === activeDotIndex
+                    ? '#65A34A'
+                    : 'rgba(255, 255, 255, 0.75)',
                 border: '1px solid rgba(0,0,0,0.2)',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
@@ -185,6 +241,7 @@ function arrowStyle(position: 'left' | 'right'): React.CSSProperties {
     boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
   };
 }
+
 
 
 
