@@ -45,7 +45,7 @@ export default async function HomePage() {
                 { id: 'courier-bags', title: 'Courier Bags', emoji: '📨' }
               ].map((cat, idx) => (
                 <Link key={`${cat.title}-${idx}`} href="/shop" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '70px', flexShrink: 0 }} className="circular-cat-item">
-                  <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '8px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2rem' }} className="cat-img-wrapper">
+                  <div style={{ width: '70px', height: '70px', borderRadius: '18px', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '8px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2rem', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }} className="cat-img-wrapper">
                     {cat.image ? (
                       <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     ) : (
@@ -73,7 +73,7 @@ export default async function HomePage() {
                 { id: 'courier-bags-2', title: 'Courier Bags', emoji: '📨' }
               ].map((cat, idx) => (
                 <Link key={`${cat.title}-dup-${idx}`} href="/shop" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '70px', flexShrink: 0 }} className="circular-cat-item">
-                  <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '8px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2rem' }} className="cat-img-wrapper">
+                  <div style={{ width: '70px', height: '70px', borderRadius: '18px', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '8px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2rem', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }} className="cat-img-wrapper">
                     {cat.image ? (
                       <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     ) : (
