@@ -3,8 +3,12 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const posters = [
-  { id: 1, img: '/assets/hero1.png', alt: 'Corrugated Boxes Manufacturer AS Print Gallery', link: '/products' },
-  { id: 2, img: '/assets/hero2.png', alt: 'All Types of Custom Packaging Available AS Print Gallery', link: '/custom-box-builder' }
+  { id: 1, img: '/assets/hero_banner_1.jpg', alt: 'Custom Stickers Printing AS Print Gallery', link: '/products' },
+  { id: 2, img: '/assets/hero_banner_2.jpg', alt: 'Corrugated Packaging Boxes AS Print Gallery', link: '/custom-box-builder' },
+  { id: 3, img: '/assets/hero_banner_3.jpg', alt: 'Direct Factory Packaging & Printing AS Print Gallery', link: '/products' },
+  { id: 4, img: '/assets/hero_banner_4.jpg', alt: 'Custom Food & Garment Packaging AS Print Gallery', link: '/products' },
+  { id: 5, img: '/assets/hero_banner_5.jpg', alt: 'Woven Labels & Brand Hang Tags AS Print Gallery', link: '/products' },
+  { id: 6, img: '/assets/hero_banner_6.jpg', alt: 'Wholesale Packaging Solutions AS Print Gallery', link: '/custom-box-builder' }
 ];
 
 export const ComboSlider: React.FC = () => {
