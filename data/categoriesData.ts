@@ -10,12 +10,12 @@ export interface CategoryItem {
 }
 
 export const initialCategories: CategoryItem[] = [
-  // 1. Paper Bags
-  { id: '11111111-1111-1111-1111-111111111111', name: 'Paper Bags', slug: 'paper-bags', parent_id: null, sort_order: 1, show_in_menu: true, show_in_home: true },
-  { id: 'pb-1', name: 'Kraft Paper Bags', slug: 'kraft-paper-bags', parent_id: '11111111-1111-1111-1111-111111111111', sort_order: 1, show_in_menu: true, show_in_home: false },
-  { id: 'pb-2', name: 'Printed Paper Bags', slug: 'printed-paper-bags', parent_id: '11111111-1111-1111-1111-111111111111', sort_order: 2, show_in_menu: true, show_in_home: false },
-  { id: 'pb-3', name: 'Handle Paper Bags', slug: 'handle-paper-bags', parent_id: '11111111-1111-1111-1111-111111111111', sort_order: 3, show_in_menu: true, show_in_home: false },
-  { id: 'pb-4', name: 'Pizza Paper Bags', slug: 'pizza-paper-bags', parent_id: '11111111-1111-1111-1111-111111111111', sort_order: 4, show_in_menu: true, show_in_home: false },
+  // 1. Carry Bags
+  { id: '11111111-1111-1111-1111-111111111111', name: 'Carry Bags', slug: 'carry-bags', parent_id: null, sort_order: 1, show_in_menu: true, show_in_home: true },
+  { id: 'pb-1', name: 'Kraft Carry Bags', slug: 'kraft-carry-bags', parent_id: '11111111-1111-1111-1111-111111111111', sort_order: 1, show_in_menu: true, show_in_home: false },
+  { id: 'pb-2', name: 'Printed Carry Bags', slug: 'printed-carry-bags', parent_id: '11111111-1111-1111-1111-111111111111', sort_order: 2, show_in_menu: true, show_in_home: false },
+  { id: 'pb-3', name: 'Handle Carry Bags', slug: 'handle-carry-bags', parent_id: '11111111-1111-1111-1111-111111111111', sort_order: 3, show_in_menu: true, show_in_home: false },
+  { id: 'pb-4', name: 'Paper Bags & Mailers', slug: 'paper-bags-mailers', parent_id: '11111111-1111-1111-1111-111111111111', sort_order: 4, show_in_menu: true, show_in_home: false },
 
   // 2. Packaging Boxes
   { id: '22222222-2222-2222-2222-222222222222', name: 'Packaging Boxes', slug: 'packaging-boxes', parent_id: null, sort_order: 2, show_in_menu: true, show_in_home: true },
@@ -41,8 +41,8 @@ export const initialCategories: CategoryItem[] = [
   { id: 'st-3', name: 'Custom Stickers', slug: 'custom-stickers', parent_id: '44444444-4444-4444-4444-444444444444', sort_order: 3, show_in_menu: true, show_in_home: false },
   { id: 'st-4', name: 'Packaging Labels', slug: 'packaging-labels', parent_id: '44444444-4444-4444-4444-444444444444', sort_order: 4, show_in_menu: true, show_in_home: false },
 
-  // 5. Branding & Marketing
-  { id: '55555555-5555-5555-5555-555555555555', name: 'Branding & Marketing', slug: 'branding-marketing', parent_id: null, sort_order: 5, show_in_menu: true, show_in_home: false },
+  // 5. Advertising
+  { id: '55555555-5555-5555-5555-555555555555', name: 'Advertising', slug: 'advertising', parent_id: null, sort_order: 5, show_in_menu: true, show_in_home: false },
   { id: 'bm-1', name: 'Visiting Cards', slug: 'visiting-cards', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 1, show_in_menu: true, show_in_home: false },
   { id: 'bm-2', name: 'Thank You Cards', slug: 'thank-you-cards', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 2, show_in_menu: true, show_in_home: false },
   { id: 'bm-3', name: 'Rubber Stamps', slug: 'rubber-stamps', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 3, show_in_menu: true, show_in_home: false },

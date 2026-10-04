@@ -119,13 +119,13 @@ export function Header() {
           
           <div className="nav-item group">
              <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
-               Paper Bags <span style={{ fontSize: '0.7rem' }}>▼</span>
+               Carry Bags <span style={{ fontSize: '0.7rem' }}>▼</span>
              </Link>
              <div className="dropdown-menu">
-               <Link href="/shop">Kraft Paper Bags</Link>
-               <Link href="/shop">Printed Paper Bags</Link>
-               <Link href="/shop">Handle Paper Bags</Link>
-               <Link href="/shop">Pizza Paper Bags</Link>
+               <Link href="/shop">Kraft Carry Bags</Link>
+               <Link href="/shop">Printed Carry Bags</Link>
+               <Link href="/shop">Handle Carry Bags</Link>
+               <Link href="/shop">Paper Bags & Mailers</Link>
              </div>
           </div>
 
@@ -170,7 +170,7 @@ export function Header() {
 
           <div className="nav-item group">
              <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
-               Branding & Marketing <span style={{ fontSize: '0.7rem' }}>▼</span>
+               Advertising <span style={{ fontSize: '0.7rem' }}>▼</span>
              </Link>
              <div className="dropdown-menu">
                <Link href="/shop">Visiting Cards</Link>
