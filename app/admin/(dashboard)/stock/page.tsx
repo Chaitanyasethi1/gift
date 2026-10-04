@@ -159,9 +159,17 @@ export default function StockProductsPage() {
                   <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: '#64748b' }}>Category</label>
                   <select required value={newItem.category_id} onChange={e => setNewItem({...newItem, category_id: e.target.value})} style={{ width: '100%', padding: '10px', border: '1px solid #e2e8f0', borderRadius: '6px', background: '#fff' }}>
                     <option value="" disabled>Select Category</option>
-                    {categories.map(cat => (
-                      <option key={cat.id} value={cat.id}>{cat.name}</option>
-                    ))}
+                    {categories.filter(c => !c.parent_id).map(mainCat => {
+                      const subs = categories.filter(c => c.parent_id === mainCat.id);
+                      return (
+                        <optgroup key={mainCat.id} label={`📁 ${mainCat.name}`}>
+                          <option value={mainCat.id}>{mainCat.name} (Main)</option>
+                          {subs.map(sub => (
+                            <option key={sub.id} value={sub.id}>&nbsp;&nbsp;↳ {sub.name}</option>
+                          ))}
+                        </optgroup>
+                      );
+                    })}
                   </select>
                 </div>
               </div>
