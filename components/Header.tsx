@@ -454,9 +454,8 @@ export function Header() {
              <Link 
                href="/3d-box-builder" 
                className="nav-link-btn"
-               style={{ color: '#38BDF8' }}
              >
-               <span style={{ pointerEvents: 'none' }}>✨ 3D Box Builder</span>
+               <span style={{ pointerEvents: 'none' }}>Customize</span>
              </Link>
           </div>
           
