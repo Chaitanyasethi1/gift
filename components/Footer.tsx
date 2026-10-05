@@ -162,8 +162,19 @@ export function Footer() {
         </div>
       </div>
 
-      <div style={{ borderTop: '1px solid #222', paddingTop: '16px', paddingBottom: '10px', textAlign: 'center', color: '#6B7280', fontSize: '0.82rem', background: '#0D0D0D' }}>
-         © 2024-25 AS Print Gallery | All rights reserved
+      <div style={{
+        borderTop: '1px solid #222',
+        padding: '16px 20px',
+        color: '#9CA3AF',
+        fontSize: '0.82rem',
+        background: '#0D0D0D'
+      }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', gap: '10px' }}>
+          <span>© 2024-25 AS Print Gallery | All rights reserved</span>
+          <span style={{ fontSize: '0.82rem' }}>
+            Developed By <strong style={{ color: '#F3F4F6', fontWeight: 700 }}>Eyesonwork</strong>
+          </span>
+        </div>
       </div>
     </footer>
   );
