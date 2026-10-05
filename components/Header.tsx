@@ -110,10 +110,9 @@ export function Header() {
     if (dropdownTimeoutRef.current) {
       clearTimeout(dropdownTimeoutRef.current);
     }
-    // 150ms graceful delay to prevent accidental closing while cursor moves
     dropdownTimeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
-    }, 150);
+    }, 120);
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -158,6 +157,7 @@ export function Header() {
           transition: all 0.25s ease;
           border: 1px solid rgba(255,255,255,0.2);
           width: max-content;
+          cursor: pointer;
         }
         .bulk-order-btn:hover {
           transform: translateY(-2px);
@@ -209,30 +209,30 @@ export function Header() {
           top: 100%;
           left: 0;
           background: #ffffff;
-          min-width: 250px;
+          min-width: 260px;
           box-shadow: 0 14px 30px rgba(0,0,0,0.18), 0 4px 10px rgba(0,0,0,0.06);
           padding: 8px 0;
           z-index: 999;
           border-radius: 10px;
           border: 1px solid #E2E8F0;
-          animation: dropSlideDown 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+          animation: dropSlideDown 0.15s ease-out;
         }
 
         /* Hover bridge overlay connecting trigger to panel */
         .nav-dropdown-panel::before {
           content: '';
           position: absolute;
-          top: -12px;
+          top: -14px;
           left: 0;
           right: 0;
-          height: 12px;
+          height: 14px;
           background: transparent;
         }
 
         @keyframes dropSlideDown {
           from {
             opacity: 0;
-            transform: translateY(-6px);
+            transform: translateY(-4px);
           }
           to {
             opacity: 1;
@@ -251,12 +251,31 @@ export function Header() {
           font-weight: 600;
           transition: all 0.15s ease;
           border-left: 3px solid transparent;
+          cursor: pointer;
         }
         .dropdown-sub-link:hover {
           background: #F1F5F9;
           color: #E11D48;
           border-left: 3px solid #E11D48;
           padding-left: 22px;
+        }
+
+        /* Direct click button styles */
+        .header-icon-action {
+          background: none;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 3px;
+          text-decoration: none;
+          color: inherit;
+          padding: 0;
+          transition: transform 0.15s ease;
+        }
+        .header-icon-action:hover {
+          transform: translateY(-1px);
         }
       `}</style>
       
@@ -274,7 +293,7 @@ export function Header() {
       <header style={{ background: '#F8FAFC', padding: '14px 0', borderBottom: '1px solid #E2E8F0' }}>
         <div className="container header-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px' }}>
           
-          {/* Logo with Direct Home Redirect */}
+          {/* Logo with Direct Home Redirect on Single Click */}
           <Link 
             href="/" 
             className="logo-container" 
@@ -287,8 +306,7 @@ export function Header() {
               width: '210px', 
               height: '65px', 
               overflow: 'hidden',
-              cursor: 'pointer',
-              transition: 'opacity 0.2s'
+              cursor: 'pointer'
             }}
           >
             <img 
@@ -342,22 +360,25 @@ export function Header() {
                </a>
              </div>
 
-             {/* Admin / Account */}
-             <Link href="/admin/login" style={{ textDecoration: 'none', color: 'inherit' }}>
-               <button type="button" style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px' }}>
-                 <span style={{ fontSize: '1.3rem' }}>👤</span>
-                 <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#334155' }}>Account</span>
-               </button>
+             {/* Admin / Account Direct Click Link */}
+             <Link 
+               href="/admin/login" 
+               className="header-icon-action"
+               title="Admin & Account"
+             >
+               <span style={{ fontSize: '1.3rem', pointerEvents: 'none' }}>👤</span>
+               <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#334155', pointerEvents: 'none' }}>Account</span>
              </Link>
 
              {/* Cart Button with Count Badge */}
              <button 
                type="button" 
                onClick={() => setIsCartOpen(true)}
-               style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', position: 'relative' }}
+               className="header-icon-action"
+               style={{ position: 'relative' }}
                aria-label="Open Cart"
              >
-               <span style={{ fontSize: '1.3rem' }}>🛒</span>
+               <span style={{ fontSize: '1.3rem', pointerEvents: 'none' }}>🛒</span>
                <span style={{ 
                  position: 'absolute', 
                  top: '-6px', 
@@ -372,17 +393,18 @@ export function Header() {
                  display: 'flex', 
                  alignItems: 'center', 
                  justifyContent: 'center',
-                 boxShadow: '0 2px 4px rgba(225, 29, 72, 0.4)'
+                 boxShadow: '0 2px 4px rgba(225, 29, 72, 0.4)',
+                 pointerEvents: 'none'
                }}>
                  {cartCount}
                </span>
-               <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#334155' }}>Cart</span>
+               <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#334155', pointerEvents: 'none' }}>Cart</span>
              </button>
           </div>
         </div>
       </header>
 
-      {/* 3. Dark Navigation Bar with Smooth Hover Subcategories */}
+      {/* 3. Dark Navigation Bar with 1-Click Smooth Dropdowns */}
       <nav style={{ background: '#1E293B', color: '#fff', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="container dark-nav-container" style={{ display: 'flex', justifyContent: 'center', gap: '32px', padding: '0' }}>
           
@@ -400,7 +422,8 @@ export function Header() {
                   className="nav-link-btn"
                   onClick={() => setActiveDropdown(null)}
                 >
-                  {category.title} <span style={{ fontSize: '0.65rem', opacity: 0.8, transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>▼</span>
+                  <span style={{ pointerEvents: 'none' }}>{category.title}</span>
+                  <span style={{ fontSize: '0.65rem', opacity: 0.8, transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', pointerEvents: 'none' }}>▼</span>
                 </Link>
 
                 {isOpen && (
@@ -416,8 +439,8 @@ export function Header() {
                         className="dropdown-sub-link"
                         onClick={() => setActiveDropdown(null)}
                       >
-                        {subItem.icon && <span style={{ fontSize: '1rem' }}>{subItem.icon}</span>}
-                        <span>{subItem.label}</span>
+                        {subItem.icon && <span style={{ fontSize: '1rem', pointerEvents: 'none' }}>{subItem.icon}</span>}
+                        <span style={{ pointerEvents: 'none' }}>{subItem.label}</span>
                       </Link>
                     ))}
                   </div>
@@ -433,7 +456,7 @@ export function Header() {
                className="nav-link-btn"
                style={{ color: '#38BDF8' }}
              >
-               ✨ 3D Box Builder
+               <span style={{ pointerEvents: 'none' }}>✨ 3D Box Builder</span>
              </Link>
           </div>
           
@@ -443,7 +466,7 @@ export function Header() {
                href="/track-order" 
                className="nav-link-btn"
              >
-               🚚 Track Order
+               <span style={{ pointerEvents: 'none' }}>🚚 Track Order</span>
              </Link>
           </div>
           
