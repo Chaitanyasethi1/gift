@@ -43,27 +43,30 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
     variantList.length > 0 ? variantList[0] : null
   );
 
-  const [selectedQty, setSelectedQty] = useState(product.moq || 50);
-  const [uploadedLogo, setUploadedLogo] = useState<File | null>(null);
-
   // Active base price for the selected size
-  const activeBasePrice = selectedVariant ? selectedVariant.price : product.price;
+  const activeBasePrice = selectedVariant ? selectedVariant.price : (product.price || 10);
 
-  // Determine active tier based on selected quantity
-  const tiers = product.tiers && product.tiers.length > 0
+  // Determine admin-configured quantity packs / tiers
+  const tiers = Array.isArray(product.tiers) && product.tiers.length > 0
     ? product.tiers
     : [
-        { qty: 50, rate: activeBasePrice, label: '50 pcs Pack' },
-        { qty: 200, rate: activeBasePrice * 0.95, label: '200 pcs Pack' },
-        { qty: 500, rate: activeBasePrice * 0.90, label: '500 pcs Pack' },
-        { qty: 1000, rate: activeBasePrice * 0.85, label: '1000 pcs Bulk Rate' }
+        { qty: product.moq || 50, rate: activeBasePrice, label: `${product.moq || 50} pcs Pack` },
+        { qty: 200, rate: Math.round(activeBasePrice * 0.95), label: '200 pcs Pack' },
+        { qty: 500, rate: Math.round(activeBasePrice * 0.90), label: '500 pcs Pack' },
+        { qty: 1000, rate: Math.round(activeBasePrice * 0.85), label: '1000 pcs Bulk Rate' }
       ];
+
+  const [selectedQty, setSelectedQty] = useState(
+    tiers.length > 0 ? tiers[0].qty : (product.moq || 50)
+  );
+  const [uploadedLogo, setUploadedLogo] = useState<File | null>(null);
 
   const activeTier = [...tiers].reverse().find((t) => selectedQty >= t.qty) || tiers[0];
 
-  // Calculate unit rate (apply discount proportion or direct tier rate)
-  const discountMultiplier = activeTier && product.price > 0 ? (activeTier.rate / product.price) : 1;
-  const currentRate = Math.max(1, activeBasePrice * (discountMultiplier > 0 ? discountMultiplier : 1));
+  // Base price proportion for size variants
+  const baseProductPrice = product.price > 0 ? product.price : (tiers[0]?.rate || 1);
+  const sizeRatio = activeBasePrice > 0 && baseProductPrice > 0 ? (activeBasePrice / baseProductPrice) : 1;
+  const currentRate = activeTier ? (activeTier.rate * (sizeRatio > 0 ? sizeRatio : 1)) : activeBasePrice;
 
   const subtotal = currentRate * selectedQty;
   const gst = subtotal * 0.18;
@@ -213,12 +216,12 @@ Please confirm order and delivery timeline.`
             {/* 2. PACK SIZES & BULK TIER PRICING */}
             <div style={{ marginBottom: '24px' }}>
               <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#0F172A', marginBottom: '8px' }}>
-                📦 2. Select Pack Size / Quantity (Bulk Factory Discounts):
+                📦 2. Select Pack Quantity:
               </label>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '10px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(125px, 1fr))', gap: '10px' }}>
                 {tiers.map((tier) => {
-                  const isTierActive = activeTier.qty === tier.qty;
-                  const tierEffectiveRate = activeBasePrice * (product.price > 0 ? (tier.rate / product.price) : 1);
+                  const isTierActive = selectedQty === tier.qty;
+                  const tierEffectiveRate = (tier.rate || activeBasePrice) * (sizeRatio > 0 ? sizeRatio : 1);
                   return (
                     <div
                       key={tier.qty}
@@ -226,18 +229,18 @@ Please confirm order and delivery timeline.`
                       style={{
                         padding: '12px 10px',
                         borderRadius: '8px',
-                        border: `2px solid ${isTierActive ? '#B91C1C' : '#E2E8F0'}`,
-                        background: isTierActive ? '#FEF2F2' : '#FFFFFF',
+                        border: `2px solid ${isTierActive ? '#7C3AED' : '#E2E8F0'}`,
+                        background: isTierActive ? '#F5F3FF' : '#FFFFFF',
                         cursor: 'pointer',
                         textAlign: 'center',
                         transition: 'all 0.2s',
-                        boxShadow: isTierActive ? '0 4px 10px rgba(185, 28, 28, 0.15)' : '0 1px 3px rgba(0,0,0,0.03)'
+                        boxShadow: isTierActive ? '0 4px 12px rgba(124, 58, 237, 0.15)' : '0 1px 3px rgba(0,0,0,0.03)'
                       }}
                     >
                       <div style={{ fontSize: '0.85rem', color: '#1E293B', fontWeight: 800 }}>
-                        {tier.qty} pcs Pack
+                        {tier.label || `${tier.qty} pcs Pack`}
                       </div>
-                      <div style={{ fontSize: '1.15rem', fontWeight: 900, color: isTierActive ? '#B91C1C' : '#0F172A', marginTop: '3px' }}>
+                      <div style={{ fontSize: '1.2rem', fontWeight: 900, color: isTierActive ? '#7C3AED' : '#0F172A', marginTop: '3px' }}>
                         ₹{tierEffectiveRate.toFixed(2)}
                       </div>
                       <div style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600 }}>per pc</div>

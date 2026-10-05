@@ -17,8 +17,8 @@ export const initialCategories: CategoryItem[] = [
   { id: 'pb-3', name: 'Handle Carry Bags', slug: 'handle-carry-bags', parent_id: '11111111-1111-1111-1111-111111111111', sort_order: 3, show_in_menu: true, show_in_home: false },
   { id: 'pb-4', name: 'Paper Bags & Mailers', slug: 'paper-bags-mailers', parent_id: '11111111-1111-1111-1111-111111111111', sort_order: 4, show_in_menu: true, show_in_home: false },
 
-  // 2. Packaging Boxes
-  { id: '22222222-2222-2222-2222-222222222222', name: 'Packaging Boxes', slug: 'packaging-boxes', parent_id: null, sort_order: 2, show_in_menu: true, show_in_home: true },
+  // 2. Packaging Material
+  { id: '22222222-2222-2222-2222-222222222222', name: 'Packaging Material', slug: 'packaging-material', parent_id: null, sort_order: 2, show_in_menu: true, show_in_home: true },
   { id: 'bx-1', name: 'Corrugated Boxes', slug: 'corrugated-boxes', parent_id: '22222222-2222-2222-2222-222222222222', sort_order: 1, show_in_menu: true, show_in_home: false },
   { id: 'bx-2', name: 'Garment Boxes', slug: 'garment-boxes', parent_id: '22222222-2222-2222-2222-222222222222', sort_order: 2, show_in_menu: true, show_in_home: false },
   { id: 'bx-3', name: 'Gift Boxes', slug: 'gift-boxes', parent_id: '22222222-2222-2222-2222-222222222222', sort_order: 3, show_in_menu: true, show_in_home: false },

@@ -131,7 +131,7 @@ export function Header() {
 
           <div className="nav-item group">
              <Link href="/shop" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
-               Packaging Boxes <span style={{ fontSize: '0.7rem' }}>▼</span>
+               Packaging Material <span style={{ fontSize: '0.7rem' }}>▼</span>
              </Link>
              <div className="dropdown-menu">
                <Link href="/shop">Corrugated Boxes</Link>

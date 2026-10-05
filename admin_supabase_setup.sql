@@ -110,7 +110,7 @@ CREATE POLICY "Allow all delete products" ON public.products FOR DELETE USING (t
 INSERT INTO public.categories (id, name, slug, parent_id, sort_order, show_in_menu, show_in_home)
 VALUES 
   ('11111111-1111-1111-1111-111111111111', 'Carry Bags', 'carry-bags', NULL, 1, true, true),
-  ('22222222-2222-2222-2222-222222222222', 'Packaging Boxes', 'packaging-boxes', NULL, 2, true, true),
+  ('22222222-2222-2222-2222-222222222222', 'Packaging Material', 'packaging-material', NULL, 2, true, true),
   ('33333333-3333-3333-3333-333333333333', 'Labels & Tags', 'labels-tags', NULL, 3, true, false),
   ('44444444-4444-4444-4444-444444444444', 'Stickers', 'stickers', NULL, 4, true, false),
   ('55555555-5555-5555-5555-555555555555', 'Advertising', 'advertising', NULL, 5, true, false),

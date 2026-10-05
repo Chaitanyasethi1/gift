@@ -64,34 +64,48 @@ export default async function ProductDetailPage({ params }: Props) {
     notFound();
   }
 
-  // Map Supabase product to expected component shape
+  // Parse variants and bulk_pricing safely
+  let parsedVariants = [];
+  try {
+    parsedVariants = typeof product.variants === 'string' ? JSON.parse(product.variants) : (product.variants || []);
+  } catch (e) {
+    parsedVariants = [];
+  }
+
+  let parsedBulk = [];
+  try {
+    parsedBulk = typeof product.bulk_pricing === 'string' ? JSON.parse(product.bulk_pricing) : (product.bulk_pricing || []);
+  } catch (e) {
+    parsedBulk = [];
+  }
+
   const mappedProduct = {
     id: product.id,
     slug: product.slug,
     title: product.name,
     category: product.category_id,
-    categoryLabel: product.categories?.name || 'Category',
-    desc: product.description || 'Premium quality product manufactured by AS Print Gallery.',
+    categoryLabel: product.categories?.name || 'Packaging Material',
+    desc: product.description || 'Premium quality packaging material manufactured by AS Print Gallery.',
     image: product.images?.[0] || 'https://via.placeholder.com/600',
-    price: product.selling_price,
-    startingAt: product.selling_price,
+    price: product.selling_price || product.price || 0,
+    startingAt: product.selling_price || product.price || 0,
     moq: product.moq || 50,
     sizes: product.sizes || [],
-    variants: product.variants || [],
+    variants: parsedVariants,
     allowLogoUpload: product.allow_logo_upload || false,
     specs: [
-      `MRP: ₹${product.mrp}`,
-      `Selling Price: ₹${product.selling_price}`,
-      `Stock Available: ${product.stock_quantity}`,
+      `MRP: ₹${product.mrp || 0}`,
+      `Selling Price: ₹${product.selling_price || product.price || 0}`,
+      `Stock Available: ${product.stock_quantity ?? 1000}`,
       `Customization: Printing Available`
     ],
-    tiers: product.bulk_pricing && product.bulk_pricing.length > 0
-      ? product.bulk_pricing
+    tiers: parsedBulk.length > 0
+      ? parsedBulk
       : [
-          { qty: 50, rate: product.selling_price || 0, label: '50 pcs Pack' },
-          { qty: 200, rate: Math.round((product.selling_price || 0) * 0.95), label: '200 pcs Pack' },
-          { qty: 500, rate: Math.round((product.selling_price || 0) * 0.90), label: '500 pcs Pack' },
-          { qty: 1000, rate: Math.round((product.selling_price || 0) * 0.85), label: '1000 pcs Pack' }
+          { qty: product.moq || 50, rate: product.selling_price || product.price || 10, label: `${product.moq || 50} pcs Pack` },
+          { qty: 200, rate: Math.round((product.selling_price || product.price || 10) * 0.95), label: '200 pcs Pack' },
+          { qty: 500, rate: Math.round((product.selling_price || product.price || 10) * 0.90), label: '500 pcs Pack' },
+          { qty: 1000, rate: Math.round((product.selling_price || product.price || 10) * 0.85), label: '1000 pcs Pack' }
         ]
   };
 
