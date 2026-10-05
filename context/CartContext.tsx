@@ -10,6 +10,8 @@ export interface CartItem {
   image: string;
   specs?: string[];
   dimensions?: string;
+  size?: string | null;
+  logo?: string | null;
   isCustomBox?: boolean;
   gstRate?: number;
 }
@@ -93,8 +95,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const addToCart = (item: Omit<CartItem, 'qty'>, quantity = 1) => {
-    const parsedItemGst = (item.gstRate !== null && item.gstRate !== undefined && item.gstRate !== '')
-      ? (typeof item.gstRate === 'number' ? item.gstRate : (parseFloat(String(item.gstRate).replace(/[^0-9.]/g, '')) || 18))
+    const rawGst = item.gstRate as any;
+    const parsedItemGst = (rawGst !== null && rawGst !== undefined && rawGst !== '')
+      ? (typeof rawGst === 'number' ? rawGst : (parseFloat(String(rawGst).replace(/[^0-9.]/g, '')) || 18))
       : 18;
 
     setCart(prev => {
@@ -158,7 +161,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Exact Item-Wise Dynamic GST calculation based on each product's specific GST Rate (0%, 5%, 12%, 18%, 28%)
   const gstAmount = cart.reduce((sum, item) => {
-    const rawRate = item.gstRate;
+    const rawRate = item.gstRate as any;
     const rate = (rawRate !== null && rawRate !== undefined && rawRate !== '')
       ? (typeof rawRate === 'number' ? rawRate : (parseFloat(String(rawRate).replace(/[^0-9.]/g, '')) ?? 18))
       : 18;

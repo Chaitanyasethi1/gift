@@ -37,7 +37,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   // Extract variants if available
   const variantList: SizeVariantItem[] = Array.isArray((product as any).variants) && (product as any).variants.length > 0
     ? (product as any).variants
-    : (product.sizes || []).map((s: string) => ({ size: s, price: product.price, mrp: (product as any).mrp || product.price * 1.5 }));
+    : (((product as any).sizes || []) as string[]).map((s: string) => ({ size: s, price: product.price, mrp: (product as any).mrp || product.price * 1.5 }));
 
   const [selectedVariant, setSelectedVariant] = useState<SizeVariantItem | null>(
     variantList.length > 0 ? variantList[0] : null
@@ -76,6 +76,8 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   // Base price proportion for size variants
   const baseProductPrice = product.price > 0 ? product.price : (tiers[0]?.rate || 1);
   const sizeRatio = activeBasePrice > 0 && baseProductPrice > 0 ? (activeBasePrice / baseProductPrice) : 1;
+  const currentRate = activeTier ? (activeTier.rate * (sizeRatio > 0 ? sizeRatio : 1)) : activeBasePrice;
+
   // Determine product-specific GST Rate with ultra-robust parsing
   const rawGst = (product as any).gst_rate ?? (product as any).gst_percentage;
   const gstRate = (rawGst !== null && rawGst !== undefined && rawGst !== '')

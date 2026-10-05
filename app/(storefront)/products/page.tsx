@@ -15,7 +15,13 @@ export const metadata: Metadata = {
   }
 };
 
-export default function ProductsPage() {
+import { createClient } from '@/utils/supabase/server';
+
+export default async function ProductsPage() {
+  const supabase = createClient();
+  const { data: dbProducts } = await supabase.from('products').select('*').eq('is_active', true);
+  const products = (dbProducts && dbProducts.length > 0) ? dbProducts : PRODUCTS;
+
   return (
     <>
       {/* Shop Header Banner */}
@@ -27,7 +33,7 @@ export default function ProductsPage() {
             <span style={{ color: 'var(--primary)', fontWeight: 700 }}>Packaging Catalogue</span>
           </div>
           <h1 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.8rem)', fontWeight: 800, color: '#FFFFFF', margin: '0 0 10px 0' }}>
-            ALL {PRODUCTS.length} PACKAGING &amp; PRINTING PRODUCTS
+            ALL PACKAGING &amp; PRINTING PRODUCTS
           </h1>
           <p style={{ color: '#CBD5E1', maxWidth: '720px', fontSize: '1rem', lineHeight: 1.5, margin: 0 }}>
             Complete industrial catalog manufactured in-house. Certified bursting strength kraft paper, food-grade safe boards, and high-precision woven labels at direct factory wholesale rates.
@@ -38,7 +44,7 @@ export default function ProductsPage() {
       {/* Main Shop Grid */}
       <section style={{ padding: '48px 0', background: '#FAFAFC' }}>
         <div className="container">
-          <ProductGrid initialFilter="all" showAllButton={false} />
+          <ProductGrid products={products} showAllButton={false} />
 
           {/* Custom Size Banner */}
           <div

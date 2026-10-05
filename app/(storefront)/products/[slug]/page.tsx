@@ -191,6 +191,8 @@ export default async function ProductDetailPage({ params }: Props) {
       `Customization: Printing Available`
     ],
 
+    rating: Number(product.rating || 4.9),
+    reviews: Number(product.reviews || 120),
     tiers: parsedBulk.length > 0
       ? parsedBulk
       : [
