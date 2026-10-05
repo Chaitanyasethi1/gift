@@ -84,10 +84,12 @@ export function Header() {
   const { cartCount, setIsCartOpen } = useCart();
   const [tickerText, setTickerText] = useState(initialHomepageConfig.tickerText);
   const [searchQuery, setSearchQuery] = useState('');
+  const [navCategories, setNavCategories] = useState<NavCategory[]>(NAV_CATEGORIES);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    // 1. Fetch Ticker Text
     fetch('/api/homepage')
       .then(res => res.json())
       .then(data => {
@@ -96,7 +98,45 @@ export function Header() {
         }
       })
       .catch(() => {});
+
+    // 2. Dynamically Fetch Categories & Subcategories from Admin
+    fetch('/api/categories')
+      .then(res => res.json())
+      .then(data => {
+        if (data?.categories && Array.isArray(data.categories) && data.categories.length > 0) {
+          const all: any[] = data.categories;
+          const main = all
+            .filter(c => (!c.parent_id || c.parent_id === 'null' || c.parent_id === '') && c.show_in_menu !== false)
+            .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+          
+          if (main.length > 0) {
+            const mapped: NavCategory[] = main.map(m => {
+              const subs = all
+                .filter(s => s.parent_id === m.id && s.show_in_menu !== false)
+                .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+              
+              return {
+                title: m.name,
+                link: `/shop?category=${m.slug}`,
+                items: subs.length > 0
+                  ? subs.map(s => ({
+                      label: s.name,
+                      link: `/shop?category=${s.slug}`,
+                      icon: '📦'
+                    }))
+                  : [{ label: `All ${m.name}`, link: `/shop?category=${m.slug}`, icon: '🛍️' }]
+              };
+            });
+
+            if (mapped.length > 0) {
+              setNavCategories(mapped);
+            }
+          }
+        }
+      })
+      .catch(() => {});
   }, []);
+
 
   const handleMouseEnter = (title: string) => {
     if (dropdownTimeoutRef.current) {
@@ -408,7 +448,7 @@ export function Header() {
       <nav style={{ background: '#1E293B', color: '#fff', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="container dark-nav-container" style={{ display: 'flex', justifyContent: 'center', gap: '32px', padding: '0' }}>
           
-          {NAV_CATEGORIES.map((category) => {
+          {navCategories.map((category) => {
             const isOpen = activeDropdown === category.title;
             return (
               <div 
