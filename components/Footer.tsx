@@ -28,26 +28,14 @@ export function Footer() {
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', color: '#D1D5DB', fontSize: '0.9rem', lineHeight: 1.5 }}>
               <MapPinIcon size={18} color="#4ADE80" />
-              <div>
-                <a 
-                  href="https://maps.app.goo.gl/sQC85oM7zJemKo9k8" 
-                  target="_blank" 
-                  rel="noreferrer"
-                  style={{ color: '#D1D5DB', textDecoration: 'none', transition: 'color 0.2s' }}
-                >
-                  {`${siteConfig.contact.address.street}, ${siteConfig.contact.address.city}, ${siteConfig.contact.address.state} - ${siteConfig.contact.address.pincode}`}
-                </a>
-                <div style={{ marginTop: '4px' }}>
-                  <a 
-                    href="https://maps.app.goo.gl/sQC85oM7zJemKo9k8" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    style={{ color: '#4ADE80', fontSize: '0.8rem', fontWeight: 700, textDecoration: 'none' }}
-                  >
-                    📍 Open in Google Maps &rarr;
-                  </a>
-                </div>
-              </div>
+              <a 
+                href="https://maps.app.goo.gl/sQC85oM7zJemKo9k8" 
+                target="_blank" 
+                rel="noreferrer"
+                style={{ color: '#D1D5DB', textDecoration: 'none', transition: 'color 0.2s' }}
+              >
+                {`${siteConfig.contact.address.street}, ${siteConfig.contact.address.city}, ${siteConfig.contact.address.state} - ${siteConfig.contact.address.pincode}`}
+              </a>
             </li>
             <li style={{ display: 'flex', gap: '12px', alignItems: 'center', color: '#D1D5DB', fontSize: '0.9rem' }}>
               <PhoneIcon size={18} />
@@ -60,14 +48,92 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Find Our App (Empty Space or App links) */}
+        {/* Find Our App / Factory Location Map */}
         <div>
-          <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px' }}>Find Our App On Mobile</h4>
-          <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-             <div style={{ background: '#000', border: '1px solid #333', padding: '8px 12px', borderRadius: '6px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+          <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '14px' }}>
+            Factory Location
+          </h4>
+          
+          <a
+            href="https://maps.app.goo.gl/sQC85oM7zJemKo9k8"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              display: 'block',
+              textDecoration: 'none',
+              borderRadius: '10px',
+              overflow: 'hidden',
+              border: '1.5px solid #374151',
+              position: 'relative',
+              background: '#1F2937',
+              boxShadow: '0 4px 14px rgba(0,0,0,0.4)',
+              transition: 'transform 0.2s, border-color 0.2s'
+            }}
+          >
+            {/* Visual Map Graphic with Factory Pin */}
+            <div style={{
+              height: '115px',
+              background: 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)',
+              position: 'relative',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundImage: 'radial-gradient(#334155 1.5px, transparent 1.5px)',
+              backgroundSize: '16px 16px'
+            }}>
+              {/* Map Marker */}
+              <div style={{
+                background: '#EF4444',
+                color: '#FFF',
+                width: '38px',
+                height: '38px',
+                borderRadius: '50% 50% 50% 0',
+                transform: 'rotate(-45deg)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px rgba(239, 68, 68, 0.6)',
+                border: '2px solid #FFF',
+                marginBottom: '6px'
+              }}>
+                <span style={{ transform: 'rotate(45deg)', fontSize: '1rem' }}>🏭</span>
+              </div>
+              
+              <div style={{
+                background: 'rgba(0,0,0,0.8)',
+                color: '#4ADE80',
+                fontSize: '0.74rem',
+                fontWeight: 800,
+                padding: '3px 10px',
+                borderRadius: '20px',
+                border: '1px solid rgba(74, 222, 128, 0.3)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}>
+                <span>📍 AS Print Gallery Factory</span>
+              </div>
+            </div>
+
+            {/* Map Click Info Box */}
+            <div style={{ padding: '10px 12px', background: '#111827', borderTop: '1px solid #374151' }}>
+              <div style={{ color: '#F3F4F6', fontSize: '0.82rem', fontWeight: 700, marginBottom: '2px' }}>
+                Kh No. 2326/2, Loni, Ghaziabad
+              </div>
+              <div style={{ color: '#38BDF8', fontSize: '0.76rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span>Click to Open Live Google Map</span>
+                <span>↗</span>
+              </div>
+            </div>
+          </a>
+
+          {/* App download pills */}
+          <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+             <div style={{ background: '#000', border: '1px solid #333', padding: '6px 10px', borderRadius: '6px', fontSize: '0.72rem', display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#9CA3AF' }}>
                🍎 App Store
              </div>
-             <div style={{ background: '#000', border: '1px solid #333', padding: '8px 12px', borderRadius: '6px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+             <div style={{ background: '#000', border: '1px solid #333', padding: '6px 10px', borderRadius: '6px', fontSize: '0.72rem', display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#9CA3AF' }}>
                ▶️ Google Play
              </div>
           </div>
