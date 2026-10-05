@@ -159,10 +159,13 @@ ALTER TABLE public.products ADD COLUMN IF NOT EXISTS selling_price NUMERIC DEFAU
 ALTER TABLE public.products ADD COLUMN IF NOT EXISTS stock_quantity INT DEFAULT 1000;
 ALTER TABLE public.products ADD COLUMN IF NOT EXISTS flag_hot_deal BOOLEAN DEFAULT false;
 ALTER TABLE public.products ADD COLUMN IF NOT EXISTS flag_mega_sale BOOLEAN DEFAULT false;
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS gst_rate NUMERIC DEFAULT 18;
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS gst_percentage NUMERIC DEFAULT 18;
 ALTER TABLE public.products ADD COLUMN IF NOT EXISTS flag_new_arrival BOOLEAN DEFAULT false;
 ALTER TABLE public.products ADD COLUMN IF NOT EXISTS flag_best_seller BOOLEAN DEFAULT false;
 
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
+
 
 DROP POLICY IF EXISTS "Allow all read products" ON public.products;
 CREATE POLICY "Allow all read products" ON public.products FOR SELECT USING (true);

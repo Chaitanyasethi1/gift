@@ -185,7 +185,7 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
                         ₹{(item.price * item.qty).toFixed(2)}
                       </span>
                       <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                        ₹{item.price.toFixed(2)}/pc
+                        ₹{item.price.toFixed(2)}/pc • <span style={{ color: '#0284C7', fontWeight: 600 }}>{item.gstRate ?? 18}% GST</span>
                       </div>
                     </div>
                   </div>
@@ -238,7 +238,7 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
                 </div>
               )}
               <div className="cart-calc-row">
-                <span>Estimated GST (18%)</span>
+                <span>Total Applied GST</span>
                 <span>₹{gstAmount.toFixed(2)}</span>
               </div>
               <div className="cart-calc-row final-total">
@@ -246,6 +246,7 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
                 <span style={{ color: 'var(--primary)' }}>₹{finalTotal.toFixed(2)}</span>
               </div>
             </div>
+
 
             {/* Action Buttons */}
             <div className="cart-checkout-actions">

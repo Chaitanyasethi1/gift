@@ -268,7 +268,9 @@ export default function CheckoutPage() {
                   <img src={item.image} alt={item.title} style={{ width: '60px', height: '60px', borderRadius: '6px', objectFit: 'cover' }} />
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: 600, fontSize: '0.95rem', color: '#1E293B', lineHeight: 1.2, marginBottom: '4px' }}>{item.title}</div>
-                    <div style={{ fontSize: '0.85rem', color: '#64748B' }}>Qty: {item.qty}</div>
+                    <div style={{ fontSize: '0.82rem', color: '#64748B' }}>
+                      Qty: {item.qty} • <span style={{ color: '#0284C7', fontWeight: 600 }}>{item.gstRate ?? 18}% GST</span>
+                    </div>
                   </div>
                   <div style={{ fontWeight: 700, color: '#0F172A' }}>
                     ₹{(item.price * item.qty).toFixed(2)}
@@ -279,7 +281,7 @@ export default function CheckoutPage() {
 
             <div style={{ borderTop: '1px dashed #CBD5E1', paddingTop: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', color: '#475569' }}>
-                <span>Subtotal</span>
+                <span>Subtotal (Excl. Tax)</span>
                 <span>₹{subtotal.toFixed(2)}</span>
               </div>
               
@@ -291,9 +293,10 @@ export default function CheckoutPage() {
               )}
               
               <div style={{ display: 'flex', justifyContent: 'space-between', color: '#475569' }}>
-                <span>GST (18%)</span>
+                <span>Total Applied GST</span>
                 <span>₹{gstAmount.toFixed(2)}</span>
               </div>
+
               
               <div style={{ display: 'flex', justifyContent: 'space-between', color: '#475569' }}>
                 <span>Shipping</span>

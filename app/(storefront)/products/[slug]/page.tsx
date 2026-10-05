@@ -178,6 +178,7 @@ export default async function ProductDetailPage({ params }: Props) {
     images: parsedImages,
     price: basePrice,
     startingAt: basePrice,
+    gst_rate: Number(product.gst_rate ?? product.gst_percentage ?? 18),
     moq: Number(product.moq || 50),
     sizes: product.sizes || [],
     variants: parsedVariants,
@@ -185,9 +186,11 @@ export default async function ProductDetailPage({ params }: Props) {
     specs: [
       `MRP: ₹${product.mrp || 0}`,
       `Selling Price: ₹${basePrice}`,
+      `GST: ${product.gst_rate ?? product.gst_percentage ?? 18}%`,
       `Stock Available: ${product.stock_quantity ?? 1000}`,
       `Customization: Printing Available`
     ],
+
     tiers: parsedBulk.length > 0
       ? parsedBulk
       : [

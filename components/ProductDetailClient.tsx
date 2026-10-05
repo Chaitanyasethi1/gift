@@ -76,10 +76,13 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   // Base price proportion for size variants
   const baseProductPrice = product.price > 0 ? product.price : (tiers[0]?.rate || 1);
   const sizeRatio = activeBasePrice > 0 && baseProductPrice > 0 ? (activeBasePrice / baseProductPrice) : 1;
-  const currentRate = activeTier ? (activeTier.rate * (sizeRatio > 0 ? sizeRatio : 1)) : activeBasePrice;
+  // Determine product-specific GST Rate (default 18%)
+  const gstRate = typeof (product as any).gst_rate === 'number'
+    ? (product as any).gst_rate
+    : (typeof (product as any).gst_percentage === 'number' ? (product as any).gst_percentage : 18);
 
   const subtotal = currentRate * selectedQty;
-  const gst = subtotal * 0.18;
+  const gst = subtotal * (gstRate / 100);
   const grandTotal = subtotal + gst;
 
   const handleAddToCart = () => {
@@ -91,9 +94,11 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
       specs: product.specs,
       dimensions: product.dimensions,
       size: selectedVariant ? selectedVariant.size : null,
-      logo: uploadedLogo ? uploadedLogo.name : null
+      logo: uploadedLogo ? uploadedLogo.name : null,
+      gstRate: gstRate
     }, selectedQty);
   };
+
 
   const handleGetQuote = () => {
     setSelectedQuoteProduct(product.title);
@@ -358,8 +363,9 @@ Please confirm order and delivery timeline.`
                     ₹{subtotal.toFixed(2)}
                   </span>
                   <div style={{ fontSize: '0.78rem', color: '#64748B', marginTop: '2px' }}>
-                    +18% GST: ₹{gst.toFixed(2)} | <strong>Total: ₹{grandTotal.toFixed(2)}</strong>
+                    +{gstRate}% GST: ₹{gst.toFixed(2)} | <strong>Total: ₹{grandTotal.toFixed(2)}</strong>
                   </div>
+
                 </div>
               </div>
             </div>

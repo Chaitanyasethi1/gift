@@ -11,6 +11,7 @@ export interface CartItem {
   specs?: string[];
   dimensions?: string;
   isCustomBox?: boolean;
+  gstRate?: number;
 }
 
 export interface Coupon {
@@ -95,9 +96,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setCart(prev => {
       const existing = prev.find(c => c.id === item.id);
       if (existing) {
-        return prev.map(c => c.id === item.id ? { ...c, qty: c.qty + quantity } : c);
+        return prev.map(c => c.id === item.id ? { ...c, qty: c.qty + quantity, gstRate: item.gstRate ?? c.gstRate } : c);
       }
-      return [...prev, { ...item, qty: quantity }];
+      return [...prev, { ...item, qty: quantity, gstRate: item.gstRate ?? 18 }];
     });
     showToast(`Added ${item.title} to cart!`);
     setIsCartOpen(true);
@@ -149,9 +150,17 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
   const discount = appliedCoupon ? subtotal * appliedCoupon.rate : 0;
-  const taxableAmount = Math.max(0, subtotal - discount);
-  const gstAmount = 0; // taxableAmount * 0.18; // 18% GST standard
-  const finalTotal = taxableAmount + gstAmount;
+  const discountMultiplier = appliedCoupon ? (1 - appliedCoupon.rate) : 1;
+
+  // Exact Item-Wise Dynamic GST calculation based on each product's specific GST Rate
+  const gstAmount = cart.reduce((sum, item) => {
+    const rate = typeof item.gstRate === 'number' ? item.gstRate : 18;
+    const itemSubtotal = item.price * item.qty * discountMultiplier;
+    return sum + (itemSubtotal * (rate / 100));
+  }, 0);
+
+  const finalTotal = subtotal - discount + gstAmount;
+
 
   return (
     <CartContext.Provider value={{

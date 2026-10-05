@@ -26,6 +26,7 @@ export default function StockProductsPage() {
   
   const defaultItem = { 
     name: '', slug: '', category_id: '', description: '', mrp: 0, selling_price: 0, stock_quantity: 1000, is_active: true, images: [] as string[],
+    gst_rate: 18,
     flag_hot_deal: false, flag_mega_sale: false, flag_new_arrival: false, flag_best_seller: false,
     moq: 50,
     allow_logo_upload: false,
@@ -98,6 +99,8 @@ export default function StockProductsPage() {
       parsedImages = [item.image];
     }
 
+    const itemGst = typeof item.gst_rate === 'number' ? item.gst_rate : (typeof item.gst_percentage === 'number' ? item.gst_percentage : 18);
+
     setNewItem({
       name: item.name,
       slug: item.slug,
@@ -108,6 +111,7 @@ export default function StockProductsPage() {
       stock_quantity: item.stock_quantity ?? 1000,
       is_active: item.is_active !== false,
       images: parsedImages,
+      gst_rate: itemGst,
       flag_hot_deal: item.flag_hot_deal || false,
       flag_mega_sale: item.flag_mega_sale || false,
       flag_new_arrival: item.flag_new_arrival || false,
@@ -119,6 +123,7 @@ export default function StockProductsPage() {
     });
     setIsModalOpen(true);
   }
+
 
   function handleAddNew() {
     setEditingId(null);
@@ -262,6 +267,8 @@ export default function StockProductsPage() {
       description: newItem.description,
       mrp: newItem.mrp,
       selling_price: newItem.selling_price,
+      gst_rate: Number(newItem.gst_rate ?? 18),
+      gst_percentage: Number(newItem.gst_rate ?? 18),
       stock_quantity: newItem.stock_quantity,
       is_active: newItem.is_active,
       images: newItem.images,
@@ -275,6 +282,7 @@ export default function StockProductsPage() {
       variants: newItem.variants,
       bulk_pricing: newItem.bulk_pricing
     };
+
 
     let error;
     if (editingId) {
@@ -497,7 +505,7 @@ export default function StockProductsPage() {
                 )}
               </div>
 
-              {/* Base Pricing & MOQ */}
+              {/* Base Pricing, GST & MOQ */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '12px', background: '#F8FAFC', padding: '15px', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
                 <div>
                   <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.8rem', fontWeight: 700, color: '#475569' }}>Base Selling Price (₹)</label>
@@ -508,6 +516,20 @@ export default function StockProductsPage() {
                   <input required type="number" min="0" step="0.01" value={newItem.mrp} onChange={e => setNewItem({...newItem, mrp: parseFloat(e.target.value) || 0})} style={{ width: '100%', padding: '8px 12px', border: '1px solid #cbd5e1', borderRadius: '6px' }} />
                 </div>
                 <div>
+                  <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.8rem', fontWeight: 800, color: '#0369A1' }}>🏛️ Product GST Rate (%)</label>
+                  <select 
+                    value={newItem.gst_rate} 
+                    onChange={e => setNewItem({...newItem, gst_rate: parseFloat(e.target.value) || 0})}
+                    style={{ width: '100%', padding: '8px 10px', border: '1.5px solid #38BDF8', borderRadius: '6px', background: '#F0F9FF', fontWeight: 700, color: '#0369A1' }}
+                  >
+                    <option value={18}>18% (Standard Rate)</option>
+                    <option value={12}>12% (Corrugated / Apparel)</option>
+                    <option value={5}>5% (Essential Goods)</option>
+                    <option value={28}>28% (Luxury / Special)</option>
+                    <option value={0}>0% (Exempt / Nil)</option>
+                  </select>
+                </div>
+                <div>
                   <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.8rem', fontWeight: 700, color: '#475569' }}>Minimum Order (MOQ)</label>
                   <input required type="number" min="1" value={newItem.moq} onChange={e => setNewItem({...newItem, moq: parseInt(e.target.value) || 1})} style={{ width: '100%', padding: '8px 12px', border: '1px solid #cbd5e1', borderRadius: '6px' }} />
                 </div>
@@ -516,6 +538,7 @@ export default function StockProductsPage() {
                   <input required type="number" min="0" value={newItem.stock_quantity} onChange={e => setNewItem({...newItem, stock_quantity: parseInt(e.target.value) || 0})} style={{ width: '100%', padding: '8px 12px', border: '1px solid #cbd5e1', borderRadius: '6px' }} />
                 </div>
               </div>
+
 
               {/* 1. SIZE VARIATIONS & INDIVIDUAL SIZE RATES */}
               <div style={{ background: '#F0FDF4', padding: '18px', borderRadius: '10px', border: '1px solid #BBF7D0' }}>
@@ -750,9 +773,14 @@ export default function StockProductsPage() {
                         {variantsCount > 0 ? `${variantsCount} Sizes` : 'Default Size'}
                       </span>
                     </td>
-                    <td style={{ padding: '15px 20px', color: '#10b981', fontWeight: 800 }}>
-                      ₹{item.selling_price}
+                    <td style={{ padding: '15px 20px' }}>
+                      <strong style={{ color: '#0F172A', fontSize: '0.95rem' }}>₹{item.selling_price || 0}</strong>
+                      <div style={{ fontSize: '0.72rem', color: '#64748B' }}>MRP: ₹{item.mrp || 0}</div>
+                      <span style={{ background: '#E0F2FE', color: '#0369A1', padding: '2px 6px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 800, display: 'inline-block', marginTop: '2px' }}>
+                        {item.gst_rate ?? item.gst_percentage ?? 18}% GST
+                      </span>
                     </td>
+
                     <td style={{ padding: '15px 20px' }}>
                       <span style={{ background: '#DBEAFE', color: '#1E40AF', padding: '3px 8px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 700 }}>
                         {tiersCount > 0 ? `${tiersCount} Packs` : 'Standard'}
