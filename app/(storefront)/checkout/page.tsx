@@ -18,8 +18,19 @@ export default function CheckoutPage() {
   const [gstin, setGstin] = useState('');
   const [consent, setConsent] = useState(false);
   
+  // Payment Method Selection: 'cod' | 'online'
+  const isCodDisabled = finalTotal > 999;
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'online'>('online');
+
   const [isProcessing, setIsProcessing] = useState(false);
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    // If total exceeds 999, auto-switch to online payment
+    if (isCodDisabled) {
+      setPaymentMethod('online');
+    }
+  }, [isCodDisabled]);
 
   useEffect(() => {
     // Load Razorpay Script
@@ -41,11 +52,52 @@ export default function CheckoutPage() {
   }, [cart.length, router, isProcessing, isLoaded]);
 
   if (!isLoaded || (cart.length === 0 && !isProcessing)) {
-    return null; // or loading state, will redirect
+    return null;
   }
 
-  const initiateRazorpayPayment = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Handle Cash On Delivery (COD) Order Submission
+  const handleCodSubmit = async () => {
+    try {
+      setIsProcessing(true);
+      setMessage('Placing Cash On Delivery Order...');
+
+      const res = await fetch('/api/create-cod-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customer_name: name,
+          customer_phone: phone,
+          shipping_address: address,
+          pincode: pincode,
+          gstin: gstin,
+          cart: cart,
+          subtotal: subtotal,
+          gstAmount: gstAmount,
+          finalTotal: finalTotal,
+          discount: discount
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setMessage(`Order Placed Successfully! Your Order ID: ${data.orderNumber}`);
+        setTimeout(() => {
+          clearCart();
+          router.push(`/order-success/${data.orderId}`);
+        }, 1500);
+      } else {
+        setMessage(data.error || 'Failed to place COD order.');
+        setIsProcessing(false);
+      }
+    } catch (err: any) {
+      console.error(err);
+      setMessage(err.message || 'Error processing COD order.');
+      setIsProcessing(false);
+    }
+  };
+
+  // Handle Online Payment (Razorpay) Submission
+  const initiateRazorpayPayment = async () => {
     setIsProcessing(true);
     setMessage('');
 
@@ -147,6 +199,19 @@ export default function CheckoutPage() {
     }
   };
 
+  const handleCheckoutSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (paymentMethod === 'cod') {
+      if (isCodDisabled) {
+        alert('Cash on Delivery is not available for orders above ₹999. Please choose Online Payment.');
+        return;
+      }
+      await handleCodSubmit();
+    } else {
+      await initiateRazorpayPayment();
+    }
+  };
+
   return (
     <div style={{ background: '#F8FAFC', minHeight: '100vh', padding: '40px 0' }}>
       <div className="container">
@@ -157,11 +222,13 @@ export default function CheckoutPage() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px', alignItems: 'start' }}>
           
-          {/* Left Column: Form */}
+          {/* Left Column: Form & Payment Methods */}
           <div style={{ background: '#FFF', padding: '30px', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '20px', borderBottom: '1px solid #E2E8F0', paddingBottom: '10px' }}>Delivery & Contact Information</h2>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '20px', borderBottom: '1px solid #E2E8F0', paddingBottom: '10px' }}>
+              Delivery & Contact Information
+            </h2>
             
-            <form onSubmit={initiateRazorpayPayment} className="modal-form-grid">
+            <form onSubmit={handleCheckoutSubmit} className="modal-form-grid">
               <div className="form-field-group">
                 <label>Full Name <span style={{ color: '#EF4444' }}>*</span></label>
                 <input
@@ -224,6 +291,137 @@ export default function CheckoutPage() {
                   style={{ width: '100%', padding: '10px', border: '1px solid #CBD5E1', borderRadius: '6px' }}
                 />
               </div>
+
+              {/* PAYMENT METHOD SELECTION (COD & Online) */}
+              <div style={{ gridColumn: '1 / -1', marginTop: '16px' }}>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0F172A', marginBottom: '12px' }}>
+                  Payment Method
+                </h3>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  
+                  {/* Option 1: Cash On Delivery */}
+                  <div
+                    onClick={() => {
+                      if (!isCodDisabled) setPaymentMethod('cod');
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '16px 20px',
+                      borderRadius: '14px',
+                      border: paymentMethod === 'cod' && !isCodDisabled ? '2px solid #16A34A' : '1.5px solid #E2E8F0',
+                      background: isCodDisabled ? '#F8FAFC' : (paymentMethod === 'cod' ? '#F0FDF4' : '#FFFFFF'),
+                      cursor: isCodDisabled ? 'not-allowed' : 'pointer',
+                      opacity: isCodDisabled ? 0.6 : 1,
+                      transition: 'all 0.2s ease',
+                      boxShadow: paymentMethod === 'cod' && !isCodDisabled ? '0 4px 12px rgba(22, 163, 74, 0.12)' : '0 1px 3px rgba(0,0,0,0.02)'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                      <div style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '10px',
+                        background: '#16A34A',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#FFFFFF',
+                        fontSize: '1.2rem'
+                      }}>
+                        💵
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '1rem', fontWeight: 700, color: isCodDisabled ? '#94A3B8' : '#1E293B' }}>
+                          Cash On Delivery
+                        </div>
+                        <div style={{ fontSize: '0.78rem', color: isCodDisabled ? '#94A3B8' : '#64748B' }}>
+                          Pay cash upon package arrival (Up to ₹999)
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{
+                      width: '22px',
+                      height: '22px',
+                      borderRadius: '50%',
+                      border: paymentMethod === 'cod' && !isCodDisabled ? '6px solid #3B82F6' : '2px solid #CBD5E1',
+                      background: '#FFFFFF'
+                    }} />
+                  </div>
+
+                  {/* Option 2: Online Payment (UPI, Cards, Netbanking) */}
+                  <div
+                    onClick={() => setPaymentMethod('online')}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '16px 20px',
+                      borderRadius: '14px',
+                      border: paymentMethod === 'online' ? '2px solid #16A34A' : '1.5px solid #E2E8F0',
+                      background: paymentMethod === 'online' ? '#F0FDF4' : '#FFFFFF',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      boxShadow: paymentMethod === 'online' ? '0 4px 12px rgba(22, 163, 74, 0.12)' : '0 1px 3px rgba(0,0,0,0.02)'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                      <div style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '10px',
+                        background: '#F1F5F9',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#1E293B',
+                        fontSize: '1.2rem',
+                        border: '1px solid #E2E8F0'
+                      }}>
+                        💳
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '1rem', fontWeight: 700, color: '#1E293B' }}>
+                          Online
+                        </div>
+                        <div style={{ fontSize: '0.78rem', color: '#64748B' }}>
+                          Instant UPI, Cards, NetBanking, Razorpay Secure
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{
+                      width: '22px',
+                      height: '22px',
+                      borderRadius: '50%',
+                      border: paymentMethod === 'online' ? '6px solid #3B82F6' : '2px solid #CBD5E1',
+                      background: '#FFFFFF'
+                    }} />
+                  </div>
+
+                  {/* Warning Notice when COD is disabled */}
+                  {isCodDisabled && (
+                    <div style={{
+                      color: '#EF4444',
+                      fontSize: '0.85rem',
+                      fontWeight: 600,
+                      marginTop: '4px',
+                      textAlign: 'center',
+                      padding: '6px 12px',
+                      background: '#FEF2F2',
+                      borderRadius: '6px',
+                      border: '1px solid #FEE2E2'
+                    }}>
+                      Cash on Delivery is not available for orders above 999.
+                    </div>
+                  )}
+
+                </div>
+              </div>
+
               <div className="form-field-group" style={{ gridColumn: '1 / -1', display: 'flex', alignItems: 'flex-start', gap: '8px', marginTop: '10px' }}>
                 <input
                   type="checkbox"
@@ -234,7 +432,7 @@ export default function CheckoutPage() {
                   disabled={isProcessing}
                 />
                 <label htmlFor="chk-consent-checkout" style={{ fontWeight: 400, fontSize: '0.85rem', color: 'var(--text-muted)', cursor: 'pointer' }}>
-                  I consent to receive promotional updates, offers, and marketing communications from AS Print Gallery via email or SMS.
+                  I consent to receive order updates, delivery dockets, and promotional offers from AS Print Gallery via SMS / WhatsApp.
                 </label>
               </div>
               
@@ -247,10 +445,25 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 className="btn-primary-hero"
-                style={{ gridColumn: '1 / -1', justifyContent: 'center', padding: '16px', marginTop: '16px', background: isProcessing ? '#94A3B8' : '#E11D48', fontSize: '1.1rem', borderRadius: '8px' }}
+                style={{
+                  gridColumn: '1 / -1',
+                  justifyContent: 'center',
+                  padding: '16px',
+                  marginTop: '16px',
+                  background: isProcessing ? '#94A3B8' : (paymentMethod === 'cod' ? '#16A34A' : '#E11D48'),
+                  fontSize: '1.1rem',
+                  borderRadius: '10px',
+                  fontWeight: 800,
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.12)',
+                  cursor: isProcessing ? 'not-allowed' : 'pointer',
+                  border: 'none'
+                }}
                 disabled={isProcessing}
               >
-                <ShieldCheckIcon size={20} color="#FFFFFF" /> {isProcessing ? 'Processing Payment...' : `Pay Securely ₹${finalTotal.toFixed(2)}`}
+                <ShieldCheckIcon size={20} color="#FFFFFF" />{' '}
+                {isProcessing
+                  ? (paymentMethod === 'cod' ? 'Placing Order...' : 'Processing Payment...')
+                  : (paymentMethod === 'cod' ? 'PLACE ORDER' : `Pay Securely ₹${finalTotal.toFixed(2)}`)}
               </button>
             </form>
           </div>
@@ -306,14 +519,14 @@ export default function CheckoutPage() {
               </div>
               
               <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #E2E8F0', paddingTop: '16px', marginTop: '8px', fontSize: '1.2rem', fontWeight: 800, color: '#0F172A' }}>
-                <span>Total</span>
-                <span style={{ color: 'var(--primary)' }}>₹{finalTotal.toFixed(2)}</span>
+                <span>Amount Payable</span>
+                <span style={{ color: '#0F172A' }}>₹{finalTotal.toFixed(2)}</span>
               </div>
             </div>
             
             <div style={{ marginTop: '24px', background: '#F8FAFC', padding: '12px', borderRadius: '8px', fontSize: '0.85rem', color: '#64748B', display: 'flex', alignItems: 'center', gap: '10px' }}>
               <ShieldCheckIcon size={24} color="#10B981" />
-              <span>Payments are 100% secure and encrypted by Razorpay.</span>
+              <span>100% Encrypted & Safe Payments (COD / UPI / Razorpay).</span>
             </div>
           </div>
           
