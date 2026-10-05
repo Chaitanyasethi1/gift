@@ -16,6 +16,7 @@ import {
   MinusIcon,
   PlusIcon
 } from './Icons';
+import { ProductReviewsSection } from './ProductReviewsSection';
 
 interface SizeVariantItem {
   size: string;
@@ -386,7 +387,81 @@ Please confirm order and delivery timeline.`
             </div>
           </div>
         </div>
+
+        {/* 🌟 CUSTOMER RATINGS & REVIEWS + SIMILAR PRODUCTS + PINCODE CHECK (FROM SCREENSHOT) */}
+        <ProductReviewsSection currentProduct={product} />
+
       </div>
+
+      {/* 📱 STICKY BOTTOM ACTION BAR (Exact Screenshot Style: White Add to Cart + Purple Buy Now) */}
+      <div style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        background: '#FFFFFF',
+        borderTop: '1px solid #E2E8F0',
+        padding: '10px 16px',
+        boxShadow: '0 -4px 16px rgba(0,0,0,0.08)',
+        zIndex: 90,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '12px'
+      }}>
+        <div style={{ maxWidth: '600px', width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            style={{
+              background: '#FFFFFF',
+              color: '#7C3AED',
+              border: '1.5px solid #7C3AED',
+              borderRadius: '8px',
+              padding: '12px',
+              fontWeight: 800,
+              fontSize: '0.95rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              transition: 'all 0.2s'
+            }}
+          >
+            <ShoppingCartIcon size={18} color="#7C3AED" />
+            Add to Cart
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              handleAddToCart();
+              window.location.href = '/cart';
+            }}
+            style={{
+              background: 'linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)',
+              color: '#FFFFFF',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '12px',
+              fontWeight: 800,
+              fontSize: '0.95rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              boxShadow: '0 4px 12px rgba(124, 58, 237, 0.3)',
+              transition: 'all 0.2s'
+            }}
+          >
+            <span>⏩</span>
+            Buy Now
+          </button>
+        </div>
+      </div>
+
     </div>
   );
 };

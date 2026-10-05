@@ -1,25 +1,30 @@
 -- ==============================================================================
--- AS PRINT GALLERY - SUPABASE ALL-IN-ONE DATABASE & PERMISSIONS SETUP
--- Run this in Supabase SQL Editor once to make everything 100% smooth & error-free!
+-- AS PRINT GALLERY - SUPABASE ALL-IN-ONE DATABASE & PERMISSIONS SETUP (FIXED)
+-- Run this in Supabase SQL Editor to make everything 100% smooth & error-free!
 -- ==============================================================================
 
--- 1. Ensure Storage Bucket for Product Images
+-- 1. Ensure Storage Bucket for Product Images & Public Access
 INSERT INTO storage.buckets (id, name, public) 
 VALUES ('product-images', 'product-images', true)
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT (id) DO UPDATE SET public = true;
 
+-- Drop and recreate storage policies to prevent duplicate errors
+DROP POLICY IF EXISTS "Public Read Images" ON storage.objects;
 CREATE POLICY "Public Read Images" 
 ON storage.objects FOR SELECT 
 USING (bucket_id = 'product-images');
 
+DROP POLICY IF EXISTS "Admin Upload Images" ON storage.objects;
 CREATE POLICY "Admin Upload Images" 
 ON storage.objects FOR INSERT 
 WITH CHECK (bucket_id = 'product-images');
 
+DROP POLICY IF EXISTS "Admin Update Images" ON storage.objects;
 CREATE POLICY "Admin Update Images" 
 ON storage.objects FOR UPDATE 
 USING (bucket_id = 'product-images');
 
+DROP POLICY IF EXISTS "Admin Delete Images" ON storage.objects;
 CREATE POLICY "Admin Delete Images" 
 ON storage.objects FOR DELETE 
 USING (bucket_id = 'product-images');
@@ -29,7 +34,7 @@ USING (bucket_id = 'product-images');
 CREATE TABLE IF NOT EXISTS public.categories (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
-    slug TEXT NOT NULL UNIQUE,
+    slug TEXT NOT NULL,
     parent_id UUID REFERENCES public.categories(id) ON DELETE CASCADE,
     image_url TEXT,
     sort_order INT DEFAULT 0,
@@ -37,6 +42,16 @@ CREATE TABLE IF NOT EXISTS public.categories (
     show_in_home BOOLEAN DEFAULT false,
     created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
 );
+
+-- Ensure slug has unique constraint if not already present
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'categories_slug_key'
+    ) THEN
+        ALTER TABLE public.categories ADD CONSTRAINT categories_slug_key UNIQUE (slug);
+    END IF;
+END $$;
 
 -- Enable RLS and add full access policies for categories
 ALTER TABLE public.categories ENABLE ROW LEVEL SECURITY;
@@ -55,6 +70,20 @@ CREATE POLICY "Allow all delete categories" ON public.categories FOR DELETE USIN
 
 
 -- 3. Ensure Products Table has all columns for Sizes, Variations & Bulk Packs
+CREATE TABLE IF NOT EXISTS public.products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    slug TEXT NOT NULL UNIQUE,
+    category TEXT,
+    price NUMERIC DEFAULT 0,
+    mrp NUMERIC,
+    description TEXT,
+    image TEXT,
+    images JSONB DEFAULT '[]'::jsonb,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
 ALTER TABLE public.products ADD COLUMN IF NOT EXISTS variants JSONB DEFAULT '[]'::jsonb;
 ALTER TABLE public.products ADD COLUMN IF NOT EXISTS bulk_pricing JSONB DEFAULT '[]'::jsonb;
 ALTER TABLE public.products ADD COLUMN IF NOT EXISTS sizes TEXT;
@@ -77,7 +106,7 @@ DROP POLICY IF EXISTS "Allow all delete products" ON public.products;
 CREATE POLICY "Allow all delete products" ON public.products FOR DELETE USING (true);
 
 
--- 4. Seed / Update Main Categories (Carry Bags, Packaging Boxes, Labels & Tags, Stickers, Advertising, Disposable Products)
+-- 4. Seed / Update Main Categories (Using ON CONFLICT ON ID to never fail)
 INSERT INTO public.categories (id, name, slug, parent_id, sort_order, show_in_menu, show_in_home)
 VALUES 
   ('11111111-1111-1111-1111-111111111111', 'Carry Bags', 'carry-bags', NULL, 1, true, true),
@@ -86,8 +115,9 @@ VALUES
   ('44444444-4444-4444-4444-444444444444', 'Stickers', 'stickers', NULL, 4, true, false),
   ('55555555-5555-5555-5555-555555555555', 'Advertising', 'advertising', NULL, 5, true, false),
   ('66666666-6666-6666-6666-666666666666', 'Disposable Products', 'disposable-products', NULL, 6, true, false)
-ON CONFLICT (slug) DO UPDATE 
+ON CONFLICT (id) DO UPDATE 
 SET name = EXCLUDED.name, 
+    slug = EXCLUDED.slug,
     sort_order = EXCLUDED.sort_order,
     show_in_menu = EXCLUDED.show_in_menu,
     show_in_home = EXCLUDED.show_in_home;
