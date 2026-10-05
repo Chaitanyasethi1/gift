@@ -181,3 +181,19 @@ VALUES
   ('Silver Dona', 'silver-dona', '66666666-6666-6666-6666-666666666666', 3, true, false),
   ('Silver Plates', 'silver-plates', '66666666-6666-6666-6666-666666666666', 4, true, false)
 ON CONFLICT (slug) DO UPDATE SET name = EXCLUDED.name, parent_id = EXCLUDED.parent_id;
+
+-- 5. Site Settings Table for Dynamic Homepage Banners, Ticker & Popular Categories
+CREATE TABLE IF NOT EXISTS public.site_settings (
+    key TEXT PRIMARY KEY,
+    value JSONB NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Public read site_settings" ON public.site_settings;
+CREATE POLICY "Public read site_settings" ON public.site_settings FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Admin write site_settings" ON public.site_settings;
+CREATE POLICY "Admin write site_settings" ON public.site_settings FOR ALL USING (true) WITH CHECK (true);
+

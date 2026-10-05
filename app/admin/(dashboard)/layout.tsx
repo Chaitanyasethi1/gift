@@ -29,8 +29,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/admin" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
             📊 Dashboard
           </Link>
+          <Link href="/admin/banners" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
+            🎨 Banners &amp; Homepage
+          </Link>
           <Link href="/admin/categories" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
-            🗂️ Categories & Menu
+            🗂️ Categories &amp; Menu
           </Link>
           <Link href="/admin/stock" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
             📦 Products & Stock
