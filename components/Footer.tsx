@@ -162,32 +162,6 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Google Maps Factory Location Bar (Bilkul Neeche) */}
-      <div style={{ borderTop: '1px solid #2D2D2D', padding: '16px 20px', textAlign: 'center', background: '#111111' }}>
-        <a 
-          href="https://maps.app.goo.gl/sQC85oM7zJemKo9k8" 
-          target="_blank" 
-          rel="noreferrer"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            color: '#4ADE80',
-            textDecoration: 'none',
-            fontSize: '0.88rem',
-            fontWeight: 700,
-            background: 'rgba(74, 222, 128, 0.1)',
-            padding: '8px 20px',
-            borderRadius: '30px',
-            border: '1px solid rgba(74, 222, 128, 0.3)',
-            transition: 'all 0.2s'
-          }}
-        >
-          <span>📍</span>
-          <span>Find Our Factory Location on Google Maps (Kh No. 2326/2, Loni, Ghaziabad) &rarr;</span>
-        </a>
-      </div>
-
       <div style={{ borderTop: '1px solid #222', paddingTop: '16px', paddingBottom: '10px', textAlign: 'center', color: '#6B7280', fontSize: '0.82rem', background: '#0D0D0D' }}>
          © 2024-25 AS Print Gallery | All rights reserved
       </div>
