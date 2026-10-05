@@ -117,12 +117,17 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products = [], showAll
                     type="button"
                     className="btn-primary-hero"
                     onClick={() => {
+                      const gstVal = quickViewProduct.gst_rate ?? quickViewProduct.gst_percentage;
+                      const parsedGst = (gstVal !== null && gstVal !== undefined && gstVal !== '')
+                        ? (typeof gstVal === 'number' ? gstVal : (parseFloat(String(gstVal).replace(/[^0-9.]/g, '')) || 18))
+                        : 18;
                       addToCart({
                         id: quickViewProduct.id,
                         title: quickViewProduct.name,
                         price: quickViewProduct.selling_price,
                         image: quickViewProduct.images?.[0] || '',
-                        specs: []
+                        specs: [],
+                        gstRate: parsedGst
                       }, quickViewProduct.moq || 1);
                       setQuickViewProduct(null);
                     }}

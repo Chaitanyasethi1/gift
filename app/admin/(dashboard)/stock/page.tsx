@@ -284,19 +284,22 @@ export default function StockProductsPage() {
     };
 
 
-    let error;
-    if (editingId) {
-      const res = await supabase.from('products').update(payload).eq('id', editingId);
-      error = res.error;
-    } else {
-      const res = await supabase.from('products').insert([payload]);
-      error = res.error;
+    let res = editingId 
+      ? await supabase.from('products').update(payload).eq('id', editingId)
+      : await supabase.from('products').insert([payload]);
+
+    if (res.error && (res.error.message?.toLowerCase().includes('column') || res.error.message?.toLowerCase().includes('schema'))) {
+      const altPayload = { ...payload };
+      delete (altPayload as any).gst_percentage;
+      res = editingId 
+        ? await supabase.from('products').update(altPayload).eq('id', editingId)
+        : await supabase.from('products').insert([altPayload]);
     }
     
     setIsSaving(false);
     
-    if (error) {
-      alert('Error saving product: ' + error.message);
+    if (res.error) {
+      alert('Error saving product: ' + res.error.message);
     } else {
       setIsModalOpen(false);
       fetchData(); // refresh list

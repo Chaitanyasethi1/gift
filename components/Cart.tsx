@@ -69,7 +69,7 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
     if (appliedCoupon) {
       text += `Discount (${appliedCoupon.code}): -₹${discount.toFixed(2)}\n`;
     }
-    text += `GST (18%): ₹${gstAmount.toFixed(2)}\n`;
+    text += `Applied GST: ₹${gstAmount.toFixed(2)}\n`;
     text += `*Grand Total: ₹${finalTotal.toFixed(2)}*\n\n`;
     text += `Please verify stock & share payment details for dispatch!`;
 

@@ -93,12 +93,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const addToCart = (item: Omit<CartItem, 'qty'>, quantity = 1) => {
+    const parsedItemGst = (item.gstRate !== null && item.gstRate !== undefined && item.gstRate !== '')
+      ? (typeof item.gstRate === 'number' ? item.gstRate : (parseFloat(String(item.gstRate).replace(/[^0-9.]/g, '')) || 18))
+      : 18;
+
     setCart(prev => {
       const existing = prev.find(c => c.id === item.id);
       if (existing) {
-        return prev.map(c => c.id === item.id ? { ...c, qty: c.qty + quantity, gstRate: item.gstRate ?? c.gstRate } : c);
+        return prev.map(c => c.id === item.id ? { ...c, qty: c.qty + quantity, gstRate: parsedItemGst } : c);
       }
-      return [...prev, { ...item, qty: quantity, gstRate: item.gstRate ?? 18 }];
+      return [...prev, { ...item, qty: quantity, gstRate: parsedItemGst }];
     });
     showToast(`Added ${item.title} to cart!`);
     setIsCartOpen(true);
@@ -152,9 +156,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const discount = appliedCoupon ? subtotal * appliedCoupon.rate : 0;
   const discountMultiplier = appliedCoupon ? (1 - appliedCoupon.rate) : 1;
 
-  // Exact Item-Wise Dynamic GST calculation based on each product's specific GST Rate
+  // Exact Item-Wise Dynamic GST calculation based on each product's specific GST Rate (0%, 5%, 12%, 18%, 28%)
   const gstAmount = cart.reduce((sum, item) => {
-    const rate = typeof item.gstRate === 'number' ? item.gstRate : 18;
+    const rawRate = item.gstRate;
+    const rate = (rawRate !== null && rawRate !== undefined && rawRate !== '')
+      ? (typeof rawRate === 'number' ? rawRate : (parseFloat(String(rawRate).replace(/[^0-9.]/g, '')) ?? 18))
+      : 18;
     const itemSubtotal = item.price * item.qty * discountMultiplier;
     return sum + (itemSubtotal * (rate / 100));
   }, 0);

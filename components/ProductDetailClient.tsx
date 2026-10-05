@@ -76,10 +76,11 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   // Base price proportion for size variants
   const baseProductPrice = product.price > 0 ? product.price : (tiers[0]?.rate || 1);
   const sizeRatio = activeBasePrice > 0 && baseProductPrice > 0 ? (activeBasePrice / baseProductPrice) : 1;
-  // Determine product-specific GST Rate (default 18%)
-  const gstRate = typeof (product as any).gst_rate === 'number'
-    ? (product as any).gst_rate
-    : (typeof (product as any).gst_percentage === 'number' ? (product as any).gst_percentage : 18);
+  // Determine product-specific GST Rate with ultra-robust parsing
+  const rawGst = (product as any).gst_rate ?? (product as any).gst_percentage;
+  const gstRate = (rawGst !== null && rawGst !== undefined && rawGst !== '')
+    ? (typeof rawGst === 'number' ? rawGst : (parseFloat(String(rawGst).replace(/[^0-9.]/g, '')) || 18))
+    : 18;
 
   const subtotal = currentRate * selectedQty;
   const gst = subtotal * (gstRate / 100);

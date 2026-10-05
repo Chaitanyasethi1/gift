@@ -19,15 +19,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const originalPrice = mrp > 0 ? mrp.toFixed(2) : (sellingPrice * 1.5).toFixed(2);
   const currentPrice = sellingPrice.toFixed(2);
 
+  const parseGst = (val: any) => {
+    if (val === null || val === undefined || val === '') return 18;
+    const num = typeof val === 'number' ? val : parseFloat(String(val).replace(/[^0-9.]/g, ''));
+    return isNaN(num) ? 18 : num;
+  };
+
   const handleAddClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    const gstRate = parseGst(product.gst_rate ?? product.gst_percentage);
     addToCart({
       id: product.id,
       title: product.name,
       price: product.selling_price,
       image: product.images?.[0] || '',
-      specs: []
+      specs: [],
+      gstRate: gstRate
     }, product.moq || 1);
     
     const btn = e.currentTarget as HTMLButtonElement;
