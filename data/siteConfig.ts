@@ -42,7 +42,7 @@ export const siteConfig = {
       country: "India",
       landmark: ""
     },
-    googleMapsUrl: "https://maps.google.com/?q=Loni+Ghaziabad+201102"
+    googleMapsUrl: "https://maps.app.goo.gl/sQC85oM7zJemKo9k8"
   },
 
   emails: {

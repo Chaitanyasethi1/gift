@@ -27,8 +27,27 @@ export function Footer() {
           <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px' }}>Contact Us</h4>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', color: '#D1D5DB', fontSize: '0.9rem', lineHeight: 1.5 }}>
-              <MapPinIcon size={18} />
-              <span>{`${siteConfig.contact.address.street}, ${siteConfig.contact.address.city}, ${siteConfig.contact.address.state} - ${siteConfig.contact.address.pincode}`}</span>
+              <MapPinIcon size={18} color="#4ADE80" />
+              <div>
+                <a 
+                  href="https://maps.app.goo.gl/sQC85oM7zJemKo9k8" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  style={{ color: '#D1D5DB', textDecoration: 'none', transition: 'color 0.2s' }}
+                >
+                  {`${siteConfig.contact.address.street}, ${siteConfig.contact.address.city}, ${siteConfig.contact.address.state} - ${siteConfig.contact.address.pincode}`}
+                </a>
+                <div style={{ marginTop: '4px' }}>
+                  <a 
+                    href="https://maps.app.goo.gl/sQC85oM7zJemKo9k8" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    style={{ color: '#4ADE80', fontSize: '0.8rem', fontWeight: 700, textDecoration: 'none' }}
+                  >
+                    📍 Open in Google Maps &rarr;
+                  </a>
+                </div>
+              </div>
             </li>
             <li style={{ display: 'flex', gap: '12px', alignItems: 'center', color: '#D1D5DB', fontSize: '0.9rem' }}>
               <PhoneIcon size={18} />
@@ -44,7 +63,6 @@ export function Footer() {
         {/* Find Our App (Empty Space or App links) */}
         <div>
           <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px' }}>Find Our App On Mobile</h4>
-          {/* QR Codes removed as requested */}
           <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
              <div style={{ background: '#000', border: '1px solid #333', padding: '8px 12px', borderRadius: '6px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                🍎 App Store
@@ -78,8 +96,34 @@ export function Footer() {
         </div>
       </div>
 
-      <div style={{ borderTop: '1px solid #333', paddingTop: '20px', textAlign: 'center', color: '#6B7280', fontSize: '0.85rem' }}>
-         © 2024-25 | All rights reserved
+      {/* Google Maps Factory Location Bar (Bilkul Neeche) */}
+      <div style={{ borderTop: '1px solid #2D2D2D', padding: '16px 20px', textAlign: 'center', background: '#111111' }}>
+        <a 
+          href="https://maps.app.goo.gl/sQC85oM7zJemKo9k8" 
+          target="_blank" 
+          rel="noreferrer"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            color: '#4ADE80',
+            textDecoration: 'none',
+            fontSize: '0.88rem',
+            fontWeight: 700,
+            background: 'rgba(74, 222, 128, 0.1)',
+            padding: '8px 20px',
+            borderRadius: '30px',
+            border: '1px solid rgba(74, 222, 128, 0.3)',
+            transition: 'all 0.2s'
+          }}
+        >
+          <span>📍</span>
+          <span>Find Our Factory Location on Google Maps (Kh No. 2326/2, Loni, Ghaziabad) &rarr;</span>
+        </a>
+      </div>
+
+      <div style={{ borderTop: '1px solid #222', paddingTop: '16px', paddingBottom: '10px', textAlign: 'center', color: '#6B7280', fontSize: '0.82rem', background: '#0D0D0D' }}>
+         © 2024-25 AS Print Gallery | All rights reserved
       </div>
     </footer>
   );
