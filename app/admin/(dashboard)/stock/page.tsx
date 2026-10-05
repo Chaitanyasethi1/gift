@@ -25,7 +25,7 @@ export default function StockProductsPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   
   const defaultItem = { 
-    name: '', slug: '', category_id: '', mrp: 0, selling_price: 0, stock_quantity: 1000, is_active: true, images: [] as string[],
+    name: '', slug: '', category_id: '', description: '', mrp: 0, selling_price: 0, stock_quantity: 1000, is_active: true, images: [] as string[],
     flag_hot_deal: false, flag_mega_sale: false, flag_new_arrival: false, flag_best_seller: false,
     moq: 50,
     allow_logo_upload: false,
@@ -33,6 +33,7 @@ export default function StockProductsPage() {
     bulk_pricing: [] as BulkTier[]
   };
   const [newItem, setNewItem] = useState(defaultItem);
+  const [newImageUrl, setNewImageUrl] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
 
@@ -82,15 +83,31 @@ export default function StockProductsPage() {
       ];
     }
 
+    // Parse images array safely
+    let parsedImages: string[] = [];
+    if (Array.isArray(item.images)) {
+      parsedImages = item.images;
+    } else if (typeof item.images === 'string') {
+      try {
+        const p = JSON.parse(item.images);
+        parsedImages = Array.isArray(p) ? p : [item.images];
+      } catch {
+        parsedImages = [item.images];
+      }
+    } else if (item.image) {
+      parsedImages = [item.image];
+    }
+
     setNewItem({
       name: item.name,
       slug: item.slug,
       category_id: item.category_id || '',
+      description: item.description || '',
       mrp: item.mrp || 0,
       selling_price: item.selling_price || 0,
       stock_quantity: item.stock_quantity ?? 1000,
       is_active: item.is_active !== false,
-      images: item.images || [],
+      images: parsedImages,
       flag_hot_deal: item.flag_hot_deal || false,
       flag_mega_sale: item.flag_mega_sale || false,
       flag_new_arrival: item.flag_new_arrival || false,
@@ -165,27 +182,69 @@ export default function StockProductsPage() {
     });
   };
 
-  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+  // Handle Multi-file upload
+  async function handleMultipleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     try {
-      setUploadingImage(true);
       if (!e.target.files || e.target.files.length === 0) return;
-      const file = e.target.files[0];
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `${fileName}`;
+      setUploadingImage(true);
+      const files = Array.from(e.target.files);
+      const uploadedUrls: string[] = [];
 
-      const { error: uploadError } = await supabase.storage.from('product-images').upload(filePath, file);
-      if (uploadError) throw uploadError;
+      for (const file of files) {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+        const filePath = `${fileName}`;
 
-      const { data } = supabase.storage.from('product-images').getPublicUrl(filePath);
-      
-      setNewItem({ ...newItem, images: [data.publicUrl] });
+        const { error: uploadError } = await supabase.storage.from('product-images').upload(filePath, file);
+        if (uploadError) {
+          console.error('Upload error:', uploadError);
+          continue;
+        }
+
+        const { data } = supabase.storage.from('product-images').getPublicUrl(filePath);
+        if (data?.publicUrl) {
+          uploadedUrls.push(data.publicUrl);
+        }
+      }
+
+      setNewItem(prev => ({
+        ...prev,
+        images: [...prev.images, ...uploadedUrls]
+      }));
     } catch (error: any) {
-      alert('Error uploading image: ' + error.message);
+      alert('Error uploading images: ' + error.message);
     } finally {
       setUploadingImage(false);
     }
   }
+
+  // Add Image via direct URL
+  const handleAddImageUrl = () => {
+    if (!newImageUrl.trim()) return;
+    setNewItem(prev => ({
+      ...prev,
+      images: [...prev.images, newImageUrl.trim()]
+    }));
+    setNewImageUrl('');
+  };
+
+  // Remove Image
+  const handleRemoveImage = (index: number) => {
+    setNewItem(prev => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index)
+    }));
+  };
+
+  // Set as Main Photo (Move to index 0)
+  const handleSetMainPhoto = (index: number) => {
+    const selected = newItem.images[index];
+    const rest = newItem.images.filter((_, i) => i !== index);
+    setNewItem(prev => ({
+      ...prev,
+      images: [selected, ...rest]
+    }));
+  };
 
   async function handleSaveItem(e: React.FormEvent) {
     e.preventDefault();
@@ -200,6 +259,7 @@ export default function StockProductsPage() {
       name: newItem.name,
       slug,
       category_id: newItem.category_id ? newItem.category_id : null,
+      description: newItem.description,
       mrp: newItem.mrp,
       selling_price: newItem.selling_price,
       stock_quantity: newItem.stock_quantity,
@@ -311,22 +371,130 @@ export default function StockProductsPage() {
                 </div>
               </div>
               
-              {/* Product Image */}
+              {/* Product Description */}
               <div>
-                <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.85rem', fontWeight: 700, color: '#334155' }}>Product Image</label>
-                <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                  {newItem.images[0] && (
-                    <img src={newItem.images[0]} alt="Preview" style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #e2e8f0' }} />
-                  )}
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={handleImageUpload} 
-                    disabled={uploadingImage}
-                    style={{ flex: 1, padding: '10px', border: '1px solid #cbd5e1', borderRadius: '8px', background: '#f8fafc' }} 
-                  />
+                <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.85rem', fontWeight: 700, color: '#334155' }}>
+                  Product Description &amp; Details *
+                </label>
+                <textarea
+                  rows={4}
+                  placeholder="Describe product quality, material (e.g. Virgin Kraft / Fluting type / GSM / Adhesive), printing, dimensions, uses, etc."
+                  value={newItem.description}
+                  onChange={e => setNewItem({...newItem, description: e.target.value})}
+                  style={{ width: '100%', padding: '10px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', lineHeight: 1.5, boxSizing: 'border-box' }}
+                />
+              </div>
+
+              {/* Multi-Photo Gallery & Upload */}
+              <div style={{ background: '#FAF5FF', padding: '18px', borderRadius: '10px', border: '1px solid #E9D5FF' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', flexWrap: 'wrap', gap: '6px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.95rem', fontWeight: 800, color: '#6B21A8' }}>
+                      📸 Product Photos (Multiple Photos Upload &amp; Gallery)
+                    </label>
+                    <span style={{ fontSize: '0.8rem', color: '#7E22CE' }}>
+                      Aap ek se zyada photos upload kar sakte hain. Pehli photo main preview photo banegi.
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#6B21A8', background: '#F3E8FF', padding: '3px 8px', borderRadius: '6px' }}>
+                    {newItem.images.length} Photos Added
+                  </span>
                 </div>
-                {uploadingImage && <span style={{ fontSize: '0.8rem', color: '#3b82f6', marginTop: '4px', display: 'block' }}>Uploading image...</span>}
+
+                {/* Upload Buttons Row */}
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '14px' }}>
+                  <label style={{
+                    background: '#7C3AED',
+                    color: '#FFF',
+                    padding: '9px 16px',
+                    borderRadius: '8px',
+                    fontWeight: 700,
+                    fontSize: '0.85rem',
+                    cursor: uploadingImage ? 'not-allowed' : 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}>
+                    <span>📁 Choose Multiple Photos</span>
+                    <input 
+                      type="file" 
+                      multiple 
+                      accept="image/*" 
+                      onChange={handleMultipleImageUpload} 
+                      disabled={uploadingImage}
+                      style={{ display: 'none' }} 
+                    />
+                  </label>
+
+                  {/* Add Image by URL */}
+                  <div style={{ display: 'flex', gap: '6px', flex: 1, minWidth: '240px' }}>
+                    <input
+                      type="text"
+                      placeholder="Or paste Image URL (https://...)"
+                      value={newImageUrl}
+                      onChange={(e) => setNewImageUrl(e.target.value)}
+                      style={{ flex: 1, padding: '8px 12px', border: '1px solid #C084FC', borderRadius: '6px', fontSize: '0.85rem' }}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleAddImageUrl}
+                      style={{ background: '#9333EA', color: '#FFF', border: 'none', padding: '8px 14px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer' }}
+                    >
+                      + Add URL
+                    </button>
+                  </div>
+                </div>
+
+                {uploadingImage && (
+                  <div style={{ fontSize: '0.85rem', color: '#7C3AED', fontWeight: 700, marginBottom: '12px' }}>
+                    ⏳ Uploading photos to secure Supabase storage... please wait
+                  </div>
+                )}
+
+                {/* Preview Thumbnails Grid */}
+                {newItem.images.length > 0 && (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))', gap: '10px' }}>
+                    {newItem.images.map((imgUrl, idx) => (
+                      <div key={idx} style={{
+                        position: 'relative',
+                        background: '#FFF',
+                        border: idx === 0 ? '2px solid #7C3AED' : '1px solid #CBD5E1',
+                        borderRadius: '8px',
+                        overflow: 'hidden',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.06)'
+                      }}>
+                        <div style={{ width: '100%', height: '80px', background: '#F8FAFC' }}>
+                          <img src={imgUrl} alt={`Photo ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </div>
+                        {idx === 0 && (
+                          <div style={{ position: 'absolute', top: '4px', left: '4px', background: '#7C3AED', color: '#FFF', fontSize: '0.65rem', fontWeight: 800, padding: '2px 6px', borderRadius: '4px' }}>
+                            MAIN
+                          </div>
+                        )}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 6px', background: '#F8FAFC', borderTop: '1px solid #E2E8F0' }}>
+                          {idx !== 0 ? (
+                            <button
+                              type="button"
+                              onClick={() => handleSetMainPhoto(idx)}
+                              title="Make Main Image"
+                              style={{ background: 'none', border: 'none', color: '#7C3AED', fontSize: '0.7rem', fontWeight: 700, cursor: 'pointer', padding: 0 }}
+                            >
+                              ★ Set Main
+                            </button>
+                          ) : <span style={{ fontSize: '0.7rem', color: '#64748B' }}>Primary</span>}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveImage(idx)}
+                            title="Delete Photo"
+                            style={{ background: 'none', border: 'none', color: '#DC2626', fontSize: '0.8rem', fontWeight: 800, cursor: 'pointer', padding: 0 }}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Base Pricing & MOQ */}

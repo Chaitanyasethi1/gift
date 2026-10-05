@@ -79,6 +79,17 @@ export default async function ProductDetailPage({ params }: Props) {
     parsedBulk = [];
   }
 
+  let parsedImages = [];
+  try {
+    parsedImages = typeof product.images === 'string' ? JSON.parse(product.images) : (product.images || []);
+  } catch (e) {
+    parsedImages = [];
+  }
+  if (!Array.isArray(parsedImages) || parsedImages.length === 0) {
+    if (product.image) parsedImages = [product.image];
+    else parsedImages = ['https://via.placeholder.com/600'];
+  }
+
   const mappedProduct = {
     id: product.id,
     slug: product.slug,
@@ -86,7 +97,9 @@ export default async function ProductDetailPage({ params }: Props) {
     category: product.category_id,
     categoryLabel: product.categories?.name || 'Packaging Material',
     desc: product.description || 'Premium quality packaging material manufactured by AS Print Gallery.',
-    image: product.images?.[0] || 'https://via.placeholder.com/600',
+    fullDesc: product.description || '',
+    image: parsedImages[0],
+    images: parsedImages,
     price: product.selling_price || product.price || 0,
     startingAt: product.selling_price || product.price || 0,
     moq: product.moq || 50,

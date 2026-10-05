@@ -56,6 +56,16 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
         { qty: 1000, rate: Math.round(activeBasePrice * 0.85), label: '1000 pcs Bulk Rate' }
       ];
 
+  // Extract all images for multi-photo gallery
+  const rawImages = (product as any).images;
+  const parsedImageList: string[] = Array.isArray(rawImages) && rawImages.length > 0
+    ? rawImages
+    : (typeof rawImages === 'string' ? (() => { try { const p = JSON.parse(rawImages); return Array.isArray(p) && p.length > 0 ? p : [product.image]; } catch { return [product.image]; } })() : [product.image]);
+
+  const [activeImage, setActiveImage] = useState<string>(
+    parsedImageList.length > 0 ? parsedImageList[0] : product.image
+  );
+
   const [selectedQty, setSelectedQty] = useState(
     tiers.length > 0 ? tiers[0].qty : (product.moq || 50)
   );
@@ -77,7 +87,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
       id: product.id,
       title: product.title,
       price: currentRate,
-      image: product.image,
+      image: activeImage || product.image,
       specs: product.specs,
       dimensions: product.dimensions,
       size: selectedVariant ? selectedVariant.size : null,
@@ -113,13 +123,15 @@ Please confirm order and delivery timeline.`
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px', alignItems: 'start' }}>
-          {/* Left Column: Image */}
+          {/* Left Column: Multi-Image Gallery */}
           <div style={{ background: '#FFFFFF', padding: '24px', borderRadius: 'var(--radius-lg, 12px)', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-            <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '8px', maxHeight: '480px' }}>
+            
+            {/* Main Active Image Display */}
+            <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '8px', minHeight: '340px', maxHeight: '480px', background: '#F8FAFC', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img
-                src={product.image}
+                src={activeImage || product.image}
                 alt={product.title}
-                style={{ width: '100%', height: 'auto', objectFit: 'cover', display: 'block' }}
+                style={{ width: '100%', maxHeight: '450px', objectFit: 'contain', display: 'block', transition: 'all 0.3s' }}
               />
               {product.badge && (
                 <div style={{ position: 'absolute', top: '14px', left: '14px' }}>
@@ -127,6 +139,36 @@ Please confirm order and delivery timeline.`
                 </div>
               )}
             </div>
+
+            {/* Thumbnail Strip for Multi-photos */}
+            {parsedImageList.length > 1 && (
+              <div style={{ display: 'flex', gap: '10px', marginTop: '14px', overflowX: 'auto', paddingBottom: '6px' }}>
+                {parsedImageList.map((img, idx) => {
+                  const isActive = (activeImage || product.image) === img;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setActiveImage(img)}
+                      style={{
+                        flex: '0 0 65px',
+                        height: '65px',
+                        padding: '2px',
+                        border: `2.5px solid ${isActive ? '#7C3AED' : '#CBD5E1'}`,
+                        borderRadius: '8px',
+                        background: '#FFF',
+                        cursor: 'pointer',
+                        overflow: 'hidden',
+                        boxShadow: isActive ? '0 2px 8px rgba(124, 58, 237, 0.3)' : 'none',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      <img src={img} alt={`Thumbnail ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }} />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
             <div style={{ marginTop: '20px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               <div style={{ background: '#F8FAFC', padding: '12px', borderRadius: '6px', border: '1px solid #E2E8F0', fontSize: '0.82rem' }}>
