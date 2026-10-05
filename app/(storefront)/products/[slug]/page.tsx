@@ -6,119 +6,195 @@ import { ProductDetailClient } from '@/components/ProductDetailClient';
 import { createClient } from '@/utils/supabase/server';
 import { supabase as supabaseAdmin } from '@/lib/supabase';
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+export const revalidate = 0;
+
 interface Props {
   params: { slug: string };
 }
 
 export async function generateStaticParams() {
-  const { data } = await supabaseAdmin.from('products').select('slug');
-  return (data || []).map((product) => ({
-    slug: product.slug
-  }));
+  try {
+    const { data } = await supabaseAdmin.from('products').select('slug');
+    return (data || []).map((product) => ({
+      slug: product.slug
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const supabase = createClient();
-  const { data: product } = await supabase.from('products').select('*').eq('slug', params.slug).single();
-  
-  if (!product) {
+  try {
+    const supabase = createClient();
+    const { data: product } = await supabase.from('products').select('*').eq('slug', params.slug).maybeSingle();
+    
+    if (!product) {
+      return {
+        title: 'Product Not Found | AS Print Gallery'
+      };
+    }
+
+    const title = `${product.name} Manufacturer | AS Print Gallery`;
+    const description = `${product.description?.slice(0, 155) || product.name}... Factory direct rates, certified bursting strength, fast Pan-India dispatch from Ghaziabad.`;
+
+    let firstImage = '';
+    if (Array.isArray(product.images) && product.images.length > 0) {
+      firstImage = product.images[0];
+    } else if (typeof product.images === 'string') {
+      try {
+        const p = JSON.parse(product.images);
+        firstImage = Array.isArray(p) && p.length > 0 ? p[0] : product.images;
+      } catch {
+        firstImage = product.images;
+      }
+    } else if (product.image) {
+      firstImage = product.image;
+    }
+
+    const imageUrl = firstImage ? (firstImage.startsWith('http') ? firstImage : `${siteConfig.url}${firstImage}`) : '';
+
     return {
-      title: 'Product Not Found | AS Print Gallery'
+      title,
+      description,
+      alternates: {
+        canonical: `/products/${product.slug}`
+      },
+      openGraph: {
+        title,
+        description,
+        url: `${siteConfig.url}/products/${product.slug}`,
+        images: imageUrl ? [{ url: imageUrl, alt: product.name }] : []
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: imageUrl ? [imageUrl] : []
+      }
+    };
+  } catch (e) {
+    return {
+      title: 'Product | AS Print Gallery'
     };
   }
-
-  const title = `${product.name} Manufacturer | AS Print Gallery`;
-  const description = `${product.description?.slice(0, 155) || product.name}... Factory direct rates, certified bursting strength, fast Pan-India dispatch from Ghaziabad.`;
-
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: `/products/${product.slug}`
-    },
-    openGraph: {
-      title,
-      description,
-      url: `${siteConfig.url}/products/${product.slug}`,
-      images: [
-        {
-          url: product.images?.[0] ? `${siteConfig.url}${product.images[0]}` : '',
-          alt: product.name
-        }
-      ]
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [product.images?.[0] ? `${siteConfig.url}${product.images[0]}` : '']
-    }
-  };
 }
 
 export default async function ProductDetailPage({ params }: Props) {
+  let product: any = null;
   const supabase = createClient();
-  const { data: product } = await supabase.from('products').select('*, categories(name)').eq('slug', params.slug).single();
-  
+
+  try {
+    // Select without postgrest foreign-key join to avoid missing relation crashes
+    const { data, error } = await supabase.from('products').select('*').eq('slug', params.slug).maybeSingle();
+    if (error || !data) {
+      notFound();
+    }
+    product = data;
+  } catch (err) {
+    notFound();
+  }
+
   if (!product) {
     notFound();
   }
 
+  // Safely get category name if category_id exists
+  let categoryName = 'Packaging Material';
+  if (product.category_id) {
+    try {
+      const { data: cat } = await supabase.from('categories').select('name').eq('id', product.category_id).maybeSingle();
+      if (cat?.name) categoryName = cat.name;
+    } catch {
+      // ignore
+    }
+  } else if (product.category) {
+    categoryName = product.category;
+  }
+
   // Parse variants and bulk_pricing safely
-  let parsedVariants = [];
-  try {
-    parsedVariants = typeof product.variants === 'string' ? JSON.parse(product.variants) : (product.variants || []);
-  } catch (e) {
-    parsedVariants = [];
+  let parsedVariants: any[] = [];
+  if (Array.isArray(product.variants)) {
+    parsedVariants = product.variants;
+  } else if (typeof product.variants === 'string') {
+    try {
+      parsedVariants = JSON.parse(product.variants);
+    } catch {
+      parsedVariants = [];
+    }
   }
 
-  let parsedBulk = [];
-  try {
-    parsedBulk = typeof product.bulk_pricing === 'string' ? JSON.parse(product.bulk_pricing) : (product.bulk_pricing || []);
-  } catch (e) {
-    parsedBulk = [];
+  // Fallback to sizes string if variants is empty
+  if ((!parsedVariants || parsedVariants.length === 0) && product.sizes) {
+    const sizeArr = Array.isArray(product.sizes) ? product.sizes : (typeof product.sizes === 'string' ? product.sizes.split(',') : []);
+    parsedVariants = sizeArr.map((s: string) => ({
+      size: s.trim(),
+      price: Number(product.selling_price || product.price || 0),
+      mrp: Number(product.mrp || 0)
+    })).filter((v: any) => v.size);
   }
 
-  let parsedImages = [];
-  try {
-    parsedImages = typeof product.images === 'string' ? JSON.parse(product.images) : (product.images || []);
-  } catch (e) {
-    parsedImages = [];
+  let parsedBulk: any[] = [];
+  if (Array.isArray(product.bulk_pricing)) {
+    parsedBulk = product.bulk_pricing;
+  } else if (typeof product.bulk_pricing === 'string') {
+    try {
+      parsedBulk = JSON.parse(product.bulk_pricing);
+    } catch {
+      parsedBulk = [];
+    }
   }
-  if (!Array.isArray(parsedImages) || parsedImages.length === 0) {
-    if (product.image) parsedImages = [product.image];
-    else parsedImages = ['https://via.placeholder.com/600'];
+
+  let parsedImages: string[] = [];
+  if (Array.isArray(product.images)) {
+    parsedImages = product.images.filter(Boolean);
+  } else if (typeof product.images === 'string') {
+    try {
+      const p = JSON.parse(product.images);
+      parsedImages = Array.isArray(p) ? p.filter(Boolean) : [product.images];
+    } catch {
+      parsedImages = [product.images];
+    }
   }
+  if (parsedImages.length === 0 && product.image) {
+    parsedImages = [product.image];
+  }
+  if (parsedImages.length === 0) {
+    parsedImages = ['https://via.placeholder.com/600'];
+  }
+
+  const basePrice = Number(product.selling_price || product.price || 0);
 
   const mappedProduct = {
     id: product.id,
     slug: product.slug,
     title: product.name,
-    category: product.category_id,
-    categoryLabel: product.categories?.name || 'Packaging Material',
+    category: product.category_id || '',
+    categoryLabel: categoryName,
     desc: product.description || 'Premium quality packaging material manufactured by AS Print Gallery.',
     fullDesc: product.description || '',
     image: parsedImages[0],
     images: parsedImages,
-    price: product.selling_price || product.price || 0,
-    startingAt: product.selling_price || product.price || 0,
-    moq: product.moq || 50,
+    price: basePrice,
+    startingAt: basePrice,
+    moq: Number(product.moq || 50),
     sizes: product.sizes || [],
     variants: parsedVariants,
-    allowLogoUpload: product.allow_logo_upload || false,
+    allowLogoUpload: Boolean(product.allow_logo_upload),
     specs: [
       `MRP: ₹${product.mrp || 0}`,
-      `Selling Price: ₹${product.selling_price || product.price || 0}`,
+      `Selling Price: ₹${basePrice}`,
       `Stock Available: ${product.stock_quantity ?? 1000}`,
       `Customization: Printing Available`
     ],
     tiers: parsedBulk.length > 0
       ? parsedBulk
       : [
-          { qty: product.moq || 50, rate: product.selling_price || product.price || 10, label: `${product.moq || 50} pcs Pack` },
-          { qty: 200, rate: Math.round((product.selling_price || product.price || 10) * 0.95), label: '200 pcs Pack' },
-          { qty: 500, rate: Math.round((product.selling_price || product.price || 10) * 0.90), label: '500 pcs Pack' },
-          { qty: 1000, rate: Math.round((product.selling_price || product.price || 10) * 0.85), label: '1000 pcs Pack' }
+          { qty: Number(product.moq || 50), rate: basePrice, label: `${product.moq || 50} pcs Pack` },
+          { qty: 200, rate: Math.round(basePrice * 0.95), label: '200 pcs Pack' },
+          { qty: 500, rate: Math.round(basePrice * 0.90), label: '500 pcs Pack' },
+          { qty: 1000, rate: Math.round(basePrice * 0.85), label: '1000 pcs Pack' }
         ]
   };
 

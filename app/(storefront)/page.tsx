@@ -9,7 +9,7 @@ import { HomeCategories } from '@/components/HomeCategories';
 
 export default async function HomePage() {
   const supabase = createClient();
-  const { data: products } = await supabase.from('products').select('*, categories(name)').eq('is_active', true);
+  const { data: products } = await supabase.from('products').select('*').eq('is_active', true);
 
   const hotDeals = products?.filter(p => p.flag_hot_deal) || [];
   const megaSale = products?.filter(p => p.flag_mega_sale) || [];

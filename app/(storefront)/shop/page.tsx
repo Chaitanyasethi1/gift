@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 
 export default async function ShopPage() {
   const supabase = createClient();
-  const { data: products } = await supabase.from('products').select('*, categories(name)').eq('is_active', true);
+  const { data: products } = await supabase.from('products').select('*').eq('is_active', true);
   
   return (
     <div style={{ padding: '60px 0', background: '#FAFAFC' }}>

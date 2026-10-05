@@ -40,7 +40,7 @@ export default function StockProductsPage() {
   async function fetchData() {
     setLoading(true);
     const [prodRes, catRes] = await Promise.all([
-      supabase.from('products').select('*, categories(name)').order('created_at', { ascending: false }),
+      supabase.from('products').select('*').order('created_at', { ascending: false }),
       supabase.from('categories').select('*').order('sort_order', { ascending: true })
     ]);
     if (prodRes.error) console.error(prodRes.error);
