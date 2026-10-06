@@ -95,10 +95,6 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
 
   if (!isCartOpen) return null;
 
-  const freeShippingThreshold = 999;
-  const progressPercent = Math.min(100, (subtotal / freeShippingThreshold) * 100);
-  const remainingForFreeShipping = Math.max(0, freeShippingThreshold - subtotal);
-
   const handleApplyCoupon = (e: React.FormEvent) => {
     e.preventDefault();
     if (!couponCode.trim()) return;
@@ -170,19 +166,10 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
           </button>
         </div>
 
-        {/* Free Shipping Progress Meter */}
-        <div className="free-shipping-meter" style={{ padding: '6px 16px', fontSize: '0.74rem' }}>
-          <div id="cart-shipping-text" style={{ fontWeight: 700 }}>
-            {remainingForFreeShipping > 0
-              ? `Add ₹${remainingForFreeShipping.toFixed(0)} more for FREE Shipping (Free on ₹999+)`
-              : '🎉 You have qualified for 100% FREE Pan-India Shipping!'}
-          </div>
-          <div className="shipping-progress-track" style={{ height: '3.5px', marginTop: '4px' }}>
-            <div
-              className="shipping-progress-fill"
-              style={{ width: `${progressPercent}%` }}
-            />
-          </div>
+        {/* 100% Free Shipping - No Minimum Order */}
+        <div style={{ background: '#ECFDF5', borderBottom: '1px solid #D1FAE5', padding: '6px 16px', fontSize: '0.74rem', color: '#065F46', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <span>🚚</span>
+          <span>100% FREE Pan-India Shipping on All Orders • No Minimum Order</span>
         </div>
 
         {/* Items Scrollable Body */}
