@@ -66,17 +66,23 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
     parsedImageList.length > 0 ? parsedImageList[0] : product.image
   );
 
-  const [selectedQty, setSelectedQty] = useState(
+  const [selectedPackQty, setSelectedPackQty] = useState<number>(
     tiers.length > 0 ? tiers[0].qty : (product.moq || 50)
   );
+  const [packCount, setPackCount] = useState<number>(1);
   const [uploadedLogo, setUploadedLogo] = useState<File | null>(null);
 
-  const activeTier = [...tiers].reverse().find((t) => selectedQty >= t.qty) || tiers[0];
+  const activeTier = tiers.find((t) => t.qty === selectedPackQty) || tiers[0];
 
   // Base price proportion for size variants
   const baseProductPrice = product.price > 0 ? product.price : (tiers[0]?.rate || 1);
   const sizeRatio = activeBasePrice > 0 && baseProductPrice > 0 ? (activeBasePrice / baseProductPrice) : 1;
   const currentRate = activeTier ? (activeTier.rate * (sizeRatio > 0 ? sizeRatio : 1)) : activeBasePrice;
+
+  // Total pieces & Direct calculated totals
+  const totalPieces = selectedPackQty * packCount;
+  const singlePackPrice = currentRate * selectedPackQty;
+  const subtotal = singlePackPrice * packCount;
 
   // Determine product-specific GST Rate with ultra-robust parsing
   const rawGst = (product as any).gst_rate ?? (product as any).gst_percentage;
@@ -84,24 +90,23 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
     ? (typeof rawGst === 'number' ? rawGst : (parseFloat(String(rawGst).replace(/[^0-9.]/g, '')) || 18))
     : 18;
 
-  const subtotal = currentRate * selectedQty;
   const gst = subtotal * (gstRate / 100);
   const grandTotal = subtotal + gst;
 
   const handleAddToCart = () => {
     addToCart({
-      id: product.id,
-      title: product.title,
-      price: currentRate,
+      id: `${product.id}-${selectedVariant ? selectedVariant.size : 'std'}-${selectedPackQty}`,
+      title: `${product.title} (Pack of ${selectedPackQty}${selectedVariant ? ` - ${selectedVariant.size}` : ''})`,
+      price: singlePackPrice,
       image: activeImage || product.image,
       specs: product.specs,
       dimensions: product.dimensions,
       size: selectedVariant ? selectedVariant.size : null,
       logo: uploadedLogo ? uploadedLogo.name : null,
       gstRate: gstRate
-    }, selectedQty);
+    }, packCount);
+    setIsCartOpen(true);
   };
-
 
   const handleGetQuote = () => {
     setSelectedQuoteProduct(product.title);
@@ -112,9 +117,9 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
     `Hello AS Print Gallery! I want to order:
 📦 *Product:* ${product.title}
 • Selected Size: ${selectedVariant ? selectedVariant.size : 'Standard'}
-• Quantity / Pack: ${selectedQty} pcs
-• Applied Unit Rate: ₹${currentRate.toFixed(2)} / pc
-• Estimated Subtotal: ₹${subtotal.toFixed(2)} (Excl. GST)
+• Pack Option: Pack of ${selectedPackQty}
+• Number of Packs: ${packCount} pack(s) (${totalPieces} pcs total)
+• Total Calculated Price: ₹${grandTotal.toFixed(2)} (Incl. ${gstRate}% GST)
 Please confirm order and delivery timeline.`
   );
 
@@ -263,79 +268,181 @@ Please confirm order and delivery timeline.`
               </div>
             )}
 
-            {/* 2. PACK SIZES & BULK TIER PRICING */}
-            <div style={{ marginBottom: '24px' }}>
-              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#0F172A', marginBottom: '8px' }}>
-                📦 2. Select Pack Quantity:
+            {/* 2. PACK OF SELECTION (Clean pills without per-pc rate, matching screenshot) */}
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontSize: '1rem', fontWeight: 800, color: '#0F172A', marginBottom: '10px' }}>
+                Pack Of
               </label>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(125px, 1fr))', gap: '10px' }}>
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                 {tiers.map((tier) => {
-                  const isTierActive = selectedQty === tier.qty;
-                  const tierEffectiveRate = (tier.rate || activeBasePrice) * (sizeRatio > 0 ? sizeRatio : 1);
+                  const isSelected = selectedPackQty === tier.qty;
+                  const labelText = tier.label && !tier.label.toLowerCase().includes('per pc') && !tier.label.toLowerCase().includes('rate')
+                    ? tier.label
+                    : `Pack of ${tier.qty}`;
                   return (
-                    <div
+                    <button
                       key={tier.qty}
-                      onClick={() => setSelectedQty(tier.qty)}
+                      type="button"
+                      onClick={() => setSelectedPackQty(tier.qty)}
                       style={{
-                        padding: '12px 10px',
+                        padding: '9px 18px',
                         borderRadius: '8px',
-                        border: `2px solid ${isTierActive ? '#7C3AED' : '#E2E8F0'}`,
-                        background: isTierActive ? '#F5F3FF' : '#FFFFFF',
+                        border: `1.5px solid ${isSelected ? '#16A34A' : '#CBD5E1'}`,
+                        background: isSelected ? '#F0FDF4' : '#FFFFFF',
+                        color: isSelected ? '#15803D' : '#334155',
+                        fontWeight: isSelected ? 800 : 600,
+                        fontSize: '0.92rem',
                         cursor: 'pointer',
-                        textAlign: 'center',
-                        transition: 'all 0.2s',
-                        boxShadow: isTierActive ? '0 4px 12px rgba(124, 58, 237, 0.15)' : '0 1px 3px rgba(0,0,0,0.03)'
+                        transition: 'all 0.15s ease',
+                        boxShadow: isSelected ? '0 2px 6px rgba(22, 163, 74, 0.18)' : 'none'
                       }}
                     >
-                      <div style={{ fontSize: '0.85rem', color: '#1E293B', fontWeight: 800 }}>
-                        {tier.label || `${tier.qty} pcs Pack`}
-                      </div>
-                      <div style={{ fontSize: '1.2rem', fontWeight: 900, color: isTierActive ? '#7C3AED' : '#0F172A', marginTop: '3px' }}>
-                        ₹{tierEffectiveRate.toFixed(2)}
-                      </div>
-                      <div style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600 }}>per pc</div>
-                    </div>
+                      {labelText}
+                    </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Quantity Custom Adjuster */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#334155' }}>Custom Qty:</span>
-              <div style={{ display: 'flex', alignItems: 'center', border: '1.5px solid #CBD5E1', borderRadius: '8px', background: '#fff' }}>
+            {/* 3. QUANTITY COUNTER & DIRECT TOTAL ADD BUTTON (Exact Screenshot Layout) */}
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '14px' }}>
+              
+              {/* - 1 + Pack Counter */}
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                border: '1.5px solid #86EFAC',
+                borderRadius: '8px',
+                background: '#F0FDF4',
+                overflow: 'hidden',
+                height: '50px'
+              }}>
                 <button
                   type="button"
-                  onClick={() => setSelectedQty(Math.max(product.moq || 10, selectedQty - 50))}
-                  style={{ padding: '8px 14px', background: '#F1F5F9', border: 'none', cursor: 'pointer', borderRadius: '6px 0 0 6px' }}
-                  aria-label="Decrease quantity"
+                  onClick={() => setPackCount(Math.max(1, packCount - 1))}
+                  style={{
+                    width: '42px',
+                    height: '100%',
+                    border: 'none',
+                    background: 'transparent',
+                    color: '#16A34A',
+                    fontSize: '1.4rem',
+                    fontWeight: 900,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                  aria-label="Decrease packs"
                 >
-                  <MinusIcon size={14} />
+                  −
                 </button>
-                <input
-                  type="number"
-                  value={selectedQty}
-                  onChange={(e) => setSelectedQty(Math.max(1, parseInt(e.target.value) || product.moq || 10))}
-                  style={{ width: '90px', textAlign: 'center', border: 'none', fontWeight: 800, fontSize: '1rem', outline: 'none' }}
-                />
+                <span style={{
+                  minWidth: '38px',
+                  textAlign: 'center',
+                  fontWeight: 800,
+                  fontSize: '1.1rem',
+                  color: '#15803D'
+                }}>
+                  {packCount}
+                </span>
                 <button
                   type="button"
-                  onClick={() => setSelectedQty(selectedQty + 50)}
-                  style={{ padding: '8px 14px', background: '#F1F5F9', border: 'none', cursor: 'pointer', borderRadius: '0 6px 6px 0' }}
-                  aria-label="Increase quantity"
+                  onClick={() => setPackCount(packCount + 1)}
+                  style={{
+                    width: '42px',
+                    height: '100%',
+                    border: 'none',
+                    background: 'transparent',
+                    color: '#16A34A',
+                    fontSize: '1.4rem',
+                    fontWeight: 900,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                  aria-label="Increase packs"
                 >
-                  <PlusIcon size={14} />
+                  +
                 </button>
               </div>
-              <span style={{ fontSize: '0.82rem', color: '#64748B' }}>
-                MOQ: <strong>{product.moq || 50} pcs</strong>
-              </span>
+
+              {/* Add ₹ Total Direct Price Button */}
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                style={{
+                  flex: 1,
+                  height: '50px',
+                  background: '#2E7D32',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontSize: '1.15rem',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: '0 4px 12px rgba(46, 125, 50, 0.28)',
+                  transition: 'background 0.2s'
+                }}
+              >
+                Add ₹ {grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </button>
+            </div>
+
+            {/* 4. BULK ORDER WHATSAPP BUTTON (Exact Screenshot Style) */}
+            <a
+              href={`https://wa.me/${siteConfig.phones.whatsappRaw}?text=${waMessage}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                width: '100%',
+                height: '48px',
+                borderRadius: '8px',
+                background: '#388E3C',
+                color: '#FFFFFF',
+                fontWeight: 700,
+                fontSize: '1rem',
+                textDecoration: 'none',
+                boxShadow: '0 2px 8px rgba(56, 142, 60, 0.22)',
+                marginBottom: '16px',
+                transition: 'all 0.2s'
+              }}
+            >
+              <WhatsAppIcon size={20} color="#FFFFFF" /> Bulk order
+            </a>
+
+            {/* Optional Custom Quote Link */}
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <button
+                type="button"
+                onClick={handleGetQuote}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#64748B',
+                  fontSize: '0.84rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  textDecoration: 'underline'
+                }}
+              >
+                Need custom sizes or specialized die cuts? Get a Custom Quote →
+              </button>
             </div>
 
             {/* Logo / Design Upload */}
             {(product as any).allowLogoUpload && (
-              <div style={{ marginBottom: '24px', padding: '16px', border: '1px dashed #94A3B8', borderRadius: '8px', background: '#F8FAFC' }}>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#1E293B', marginBottom: '8px' }}>
+              <div style={{ marginBottom: '20px', padding: '14px', border: '1px dashed #94A3B8', borderRadius: '8px', background: '#F8FAFC' }}>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#1E293B', marginBottom: '6px' }}>
                   🎨 Upload Your Brand Logo/Design (Optional):
                 </label>
                 <input 
@@ -348,72 +455,27 @@ Please confirm order and delivery timeline.`
               </div>
             )}
 
-            {/* Live Subtotal Display */}
-            <div style={{ background: '#F8FAFC', padding: '18px 20px', borderRadius: '10px', border: '1.5px solid #E2E8F0', marginBottom: '24px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-                <div>
-                  <div style={{ fontSize: '0.9rem', color: '#475569' }}>
-                    Rate: <strong style={{ color: '#0F172A' }}>₹{currentRate.toFixed(2)}/pc</strong> &times; {selectedQty} pcs
-                  </div>
-                  {selectedVariant && (
-                    <div style={{ fontSize: '0.8rem', color: '#10B981', fontWeight: 700, marginTop: '2px' }}>
-                      Size: {selectedVariant.size}
-                    </div>
-                  )}
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <span style={{ fontSize: '1.5rem', fontWeight: 900, color: '#B91C1C' }}>
-                    ₹{subtotal.toFixed(2)}
+            {/* Price Breakdown Details Box */}
+            <div style={{ background: '#F8FAFC', padding: '16px 18px', borderRadius: '10px', border: '1px solid #E2E8F0', marginBottom: '24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap', gap: '6px' }}>
+                <span style={{ fontSize: '0.88rem', color: '#334155' }}>
+                  Selected: <strong>Pack of {selectedPackQty}</strong> &times; <strong>{packCount} {packCount > 1 ? 'packs' : 'pack'}</strong> ({totalPieces} pcs)
+                </span>
+                {selectedVariant && (
+                  <span style={{ fontSize: '0.82rem', color: '#16A34A', fontWeight: 700 }}>
+                    Size: {selectedVariant.size}
                   </span>
-                  <div style={{ fontSize: '0.78rem', color: '#64748B', marginTop: '2px' }}>
-                    +{gstRate}% GST: ₹{gst.toFixed(2)} | <strong>Total: ₹{grandTotal.toFixed(2)}</strong>
-                  </div>
-
+                )}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingTop: '8px', borderTop: '1px dashed #CBD5E1', flexWrap: 'wrap', gap: '8px' }}>
+                <div style={{ fontSize: '0.82rem', color: '#64748B' }}>
+                  Subtotal: ₹{subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })} • GST ({gstRate}%): ₹{gst.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                </div>
+                <div style={{ fontSize: '1.25rem', fontWeight: 900, color: '#0F172A' }}>
+                  Total: ₹{grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </div>
               </div>
             </div>
-
-            {/* Action Buttons */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '16px' }}>
-              <button
-                type="button"
-                className="btn-primary-hero"
-                onClick={handleAddToCart}
-                style={{ justifyContent: 'center', padding: '14px', fontSize: '0.95rem' }}
-              >
-                <ShoppingCartIcon size={18} /> Add to Cart
-              </button>
-              <button
-                type="button"
-                className="btn-outline-hero"
-                onClick={handleGetQuote}
-                style={{ justifyContent: 'center', padding: '14px', fontSize: '0.95rem', background: '#0F172A', color: '#FFF' }}
-              >
-                <FileTextIcon size={18} /> Get Custom Quote
-              </button>
-            </div>
-
-            <a
-              href={`https://wa.me/${siteConfig.phones.whatsappRaw}?text=${waMessage}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                width: '100%',
-                padding: '12px 0',
-                borderRadius: 'var(--radius-sm, 6px)',
-                background: '#25D366',
-                color: '#FFFFFF',
-                fontWeight: 700,
-                fontSize: '0.9rem',
-                textDecoration: 'none'
-              }}
-            >
-              <WhatsAppIcon size={18} color="#FFFFFF" /> Order on WhatsApp Instantly
-            </a>
 
             {/* Product Specifications Table */}
             <div style={{ marginTop: '32px', borderTop: '1px solid #E2E8F0', paddingTop: '24px' }}>
@@ -463,38 +525,12 @@ Please confirm order and delivery timeline.`
         justifyContent: 'center',
         gap: '12px'
       }}>
-        <div style={{ maxWidth: '600px', width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+        <div style={{ maxWidth: '600px', width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           <button
             type="button"
             onClick={handleAddToCart}
             style={{
-              background: '#FFFFFF',
-              color: '#7C3AED',
-              border: '1.5px solid #7C3AED',
-              borderRadius: '8px',
-              padding: '12px',
-              fontWeight: 800,
-              fontSize: '0.95rem',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              transition: 'all 0.2s'
-            }}
-          >
-            <ShoppingCartIcon size={18} color="#7C3AED" />
-            Add to Cart
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              handleAddToCart();
-              setIsCartOpen(true);
-            }}
-            style={{
-              background: 'linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)',
+              background: '#2E7D32',
               color: '#FFFFFF',
               border: 'none',
               borderRadius: '8px',
@@ -505,14 +541,38 @@ Please confirm order and delivery timeline.`
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '8px',
-              boxShadow: '0 4px 12px rgba(124, 58, 237, 0.3)',
-              transition: 'all 0.2s'
+              gap: '6px',
+              boxShadow: '0 2px 8px rgba(46, 125, 50, 0.25)'
             }}
           >
-            <span>⏩</span>
-            Buy Now
+            <ShoppingCartIcon size={18} color="#FFFFFF" />
+            Add ₹{grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
           </button>
+
+          <a
+            href={`https://wa.me/${siteConfig.phones.whatsappRaw}?text=${waMessage}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              background: '#388E3C',
+              color: '#FFFFFF',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '12px',
+              fontWeight: 800,
+              fontSize: '0.95rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              textDecoration: 'none',
+              boxShadow: '0 2px 8px rgba(56, 142, 60, 0.25)'
+            }}
+          >
+            <WhatsAppIcon size={18} color="#FFFFFF" />
+            Bulk order
+          </a>
         </div>
       </div>
 
