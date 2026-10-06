@@ -33,6 +33,44 @@ const getCategoryById = cache(async (categoryId: string) => {
   return 'Packaging Material';
 });
 
+const getSimilarProducts = cache(async (currentId: string, categoryId?: string) => {
+  const supabase = createClient();
+  try {
+    let query = supabase.from('products').select('*').limit(10);
+    const { data } = await query;
+    if (data && data.length > 0) {
+      return data
+        .filter((p: any) => p.id !== currentId && p.slug !== currentId)
+        .map((p: any) => {
+          let firstImg = p.image || '/assets/corrugated_box.jpg';
+          if (Array.isArray(p.images) && p.images.length > 0) firstImg = p.images[0];
+          else if (typeof p.images === 'string') {
+            try {
+              const arr = JSON.parse(p.images);
+              if (Array.isArray(arr) && arr.length > 0) firstImg = arr[0];
+            } catch {}
+          }
+          const price = Number(p.selling_price || p.price || 10);
+          return {
+            id: p.id,
+            slug: p.slug || p.id,
+            name: p.name || p.title || 'Product',
+            title: p.name || p.title || 'Product',
+            selling_price: price,
+            price: price,
+            mrp: Number(p.mrp) > 0 ? Number(p.mrp) : Math.round(price * 1.4),
+            image: firstImg,
+            images: [firstImg],
+            rating: Number(p.rating || 4.9),
+            reviews: Number(p.reviews || 120)
+          };
+        })
+        .slice(0, 8);
+    }
+  } catch {}
+  return [];
+});
+
 export async function generateStaticParams() {
   try {
     const { data } = await supabaseAdmin.from('products').select('slug');
@@ -243,13 +281,15 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
     }
   };
 
+  const similarProducts = await getSimilarProducts(product.id || slug, product.category_id);
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
-      <ProductDetailClient product={mappedProduct} />
+      <ProductDetailClient product={mappedProduct} similarProducts={similarProducts} />
     </>
   );
 }

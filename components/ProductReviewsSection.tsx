@@ -51,12 +51,14 @@ const DEFAULT_REVIEWS: Review[] = [
 
 interface ProductReviewsSectionProps {
   currentProduct: Product;
+  similarProducts?: any[];
 }
 
-export const ProductReviewsSection: React.FC<ProductReviewsSectionProps> = ({ currentProduct }) => {
+export const ProductReviewsSection: React.FC<ProductReviewsSectionProps> = ({ currentProduct, similarProducts: initialSimilar = [] }) => {
   const [reviews, setReviews] = useState<Review[]>(DEFAULT_REVIEWS);
   const [helpfulLiked, setHelpfulLiked] = useState<Record<string, boolean>>({});
   const [showAllReviews, setShowAllReviews] = useState(false);
+  const [similarList, setSimilarList] = useState<any[]>(initialSimilar);
   
   // Review submission state
   const [isAddingReview, setIsAddingReview] = useState(false);
@@ -72,6 +74,23 @@ export const ProductReviewsSection: React.FC<ProductReviewsSectionProps> = ({ cu
     serviceable: true,
     msg: 'Express Dispatch Available • 2-3 Days Delivery'
   });
+
+  // Dynamically load real products if initialSimilar is empty
+  useEffect(() => {
+    if (initialSimilar && initialSimilar.length > 0) {
+      setSimilarList(initialSimilar);
+      return;
+    }
+    fetch('/api/homepage')
+      .then(res => res.json())
+      .then(data => {
+        if (data?.featuredProducts && Array.isArray(data.featuredProducts) && data.featuredProducts.length > 0) {
+          const list = data.featuredProducts.filter((p: any) => p.id !== currentProduct.id).slice(0, 8);
+          if (list.length > 0) setSimilarList(list);
+        }
+      })
+      .catch(() => {});
+  }, [initialSimilar, currentProduct.id]);
 
   const handlePincodeCheck = (e: React.FormEvent) => {
     e.preventDefault();
@@ -139,8 +158,10 @@ export const ProductReviewsSection: React.FC<ProductReviewsSectionProps> = ({ cu
     ? (reviews.reduce((acc, r) => acc + r.rating, 0) / totalRatings).toFixed(1)
     : '4.7';
 
-  // Similar Products list
-  const similarProducts = PRODUCTS.filter(p => p.id !== currentProduct.id).slice(0, 6);
+  // Fallback to static if similarList is still empty
+  const displaySimilar = similarList.length > 0 
+    ? similarList 
+    : PRODUCTS.filter(p => p.id !== currentProduct.id).slice(0, 6);
 
   return (
     <div style={{ marginTop: '40px' }}>
@@ -151,7 +172,7 @@ export const ProductReviewsSection: React.FC<ProductReviewsSectionProps> = ({ cu
           <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0F172A', margin: 0 }}>
             Similar Products You May Like
           </h3>
-          <Link href="/shop" style={{ fontSize: '0.84rem', color: '#7C3AED', fontWeight: 700, textDecoration: 'none' }}>
+          <Link href="/shop" style={{ fontSize: '0.84rem', color: '#16A34A', fontWeight: 700, textDecoration: 'none' }}>
             View All &rarr;
           </Link>
         </div>
@@ -163,14 +184,19 @@ export const ProductReviewsSection: React.FC<ProductReviewsSectionProps> = ({ cu
           paddingBottom: '12px',
           scrollbarWidth: 'thin'
         }}>
-          {similarProducts.map((p) => {
-            const price = Number(p.price || 0);
-            const mrp = price > 0 ? Math.round(price * 1.25) : 0;
+          {displaySimilar.map((p) => {
+            const price = Number(p.selling_price || p.price || 10);
+            const mrp = Number(p.mrp) > 0 ? Number(p.mrp) : Math.round(price * 1.4);
             const discount = (mrp > price && mrp > 0) ? Math.round(((mrp - price) / mrp) * 100) : 0;
+            const targetSlug = p.slug || p.id;
+            const imgUrl = (Array.isArray(p.images) && p.images[0]) ? p.images[0] : (p.image || '/assets/corrugated_box.jpg');
+            const title = p.name || p.title || 'Packaging Product';
+
             return (
               <Link
                 key={p.id}
-                href={`/products/${p.slug}`}
+                href={`/products/${targetSlug}`}
+                prefetch={true}
                 style={{
                   flex: '0 0 200px',
                   background: '#FFFFFF',
@@ -182,27 +208,32 @@ export const ProductReviewsSection: React.FC<ProductReviewsSectionProps> = ({ cu
                   transition: 'transform 0.2s, box-shadow 0.2s',
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
+                  touchAction: 'manipulation'
                 }}
               >
                 <div>
-                  <div style={{ width: '100%', height: '140px', borderRadius: '8px', overflow: 'hidden', background: '#F8FAFC', marginBottom: '10px' }}>
-                    <img src={p.image} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <div style={{ width: '100%', height: '140px', borderRadius: '8px', overflow: 'hidden', background: '#F8FAFC', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <img src={imgUrl} alt={title} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                   </div>
                   <h4 style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1E293B', margin: '0 0 6px 0', lineHeight: 1.3, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    {p.title}
+                    {title}
                   </h4>
                 </div>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '4px' }}>
-                    <span style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0F172A' }}>₹{p.price}</span>
-                    <span style={{ fontSize: '0.75rem', color: '#94A3B8', textDecoration: 'line-through' }}>₹{mrp}</span>
-                    <span style={{ fontSize: '0.75rem', color: '#16A34A', fontWeight: 700 }}>{discount}% off</span>
+                    <span style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0F172A' }}>₹{price}</span>
+                    {mrp > price && (
+                      <span style={{ fontSize: '0.75rem', color: '#94A3B8', textDecoration: 'line-through' }}>₹{mrp}</span>
+                    )}
+                    {discount > 0 && (
+                      <span style={{ fontSize: '0.75rem', color: '#16A34A', fontWeight: 700 }}>{discount}% off</span>
+                    )}
                   </div>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: '#16A34A', color: '#FFFFFF', padding: '2px 7px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700 }}>
-                    <span>{p.rating || 4.3}</span>
+                    <span>{Number(p.rating || 4.8).toFixed(1)}</span>
                     <span>★</span>
-                    <span style={{ color: '#DCFCE7', fontSize: '0.7rem', marginLeft: '2px' }}>({p.reviews || 176})</span>
+                    <span style={{ color: '#DCFCE7', fontSize: '0.7rem', marginLeft: '2px' }}>({p.reviews || 120})</span>
                   </div>
                 </div>
               </Link>

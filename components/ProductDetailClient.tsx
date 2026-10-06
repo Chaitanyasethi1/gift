@@ -31,9 +31,10 @@ interface ProductDetailClientProps {
     gst_rate?: number;
     gst_percentage?: number;
   };
+  similarProducts?: any[];
 }
 
-export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product }) => {
+export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product, similarProducts }) => {
   const { addToCart, setIsCartOpen, setIsQuoteModalOpen, setSelectedQuoteProduct } = useCart();
   
   // Extract and memoize variants
@@ -562,7 +563,7 @@ Please confirm order and delivery timeline.`
         </div>
 
         {/* 🌟 CUSTOMER RATINGS & REVIEWS + SIMILAR PRODUCTS + PINCODE CHECK (FROM SCREENSHOT) */}
-        <ProductReviewsSection currentProduct={product} />
+        <ProductReviewsSection currentProduct={product} similarProducts={similarProducts} />
 
       </div>
 
