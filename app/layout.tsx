@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Inter, Poppins } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { siteConfig } from '@/data/siteConfig';
 import { CartProvider } from '@/context/CartContext';
@@ -297,6 +298,7 @@ export default function RootLayout({
         <CartProvider>
           {children}
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   );
