@@ -296,11 +296,15 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
                 <span
                   style={{
                     display: 'block',
-                    width: isActive ? '22px' : '8px',
+                    width: '9px',
                     height: '8px',
                     borderRadius: '4px',
-                    background: isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.55)',
-                    transition: 'all 0.25s ease'
+                    background: '#FFFFFF',
+                    transform: isActive ? 'scaleX(2.4)' : 'scaleX(1)',
+                    opacity: isActive ? 1 : 0.55,
+                    transformOrigin: 'center center',
+                    transition: 'transform 0.25s ease, opacity 0.25s ease',
+                    willChange: 'transform, opacity'
                   }}
                 />
               </button>

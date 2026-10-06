@@ -91,20 +91,20 @@ export const CookieBanner: React.FC = () => {
             We use strictly essential cookies to maintain your shopping cart and session (e.g. <code>as_cart</code>).
             No third-party advertising trackers are used. Analytics is only enabled if you choose &ldquo;Accept All&rdquo;.
             Read our{' '}
-            <Link href="/cookies" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>
+            <Link href="/cookies" style={{ color: '#FCA5A5', textDecoration: 'underline', fontWeight: 600 }}>
               Cookie Policy
             </Link>
             .
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
           <button
             type="button"
             id="cookie-accept-all"
             onClick={handleAcceptAll}
             style={{
-              background: 'var(--primary)',
-              color: '#000',
+              background: '#B81B54',
+              color: '#FFFFFF',
               border: 'none',
               padding: '8px 16px',
               fontWeight: 700,
@@ -134,7 +134,7 @@ export const CookieBanner: React.FC = () => {
             href="/cookies"
             style={{
               background: 'transparent',
-              color: '#94A3B8',
+              color: '#CBD5E1',
               border: 'none',
               textDecoration: 'underline',
               padding: '8px',

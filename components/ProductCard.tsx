@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { StarIcon } from './Icons';
 import { useCart } from '@/context/CartContext';
 import { useRouter } from 'next/navigation';
@@ -56,18 +57,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         {/* Image Area */}
         <div style={{ position: 'relative', width: '100%', paddingTop: '100%', background: '#F8FAFC', borderBottom: '1px solid #F1F5F9' }}>
-          <img
+          <Image
             src={product.images?.[0] || product.image || 'https://via.placeholder.com/400'}
             alt={product.name || product.title || 'Product'}
-            width={300}
-            height={300}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             loading="lazy"
-            decoding="async"
-            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', padding: '16px' }}
+            style={{ objectFit: 'contain', padding: '16px' }}
           />
           {/* Rating Badge */}
           {product.rating && (
-            <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: '#166534', color: '#fff', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
+            <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: '#166534', color: '#fff', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px', zIndex: 2 }}>
               {Number(product.rating).toFixed(1)} <StarIcon size={10} filled={true} color="#fff" />
             </div>
           )}

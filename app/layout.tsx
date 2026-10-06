@@ -258,11 +258,13 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="msapplication-TileImage" content="/icon.png" />
-        <script
-          async
+        <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-RNM182BSEZ"
+          strategy="afterInteractive"
         />
-        <script
+        <Script
+          id="google-analytics-init"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
