@@ -1,0 +1,22 @@
+{
+  "name": "AS Print Gallery",
+  "description": "Manufacturer of corrugated boxes, carry bags, packaging and printing products",
+  "url": "https://www.asprintgallery.com",
+  "capabilities": [
+    {
+      "name": "Product Catalogue",
+      "endpoint": "https://www.asprintgallery.com/shop",
+      "type": "catalog"
+    },
+    {
+      "name": "Custom Box Builder",
+      "endpoint": "https://www.asprintgallery.com/custom-box-builder",
+      "type": "tool"
+    },
+    {
+      "name": "Order Tracking",
+      "endpoint": "https://www.asprintgallery.com/track-order",
+      "type": "service"
+    }
+  ]
+}
