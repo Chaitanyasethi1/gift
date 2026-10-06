@@ -5,6 +5,7 @@ import { siteConfig } from '@/data/siteConfig';
 import { ProductDetailClient } from '@/components/ProductDetailClient';
 import { createClient } from '@/utils/supabase/server';
 import { supabase as supabaseAdmin } from '@/lib/supabase';
+import { PRODUCTS } from '@/data/products';
 
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
@@ -17,18 +18,31 @@ interface Props {
 export async function generateStaticParams() {
   try {
     const { data } = await supabaseAdmin.from('products').select('slug');
-    return (data || []).map((product) => ({
-      slug: product.slug
-    }));
+    const dbSlugs = (data || []).map((product) => ({ slug: product.slug }));
+    const staticSlugs = PRODUCTS.map((product) => ({ slug: product.slug }));
+    const all = [...dbSlugs, ...staticSlugs];
+    const unique = Array.from(new Set(all.map(s => s.slug))).map(slug => ({ slug }));
+    return unique;
   } catch {
-    return [];
+    return PRODUCTS.map((product) => ({ slug: product.slug }));
   }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } | Promise<{ slug: string }> }): Promise<Metadata> {
   try {
+    const resolvedParams = await Promise.resolve(params);
+    const slug = resolvedParams?.slug;
+    let product: any = null;
     const supabase = createClient();
-    const { data: product } = await supabase.from('products').select('*').eq('slug', params.slug).maybeSingle();
+
+    try {
+      const { data } = await supabase.from('products').select('*').eq('slug', slug).maybeSingle();
+      if (data) product = data;
+    } catch {}
+
+    if (!product) {
+      product = PRODUCTS.find(p => p.slug === slug || p.id === slug);
+    }
     
     if (!product) {
       return {
@@ -36,8 +50,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       };
     }
 
-    const title = `${product.name} Manufacturer | AS Print Gallery`;
-    const description = `${product.description?.slice(0, 155) || product.name}... Factory direct rates, certified bursting strength, fast Pan-India dispatch from Ghaziabad.`;
+    const titleText = product.name || product.title || 'Product';
+    const descText = product.description || product.desc || titleText;
+    const title = `${titleText} Manufacturer | AS Print Gallery`;
+    const description = `${descText.slice(0, 155)}... Factory direct rates, certified bursting strength, fast Pan-India dispatch from Ghaziabad.`;
 
     let firstImage = '';
     if (Array.isArray(product.images) && product.images.length > 0) {
@@ -59,13 +75,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       alternates: {
-        canonical: `/products/${product.slug}`
+        canonical: `/products/${product.slug || slug}`
       },
       openGraph: {
         title,
         description,
-        url: `${siteConfig.url}/products/${product.slug}`,
-        images: imageUrl ? [{ url: imageUrl, alt: product.name }] : []
+        url: `${siteConfig.url}/products/${product.slug || slug}`,
+        images: imageUrl ? [{ url: imageUrl, alt: titleText }] : []
       },
       twitter: {
         card: 'summary_large_image',
@@ -81,19 +97,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function ProductDetailPage({ params }: Props) {
+export default async function ProductDetailPage({ params }: { params: { slug: string } | Promise<{ slug: string }> }) {
+  const resolvedParams = await Promise.resolve(params);
+  const slug = resolvedParams?.slug;
   let product: any = null;
   const supabase = createClient();
 
   try {
-    // Select without postgrest foreign-key join to avoid missing relation crashes
-    const { data, error } = await supabase.from('products').select('*').eq('slug', params.slug).maybeSingle();
-    if (error || !data) {
-      notFound();
+    const { data } = await supabase.from('products').select('*').eq('slug', slug).maybeSingle();
+    if (data) {
+      product = data;
     }
-    product = data;
   } catch (err) {
-    notFound();
+    // ignore
+  }
+
+  // Fallback to static catalogue if not found in database or if database offline
+  if (!product) {
+    const staticProd = PRODUCTS.find(p => p.slug === slug || p.id === slug);
+    if (staticProd) {
+      product = staticProd;
+    }
   }
 
   if (!product) {
@@ -109,6 +133,8 @@ export default async function ProductDetailPage({ params }: Props) {
     } catch {
       // ignore
     }
+  } else if (product.categoryLabel) {
+    categoryName = product.categoryLabel;
   } else if (product.category) {
     categoryName = product.category;
   }
@@ -144,6 +170,8 @@ export default async function ProductDetailPage({ params }: Props) {
     } catch {
       parsedBulk = [];
     }
+  } else if (Array.isArray(product.tiers)) {
+    parsedBulk = product.tiers;
   }
 
   let parsedImages: string[] = [];
@@ -167,13 +195,13 @@ export default async function ProductDetailPage({ params }: Props) {
   const basePrice = Number(product.selling_price || product.price || 0);
 
   const mappedProduct = {
-    id: product.id,
-    slug: product.slug,
-    title: product.name,
-    category: product.category_id || '',
+    id: product.id || slug,
+    slug: product.slug || slug,
+    title: product.name || product.title || 'Product',
+    category: product.category_id || product.category || '',
     categoryLabel: categoryName,
-    desc: product.description || 'Premium quality packaging material manufactured by AS Print Gallery.',
-    fullDesc: product.description || '',
+    desc: product.description || product.desc || 'Premium quality packaging material manufactured by AS Print Gallery.',
+    fullDesc: product.fullDesc || product.description || product.desc || '',
     image: parsedImages[0],
     images: parsedImages,
     price: basePrice,
@@ -183,13 +211,15 @@ export default async function ProductDetailPage({ params }: Props) {
     sizes: product.sizes || [],
     variants: parsedVariants,
     allowLogoUpload: Boolean(product.allow_logo_upload),
-    specs: [
-      `MRP: ₹${product.mrp || 0}`,
-      `Selling Price: ₹${basePrice}`,
-      `GST: ${product.gst_rate ?? product.gst_percentage ?? 18}%`,
-      `Stock Available: ${product.stock_quantity ?? 1000}`,
-      `Customization: Printing Available`
-    ],
+    specs: Array.isArray(product.specs) && product.specs.length > 0
+      ? product.specs
+      : [
+          `MRP: ₹${product.mrp || Math.round(basePrice * 1.5)}`,
+          `Selling Price: ₹${basePrice}`,
+          `GST: ${product.gst_rate ?? product.gst_percentage ?? 18}%`,
+          `Stock Available: ${product.stock_quantity ?? 1000}`,
+          `Customization: Printing Available`
+        ],
 
     rating: Number(product.rating || 4.9),
     reviews: Number(product.reviews || 120),

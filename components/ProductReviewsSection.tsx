@@ -164,8 +164,9 @@ export const ProductReviewsSection: React.FC<ProductReviewsSectionProps> = ({ cu
           scrollbarWidth: 'thin'
         }}>
           {similarProducts.map((p) => {
-            const mrp = Math.round(p.price * 1.25);
-            const discount = Math.round(((mrp - p.price) / mrp) * 100);
+            const price = Number(p.price || 0);
+            const mrp = price > 0 ? Math.round(price * 1.25) : 0;
+            const discount = (mrp > price && mrp > 0) ? Math.round(((mrp - price) / mrp) * 100) : 0;
             return (
               <Link
                 key={p.id}

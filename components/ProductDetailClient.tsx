@@ -32,7 +32,7 @@ interface ProductDetailClientProps {
 }
 
 export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product }) => {
-  const { addToCart, setIsQuoteModalOpen, setSelectedQuoteProduct } = useCart();
+  const { addToCart, setIsCartOpen, setIsQuoteModalOpen, setSelectedQuoteProduct } = useCart();
   
   // Extract variants if available
   const variantList: SizeVariantItem[] = Array.isArray((product as any).variants) && (product as any).variants.length > 0
@@ -491,7 +491,7 @@ Please confirm order and delivery timeline.`
             type="button"
             onClick={() => {
               handleAddToCart();
-              window.location.href = '/cart';
+              setIsCartOpen(true);
             }}
             style={{
               background: 'linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)',
