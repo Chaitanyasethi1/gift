@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { StarIcon } from './Icons';
 import { useCart } from '@/context/CartContext';
-import { useRouter } from 'next/navigation';
 
 interface ProductCardProps {
   product: any;
@@ -14,11 +13,11 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart, setIsCartOpen } = useCart();
-  const router = useRouter();
   const sellingPrice = Number(product?.selling_price || product?.price || 0);
   const mrp = Number(product?.mrp || 0);
   const originalPrice = mrp > 0 ? mrp.toFixed(2) : (sellingPrice * 1.5).toFixed(2);
   const currentPrice = sellingPrice.toFixed(2);
+  const targetSlug = product.slug || product.id;
 
   const parseGst = (val: any) => {
     if (val === null || val === undefined || val === '') return 18;
@@ -41,17 +40,24 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     setIsCartOpen(true);
   };
 
-  const handleCardClick = () => {
-    const targetSlug = product.slug || product.id;
-    if (targetSlug) {
-      router.push(`/products/${targetSlug}`);
-    }
-  };
-
   return (
-    <div 
-      onClick={handleCardClick}
-      style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: '12px', overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative', transition: 'box-shadow 0.2s', cursor: 'pointer' }} 
+    <Link 
+      href={`/products/${targetSlug}`}
+      prefetch={true}
+      style={{ 
+        background: '#fff', 
+        border: '1px solid #E2E8F0', 
+        borderRadius: '12px', 
+        overflow: 'hidden', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        position: 'relative', 
+        transition: 'all 0.2s ease', 
+        textDecoration: 'none',
+        color: 'inherit',
+        cursor: 'pointer',
+        touchAction: 'manipulation'
+      }} 
       className="minimal-product-card"
     >
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -89,9 +95,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
             
             <button 
-              type="button"
+              type="button" 
               onClick={handleAddClick}
-              style={{ background: '#166534', color: '#fff', border: 'none', padding: '6px 16px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s' }}
+              style={{ background: '#166534', color: '#fff', border: 'none', padding: '6px 16px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s', touchAction: 'manipulation' }}
               className="btn-add-minimal"
               aria-label={`Add ${product.name || product.title} to cart`}
             >
@@ -104,11 +110,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <style>{`
         .minimal-product-card:hover {
           box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+          transform: translateY(-2px);
         }
         .btn-add-minimal:hover {
           background: #4d8236 !important;
         }
       `}</style>
-    </div>
+    </Link>
   );
 };
