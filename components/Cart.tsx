@@ -173,10 +173,10 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
 
         {/* Free Shipping Progress Meter */}
         <div className="free-shipping-meter">
-          <div id="cart-shipping-text">
+          <div id="cart-shipping-text" style={{ fontWeight: 700 }}>
             {remainingForFreeShipping > 0
-              ? `Add ₹${remainingForFreeShipping.toFixed(0)} more for FREE Pan-India Shipping`
-              : '🎉 You have qualified for FREE Shipping!'}
+              ? `Add ₹${remainingForFreeShipping.toFixed(0)} more for FREE Pan-India Shipping (Free on ₹999+)`
+              : '🎉 You have qualified for 100% FREE Pan-India Shipping!'}
           </div>
           <div className="shipping-progress-track">
             <div
@@ -369,6 +369,10 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
               <div className="cart-calc-row">
                 <span>Total Applied GST</span>
                 <span>₹{gstAmount.toFixed(2)}</span>
+              </div>
+              <div className="cart-calc-row">
+                <span>Shipping / Delivery Charges</span>
+                <span style={{ color: '#16A34A', fontWeight: 800 }}>FREE (Pan-India)</span>
               </div>
               <div className="cart-calc-row final-total">
                 <span>Estimated Grand Total</span>

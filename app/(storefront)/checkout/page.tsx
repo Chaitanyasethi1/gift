@@ -512,9 +512,9 @@ export default function CheckoutPage() {
 
               
               <div style={{ display: 'flex', justifyContent: 'space-between', color: '#475569' }}>
-                <span>Shipping</span>
-                <span style={{ color: subtotal >= 999 ? '#10B981' : '#475569' }}>
-                  {subtotal >= 999 ? 'FREE' : 'Calculated next step'}
+                <span>Shipping / Delivery Charges</span>
+                <span style={{ color: '#16A34A', fontWeight: 700 }}>
+                  FREE (Pan-India)
                 </span>
               </div>
               

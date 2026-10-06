@@ -506,7 +506,7 @@ Please confirm order and delivery timeline.`
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingTop: '8px', borderTop: '1px dashed #CBD5E1', flexWrap: 'wrap', gap: '8px' }}>
                 <div style={{ fontSize: '0.82rem', color: '#64748B' }}>
-                  Subtotal: ₹{subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })} • GST ({gstRate}%): ₹{gst.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                  Subtotal: ₹{subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })} • GST ({gstRate}%): ₹{gst.toLocaleString('en-IN', { minimumFractionDigits: 2 })} • Shipping: <span style={{ color: '#16A34A', fontWeight: 700 }}>FREE</span>
                 </div>
                 <div style={{ fontSize: '1.25rem', fontWeight: 900, color: '#0F172A' }}>
                   Total: ₹{grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
