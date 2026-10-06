@@ -37,10 +37,20 @@ export default async function ShopPage({
   }
 
   if (searchQuery) {
-    query = query.ilike('name', `%${searchQuery}%`);
+    query = query.or(`name.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%,slug.ilike.%${searchQuery}%`);
   }
 
-  const { data: products } = await query;
+  const { data: dbProducts } = await query;
+  let products = dbProducts || [];
+
+  if (products.length === 0 && searchQuery) {
+    const qLower = searchQuery.toLowerCase();
+    products = PRODUCTS.filter(p => 
+      p.title?.toLowerCase().includes(qLower) || 
+      p.desc?.toLowerCase().includes(qLower) ||
+      p.categoryLabel?.toLowerCase().includes(qLower)
+    );
+  }
   
   return (
     <div style={{ padding: '60px 0', background: '#FAFAFC' }}>

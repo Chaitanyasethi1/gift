@@ -1,16 +1,37 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { initialHomepageConfig } from '@/data/homepageData';
+import { PRODUCTS } from '@/data/products';
 
 interface NavCategory {
   title: string;
   link: string;
   items: { label: string; link: string; icon?: string }[];
 }
+
+const POPULAR_SEARCH_TERMS = [
+  'Corrugated Boxes',
+  '3-Ply Shipping Box',
+  '5-Ply Heavy Duty Cartons',
+  'Kraft Paper Bags',
+  'Printed Carry Bags',
+  'Handle Paper Bags',
+  'Woven Brand Labels',
+  'Printed Satin Labels',
+  'Clothing Hang Tags',
+  'Waterproof Vinyl Stickers',
+  'Custom Die-Cut Stickers',
+  'Custom Pizza Boxes',
+  'Paper Mailers Lifafa',
+  'Garment & Apparel Boxes',
+  'Sweet & Bakery Boxes',
+  'Visiting Cards',
+  'Barcode Stickers'
+];
 
 const NAV_CATEGORIES: NavCategory[] = [
   {
@@ -84,17 +105,30 @@ export function Header() {
   const { cartCount, setIsCartOpen } = useCart();
   const [tickerText, setTickerText] = useState(initialHomepageConfig.tickerText);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [allProducts, setAllProducts] = useState<any[]>(PRODUCTS);
   const [navCategories, setNavCategories] = useState<NavCategory[]>(NAV_CATEGORIES);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const searchContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // 1. Fetch Ticker Text
+    // 1. Fetch Ticker Text & Active Products for Instant Search Indexing
     fetch('/api/homepage')
       .then(res => res.json())
       .then(data => {
         if (data?.tickerText) {
           setTickerText(data.tickerText);
+        }
+      })
+      .catch(() => {});
+
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setAllProducts(data);
         }
       })
       .catch(() => {});
@@ -137,6 +171,51 @@ export function Header() {
       .catch(() => {});
   }, []);
 
+  // Click Outside to Close Search Autocomplete
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Real-Time Live Search Suggestions Calculation
+  const { suggestedTerms, matchingProducts } = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) {
+      return {
+        suggestedTerms: POPULAR_SEARCH_TERMS.slice(0, 6),
+        matchingProducts: allProducts.slice(0, 4)
+      };
+    }
+
+    // 1. Matching text phrases
+    const terms = POPULAR_SEARCH_TERMS.filter(t => t.toLowerCase().includes(q));
+    
+    // Also include product titles that start with or contain query
+    const productTitles = allProducts
+      .map(p => p.title || p.name)
+      .filter(Boolean)
+      .filter(t => t.toLowerCase().includes(q));
+
+    const combinedTerms = Array.from(new Set([...terms, ...productTitles])).slice(0, 6);
+
+    // 2. Matching direct products
+    const prods = allProducts.filter(p => {
+      const name = (p.title || p.name || '').toLowerCase();
+      const desc = (p.description || p.desc || '').toLowerCase();
+      const cat = (p.categoryLabel || p.category || '').toLowerCase();
+      return name.includes(q) || desc.includes(q) || cat.includes(q);
+    }).slice(0, 4);
+
+    return {
+      suggestedTerms: combinedTerms,
+      matchingProducts: prods
+    };
+  }, [searchQuery, allProducts]);
 
   const handleMouseEnter = (title: string) => {
     if (dropdownTimeoutRef.current) {
@@ -155,13 +234,26 @@ export function Header() {
     }, 120);
   };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSearchSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    setIsSearchFocused(false);
     if (searchQuery.trim()) {
       router.push(`/shop?q=${encodeURIComponent(searchQuery.trim())}`);
     } else {
       router.push('/shop');
     }
+  };
+
+  const handleSelectTerm = (term: string) => {
+    setSearchQuery(term);
+    setIsSearchFocused(false);
+    router.push(`/shop?q=${encodeURIComponent(term)}`);
+  };
+
+  const handleSelectProduct = (prod: any) => {
+    setIsSearchFocused(false);
+    const slug = prod.slug || prod.id;
+    router.push(`/products/${slug}`);
   };
 
   return (
@@ -364,23 +456,206 @@ export function Header() {
           </Link>
 
           {/* Center: Search & Bulk Order Button */}
-          <div className="header-search-row" style={{ flex: 1, display: 'flex', gap: '14px', alignItems: 'center', justifyContent: 'center', maxWidth: '650px' }}>
-            <form onSubmit={handleSearchSubmit} style={{ flex: 1, width: '100%', display: 'flex', background: '#fff', border: '1.5px solid #CBD5E1', borderRadius: '30px', overflow: 'hidden', padding: '2px 8px 2px 14px', boxShadow: '0 2px 4px rgba(0,0,0,0.03)' }}>
-              <input 
-                type="text" 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search boxes, labels, tags, stickers..." 
-                style={{ flex: 1, width: '100%', padding: '9px 6px', border: 'none', outline: 'none', fontSize: '0.92rem', color: '#1E293B', background: 'transparent' }} 
-              />
-              <button 
-                type="submit" 
-                style={{ background: 'none', border: 'none', color: '#65A34A', padding: '6px 10px', fontSize: '1.1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', touchAction: 'manipulation' }}
-                aria-label="Search"
-              >
-                🔍
-              </button>
-            </form>
+          <div className="header-search-row" style={{ flex: 1, display: 'flex', gap: '14px', alignItems: 'center', justifyContent: 'center', maxWidth: '650px', position: 'relative' }}>
+            <div ref={searchContainerRef} style={{ flex: 1, width: '100%', position: 'relative' }}>
+              <form onSubmit={handleSearchSubmit} style={{ width: '100%', display: 'flex', background: '#fff', border: isSearchFocused ? '1.5px solid #16A34A' : '1.5px solid #CBD5E1', borderRadius: '30px', overflow: 'hidden', padding: '2px 8px 2px 14px', boxShadow: isSearchFocused ? '0 0 0 3px rgba(22, 163, 74, 0.15)' : '0 2px 4px rgba(0,0,0,0.03)', transition: 'all 0.2s ease' }}>
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setIsSearchFocused(true);
+                  }}
+                  onFocus={() => setIsSearchFocused(true)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape') setIsSearchFocused(false);
+                  }}
+                  placeholder="Search boxes, labels, tags, stickers..." 
+                  style={{ flex: 1, width: '100%', padding: '9px 6px', border: 'none', outline: 'none', fontSize: '0.92rem', color: '#1E293B', background: 'transparent' }} 
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    style={{ background: 'none', border: 'none', color: '#94A3B8', padding: '0 6px', cursor: 'pointer', fontSize: '0.9rem' }}
+                    aria-label="Clear Search"
+                  >
+                    ✕
+                  </button>
+                )}
+                <button 
+                  type="submit" 
+                  style={{ background: 'none', border: 'none', color: '#16A34A', padding: '6px 10px', fontSize: '1.1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', touchAction: 'manipulation' }}
+                  aria-label="Search"
+                >
+                  🔍
+                </button>
+              </form>
+
+              {/* 🌟 AMAZON-STYLE LIVE AUTOCOMPLETE & SEARCH SUGGESTIONS DROPDOWN */}
+              {isSearchFocused && (
+                <div 
+                  style={{
+                    position: 'absolute',
+                    top: 'calc(100% + 6px)',
+                    left: 0,
+                    right: 0,
+                    background: '#FFFFFF',
+                    borderRadius: '12px',
+                    border: '1px solid #E2E8F0',
+                    boxShadow: '0 12px 32px rgba(0, 0, 0, 0.15)',
+                    zIndex: 99999,
+                    overflow: 'hidden',
+                    maxHeight: '460px',
+                    overflowY: 'auto',
+                    animation: 'fadeInDown 0.15s ease-out'
+                  }}
+                >
+                  {/* Header Title */}
+                  <div style={{ padding: '8px 14px', background: '#F8FAFC', borderBottom: '1px solid #F1F5F9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                      {searchQuery.trim() ? 'Search Suggestions' : '🔥 Popular Searches'}
+                    </span>
+                    <span style={{ fontSize: '0.68rem', color: '#94A3B8' }}>Select to explore</span>
+                  </div>
+
+                  {/* 1. Suggested Query Keywords */}
+                  {suggestedTerms.length > 0 && (
+                    <div style={{ padding: '4px 0', borderBottom: matchingProducts.length > 0 ? '1px solid #F1F5F9' : 'none' }}>
+                      {suggestedTerms.map((term, idx) => {
+                        const qLower = searchQuery.trim().toLowerCase();
+                        const termLower = term.toLowerCase();
+                        const matchIndex = qLower ? termLower.indexOf(qLower) : -1;
+
+                        return (
+                          <div
+                            key={idx}
+                            onClick={() => handleSelectTerm(term)}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '12px',
+                              padding: '8px 16px',
+                              cursor: 'pointer',
+                              fontSize: '0.88rem',
+                              color: '#1E293B',
+                              transition: 'background 0.12s'
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.background = '#F1F5F9')}
+                            onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                          >
+                            <span style={{ color: '#94A3B8', fontSize: '0.85rem' }}>🔍</span>
+                            <div style={{ flex: 1 }}>
+                              {matchIndex >= 0 ? (
+                                <span>
+                                  {term.substring(0, matchIndex)}
+                                  <strong style={{ color: '#0F172A', fontWeight: 800 }}>
+                                    {term.substring(matchIndex, matchIndex + qLower.length)}
+                                  </strong>
+                                  {term.substring(matchIndex + qLower.length)}
+                                </span>
+                              ) : (
+                                <span>{term}</span>
+                              )}
+                            </div>
+                            <span style={{ color: '#CBD5E1', fontSize: '0.75rem' }}>↗</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* 2. Direct Matching Products with Thumbnails & Rates */}
+                  {matchingProducts.length > 0 && (
+                    <div style={{ padding: '6px 0', background: '#FAFAFC' }}>
+                      <div style={{ padding: '4px 16px 6px', fontSize: '0.72rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase' }}>
+                        📦 Products Matching &quot;{searchQuery.trim() || 'Catalog'}&quot;
+                      </div>
+                      {matchingProducts.map((prod) => {
+                        let firstImg = prod.image || '/assets/corrugated_box.jpg';
+                        if (Array.isArray(prod.images) && prod.images.length > 0 && prod.images[0]) firstImg = prod.images[0];
+                        const price = Number(prod.selling_price || prod.price || 10);
+                        const title = prod.title || prod.name || 'Product';
+
+                        return (
+                          <div
+                            key={prod.id}
+                            onClick={() => handleSelectProduct(prod)}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '12px',
+                              padding: '8px 16px',
+                              cursor: 'pointer',
+                              background: '#FFFFFF',
+                              borderBottom: '1px solid #F1F5F9',
+                              transition: 'background 0.12s'
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.background = '#F8FAFC')}
+                            onMouseLeave={(e) => (e.currentTarget.style.background = '#FFFFFF')}
+                          >
+                            <img
+                              src={firstImg}
+                              alt={title}
+                              style={{ width: '40px', height: '40px', objectFit: 'contain', borderRadius: '6px', background: '#F8FAFC', border: '1px solid #E2E8F0', flexShrink: 0 }}
+                              onError={(e: any) => { e.target.src = '/assets/corrugated_box.jpg'; }}
+                            />
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0F172A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                {title}
+                              </div>
+                              <div style={{ fontSize: '0.72rem', color: '#64748B', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                <span>{prod.categoryLabel || 'Packaging'}</span>
+                                <span>•</span>
+                                <span style={{ color: '#16A34A', fontWeight: 800 }}>₹{price.toFixed(2)}/pc</span>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              style={{
+                                background: '#F1F5F9',
+                                border: '1px solid #CBD5E1',
+                                borderRadius: '4px',
+                                padding: '3px 8px',
+                                fontSize: '0.7rem',
+                                fontWeight: 700,
+                                color: '#0F172A'
+                              }}
+                            >
+                              View
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* 3. See All Results Footer Row */}
+                  {searchQuery.trim() && (
+                    <div
+                      onClick={() => handleSearchSubmit()}
+                      style={{
+                        padding: '10px 16px',
+                        background: '#F0FDF4',
+                        borderTop: '1px solid #DCFCE7',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        cursor: 'pointer',
+                        fontSize: '0.82rem',
+                        fontWeight: 700,
+                        color: '#15803D'
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = '#DCFCE7')}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = '#F0FDF4')}
+                    >
+                      <span>See all search results for &ldquo;<strong>{searchQuery}</strong>&rdquo;</span>
+                      <span>➔</span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
             
             <a 
               href="https://wa.me/919911678386?text=Hi%20AS%20Print%20Gallery,%20I%20need%20a%20bulk%20order%20quotation" 
