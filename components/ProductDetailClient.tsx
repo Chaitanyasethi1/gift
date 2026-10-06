@@ -39,12 +39,11 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
     ? (product as any).variants
     : (((product as any).sizes || []) as string[]).map((s: string) => ({ size: s, price: product.price, mrp: (product as any).mrp || product.price * 1.5 }));
 
-  const [selectedVariant, setSelectedVariant] = useState<SizeVariantItem | null>(
-    variantList.length > 0 ? variantList[0] : null
-  );
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState<number>(0);
+  const selectedVariant = variantList[selectedVariantIndex] || (variantList.length > 0 ? variantList[0] : null);
 
   // Active base price for the selected size
-  const activeBasePrice = selectedVariant ? selectedVariant.price : (product.price || 10);
+  const activeBasePrice = selectedVariant ? Number(selectedVariant.price || 0) : (Number(product.price) || 10);
 
   // Determine admin-configured quantity packs / tiers
   const tiers = Array.isArray(product.tiers) && product.tiers.length > 0
@@ -74,14 +73,42 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
 
   const activeTier = tiers.find((t) => t.qty === selectedPackQty) || tiers[0];
 
-  // Base price proportion for size variants
-  const baseProductPrice = product.price > 0 ? product.price : (tiers[0]?.rate || 1);
-  const sizeRatio = activeBasePrice > 0 && baseProductPrice > 0 ? (activeBasePrice / baseProductPrice) : 1;
-  const currentRate = activeTier ? (activeTier.rate * (sizeRatio > 0 ? sizeRatio : 1)) : activeBasePrice;
+  // 💰 ROBUST ACCURATE PRICE CALCULATION ENGINE
+  let singlePackPrice = 0;
+  let perPieceRate = 0;
+
+  if (activeTier) {
+    const rawRate = Number(activeTier.rate || 0);
+    if (rawRate > 40 && selectedPackQty >= 20) {
+      singlePackPrice = rawRate;
+      perPieceRate = selectedPackQty > 0 ? (singlePackPrice / selectedPackQty) : singlePackPrice;
+    } else if (rawRate > 0) {
+      perPieceRate = rawRate;
+      singlePackPrice = rawRate * selectedPackQty;
+    }
+  }
+
+  if (selectedVariant && selectedVariant.price > 0) {
+    const vPrice = Number(selectedVariant.price);
+    if (vPrice > 40 && selectedPackQty >= 20) {
+      singlePackPrice = vPrice;
+      perPieceRate = selectedPackQty > 0 ? (singlePackPrice / selectedPackQty) : singlePackPrice;
+    } else if (vPrice > 0 && vPrice <= 40) {
+      perPieceRate = vPrice;
+      singlePackPrice = vPrice * selectedPackQty;
+    } else if (vPrice > 0) {
+      singlePackPrice = vPrice;
+      perPieceRate = selectedPackQty > 0 ? (vPrice / selectedPackQty) : vPrice;
+    }
+  }
+
+  if (singlePackPrice <= 0) {
+    singlePackPrice = Number(product.price || 10);
+    perPieceRate = selectedPackQty > 0 ? (singlePackPrice / selectedPackQty) : singlePackPrice;
+  }
 
   // Total pieces & Direct calculated totals
   const totalPieces = selectedPackQty * packCount;
-  const singlePackPrice = currentRate * selectedPackQty;
   const subtotal = singlePackPrice * packCount;
 
   // Determine product-specific GST Rate with ultra-robust parsing
@@ -95,7 +122,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
 
   const handleAddToCart = () => {
     addToCart({
-      id: `${product.id}-${selectedVariant ? selectedVariant.size : 'std'}-${selectedPackQty}`,
+      id: `${product.id}-${selectedVariant ? `${selectedVariant.size}-${selectedVariant.price}` : 'std'}-${selectedPackQty}`,
       title: `${product.title} (Pack of ${selectedPackQty}${selectedVariant ? ` - ${selectedVariant.size}` : ''})`,
       price: singlePackPrice,
       image: activeImage || product.image,
@@ -231,13 +258,18 @@ Please confirm order and delivery timeline.`
                   )}
                 </label>
                 <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                  {variantList.map((v) => {
-                    const isSelected = selectedVariant?.size === v.size;
+                  {variantList.map((v, idx) => {
+                    const isSelected = selectedVariantIndex === idx;
                     return (
                       <button
-                        key={v.size}
+                        key={`${v.size}-${v.price}-${idx}`}
                         type="button"
-                        onClick={() => setSelectedVariant(v)}
+                        onClick={() => {
+                          setSelectedVariantIndex(idx);
+                          if (tiers[idx]) {
+                            setSelectedPackQty(tiers[idx].qty);
+                          }
+                        }}
                         style={{
                           padding: '10px 16px',
                           border: `2px solid ${isSelected ? '#10B981' : '#CBD5E1'}`,
@@ -274,16 +306,21 @@ Please confirm order and delivery timeline.`
                 Pack Of
               </label>
               <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                {tiers.map((tier) => {
+                {tiers.map((tier, tIdx) => {
                   const isSelected = selectedPackQty === tier.qty;
                   const labelText = tier.label && !tier.label.toLowerCase().includes('per pc') && !tier.label.toLowerCase().includes('rate')
                     ? tier.label
                     : `Pack of ${tier.qty}`;
                   return (
                     <button
-                      key={tier.qty}
+                      key={`${tier.qty}-${tIdx}`}
                       type="button"
-                      onClick={() => setSelectedPackQty(tier.qty)}
+                      onClick={() => {
+                        setSelectedPackQty(tier.qty);
+                        if (variantList[tIdx]) {
+                          setSelectedVariantIndex(tIdx);
+                        }
+                      }}
                       style={{
                         padding: '9px 18px',
                         borderRadius: '8px',

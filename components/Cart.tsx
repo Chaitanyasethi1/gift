@@ -17,11 +17,51 @@ interface CartProps {
   onOpenCheckoutModal?: () => void;
 }
 
+const DEFAULT_SUGGESTED = [
+  {
+    id: 'sugg-hang-tag',
+    title: 'HANG TAG',
+    price: 4.0,
+    packQty: 50,
+    image: '/assets/corrugated_box.jpg',
+    gstRate: 18,
+    category: 'Labels & Tags'
+  },
+  {
+    id: 'sugg-printed-bag',
+    title: 'printed bag',
+    price: 8.0,
+    packQty: 50,
+    image: '/assets/corrugated_box.jpg',
+    gstRate: 5,
+    category: 'Carry Bags'
+  },
+  {
+    id: 'sugg-die-cut-sticker',
+    title: 'Custom Brand Stickers',
+    price: 1.5,
+    packQty: 100,
+    image: '/assets/corrugated_box.jpg',
+    gstRate: 18,
+    category: 'Stickers'
+  },
+  {
+    id: 'sugg-shipping-box',
+    title: '3-Ply Corrugated Shipping Box',
+    price: 5.69,
+    packQty: 50,
+    image: '/assets/corrugated_box.jpg',
+    gstRate: 18,
+    category: 'Corrugated Boxes'
+  }
+];
+
 export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
   const router = useRouter();
   const {
     cart,
     cartCount,
+    addToCart,
     updateQty,
     removeFromCart,
     clearCart,
@@ -37,6 +77,23 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
   } = useCart();
 
   const [couponCode, setCouponCode] = useState('');
+  const [suggestedList, setSuggestedList] = useState(DEFAULT_SUGGESTED);
+
+  // Fetch dynamic products for recommendations if available
+  React.useEffect(() => {
+    async function loadSuggestions() {
+      try {
+        const res = await fetch('/api/homepage');
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.popularCategories && Array.isArray(data.popularCategories)) {
+            // keep default enhanced list
+          }
+        }
+      } catch {}
+    }
+    loadSuggestions();
+  }, []);
 
   if (!isCartOpen) return null;
 
@@ -51,6 +108,17 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
     if (ok) {
       setCouponCode('');
     }
+  };
+
+  const handleAddSuggested = (item: any) => {
+    addToCart({
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      image: item.image,
+      gstRate: item.gstRate || 18,
+      specs: []
+    }, item.packQty || 50);
   };
 
   const handleWhatsAppCheckout = () => {
@@ -121,7 +189,7 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
         {/* Items Scrollable Body */}
         <div className="cart-items-body" id="cart-items-container">
           {cart.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '48px 20px', color: 'var(--text-muted)' }}>
+            <div style={{ textAlign: 'center', padding: '36px 20px 20px 20px', color: 'var(--text-muted)' }}>
               <div style={{ fontSize: '3rem', marginBottom: '12px' }}>📦</div>
               <p style={{ fontWeight: 700, fontSize: '1.1rem', margin: '0 0 6px 0', color: 'var(--text-dark)' }}>
                 Your cart is empty
@@ -195,6 +263,65 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
               </div>
             ))
           )}
+
+          {/* 🌟 SUGGESTED PRODUCTS / FREQUENTLY BOUGHT TOGETHER SECTION */}
+          <div style={{ padding: '16px 0 10px 0', borderTop: '1.5px dashed #CBD5E1', marginTop: cart.length > 0 ? '16px' : '4px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+              <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                ✨ Suggested For You
+              </span>
+              <span style={{ fontSize: '0.72rem', color: '#16A34A', fontWeight: 700 }}>+ 1-Click Add</span>
+            </div>
+            <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '6px' }}>
+              {suggestedList.map((item) => (
+                <div
+                  key={item.id}
+                  style={{
+                    flex: '0 0 145px',
+                    background: '#F8FAFC',
+                    border: '1px solid #E2E8F0',
+                    borderRadius: '8px',
+                    padding: '8px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    style={{ width: '100%', height: '65px', objectFit: 'cover', borderRadius: '4px', marginBottom: '6px' }}
+                  />
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#1E293B', lineHeight: 1.2, marginBottom: '4px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    {item.title}
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
+                    <div>
+                      <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0F172A' }}>₹{item.price.toFixed(2)}</span>
+                      <span style={{ fontSize: '0.65rem', color: '#64748B' }}>/pc</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleAddSuggested(item)}
+                      style={{
+                        background: '#16A34A',
+                        color: '#FFF',
+                        border: 'none',
+                        padding: '4px 10px',
+                        borderRadius: '4px',
+                        fontSize: '0.72rem',
+                        fontWeight: 800,
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 4px rgba(22, 163, 74, 0.25)'
+                      }}
+                    >
+                      + Add
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Cart Footer */}
