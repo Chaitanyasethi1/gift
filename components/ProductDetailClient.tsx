@@ -124,7 +124,7 @@ Please confirm order and delivery timeline.`
   );
 
   return (
-    <div style={{ padding: '40px 0', background: '#FAFAFC' }}>
+    <div style={{ padding: '40px 0 100px 0', background: '#FAFAFC', minHeight: '100vh' }}>
       <div className="container">
         {/* Breadcrumb */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: '#94A3B8', marginBottom: '24px' }}>
@@ -518,8 +518,8 @@ Please confirm order and delivery timeline.`
         background: '#FFFFFF',
         borderTop: '1px solid #E2E8F0',
         padding: '10px 16px',
-        boxShadow: '0 -4px 16px rgba(0,0,0,0.08)',
-        zIndex: 90,
+        boxShadow: '0 -4px 16px rgba(0,0,0,0.12)',
+        zIndex: 1500,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -542,7 +542,8 @@ Please confirm order and delivery timeline.`
               alignItems: 'center',
               justifyContent: 'center',
               gap: '6px',
-              boxShadow: '0 2px 8px rgba(46, 125, 50, 0.25)'
+              boxShadow: '0 2px 8px rgba(46, 125, 50, 0.25)',
+              touchAction: 'manipulation'
             }}
           >
             <ShoppingCartIcon size={18} color="#FFFFFF" />
@@ -567,7 +568,8 @@ Please confirm order and delivery timeline.`
               justifyContent: 'center',
               gap: '6px',
               textDecoration: 'none',
-              boxShadow: '0 2px 8px rgba(56, 142, 60, 0.25)'
+              boxShadow: '0 2px 8px rgba(56, 142, 60, 0.25)',
+              touchAction: 'manipulation'
             }}
           >
             <WhatsAppIcon size={18} color="#FFFFFF" />

@@ -28,15 +28,38 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products = [], showAll
   const [quickViewProduct, setQuickViewProduct] = useState<any | null>(null);
   const { addToCart, setIsQuoteModalOpen, setSelectedQuoteProduct } = useCart();
 
-  // Assuming category string mapping or similar, for MVP we just show all if categories aren't strictly mapped
-  let filteredProducts = products;
-  // if (selectedCategory !== 'all') {
-  //   filteredProducts = products.filter((p) => p.category_slug === selectedCategory);
-  // }
-
-  if (limit) {
-    filteredProducts = filteredProducts.slice(0, limit);
-  }
+  const filteredProducts = React.useMemo(() => {
+    let list = products;
+    if (selectedCategory !== 'all') {
+      list = products.filter((p) => {
+        const cat = String(p.category_slug || p.category || p.categories?.slug || p.categories?.name || '').toLowerCase();
+        const name = String(p.name || p.title || '').toLowerCase();
+        if (selectedCategory === 'corrugated') {
+          return cat.includes('corrugat') || cat.includes('box') || name.includes('box') || name.includes('carton') || name.includes('corrugated');
+        }
+        if (selectedCategory === 'food') {
+          return cat.includes('food') || cat.includes('pizza') || cat.includes('bakery') || name.includes('pizza') || name.includes('burger') || name.includes('sweet') || name.includes('food');
+        }
+        if (selectedCategory === 'packaging') {
+          return cat.includes('packaging') || cat.includes('garment') || cat.includes('apparel') || name.includes('garment') || name.includes('apparel') || name.includes('box');
+        }
+        if (selectedCategory === 'label') {
+          return cat.includes('label') || cat.includes('tag') || name.includes('label') || name.includes('tag') || name.includes('woven') || name.includes('satin');
+        }
+        if (selectedCategory === 'sticker') {
+          return cat.includes('sticker') || cat.includes('roll') || name.includes('sticker') || name.includes('gumming') || name.includes('barcode');
+        }
+        if (selectedCategory === 'bags') {
+          return cat.includes('bag') || cat.includes('envelope') || cat.includes('mailer') || name.includes('bag') || name.includes('mailer') || name.includes('lifafa');
+        }
+        return cat.includes(selectedCategory) || name.includes(selectedCategory);
+      });
+    }
+    if (limit) {
+      list = list.slice(0, limit);
+    }
+    return list;
+  }, [products, selectedCategory, limit]);
 
   return (
     <>

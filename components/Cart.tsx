@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { 
   ShoppingCartIcon, 
@@ -17,6 +18,7 @@ interface CartProps {
 }
 
 export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
+  const router = useRouter();
   const {
     cart,
     cartCount,
@@ -262,7 +264,7 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
                 className="btn-cart-checkout"
                 onClick={() => {
                   setIsCartOpen(false);
-                  window.location.href = '/checkout';
+                  router.push('/checkout');
                 }}
               >
                 <PackageIcon size={16} /> Checkout securely

@@ -12,9 +12,9 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { addToCart } = useCart();
+  const { addToCart, setIsCartOpen } = useCart();
   const router = useRouter();
-  const sellingPrice = Number(product?.selling_price || 0);
+  const sellingPrice = Number(product?.selling_price || product?.price || 0);
   const mrp = Number(product?.mrp || 0);
   const originalPrice = mrp > 0 ? mrp.toFixed(2) : (sellingPrice * 1.5).toFixed(2);
   const currentPrice = sellingPrice.toFixed(2);
@@ -30,26 +30,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     e.stopPropagation();
     const gstRate = parseGst(product.gst_rate ?? product.gst_percentage);
     addToCart({
-      id: product.id,
-      title: product.name,
-      price: product.selling_price,
-      image: product.images?.[0] || '',
-      specs: [],
+      id: String(product.id),
+      title: product.name || product.title || 'Product',
+      price: sellingPrice,
+      image: product.images?.[0] || product.image || '',
+      specs: product.specs || [],
       gstRate: gstRate
     }, product.moq || 1);
-    
-    const btn = e.currentTarget as HTMLButtonElement;
-    const originalText = btn.innerText;
-    btn.innerText = "ADDED ✓";
-    btn.style.background = "#0F172A";
-    setTimeout(() => {
-      btn.innerText = originalText;
-      btn.style.background = "#65A34A";
-    }, 1500);
+    setIsCartOpen(true);
   };
 
   const handleCardClick = () => {
-    router.push(`/products/${product.slug}`);
+    const targetSlug = product.slug || product.id;
+    if (targetSlug) {
+      router.push(`/products/${targetSlug}`);
+    }
   };
 
   return (
@@ -62,8 +57,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Image Area */}
         <div style={{ position: 'relative', width: '100%', paddingTop: '100%', background: '#F8FAFC', borderBottom: '1px solid #F1F5F9' }}>
           <img
-            src={product.images?.[0] || 'https://via.placeholder.com/400'}
-            alt={product.name}
+            src={product.images?.[0] || product.image || 'https://via.placeholder.com/400'}
+            alt={product.name || product.title || 'Product'}
             loading="lazy"
             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', padding: '16px' }}
           />
@@ -78,10 +73,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Text Area */}
         <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
           <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#1E293B', margin: '0 0 4px 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-            {product.name}
+            {product.name || product.title}
           </h3>
           <p style={{ fontSize: '0.8rem', color: '#64748B', margin: '0 0 16px 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {product.categories?.name || 'AS Print Gallery'}
+            {product.categories?.name || product.categoryLabel || 'AS Print Gallery'}
           </p>
           
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
@@ -91,6 +86,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
             
             <button 
+              type="button"
               onClick={handleAddClick}
               style={{ background: '#65A34A', color: '#fff', border: 'none', padding: '6px 16px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s' }}
               className="btn-add-minimal"
