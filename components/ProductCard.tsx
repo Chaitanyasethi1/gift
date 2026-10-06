@@ -59,12 +59,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <img
             src={product.images?.[0] || product.image || 'https://via.placeholder.com/400'}
             alt={product.name || product.title || 'Product'}
+            width={300}
+            height={300}
             loading="lazy"
+            decoding="async"
             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', padding: '16px' }}
           />
           {/* Rating Badge */}
           {product.rating && (
-            <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: '#65A34A', color: '#fff', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
+            <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: '#166534', color: '#fff', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
               {Number(product.rating).toFixed(1)} <StarIcon size={10} filled={true} color="#fff" />
             </div>
           )}
@@ -82,14 +85,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
               <span style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0F172A' }}>₹{currentPrice}</span>
-              <span style={{ fontSize: '0.75rem', color: '#94A3B8', textDecoration: 'line-through' }}>₹{originalPrice}</span>
+              <span style={{ fontSize: '0.75rem', color: '#64748B', textDecoration: 'line-through' }}>₹{originalPrice}</span>
             </div>
             
             <button 
               type="button"
               onClick={handleAddClick}
-              style={{ background: '#65A34A', color: '#fff', border: 'none', padding: '6px 16px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s' }}
+              style={{ background: '#166534', color: '#fff', border: 'none', padding: '6px 16px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s' }}
               className="btn-add-minimal"
+              aria-label={`Add ${product.name || product.title} to cart`}
             >
               ADD
             </button>

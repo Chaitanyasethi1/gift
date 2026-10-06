@@ -141,7 +141,7 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
             willChange: 'transform'
           }}
         >
-          {extendedSlides.map((poster) => (
+          {extendedSlides.map((poster, idx) => (
             <div
               key={poster.uniqueKey}
               style={{
@@ -157,7 +157,13 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
               >
                 <img
                   src={poster.img}
-                  alt={poster.alt || 'AS Print Gallery Banner'}
+                  alt={poster.alt || 'AS Print Gallery Factory Packaging & Printing'}
+                  width={1200}
+                  height={450}
+                  loading={idx === 1 ? 'eager' : 'lazy'}
+                  // @ts-ignore
+                  fetchPriority={idx === 1 ? 'high' : 'auto'}
+                  decoding="async"
                   style={{
                     width: '100%',
                     height: 'auto',
@@ -250,19 +256,20 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
           </svg>
         </button>
 
-        {/* Dot Indicators */}
+        {/* Dot Indicators with Accessible Touch Targets */}
         <div
           style={{
             position: 'absolute',
-            bottom: '14px',
+            bottom: '10px',
             left: '50%',
             transform: 'translateX(-50%)',
             display: 'flex',
-            gap: '8px',
+            alignItems: 'center',
+            gap: '2px',
             zIndex: 10,
-            background: 'rgba(0, 0, 0, 0.25)',
-            padding: '6px 12px',
-            borderRadius: '20px',
+            background: 'rgba(0, 0, 0, 0.35)',
+            padding: '2px 8px',
+            borderRadius: '24px',
             backdropFilter: 'blur(4px)'
           }}
         >
@@ -275,17 +282,28 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
                 onClick={(e) => handleDotClick(dotIdx, e)}
                 aria-label={`Go to slide ${dotIdx + 1}`}
                 style={{
-                  width: isActive ? '24px' : '9px',
-                  height: '9px',
-                  borderRadius: '5px',
-                  background: isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.5)',
+                  minWidth: '40px',
+                  minHeight: '40px',
+                  padding: '10px 4px',
+                  background: 'transparent',
                   border: 'none',
                   cursor: 'pointer',
-                  padding: 0,
-                  transition: 'all 0.3s ease',
-                  boxShadow: isActive ? '0 0 8px rgba(255,255,255,0.8)' : 'none'
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
-              />
+              >
+                <span
+                  style={{
+                    display: 'block',
+                    width: isActive ? '22px' : '8px',
+                    height: '8px',
+                    borderRadius: '4px',
+                    background: isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.55)',
+                    transition: 'all 0.25s ease'
+                  }}
+                />
+              </button>
             );
           })}
         </div>

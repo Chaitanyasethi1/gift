@@ -352,6 +352,11 @@ export function Header() {
             <img 
               src="/logo.png" 
               alt="AS Print Gallery Logo" 
+              width={210}
+              height={65}
+              // @ts-ignore
+              fetchPriority="high"
+              decoding="async"
               style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', pointerEvents: 'none' }} 
             />
           </Link>

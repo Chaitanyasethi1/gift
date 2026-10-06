@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
-body, p, span, a, li, input, button { font-family: 'Inter', sans-serif !important; }
-h1, h2, h3, h4, h5, h6, .brand-name, .section-title { font-family: 'Poppins', sans-serif !important; letter-spacing: -0.5px; }
+body, p, span, a, li, input, button { font-family: var(--font-inter), system-ui, -apple-system, sans-serif !important; }
+h1, h2, h3, h4, h5, h6, .brand-name, .section-title { font-family: var(--font-poppins), system-ui, -apple-system, sans-serif !important; letter-spacing: -0.5px; }
 
 :root {
   /* Refined Industrial B2B Light Palette (Clean, Airy, Luxury) */

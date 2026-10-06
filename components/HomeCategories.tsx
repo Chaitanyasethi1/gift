@@ -42,7 +42,7 @@ export const HomeCategories: React.FC = () => {
               <Link key={`${cat.title}-${idx}`} href={cat.link || '/shop'} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '70px', flexShrink: 0 }} className="circular-cat-item">
                 <div style={{ width: '70px', height: '70px', borderRadius: '18px', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '8px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2rem', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }} className="cat-img-wrapper">
                   {cat.image ? (
-                    <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={cat.image} alt="" aria-hidden="true" width={70} height={70} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   ) : (
                     cat.emoji || '📦'
                   )}
@@ -50,19 +50,21 @@ export const HomeCategories: React.FC = () => {
                 <h3 style={{ fontSize: '0.75rem', fontWeight: 600, color: cat.isSpecial ? '#B91C1C' : '#0F172A', margin: 0, textAlign: 'center', lineHeight: 1.2, whiteSpace: 'normal' }}>{cat.title}</h3>
               </Link>
             ))}
-            {/* Duplicate for infinite marquee effect */}
-            {categories.map((cat, idx) => (
-              <Link key={`${cat.title}-dup-${idx}`} href={cat.link || '/shop'} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '70px', flexShrink: 0 }} className="circular-cat-item">
-                <div style={{ width: '70px', height: '70px', borderRadius: '18px', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '8px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2rem', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }} className="cat-img-wrapper">
-                  {cat.image ? (
-                    <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  ) : (
-                    cat.emoji || '📦'
-                  )}
-                </div>
-                <h3 style={{ fontSize: '0.75rem', fontWeight: 600, color: cat.isSpecial ? '#B91C1C' : '#0F172A', margin: 0, textAlign: 'center', lineHeight: 1.2, whiteSpace: 'normal' }}>{cat.title}</h3>
-              </Link>
-            ))}
+            {/* Duplicate for infinite marquee effect with aria-hidden to prevent redundant screen reader links */}
+            <div aria-hidden="true" style={{ display: 'inline-flex', gap: '20px' }}>
+              {categories.map((cat, idx) => (
+                <Link key={`${cat.title}-dup-${idx}`} href={cat.link || '/shop'} tabIndex={-1} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '70px', flexShrink: 0 }} className="circular-cat-item">
+                  <div style={{ width: '70px', height: '70px', borderRadius: '18px', background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden', marginBottom: '8px', border: cat.isSpecial ? '2px solid #EF4444' : '1px solid #E2E8F0', transition: 'all 0.3s ease', fontSize: '2rem', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }} className="cat-img-wrapper">
+                    {cat.image ? (
+                      <img src={cat.image} alt="" aria-hidden="true" width={70} height={70} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      cat.emoji || '📦'
+                    )}
+                  </div>
+                  <h3 style={{ fontSize: '0.75rem', fontWeight: 600, color: cat.isSpecial ? '#B91C1C' : '#0F172A', margin: 0, textAlign: 'center', lineHeight: 1.2, whiteSpace: 'normal' }}>{cat.title}</h3>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>

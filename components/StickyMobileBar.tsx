@@ -122,7 +122,7 @@ export const StickyMobileBar: React.FC = () => {
             </button>
 
             <Link
-              href="/#3d-customizer"
+              href="/custom-box-builder"
               className="mobile-nav-item"
             >
               <span className="icon" style={{ display: 'inline-flex' }}>
@@ -158,13 +158,13 @@ export const StickyMobileBar: React.FC = () => {
               rel="noopener noreferrer"
               className="mobile-nav-item"
               onClick={handleWhatsAppClick}
-              style={{ color: '#25D366' }}
-              aria-label="Chat on WhatsApp"
+              style={{ color: '#0F172A' }}
+              aria-label="Chat with factory sales on WhatsApp"
             >
               <span className="icon" style={{ display: 'inline-flex' }}>
                 <WhatsAppIcon size={18} color="#25D366" />
               </span>
-              <span>Chat</span>
+              <span style={{ color: '#0F172A', fontWeight: 600 }}>Chat</span>
             </a>
           </div>
         </nav>

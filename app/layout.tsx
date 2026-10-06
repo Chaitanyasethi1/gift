@@ -1,11 +1,23 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { Roboto } from 'next/font/google';
+import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/data/siteConfig';
 import { CartProvider } from '@/context/CartContext';
 
-const roboto = Roboto({ subsets: ['latin'], weight: ['300', '400', '500', '700', '900'], variable: '--font-roboto' });
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-poppins',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -239,7 +251,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={roboto.variable}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.png" type="image/png" sizes="192x192" />
@@ -278,7 +290,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
-        <style dangerouslySetInnerHTML={{ __html: `body, * { font-family: var(--font-roboto), sans-serif !important; }` }} />
       </head>
       <body>
         <CartProvider>

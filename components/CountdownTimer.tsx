@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 export const CountdownTimer: React.FC<{ days: number }> = ({ days }) => {
+  const [isMounted, setIsMounted] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days,
     hours: 23,
@@ -10,6 +11,7 @@ export const CountdownTimer: React.FC<{ days: number }> = ({ days }) => {
   });
 
   useEffect(() => {
+    setIsMounted(true);
     const timer = setInterval(() => {
       setTimeLeft(prev => {
         let { days, hours, minutes, seconds } = prev;
@@ -42,8 +44,8 @@ export const CountdownTimer: React.FC<{ days: number }> = ({ days }) => {
 
   return (
     <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#FEF2F2', padding: '4px 10px', borderRadius: '4px', border: '1px solid #FECACA' }}>
-      <span style={{ fontSize: '1rem' }}>⏳</span>
-      <div style={{ display: 'flex', gap: '4px', fontWeight: 700, color: '#DC2626', fontSize: '0.85rem' }}>
+      <span style={{ fontSize: '1rem' }} aria-hidden="true">⏳</span>
+      <div style={{ display: 'flex', gap: '4px', fontWeight: 700, color: '#991B1B', fontSize: '0.85rem' }} suppressHydrationWarning>
         <span>{String(timeLeft.days).padStart(2, '0')}d</span>:
         <span>{String(timeLeft.hours).padStart(2, '0')}h</span>:
         <span>{String(timeLeft.minutes).padStart(2, '0')}m</span>:
