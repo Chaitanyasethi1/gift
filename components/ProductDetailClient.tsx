@@ -1,18 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Product } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { siteConfig } from '@/data/siteConfig';
 import { 
   ShoppingCartIcon, 
   WhatsAppIcon, 
-  FileTextIcon, 
   StarIcon, 
   TruckIcon, 
   ShieldCheckIcon, 
-  ZapIcon,
   MinusIcon,
   PlusIcon
 } from './Icons';
@@ -28,94 +27,118 @@ interface ProductDetailClientProps {
   product: Product & {
     variants?: SizeVariantItem[];
     allowLogoUpload?: boolean;
+    selling_price?: number;
+    gst_rate?: number;
+    gst_percentage?: number;
   };
 }
 
 export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product }) => {
   const { addToCart, setIsCartOpen, setIsQuoteModalOpen, setSelectedQuoteProduct } = useCart();
   
-  // Extract variants if available
-  const variantList: SizeVariantItem[] = Array.isArray((product as any).variants) && (product as any).variants.length > 0
-    ? (product as any).variants
-    : (((product as any).sizes || []) as string[]).map((s: string) => ({ size: s, price: product.price, mrp: (product as any).mrp || product.price * 1.5 }));
+  // Extract and memoize variants
+  const variantList: SizeVariantItem[] = useMemo(() => {
+    if (Array.isArray(product.variants) && product.variants.length > 0) {
+      return product.variants;
+    }
+    const sizes = ((product as any).sizes || []) as string[];
+    if (sizes.length > 0) {
+      const baseP = Number(product.selling_price || product.price || 10);
+      return sizes.map((s: string) => ({
+        size: s,
+        price: baseP,
+        mrp: (product as any).mrp || Math.round(baseP * 1.5)
+      }));
+    }
+    return [];
+  }, [product]);
 
   const [selectedVariantIndex, setSelectedVariantIndex] = useState<number>(0);
   const selectedVariant = variantList[selectedVariantIndex] || (variantList.length > 0 ? variantList[0] : null);
 
   // Active base price for the selected size
-  const activeBasePrice = selectedVariant ? Number(selectedVariant.price || 0) : (Number(product.price) || 10);
+  const activeBasePrice = selectedVariant ? Number(selectedVariant.price || 0) : (Number(product.selling_price || product.price) || 10);
 
-  // Determine admin-configured quantity packs / tiers
-  const tiers = Array.isArray(product.tiers) && product.tiers.length > 0
-    ? product.tiers
-    : [
-        { qty: product.moq || 50, rate: activeBasePrice, label: `${product.moq || 50} pcs Pack` },
-        { qty: 200, rate: Math.round(activeBasePrice * 0.95), label: '200 pcs Pack' },
-        { qty: 500, rate: Math.round(activeBasePrice * 0.90), label: '500 pcs Pack' },
-        { qty: 1000, rate: Math.round(activeBasePrice * 0.85), label: '1000 pcs Bulk Rate' }
-      ];
+  // Memoize and Deduplicate quantity packs / tiers by qty
+  const tiers = useMemo(() => {
+    const raw = Array.isArray(product.tiers) && product.tiers.length > 0
+      ? product.tiers
+      : [
+          { qty: product.moq || 50, rate: activeBasePrice, label: `${product.moq || 50} pcs Pack` },
+          { qty: 200, rate: Math.round(activeBasePrice * 0.95), label: '200 pcs Pack' },
+          { qty: 500, rate: Math.round(activeBasePrice * 0.90), label: '500 pcs Pack' },
+          { qty: 1000, rate: Math.round(activeBasePrice * 0.85), label: 'Pack of 1000' }
+        ];
+
+    // Deduplicate by qty so duplicate buttons never appear
+    const seen = new Set<number>();
+    const list: typeof raw = [];
+    for (const item of raw) {
+      const q = Number(item.qty);
+      if (!seen.has(q) && q > 0) {
+        seen.add(q);
+        list.push(item);
+      }
+    }
+    return list.sort((a, b) => Number(a.qty) - Number(b.qty));
+  }, [product.tiers, product.moq, activeBasePrice]);
 
   // Extract all images for multi-photo gallery
-  const rawImages = (product as any).images;
-  const parsedImageList: string[] = Array.isArray(rawImages) && rawImages.length > 0
-    ? rawImages
-    : (typeof rawImages === 'string' ? (() => { try { const p = JSON.parse(rawImages); return Array.isArray(p) && p.length > 0 ? p : [product.image]; } catch { return [product.image]; } })() : [product.image]);
+  const parsedImageList: string[] = useMemo(() => {
+    const rawImages = (product as any).images;
+    if (Array.isArray(rawImages) && rawImages.length > 0) {
+      return rawImages.filter(Boolean);
+    }
+    if (typeof rawImages === 'string') {
+      try {
+        const p = JSON.parse(rawImages);
+        if (Array.isArray(p) && p.length > 0) return p.filter(Boolean);
+      } catch {}
+      if (rawImages) return [rawImages];
+    }
+    return product.image ? [product.image] : ['/assets/corrugated_box.jpg'];
+  }, [product]);
 
   const [activeImage, setActiveImage] = useState<string>(
     parsedImageList.length > 0 ? parsedImageList[0] : product.image
   );
 
-  const [selectedPackQty, setSelectedPackQty] = useState<number>(
-    tiers.length > 0 ? tiers[0].qty : (product.moq || 50)
-  );
+  const initialQty = useMemo(() => {
+    return tiers.length > 0 ? tiers[0].qty : (product.moq || 50);
+  }, [tiers]);
+
+  const [selectedPackQty, setSelectedPackQty] = useState<number>(initialQty);
   const [packCount, setPackCount] = useState<number>(1);
   const [uploadedLogo, setUploadedLogo] = useState<File | null>(null);
 
-  const activeTier = tiers.find((t) => t.qty === selectedPackQty) || tiers[0];
+  const activeTier = useMemo(() => {
+    return tiers.find((t) => t.qty === selectedPackQty) || tiers[0];
+  }, [tiers, selectedPackQty]);
 
   // 💰 ROBUST ACCURATE PRICE CALCULATION ENGINE
-  let singlePackPrice = 0;
-  let perPieceRate = 0;
-
-  if (activeTier) {
-    const rawRate = Number(activeTier.rate || 0);
-    if (rawRate > 40 && selectedPackQty >= 20) {
-      singlePackPrice = rawRate;
-      perPieceRate = selectedPackQty > 0 ? (singlePackPrice / selectedPackQty) : singlePackPrice;
-    } else if (rawRate > 0) {
-      perPieceRate = rawRate;
-      singlePackPrice = rawRate * selectedPackQty;
+  const unitPrice = useMemo(() => {
+    if (selectedVariant && Number(selectedVariant.price) > 0) {
+      return Number(selectedVariant.price);
     }
-  }
-
-  if (selectedVariant && selectedVariant.price > 0) {
-    const vPrice = Number(selectedVariant.price);
-    if (vPrice > 40 && selectedPackQty >= 20) {
-      singlePackPrice = vPrice;
-      perPieceRate = selectedPackQty > 0 ? (singlePackPrice / selectedPackQty) : singlePackPrice;
-    } else if (vPrice > 0 && vPrice <= 40) {
-      perPieceRate = vPrice;
-      singlePackPrice = vPrice * selectedPackQty;
-    } else if (vPrice > 0) {
-      singlePackPrice = vPrice;
-      perPieceRate = selectedPackQty > 0 ? (vPrice / selectedPackQty) : vPrice;
+    if (activeTier && Number(activeTier.rate) > 0) {
+      const r = Number(activeTier.rate);
+      return (r > 40 && selectedPackQty >= 20) ? (r / selectedPackQty) : r;
     }
-  }
+    return Number(product.selling_price || product.price) || 10;
+  }, [selectedVariant, activeTier, selectedPackQty, product]);
 
-  if (singlePackPrice <= 0) {
-    singlePackPrice = Number(product.price || 10);
-    perPieceRate = selectedPackQty > 0 ? (singlePackPrice / selectedPackQty) : singlePackPrice;
-  }
-
-  // Total pieces & Direct calculated totals
+  const singlePackPrice = unitPrice * selectedPackQty;
   const totalPieces = selectedPackQty * packCount;
   const subtotal = singlePackPrice * packCount;
 
   // Determine product-specific GST Rate with ultra-robust parsing
-  const rawGst = (product as any).gst_rate ?? (product as any).gst_percentage;
-  const gstRate = (rawGst !== null && rawGst !== undefined && rawGst !== '')
-    ? (typeof rawGst === 'number' ? rawGst : (parseFloat(String(rawGst).replace(/[^0-9.]/g, '')) || 18))
-    : 18;
+  const gstRate = useMemo(() => {
+    const rawGst = (product as any).gst_rate ?? (product as any).gst_percentage;
+    if (rawGst !== null && rawGst !== undefined && rawGst !== '') {
+      return typeof rawGst === 'number' ? rawGst : (parseFloat(String(rawGst).replace(/[^0-9.]/g, '')) || 18);
+    }
+    return 18;
+  }, [product]);
 
   const gst = subtotal * (gstRate / 100);
   const grandTotal = subtotal + gst;
@@ -140,21 +163,23 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
     setIsQuoteModalOpen(true);
   };
 
-  const waMessage = encodeURIComponent(
-    `Hello AS Print Gallery! I want to order:
+  const waMessage = useMemo(() => {
+    return encodeURIComponent(
+      `Hello AS Print Gallery! I want to order:
 📦 *Product:* ${product.title}
 • Selected Size: ${selectedVariant ? selectedVariant.size : 'Standard'}
 • Pack Option: Pack of ${selectedPackQty}
 • Number of Packs: ${packCount} pack(s) (${totalPieces} pcs total)
 • Total Calculated Price: ₹${grandTotal.toFixed(2)} (Incl. ${gstRate}% GST)
 Please confirm order and delivery timeline.`
-  );
+    );
+  }, [product.title, selectedVariant, selectedPackQty, packCount, totalPieces, grandTotal, gstRate]);
 
   return (
-    <div style={{ padding: '40px 0 100px 0', background: '#FAFAFC', minHeight: '100vh' }}>
+    <div style={{ padding: '30px 0 100px 0', background: '#FAFAFC', minHeight: '100vh' }}>
       <div className="container">
         {/* Breadcrumb */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: '#94A3B8', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: '#94A3B8', marginBottom: '20px' }}>
           <Link href="/" style={{ color: '#64748B', textDecoration: 'none' }}>Home</Link>
           <span>/</span>
           <Link href="/shop" style={{ color: '#64748B', textDecoration: 'none' }}>Products</Link>
@@ -162,16 +187,18 @@ Please confirm order and delivery timeline.`
           <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{product.title}</span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', alignItems: 'start' }}>
           {/* Left Column: Multi-Image Gallery */}
-          <div style={{ background: '#FFFFFF', padding: '24px', borderRadius: 'var(--radius-lg, 12px)', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
+          <div style={{ background: '#FFFFFF', padding: '20px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
             
             {/* Main Active Image Display */}
-            <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '8px', minHeight: '340px', maxHeight: '480px', background: '#F8FAFC', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '8px', minHeight: '340px', maxHeight: '460px', background: '#F8FAFC', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img
                 src={activeImage || product.image}
                 alt={product.title}
-                style={{ width: '100%', maxHeight: '450px', objectFit: 'contain', display: 'block', transition: 'all 0.3s' }}
+                loading="eager"
+                decoding="async"
+                style={{ width: '100%', maxHeight: '440px', objectFit: 'contain', display: 'block', transition: 'opacity 0.2s' }}
               />
               {product.badge && (
                 <div style={{ position: 'absolute', top: '14px', left: '14px' }}>
@@ -194,16 +221,17 @@ Please confirm order and delivery timeline.`
                         flex: '0 0 65px',
                         height: '65px',
                         padding: '2px',
-                        border: `2.5px solid ${isActive ? '#7C3AED' : '#CBD5E1'}`,
+                        border: `2.5px solid ${isActive ? '#16A34A' : '#CBD5E1'}`,
                         borderRadius: '8px',
                         background: '#FFF',
                         cursor: 'pointer',
                         overflow: 'hidden',
-                        boxShadow: isActive ? '0 2px 8px rgba(124, 58, 237, 0.3)' : 'none',
-                        transition: 'all 0.2s'
+                        boxShadow: isActive ? '0 2px 8px rgba(22, 163, 74, 0.25)' : 'none',
+                        transition: 'all 0.15s ease',
+                        touchAction: 'manipulation'
                       }}
                     >
-                      <img src={img} alt={`Thumbnail ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }} />
+                      <img src={img} alt={`Thumbnail ${idx + 1}`} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }} />
                     </button>
                   );
                 })}
@@ -223,16 +251,16 @@ Please confirm order and delivery timeline.`
           </div>
 
           {/* Right Column: Product Config & Details */}
-          <div style={{ background: '#FFFFFF', padding: '32px', borderRadius: 'var(--radius-lg, 12px)', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--primary)', letterSpacing: '0.5px' }}>
+          <div style={{ background: '#FFFFFF', padding: '28px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', color: '#16A34A', letterSpacing: '0.5px' }}>
               {product.categoryLabel}
             </span>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-dark)', margin: '8px 0 12px 0', lineHeight: 1.3 }}>
+            <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0F172A', margin: '6px 0 10px 0', lineHeight: 1.3 }}>
               {product.title}
             </h1>
 
             {/* Rating */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
               <div style={{ display: 'flex', gap: '2px', color: '#F59E0B' }}>
                 {[...Array(5)].map((_, i) => (
                   <StarIcon key={i} size={15} filled={true} />
@@ -242,17 +270,17 @@ Please confirm order and delivery timeline.`
               <span style={{ fontSize: '0.82rem', color: '#64748B' }}>({product.reviews || 120} verified orders)</span>
             </div>
 
-            <p style={{ fontSize: '0.95rem', color: 'var(--text-body)', lineHeight: 1.6, marginBottom: '24px' }}>
+            <p style={{ fontSize: '0.92rem', color: '#475569', lineHeight: 1.55, marginBottom: '20px' }}>
               {product.fullDesc || product.desc}
             </p>
 
-            {/* 1. SIZE SELECTION (Size ke hisab se rate) */}
+            {/* 1. SIZE SELECTION (Completely Independent from Pack Selection) */}
             {variantList.length > 0 && (
-              <div style={{ marginBottom: '24px', background: '#F8FAFC', padding: '16px', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
+              <div style={{ marginBottom: '20px', background: '#F8FAFC', padding: '14px', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
                 <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.88rem', fontWeight: 800, color: '#0F172A', marginBottom: '10px' }}>
                   <span>📏 1. Choose Size:</span>
                   {selectedVariant && (
-                    <span style={{ color: '#10B981', fontWeight: 700, fontSize: '0.82rem' }}>
+                    <span style={{ color: '#16A34A', fontWeight: 700, fontSize: '0.82rem' }}>
                       Base: ₹{selectedVariant.price} {selectedVariant.mrp ? `(MRP: ₹${selectedVariant.mrp})` : ''}
                     </span>
                   )}
@@ -264,32 +292,28 @@ Please confirm order and delivery timeline.`
                       <button
                         key={`${v.size}-${v.price}-${idx}`}
                         type="button"
-                        onClick={() => {
-                          setSelectedVariantIndex(idx);
-                          if (tiers[idx]) {
-                            setSelectedPackQty(tiers[idx].qty);
-                          }
-                        }}
+                        onClick={() => setSelectedVariantIndex(idx)}
                         style={{
-                          padding: '10px 16px',
-                          border: `2px solid ${isSelected ? '#10B981' : '#CBD5E1'}`,
-                          background: isSelected ? '#ECFDF5' : '#FFFFFF',
-                          color: isSelected ? '#065F46' : '#334155',
+                          padding: '8px 16px',
+                          border: `2px solid ${isSelected ? '#16A34A' : '#CBD5E1'}`,
+                          background: isSelected ? '#F0FDF4' : '#FFFFFF',
+                          color: isSelected ? '#15803D' : '#334155',
                           borderRadius: '8px',
                           fontWeight: 700,
                           fontSize: '0.9rem',
                           cursor: 'pointer',
-                          transition: 'all 0.2s',
+                          transition: 'all 0.15s ease',
                           display: 'flex',
                           flexDirection: 'column',
                           alignItems: 'center',
                           gap: '2px',
-                          boxShadow: isSelected ? '0 2px 8px rgba(16, 185, 129, 0.2)' : 'none'
+                          boxShadow: isSelected ? '0 2px 6px rgba(22, 163, 74, 0.18)' : 'none',
+                          touchAction: 'manipulation'
                         }}
                       >
                         <span>{v.size}</span>
                         {v.price > 0 && (
-                          <span style={{ fontSize: '0.75rem', color: isSelected ? '#059669' : '#64748B', fontWeight: 600 }}>
+                          <span style={{ fontSize: '0.75rem', color: isSelected ? '#16A34A' : '#64748B', fontWeight: 600 }}>
                             ₹{v.price}
                           </span>
                         )}
@@ -300,9 +324,9 @@ Please confirm order and delivery timeline.`
               </div>
             )}
 
-            {/* 2. PACK OF SELECTION (Clean pills without per-pc rate, matching screenshot) */}
+            {/* 2. PACK OF SELECTION (Deduplicated, Clean & Independent) */}
             <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', fontSize: '1rem', fontWeight: 800, color: '#0F172A', marginBottom: '10px' }}>
+              <label style={{ display: 'block', fontSize: '0.95rem', fontWeight: 800, color: '#0F172A', marginBottom: '10px' }}>
                 Pack Of
               </label>
               <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
@@ -315,23 +339,19 @@ Please confirm order and delivery timeline.`
                     <button
                       key={`${tier.qty}-${tIdx}`}
                       type="button"
-                      onClick={() => {
-                        setSelectedPackQty(tier.qty);
-                        if (variantList[tIdx]) {
-                          setSelectedVariantIndex(tIdx);
-                        }
-                      }}
+                      onClick={() => setSelectedPackQty(tier.qty)}
                       style={{
                         padding: '9px 18px',
                         borderRadius: '8px',
-                        border: `1.5px solid ${isSelected ? '#16A34A' : '#CBD5E1'}`,
+                        border: `2px solid ${isSelected ? '#16A34A' : '#CBD5E1'}`,
                         background: isSelected ? '#F0FDF4' : '#FFFFFF',
                         color: isSelected ? '#15803D' : '#334155',
                         fontWeight: isSelected ? 800 : 600,
                         fontSize: '0.92rem',
                         cursor: 'pointer',
                         transition: 'all 0.15s ease',
-                        boxShadow: isSelected ? '0 2px 6px rgba(22, 163, 74, 0.18)' : 'none'
+                        boxShadow: isSelected ? '0 2px 6px rgba(22, 163, 74, 0.18)' : 'none',
+                        touchAction: 'manipulation'
                       }}
                     >
                       {labelText}
