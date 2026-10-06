@@ -64,40 +64,29 @@ export const CookieBanner: React.FC = () => {
       id="cookie-consent-banner"
       style={{
         position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
+        bottom: '80px',
+        right: '16px',
+        maxWidth: '380px',
         background: '#0F172A',
         color: '#FFFFFF',
-        padding: '20px',
-        zIndex: 9999,
-        boxShadow: '0 -4px 10px rgba(0,0,0,0.2)'
+        padding: '16px 18px',
+        borderRadius: '12px',
+        zIndex: 2000,
+        boxShadow: '0 10px 25px -5px rgba(0,0,0,0.3)',
+        border: '1px solid #334155',
+        touchAction: 'manipulation'
       }}
     >
-      <div
-        className="container"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '14px',
-          maxWidth: '1200px'
-        }}
-      >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <div>
-          <h4 style={{ margin: '0 0 8px 0', fontSize: '1.1rem', color: '#FFFFFF' }}>
-            🍪 We value your privacy
+          <h4 style={{ margin: '0 0 4px 0', fontSize: '0.95rem', color: '#FFFFFF', fontWeight: 700 }}>
+            🍪 Cookie Settings
           </h4>
-          <p style={{ margin: 0, fontSize: '0.9rem', color: '#CBD5E1', lineHeight: '1.5' }}>
-            We use strictly essential cookies to maintain your shopping cart and session (e.g. <code>as_cart</code>).
-            No third-party advertising trackers are used. Analytics is only enabled if you choose &ldquo;Accept All&rdquo;.
-            Read our{' '}
-            <Link href="/cookies" style={{ color: '#FCA5A5', textDecoration: 'underline', fontWeight: 600 }}>
-              Cookie Policy
-            </Link>
-            .
+          <p style={{ margin: 0, fontSize: '0.8rem', color: '#94A3B8', lineHeight: '1.4' }}>
+            We use essential cookies for your shopping cart. Analytics cookies help us improve our factory store.
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
           <button
             type="button"
             id="cookie-accept-all"
@@ -106,13 +95,15 @@ export const CookieBanner: React.FC = () => {
               background: '#B81B54',
               color: '#FFFFFF',
               border: 'none',
-              padding: '8px 16px',
+              padding: '6px 14px',
+              fontSize: '0.8rem',
               fontWeight: 700,
-              borderRadius: 'var(--radius-sm, 6px)',
-              cursor: 'pointer'
+              borderRadius: '6px',
+              cursor: 'pointer',
+              touchAction: 'manipulation'
             }}
           >
-            Accept All
+            Accept
           </button>
           <button
             type="button"
@@ -120,32 +111,18 @@ export const CookieBanner: React.FC = () => {
             onClick={handleRejectAll}
             style={{
               background: 'transparent',
-              color: '#FFFFFF',
+              color: '#94A3B8',
               border: '1px solid #475569',
-              padding: '8px 16px',
+              padding: '6px 12px',
+              fontSize: '0.8rem',
               fontWeight: 600,
-              borderRadius: 'var(--radius-sm, 6px)',
-              cursor: 'pointer'
-            }}
-          >
-            Reject Non-Essential
-          </button>
-          <Link
-            href="/cookies"
-            style={{
-              background: 'transparent',
-              color: '#CBD5E1',
-              border: 'none',
-              textDecoration: 'underline',
-              padding: '8px',
-              fontSize: '0.85rem',
+              borderRadius: '6px',
               cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center'
+              touchAction: 'manipulation'
             }}
           >
-            Customize
-          </Link>
+            Decline
+          </button>
         </div>
       </div>
     </div>

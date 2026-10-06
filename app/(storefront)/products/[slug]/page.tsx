@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { cache } from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { siteConfig } from '@/data/siteConfig';
@@ -7,13 +7,31 @@ import { createClient } from '@/utils/supabase/server';
 import { supabase as supabaseAdmin } from '@/lib/supabase';
 import { PRODUCTS } from '@/data/products';
 
-export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
-export const revalidate = 0;
+export const revalidate = 60; // Instant ISR caching with background revalidation
 
 interface Props {
   params: { slug: string };
 }
+
+// React cache to avoid duplicate database hits between metadata and page render
+const getProductBySlug = cache(async (slug: string) => {
+  const supabase = createClient();
+  try {
+    const { data } = await supabase.from('products').select('*').eq('slug', slug).maybeSingle();
+    if (data) return data;
+  } catch {}
+  return PRODUCTS.find(p => p.slug === slug || p.id === slug) || null;
+});
+
+const getCategoryById = cache(async (categoryId: string) => {
+  const supabase = createClient();
+  try {
+    const { data } = await supabase.from('categories').select('name').eq('id', categoryId).maybeSingle();
+    if (data?.name) return data.name;
+  } catch {}
+  return 'Packaging Material';
+});
 
 export async function generateStaticParams() {
   try {
@@ -32,17 +50,7 @@ export async function generateMetadata({ params }: { params: { slug: string } | 
   try {
     const resolvedParams = await Promise.resolve(params);
     const slug = resolvedParams?.slug;
-    let product: any = null;
-    const supabase = createClient();
-
-    try {
-      const { data } = await supabase.from('products').select('*').eq('slug', slug).maybeSingle();
-      if (data) product = data;
-    } catch {}
-
-    if (!product) {
-      product = PRODUCTS.find(p => p.slug === slug || p.id === slug);
-    }
+    const product = await getProductBySlug(slug);
     
     if (!product) {
       return {
@@ -97,42 +105,19 @@ export async function generateMetadata({ params }: { params: { slug: string } | 
   }
 }
 
-export default async function ProductDetailPage({ params }: { params: { slug: string } | Promise<{ slug: string }> }) {
+export default async function ProductDetailPage({ params }: { params: { slug: string } | Promise<{ slug: string }> }): Promise<React.ReactElement> {
   const resolvedParams = await Promise.resolve(params);
   const slug = resolvedParams?.slug;
-  let product: any = null;
-  const supabase = createClient();
-
-  try {
-    const { data } = await supabase.from('products').select('*').eq('slug', slug).maybeSingle();
-    if (data) {
-      product = data;
-    }
-  } catch (err) {
-    // ignore
-  }
-
-  // Fallback to static catalogue if not found in database or if database offline
-  if (!product) {
-    const staticProd = PRODUCTS.find(p => p.slug === slug || p.id === slug);
-    if (staticProd) {
-      product = staticProd;
-    }
-  }
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
 
-  // Safely get category name if category_id exists
+  // Safely get category name
   let categoryName = 'Packaging Material';
   if (product.category_id) {
-    try {
-      const { data: cat } = await supabase.from('categories').select('name').eq('id', product.category_id).maybeSingle();
-      if (cat?.name) categoryName = cat.name;
-    } catch {
-      // ignore
-    }
+    categoryName = await getCategoryById(product.category_id);
   } else if (product.categoryLabel) {
     categoryName = product.categoryLabel;
   } else if (product.category) {
