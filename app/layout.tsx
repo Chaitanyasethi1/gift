@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
+import React from 'react';
 import Script from 'next/script';
 import { Inter, Poppins } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { siteConfig } from '@/data/siteConfig';
 import { CartProvider } from '@/context/CartContext';
+import { TopProgressBar } from '@/components/TopProgressBar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -295,6 +297,9 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <React.Suspense fallback={null}>
+          <TopProgressBar />
+        </React.Suspense>
         <CartProvider>
           {children}
         </CartProvider>
