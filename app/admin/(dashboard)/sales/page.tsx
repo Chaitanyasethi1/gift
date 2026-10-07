@@ -161,7 +161,7 @@ export default function SalesPage() {
           <div class="header">
             <div>
               <h2 style="margin:0;">AS PRINT GALLERY</h2>
-              <div style="font-size:12px;color:#555;">Plot No. 12, Industrial Area, Loni, Ghaziabad, UP - 201102</div>
+              <div style="font-size:12px;color:#555;">Kh No. 2326/2, Shankar Garden, Ashok Vihar, Loni, Ghaziabad, Uttar Pradesh - 201102</div>
               <div style="font-size:12px;color:#555;">GSTIN: 09AWKPN5910E1ZG | Phone: +91 9911678386</div>
             </div>
             <div style="text-align:right;">
