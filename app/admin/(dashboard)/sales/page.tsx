@@ -9,6 +9,7 @@ export default function SalesPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
   
   // Edit Form State
   const [status, setStatus] = useState('');
@@ -68,25 +69,57 @@ export default function SalesPage() {
   };
 
   const parseAddress = (shippingAddress: any) => {
-    if (!shippingAddress) return { address: 'No Address Provided', pincode: '' };
+    if (!shippingAddress) return { address: 'No Address Provided', pincode: '', fullText: '' };
+    
+    let rawAddress = '';
+    let rawPincode = '';
+
     if (typeof shippingAddress === 'string') {
       try {
         const parsed = JSON.parse(shippingAddress);
-        return {
-          address: parsed.address || shippingAddress,
-          pincode: parsed.pincode || ''
-        };
+        if (typeof parsed === 'object' && parsed !== null) {
+          rawAddress = parsed.address || parsed.street || parsed.line1 || '';
+          rawPincode = parsed.pincode || parsed.pin || parsed.postal_code || '';
+          if (parsed.city && !rawAddress.includes(parsed.city)) rawAddress += `, ${parsed.city}`;
+          if (parsed.state && !rawAddress.includes(parsed.state)) rawAddress += `, ${parsed.state}`;
+        } else {
+          rawAddress = shippingAddress;
+        }
       } catch {
-        return { address: shippingAddress, pincode: '' };
+        rawAddress = shippingAddress;
       }
+    } else if (typeof shippingAddress === 'object') {
+      rawAddress = shippingAddress.address || shippingAddress.street || shippingAddress.line1 || '';
+      rawPincode = shippingAddress.pincode || shippingAddress.pin || shippingAddress.postal_code || '';
+      if (shippingAddress.city && !rawAddress.includes(shippingAddress.city)) rawAddress += `, ${shippingAddress.city}`;
+      if (shippingAddress.state && !rawAddress.includes(shippingAddress.state)) rawAddress += `, ${shippingAddress.state}`;
+    } else {
+      rawAddress = String(shippingAddress);
     }
-    if (typeof shippingAddress === 'object') {
-      return {
-        address: shippingAddress.address || 'No Address Provided',
-        pincode: shippingAddress.pincode || ''
-      };
+
+    // Clean up if raw address is still empty or stringified
+    if (!rawAddress && shippingAddress) {
+      rawAddress = typeof shippingAddress === 'string' ? shippingAddress : JSON.stringify(shippingAddress);
     }
-    return { address: String(shippingAddress), pincode: '' };
+
+    return {
+      address: rawAddress || 'No Address Provided',
+      pincode: rawPincode || '',
+      fullText: `${rawAddress}${rawPincode ? ` - ${rawPincode}` : ''}`
+    };
+  };
+
+  const copyToClipboard = (text: string, label: string) => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopyFeedback(label);
+      setTimeout(() => setCopyFeedback(null), 2500);
+    }
+  };
+
+  const getCompleteFormattedAddress = (order: any) => {
+    const addr = parseAddress(order.shipping_address);
+    return `Recipient: ${order.customer_name || 'Customer'}\nPhone: ${order.customer_phone || 'N/A'}\nAddress:\n${addr.address}\nPIN Code: ${addr.pincode || 'N/A'}${order.gst_number ? `\nGSTIN: ${order.gst_number}` : ''}`;
   };
 
   const filteredOrders = orders.filter((o) => {
@@ -121,6 +154,7 @@ export default function SalesPage() {
             table { width: 100%; border-collapse: collapse; margin-top: 10px; }
             th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
             th { background: #f5f5f5; }
+            .address-box { white-space: pre-wrap; font-size: 14px; margin-top: 6px; line-height: 1.5; background: #fff; padding: 10px; border: 1px dashed #999; }
           </style>
         </head>
         <body>
@@ -139,10 +173,10 @@ export default function SalesPage() {
 
           <div class="section" style="background:#f9f9f9;padding:15px;border:1px solid #ddd;">
             <div style="font-weight:bold;font-size:13px;text-transform:uppercase;margin-bottom:6px;">DELIVER TO (CUSTOMER):</div>
-            <div style="font-size:15px;font-weight:bold;">${order.customer_name || 'Guest'}</div>
+            <div style="font-size:16px;font-weight:bold;">${order.customer_name || 'Guest'}</div>
             <div style="font-size:14px;margin-top:2px;">Phone: <strong>${order.customer_phone || 'N/A'}</strong></div>
-            <div style="font-size:14px;margin-top:4px;line-height:1.4;"><strong>Address:</strong> ${addr.address}</div>
-            <div style="font-size:14px;margin-top:4px;"><strong>PIN Code:</strong> ${addr.pincode}</div>
+            <div class="address-box"><strong>Delivery Address:</strong><br>${addr.address}</div>
+            <div style="font-size:14px;margin-top:6px;"><strong>PIN Code:</strong> <span style="font-size:16px;font-weight:bold;">${addr.pincode || 'N/A'}</span></div>
             ${order.gst_number ? `<div style="font-size:13px;margin-top:4px;"><strong>GSTIN:</strong> ${order.gst_number}</div>` : ''}
           </div>
 
@@ -192,11 +226,18 @@ export default function SalesPage() {
 
   return (
     <div>
+      {/* Toast Notification */}
+      {copyFeedback && (
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', background: '#0f172a', color: '#fff', padding: '12px 20px', borderRadius: '10px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)', zIndex: 9999, fontWeight: 700, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px', animation: 'fadeIn 0.2s ease' }}>
+          ✅ {copyFeedback} copied to clipboard!
+        </div>
+      )}
+
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '15px' }}>
         <div>
           <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>📦 Orders, Customer Details &amp; Dispatch</h1>
-          <p style={{ color: '#64748b', fontSize: '0.9rem', margin: '4px 0 0 0' }}>Complete customer details: Full Name, Phone, Delivery Address, Pincode, GSTIN, and Ordered Items.</p>
+          <p style={{ color: '#64748b', fontSize: '0.9rem', margin: '4px 0 0 0' }}>Complete customer details: Full Name, Phone, Exact Delivery Address, Pincode, GSTIN, and Ordered Items.</p>
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
           <button 
@@ -262,7 +303,7 @@ export default function SalesPage() {
                 <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0', color: '#475569', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                   <th style={{ padding: '16px' }}>Order ID &amp; Time</th>
                   <th style={{ padding: '16px' }}>👤 Customer &amp; Phone</th>
-                  <th style={{ padding: '16px', width: '280px' }}>📍 Complete Delivery Address</th>
+                  <th style={{ padding: '16px', width: '320px' }}>📍 Complete Delivery Address</th>
                   <th style={{ padding: '16px' }}>🏷️ GSTIN</th>
                   <th style={{ padding: '16px' }}>💰 Payment &amp; Total</th>
                   <th style={{ padding: '16px' }}>📦 Order Status</th>
@@ -319,16 +360,33 @@ export default function SalesPage() {
                       </td>
 
                       {/* Full Delivery Address & Pincode */}
-                      <td style={{ padding: '16px', minWidth: '260px' }}>
-                        <div style={{ background: '#f8fafc', padding: '10px 12px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '0.88rem', color: '#1e293b', lineHeight: 1.4 }}>
-                          <div>{addr.address}</div>
-                          {addr.pincode && (
-                            <div style={{ marginTop: '4px' }}>
-                              <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '2px 6px', borderRadius: '4px', fontSize: '0.78rem', fontWeight: 800 }}>
-                                PIN: {addr.pincode}
+                      <td style={{ padding: '16px', minWidth: '300px' }}>
+                        <div style={{ background: '#f8fafc', padding: '12px 14px', borderRadius: '8px', border: '1.5px solid #e2e8f0', fontSize: '0.88rem', color: '#1e293b' }}>
+                          <div style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', lineHeight: 1.45, fontWeight: 500 }}>
+                            {addr.address}
+                          </div>
+                          
+                          <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px' }}>
+                            {addr.pincode ? (
+                              <span style={{ background: '#0284c7', color: '#fff', padding: '2px 8px', borderRadius: '4px', fontSize: '0.78rem', fontWeight: 800, letterSpacing: '0.5px' }}>
+                                📍 PIN: {addr.pincode}
                               </span>
-                            </div>
-                          )}
+                            ) : (
+                              <span style={{ color: '#94a3b8', fontSize: '0.75rem' }}>No PIN</span>
+                            )}
+
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                copyToClipboard(getCompleteFormattedAddress(order), `Order ${order.order_number} address`);
+                              }}
+                              style={{ background: '#e2e8f0', border: 'none', color: '#334155', padding: '3px 8px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700, cursor: 'pointer' }}
+                              title="Copy full shipping details for courier"
+                            >
+                              📋 Copy
+                            </button>
+                          </div>
                         </div>
                       </td>
 
@@ -420,7 +478,7 @@ export default function SalesPage() {
       {/* COMPLETE ORDER DETAILS & DISPATCH MODAL */}
       {selectedOrder && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}>
-          <div style={{ background: '#fff', padding: '32px', borderRadius: '16px', width: '100%', maxWidth: '720px', maxHeight: '92vh', overflowY: 'auto', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}>
+          <div style={{ background: '#fff', padding: '32px', borderRadius: '16px', width: '100%', maxWidth: '750px', maxHeight: '92vh', overflowY: 'auto', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}>
             
             {/* Modal Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #e2e8f0', paddingBottom: '16px', marginBottom: '20px' }}>
@@ -454,8 +512,17 @@ export default function SalesPage() {
 
             {/* SECTION 1: CUSTOMER & DELIVERY ADDRESS */}
             <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '14px', border: '1.5px solid #cbd5e1', marginBottom: '20px' }}>
-              <div style={{ fontSize: '0.85rem', textTransform: 'uppercase', color: '#0f172a', fontWeight: 900, marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                📍 Complete Customer &amp; Shipping Details
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                <div style={{ fontSize: '0.9rem', textTransform: 'uppercase', color: '#0f172a', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  📍 Customer &amp; Complete Delivery Address
+                </div>
+                <button
+                  type="button"
+                  onClick={() => copyToClipboard(getCompleteFormattedAddress(selectedOrder), 'Full Shipping Address')}
+                  style={{ background: '#0284c7', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}
+                >
+                  📋 Copy Full Address
+                </button>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', fontSize: '0.92rem' }}>
@@ -483,16 +550,18 @@ export default function SalesPage() {
                   </div>
                 </div>
 
-                <div style={{ gridColumn: '1 / -1', borderTop: '1px dashed #cbd5e1', paddingTop: '10px' }}>
-                  <span style={{ color: '#64748b', fontSize: '0.78rem', display: 'block', fontWeight: 600 }}>Street &amp; Shipping Address:</span>
-                  <p style={{ margin: '4px 0 0 0', fontWeight: 700, color: '#0f172a', fontSize: '1rem', lineHeight: 1.5 }}>
+                <div style={{ gridColumn: '1 / -1', borderTop: '1px dashed #cbd5e1', paddingTop: '12px' }}>
+                  <span style={{ color: '#64748b', fontSize: '0.78rem', display: 'block', fontWeight: 600, marginBottom: '4px' }}>
+                    Customer Entered Exact Address:
+                  </span>
+                  <div style={{ background: '#fff', border: '1.5px solid #cbd5e1', borderRadius: '8px', padding: '12px 14px', whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontWeight: 600, color: '#0f172a', fontSize: '0.98rem', lineHeight: 1.5 }}>
                     {parseAddress(selectedOrder.shipping_address).address}
-                  </p>
+                  </div>
                 </div>
 
                 <div>
                   <span style={{ color: '#64748b', fontSize: '0.78rem', display: 'block', fontWeight: 600 }}>Pincode (Postal Code):</span>
-                  <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '3px 10px', borderRadius: '6px', fontSize: '0.95rem', fontWeight: 900, display: 'inline-block', marginTop: '3px' }}>
+                  <span style={{ background: '#0284c7', color: '#fff', padding: '4px 12px', borderRadius: '6px', fontSize: '1rem', fontWeight: 900, display: 'inline-block', marginTop: '4px', letterSpacing: '0.5px' }}>
                     {parseAddress(selectedOrder.shipping_address).pincode || 'N/A'}
                   </span>
                 </div>
@@ -500,11 +569,24 @@ export default function SalesPage() {
                 <div>
                   <span style={{ color: '#64748b', fontSize: '0.78rem', display: 'block', fontWeight: 600 }}>GSTIN (Tax Invoice):</span>
                   {selectedOrder.gst_number ? (
-                    <span style={{ background: '#f1f5f9', color: '#0f172a', padding: '3px 10px', borderRadius: '6px', fontSize: '0.95rem', fontWeight: 900, display: 'inline-block', marginTop: '3px', border: '1px solid #cbd5e1' }}>
+                    <span style={{ background: '#f1f5f9', color: '#0f172a', padding: '4px 10px', borderRadius: '6px', fontSize: '0.95rem', fontWeight: 900, display: 'inline-block', marginTop: '4px', border: '1px solid #cbd5e1' }}>
                       {selectedOrder.gst_number}
                     </span>
                   ) : (
-                    <span style={{ color: '#94a3b8', fontSize: '0.9rem', fontStyle: 'italic', display: 'inline-block', marginTop: '3px' }}>Not Provided</span>
+                    <span style={{ color: '#94a3b8', fontSize: '0.9rem', fontStyle: 'italic', display: 'inline-block', marginTop: '4px' }}>Not Provided</span>
+                  )}
+                </div>
+
+                <div style={{ gridColumn: '1 / -1', marginTop: '4px' }}>
+                  {parseAddress(selectedOrder.shipping_address).pincode && (
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(parseAddress(selectedOrder.shipping_address).address + ' ' + parseAddress(selectedOrder.shipping_address).pincode)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ fontSize: '0.82rem', color: '#0284c7', fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                    >
+                      🗺️ Open Address in Google Maps →
+                    </a>
                   )}
                 </div>
               </div>
