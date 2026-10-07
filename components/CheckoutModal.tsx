@@ -67,7 +67,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
       }
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_Tl2yywBxaa6BDT', 
+        key: orderData.key_id || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_Tl2yywBxaa6BDT', 
         amount: orderData.amount,
         currency: orderData.currency || 'INR',
         name: siteConfig.name,

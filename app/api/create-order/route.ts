@@ -53,6 +53,7 @@ export async function POST(req: Request) {
       currency: order.currency,
       receipt: order.receipt,
       status: order.status,
+      key_id: keyId,
     });
   } catch (error: any) {
     console.error('Error in create-order API:', error);
