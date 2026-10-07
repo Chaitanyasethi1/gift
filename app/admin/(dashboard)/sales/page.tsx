@@ -252,6 +252,11 @@ export default function SalesPage() {
           <div style={{ padding: '20px', color: '#b91c1c', background: '#fef2f2' }}>Error loading orders: {error}</div>
         ) : filteredOrders && filteredOrders.length > 0 ? (
           <div style={{ overflowX: 'auto' }}>
+            <style>{`
+              .order-row:hover {
+                background-color: #f8fafc !important;
+              }
+            `}</style>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '1150px' }}>
               <thead>
                 <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0', color: '#475569', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
@@ -271,7 +276,12 @@ export default function SalesPage() {
                   const isCod = order.payment_status === 'Pending' || order.internal_notes?.includes('COD');
 
                   return (
-                    <tr key={order.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                    <tr 
+                      key={order.id} 
+                      className="order-row"
+                      onClick={() => handleOpenDetails(order)}
+                      style={{ borderBottom: '1px solid #f1f5f9', cursor: 'pointer', transition: 'background 0.15s ease' }}
+                    >
                       {/* Order Number & Timestamp */}
                       <td style={{ padding: '16px' }}>
                         <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.98rem' }}>{order.order_number}</div>
