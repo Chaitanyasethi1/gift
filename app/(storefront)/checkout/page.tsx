@@ -117,12 +117,12 @@ export default function CheckoutPage() {
       }
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, 
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_Tl2yywBxaa6BDT', 
         amount: orderData.amount,
-        currency: orderData.currency,
+        currency: orderData.currency || 'INR',
         name: siteConfig.name,
         description: 'Packaging Order Checkout',
-        order_id: orderData.id,
+        order_id: orderData.order_id || orderData.id,
         handler: async function (response: any) {
           try {
             setMessage('Verifying payment...');
