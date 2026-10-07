@@ -283,21 +283,22 @@ export default function SalesPage() {
                       style={{ borderBottom: '1px solid #f1f5f9', cursor: 'pointer', transition: 'background 0.15s ease' }}
                     >
                       {/* Order Number & Timestamp */}
-                      <td style={{ padding: '16px' }}>
-                        <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.98rem' }}>{order.order_number}</div>
+                      <td style={{ padding: '16px', whiteSpace: 'nowrap', minWidth: '160px' }}>
+                        <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.98rem', letterSpacing: '0.5px' }}>{order.order_number}</div>
                         <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '3px' }}>
                           {new Date(order.created_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}
                         </div>
                       </td>
 
                       {/* Customer Name & Phone */}
-                      <td style={{ padding: '16px' }}>
+                      <td style={{ padding: '16px', whiteSpace: 'nowrap', minWidth: '180px' }}>
                         <div style={{ fontWeight: 800, color: '#1e293b', fontSize: '0.95rem' }}>
                           {order.customer_name || 'Guest'}
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>
                           <a 
                             href={`tel:${order.customer_phone}`}
+                            onClick={(e) => e.stopPropagation()}
                             style={{ color: '#0284c7', fontWeight: 700, fontSize: '0.88rem', textDecoration: 'none' }}
                           >
                             📞 {order.customer_phone || 'N/A'}
@@ -307,7 +308,8 @@ export default function SalesPage() {
                               href={`https://wa.me/91${order.customer_phone.replace(/\D/g, '').slice(-10)}?text=Hi%20${encodeURIComponent(order.customer_name || 'Customer')},%20this%20is%20regarding%20your%20AS%20Print%20Gallery%20Order%20${order.order_number}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              style={{ background: '#dcfce7', color: '#166534', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800, textDecoration: 'none' }}
+                              onClick={(e) => e.stopPropagation()}
+                              style={{ background: '#dcfce7', color: '#166534', padding: '2px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 800, textDecoration: 'none' }}
                               title="Chat with Customer on WhatsApp"
                             >
                               💬 WA
@@ -317,7 +319,7 @@ export default function SalesPage() {
                       </td>
 
                       {/* Full Delivery Address & Pincode */}
-                      <td style={{ padding: '16px' }}>
+                      <td style={{ padding: '16px', minWidth: '260px' }}>
                         <div style={{ background: '#f8fafc', padding: '10px 12px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '0.88rem', color: '#1e293b', lineHeight: 1.4 }}>
                           <div>{addr.address}</div>
                           {addr.pincode && (
