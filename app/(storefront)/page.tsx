@@ -5,16 +5,31 @@ import { ComboSlider } from '@/components/ComboSlider';
 import { CountdownTimer } from '@/components/CountdownTimer';
 import { createClient } from '@/utils/supabase/server';
 
+import { PRODUCTS } from '@/data/products';
 import { HomeCategories } from '@/components/HomeCategories';
 
 export default async function HomePage() {
-  const supabase = createClient();
-  const { data: products } = await supabase.from('products').select('*').eq('is_active', true);
+  let productsList = PRODUCTS;
+  try {
+    const supabase = createClient();
+    const { data: dbProducts } = await supabase.from('products').select('*').eq('is_active', true);
+    if (dbProducts && dbProducts.length > 0) {
+      productsList = dbProducts;
+    }
+  } catch (err) {
+    console.warn('Supabase fetch in HomePage fallback to static products:', err);
+  }
 
-  const hotDeals = products?.filter(p => p.flag_hot_deal) || [];
-  const megaSale = products?.filter(p => p.flag_mega_sale) || [];
-  const newArrivals = products?.filter(p => p.flag_new_arrival) || [];
-  const bestSellers = products?.filter(p => p.flag_best_seller) || [];
+  const hotDeals = productsList.filter(p => (p as any).flag_hot_deal) || [];
+  const megaSale = productsList.filter(p => (p as any).flag_mega_sale) || [];
+  const newArrivals = productsList.filter(p => (p as any).flag_new_arrival) || [];
+  const bestSellers = productsList.filter(p => (p as any).flag_best_seller) || [];
+
+  // If no flags are set, gracefully distribute products across sections
+  const finalHotDeals = hotDeals.length > 0 ? hotDeals : productsList.slice(0, 4);
+  const finalMegaSale = megaSale.length > 0 ? megaSale : productsList.slice(4, 8);
+  const finalNewArrivals = newArrivals.length > 0 ? newArrivals : productsList.slice(8, 12);
+  const finalBestSellers = bestSellers.length > 0 ? bestSellers : productsList.slice(12, 16);
 
   return (
     <>
@@ -51,7 +66,7 @@ export default async function HomePage() {
             </div>
             <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
           </div>
-          <ProductGrid products={hotDeals} showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={finalHotDeals} showAllButton={false} limit={4} hideTabs={true} />
         </div>
       </section>
 
@@ -65,7 +80,7 @@ export default async function HomePage() {
             </div>
             <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
           </div>
-          <ProductGrid products={megaSale} showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={finalMegaSale} showAllButton={false} limit={4} hideTabs={true} />
         </div>
       </section>
 
@@ -76,7 +91,7 @@ export default async function HomePage() {
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🌟 New Arrivals</h2>
             <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
           </div>
-          <ProductGrid products={newArrivals} showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={finalNewArrivals} showAllButton={false} limit={4} hideTabs={true} />
         </div>
       </section>
 
@@ -87,7 +102,7 @@ export default async function HomePage() {
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>🏆 Best Sellers</h2>
             <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
           </div>
-          <ProductGrid products={bestSellers} showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={finalBestSellers} showAllButton={false} limit={4} hideTabs={true} />
         </div>
       </section>
 
