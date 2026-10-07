@@ -44,7 +44,7 @@ export async function POST(req: Request) {
         shipping_fee: 0,
         total_amount: finalTotal || 0,
         status: 'Pending',
-        payment_status: 'Pending (Cash On Delivery)',
+        payment_status: 'Pending',
         internal_notes: 'Payment Method: Cash On Delivery (COD - Max ₹999)'
       })
       .select('id, order_number')
