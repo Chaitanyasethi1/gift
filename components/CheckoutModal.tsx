@@ -82,7 +82,17 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
               body: JSON.stringify({
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature
+                razorpay_signature: response.razorpay_signature,
+                customer_name: name,
+                customer_phone: phone,
+                shipping_address: address,
+                pincode: pincode,
+                gstin: gstin,
+                cart: cart,
+                subtotal: subtotal,
+                gstAmount: gstAmount,
+                finalTotal: finalTotal,
+                discount: discount
               })
             });
             const verifyData = await verifyRes.json();
