@@ -39,7 +39,9 @@ export function Footer() {
             </li>
             <li style={{ display: 'flex', gap: '12px', alignItems: 'center', color: '#D1D5DB', fontSize: '0.9rem' }}>
               <PhoneIcon size={18} />
-              <span>{siteConfig.contact.salesPhone}, {siteConfig.contact.whatsappPhone}</span>
+              <a href={`tel:${siteConfig.phones.salesRaw}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                {siteConfig.contact.salesPhone}
+              </a>
             </li>
             <li style={{ display: 'flex', gap: '12px', alignItems: 'center', color: '#D1D5DB', fontSize: '0.9rem' }}>
               <MailIcon size={18} />
@@ -48,7 +50,7 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Find Our App / Factory Location Map */}
+        {/* Factory Location Map */}
         <div>
           <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '14px' }}>
             Factory Location
@@ -128,13 +130,13 @@ export function Footer() {
             </div>
           </a>
 
-          {/* App download pills */}
-          <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
-             <div style={{ background: '#000', border: '1px solid #333', padding: '6px 10px', borderRadius: '6px', fontSize: '0.72rem', display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#9CA3AF' }}>
-               🍎 App Store
+          {/* Factory highlights */}
+          <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
+             <div style={{ background: '#111827', border: '1px solid #374151', padding: '6px 10px', borderRadius: '6px', fontSize: '0.74rem', display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#E2E8F0', fontWeight: 600 }}>
+               ⚡ Direct Dispatch
              </div>
-             <div style={{ background: '#000', border: '1px solid #333', padding: '6px 10px', borderRadius: '6px', fontSize: '0.72rem', display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#9CA3AF' }}>
-               ▶️ Google Play
+             <div style={{ background: '#111827', border: '1px solid #374151', padding: '6px 10px', borderRadius: '6px', fontSize: '0.74rem', display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#E2E8F0', fontWeight: 600 }}>
+               🏭 100% In-House Plant
              </div>
           </div>
         </div>
@@ -142,10 +144,12 @@ export function Footer() {
         {/* Payment Methods */}
         <div>
           <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px' }}>Payment Methods</h4>
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '30px' }}>
-             <div style={{ width: '40px', height: '25px', background: '#fff', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontSize: '0.7rem', fontWeight: 'bold' }}>VISA</div>
-             <div style={{ width: '40px', height: '25px', background: '#fff', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontSize: '0.7rem', fontWeight: 'bold' }}>MC</div>
-             <div style={{ width: '40px', height: '25px', background: '#fff', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontSize: '0.7rem', fontWeight: 'bold' }}>UPI</div>
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', flexWrap: 'wrap' }}>
+             <div style={{ padding: '4px 10px', background: '#1E293B', border: '1px solid #334155', borderRadius: '4px', color: '#F8FAFC', fontSize: '0.72rem', fontWeight: 700 }}>UPI / QR</div>
+             <div style={{ padding: '4px 10px', background: '#1E293B', border: '1px solid #334155', borderRadius: '4px', color: '#F8FAFC', fontSize: '0.72rem', fontWeight: 700 }}>VISA</div>
+             <div style={{ padding: '4px 10px', background: '#1E293B', border: '1px solid #334155', borderRadius: '4px', color: '#F8FAFC', fontSize: '0.72rem', fontWeight: 700 }}>Mastercard</div>
+             <div style={{ padding: '4px 10px', background: '#1E293B', border: '1px solid #334155', borderRadius: '4px', color: '#F8FAFC', fontSize: '0.72rem', fontWeight: 700 }}>NetBanking</div>
+             <div style={{ padding: '4px 10px', background: '#1E293B', border: '1px solid #334155', borderRadius: '4px', color: '#F8FAFC', fontSize: '0.72rem', fontWeight: 700 }}>Cash on Delivery</div>
           </div>
           <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '15px' }}>Keep In Touch</h4>
           <div style={{ display: 'flex', gap: '20px' }}>
@@ -162,7 +166,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div style={{
+      <div className="footer-sub-bar" style={{
         borderTop: '1px solid #222',
         padding: '16px 20px',
         color: '#9CA3AF',
@@ -176,6 +180,19 @@ export function Footer() {
           </span>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .footer-sub-bar {
+            padding-bottom: 84px !important;
+            text-align: center;
+          }
+          .footer-sub-bar .container {
+            justify-content: center !important;
+            gap: 6px !important;
+          }
+        }
+      `}</style>
     </footer>
   );
 }

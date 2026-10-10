@@ -4550,3 +4550,63 @@ button, input, select, textarea {
   color: #C5A059 !important;
 }
 
+/* =========================================
+   GLOBAL MOBILE 2-COLUMN PRODUCT GRID & CARDS
+   (Applies across Homepage, /shop, /products, Category Pages)
+   ========================================= */
+@media (max-width: 768px) {
+  .products-grid,
+  #products-grid-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    padding: 0 !important;
+  }
+
+  .minimal-product-card {
+    border-radius: 12px !important;
+  }
+
+  .minimal-product-card div[style*="padding: 16px"] {
+    padding: 10px 8px !important;
+  }
+
+  .minimal-product-card h3 {
+    font-size: 0.84rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 3px !important;
+  }
+
+  .minimal-product-card p {
+    font-size: 0.72rem !important;
+    margin-bottom: 8px !important;
+  }
+
+  .minimal-product-card .btn-add-minimal {
+    padding: 5px 12px !important;
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
+  }
+
+  /* Filter tabs wrapper on shop page becomes smooth horizontal scrollable chips */
+  .filter-tabs-wrapper {
+    display: flex !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    padding: 4px 2px 14px 2px !important;
+    gap: 8px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+  .filter-tabs-wrapper::-webkit-scrollbar {
+    display: none !important;
+  }
+  .filter-tab-pill {
+    flex-shrink: 0 !important;
+    font-size: 0.78rem !important;
+    padding: 6px 14px !important;
+    white-space: nowrap !important;
+  }
+}
+
+

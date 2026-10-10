@@ -77,12 +77,23 @@ export const StickyMobileBar: React.FC = () => {
           }
 
           .floating-actions-container {
-            bottom: 76px !important;
-            right: 16px !important;
+            bottom: 74px !important;
+            right: 12px !important;
+          }
+
+          .floating-wa-btn {
+            width: 44px !important;
+            height: 44px !important;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4) !important;
+          }
+
+          .floating-scrolltop-btn {
+            width: 36px !important;
+            height: 36px !important;
           }
 
           body {
-            padding-bottom: 64px;
+            padding-bottom: 76px;
           }
         }
       `}</style>
