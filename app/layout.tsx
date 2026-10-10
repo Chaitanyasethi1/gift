@@ -161,47 +161,62 @@ export default function RootLayout({
   const siteNavigationSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
+    name: 'AS Print Gallery Navigation & Sitelinks',
     itemListElement: [
       {
         '@type': 'SiteNavigationElement',
         position: 1,
-        name: 'Packaging Boxes & Corrugated Cartons',
-        description: 'Direct factory manufactured 3-ply and 5-ply corrugated boxes.',
-        url: `${siteConfig.url}/products`
+        name: 'Packaging & Corrugated Boxes',
+        description: 'Direct factory manufactured 3-ply and 5-ply corrugated shipping boxes and cartons.',
+        url: `${siteConfig.url}/corrugated-boxes-delhi`
       },
       {
         '@type': 'SiteNavigationElement',
         position: 2,
-        name: 'Custom Box Builder (3D Configurator)',
-        description: 'Instant online quote & 3D custom packaging box customizer.',
-        url: `${siteConfig.url}/custom-box-builder`
+        name: 'Kraft Paper Bags',
+        description: 'Custom printed brown and white kraft paper carry bags with twisted handles.',
+        url: `${siteConfig.url}/products/kraft-paper-bag`
       },
       {
         '@type': 'SiteNavigationElement',
         position: 3,
-        name: 'Stickers, Labels & Hang Tags',
-        description: 'Waterproof stickers, woven garment labels and custom hang tags.',
-        url: `${siteConfig.url}/products`
+        name: 'Custom 3D Box Builder',
+        description: 'Design custom dimensions, flutes, and get instant wholesale factory prices online.',
+        url: `${siteConfig.url}/3d-box-builder`
       },
       {
         '@type': 'SiteNavigationElement',
         position: 4,
-        name: 'Track Order Status',
-        description: 'Real-time live order tracking and dispatch status.',
-        url: `${siteConfig.url}/track-order`
+        name: 'Woven Labels & Hang Tags',
+        description: 'Woven damask garment tags, satin wash care labels, and branding trims.',
+        url: `${siteConfig.url}/products/woven-brand-label`
       },
       {
         '@type': 'SiteNavigationElement',
         position: 5,
-        name: 'About Manufacturing Unit',
-        description: 'About our Ghaziabad manufacturing plant and quality standards.',
-        url: `${siteConfig.url}/about`
+        name: 'All Products & Catalog',
+        description: 'Explore the complete factory catalog of boxes, bags, labels, and stickers.',
+        url: `${siteConfig.url}/shop`
       },
       {
         '@type': 'SiteNavigationElement',
         position: 6,
+        name: 'Track Order Status',
+        description: 'Live order tracking and dispatch status with pan-India courier updates.',
+        url: `${siteConfig.url}/track-order`
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 7,
+        name: 'About Manufacturing Unit',
+        description: 'About our Ghaziabad manufacturing plant, infrastructure, and quality standards.',
+        url: `${siteConfig.url}/about`
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        position: 8,
         name: 'Contact Factory',
-        description: 'Direct sales desk and instant WhatsApp support.',
+        description: 'Direct factory sales desk, plant address, and instant WhatsApp inquiry.',
         url: `${siteConfig.url}/contact`
       }
     ]
