@@ -25,8 +25,49 @@ export const HomeCategories: React.FC = () => {
   }, []);
 
   return (
-    <section style={{ padding: '40px 0', background: '#FFFFFF' }}>
-      <div className="container">
+    <section className="home-categories-section" style={{ padding: '30px 0', background: '#FFFFFF' }}>
+      <style>{`
+        .home-categories-section .cat-section-inner {
+          display: flex;
+          flex-direction: column;
+        }
+
+        /* Desktop: Header Row on Top (order 1), Marquee on Bottom (order 2) */
+        @media (min-width: 769px) {
+          .cat-header-row {
+            order: 1;
+            margin-bottom: 25px;
+          }
+          .marquee-wrapper {
+            order: 2;
+          }
+        }
+
+        /* Mobile (<= 768px): Scrolling categories on top, Title & View All underneath */
+        @media (max-width: 768px) {
+          .home-categories-section {
+            padding: 16px 0 20px 0 !important;
+          }
+          .marquee-wrapper {
+            order: 1 !important;
+            padding: 4px 0 12px 0 !important;
+          }
+          .cat-header-row {
+            order: 2 !important;
+            margin-bottom: 0 !important;
+            margin-top: 10px !important;
+            padding: 0 4px;
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+          }
+          .cat-header-row .section-title {
+            font-size: 1.25rem !important;
+          }
+        }
+      `}</style>
+      <div className="container cat-section-inner">
         <div className="cat-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '30px' }}>
           <h2 className="section-title" style={{ fontSize: '1.8rem', fontWeight: 700, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>
             Our Popular Categories
