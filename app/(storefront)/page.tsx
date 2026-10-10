@@ -25,11 +25,11 @@ export default async function HomePage() {
   const newArrivals = productsList.filter(p => (p as any).flag_new_arrival) || [];
   const bestSellers = productsList.filter(p => (p as any).flag_best_seller) || [];
 
-  // If no flags are set, gracefully distribute products across sections
-  const finalHotDeals = hotDeals.length > 0 ? hotDeals : productsList.slice(0, 4);
-  const finalMegaSale = megaSale.length > 0 ? megaSale : productsList.slice(4, 8);
-  const finalNewArrivals = newArrivals.length > 0 ? newArrivals : productsList.slice(8, 12);
-  const finalBestSellers = bestSellers.length > 0 ? bestSellers : productsList.slice(12, 16);
+  // If no flags are set, gracefully distribute products across sections with 8 items each
+  const finalHotDeals = hotDeals.length > 0 ? hotDeals : productsList.slice(0, 8);
+  const finalMegaSale = megaSale.length > 0 ? megaSale : productsList.slice(4, 12);
+  const finalNewArrivals = newArrivals.length > 0 ? newArrivals : productsList.slice(8, 16);
+  const finalBestSellers = bestSellers.length > 0 ? bestSellers : productsList.slice(12, 20);
 
   return (
     <>
@@ -59,50 +59,50 @@ export default async function HomePage() {
       {/* Hot Deals */}
       <section style={{ padding: '20px 0', background: '#FAFAFC' }}>
         <div className="container">
-           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
+           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🔥 Hot Deals</h2>
+              <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🔥 Hot Deals</h2>
               <CountdownTimer days={3} />
             </div>
-            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
+            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
-          <ProductGrid products={finalHotDeals} showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={finalHotDeals} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>
       </section>
 
       {/* Sale */}
       <section style={{ padding: '20px 0', background: '#FFFFFF' }}>
         <div className="container">
-           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
+           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🏷️ Mega Sale</h2>
+              <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🏷️ Mega Sale</h2>
               <CountdownTimer days={12} />
             </div>
-            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
+            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
-          <ProductGrid products={finalMegaSale} showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={finalMegaSale} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>
       </section>
 
       {/* New Arrivals */}
       <section style={{ padding: '20px 0', background: '#FAFAFC' }}>
         <div className="container">
-           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🌟 New Arrivals</h2>
-            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
+           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+            <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🌟 New Arrivals</h2>
+            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
-          <ProductGrid products={finalNewArrivals} showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={finalNewArrivals} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>
       </section>
 
       {/* 6. Best Sellers */}
       <section style={{ padding: '20px 0 40px 0', background: '#FFFFFF' }}>
         <div className="container">
-           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>🏆 Best Sellers</h2>
-            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem' }}>View All &rarr;</Link>
+           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+            <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0 }}>🏆 Best Sellers</h2>
+            <Link href="/shop" style={{ color: '#B81B54', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
-          <ProductGrid products={finalBestSellers} showAllButton={false} limit={4} hideTabs={true} />
+          <ProductGrid products={finalBestSellers} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>
       </section>
 

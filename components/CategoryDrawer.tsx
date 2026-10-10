@@ -537,24 +537,7 @@ export const CategoryDrawer: React.FC = () => {
               <span>Contact & Plant Location</span>
             </Link>
 
-            <Link
-              href="/admin/login"
-              onClick={closeDrawer}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '12px 18px',
-                borderBottom: '1px solid #F1F5F9',
-                fontSize: '0.88rem',
-                fontWeight: 600,
-                color: '#334155',
-                textDecoration: 'none'
-              }}
-            >
-              <UserIcon size={18} color="#64748B" />
-              <span>Admin / Staff Portal</span>
-            </Link>
+
           </div>
         </div>
 

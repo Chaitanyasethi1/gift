@@ -191,6 +191,18 @@ export const ChevronUpIcon: React.FC<IconProps> = ({ size = 16, color = 'current
   </svg>
 );
 
+export const ChevronLeftIcon: React.FC<IconProps> = ({ size = 16, color = 'currentColor', className = '', ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`ui-icon ${className}`} {...props}>
+    <path d="m15 18-6-6 6-6" />
+  </svg>
+);
+
+export const ChevronRightIcon: React.FC<IconProps> = ({ size = 16, color = 'currentColor', className = '', ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`ui-icon ${className}`} {...props}>
+    <path d="m9 18 6-6-6-6" />
+  </svg>
+);
+
 // 19. Upload & Move
 export const UploadCloudIcon: React.FC<IconProps> = ({ size = 20, color = 'currentColor', className = '', ...props }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`ui-icon ${className}`} {...props}>

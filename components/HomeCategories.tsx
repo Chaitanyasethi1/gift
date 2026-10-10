@@ -61,9 +61,18 @@ export const HomeCategories: React.FC = () => {
             flex-direction: row !important;
             justify-content: space-between !important;
             align-items: center !important;
+            gap: 8px !important;
           }
           .cat-header-row .section-title {
-            font-size: 1.25rem !important;
+            font-size: 1.15rem !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+          }
+          .cat-view-all-link {
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+            font-size: 0.85rem !important;
           }
         }
       `}</style>
@@ -72,7 +81,7 @@ export const HomeCategories: React.FC = () => {
           <h2 className="section-title" style={{ fontSize: '1.8rem', fontWeight: 700, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>
             Our Popular Categories
           </h2>
-          <Link href="/shop" style={{ color: '#B91C1C', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}>
+          <Link href="/shop" className="cat-view-all-link" style={{ color: '#B91C1C', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}>
             View All <span style={{ fontSize: '1.2rem' }}>&rarr;</span>
           </Link>
         </div>
