@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { initialHomepageConfig } from '@/data/homepageData';
 import { PRODUCTS } from '@/data/products';
+import { MenuIcon, ShoppingCartIcon, UserIcon } from '@/components/Icons';
 
 interface NavCategory {
   title: string;
@@ -36,73 +37,73 @@ const POPULAR_SEARCH_TERMS = [
 const NAV_CATEGORIES: NavCategory[] = [
   {
     title: 'Carry Bags',
-    link: '/shop',
+    link: '/shop?category=carry-bags',
     items: [
-      { label: 'Kraft Paper Bags', link: '/shop', icon: '🛍️' },
-      { label: 'Printed Carry Bags', link: '/shop', icon: '🎨' },
-      { label: 'Handle Paper Bags', link: '/shop', icon: '👜' },
-      { label: 'Paper Mailers & Lifafa', link: '/shop', icon: '✉️' }
+      { label: 'Kraft Paper Bags', link: '/shop?category=kraft-paper-bags', icon: '🛍️' },
+      { label: 'Printed Carry Bags', link: '/shop?category=printed-carry-bags', icon: '🎨' },
+      { label: 'Handle Paper Bags', link: '/shop?category=handle-paper-bags', icon: '👜' },
+      { label: 'Paper Mailers & Lifafa', link: '/shop?category=paper-courier-mailers', icon: '✉️' }
     ]
   },
   {
     title: 'Packaging Material',
-    link: '/shop',
+    link: '/shop?category=packaging-material',
     items: [
       { label: 'Corrugated Boxes (3 & 5 Ply)', link: '/corrugated-boxes-delhi', icon: '📦' },
-      { label: 'Garment & Apparel Boxes', link: '/shop', icon: '👔' },
-      { label: 'Gift & Luxury Boxes', link: '/shop', icon: '🎁' },
-      { label: 'Sweet & Bakery Boxes', link: '/shop', icon: '🍰' },
-      { label: 'Custom Printed Pizza Boxes', link: '/shop', icon: '🍕' },
+      { label: 'Garment & Apparel Boxes', link: '/shop?category=garment-boxes', icon: '👔' },
+      { label: 'Gift & Luxury Boxes', link: '/shop?category=luxury-boxes', icon: '🎁' },
+      { label: 'Sweet & Bakery Boxes', link: '/shop?category=sweet-bakery-boxes', icon: '🍰' },
+      { label: 'Custom Printed Pizza Boxes', link: '/shop?category=pizza-boxes', icon: '🍕' },
       { label: 'Custom Master Cartons', link: '/corrugated-boxes-ghaziabad', icon: '🏭' }
     ]
   },
   {
     title: 'Labels & Tags',
-    link: '/shop',
+    link: '/shop?category=labels-tags',
     items: [
-      { label: 'Woven Brand Labels', link: '/shop', icon: '🧵' },
-      { label: 'Printed Satin Labels', link: '/shop', icon: '🏷️' },
-      { label: 'Clothing Hang Tags', link: '/shop', icon: '🔖' },
-      { label: 'Wash Care Labels', link: '/shop', icon: '👕' },
-      { label: 'Barcode & SKU Stickers', link: '/shop', icon: '📊' }
+      { label: 'Woven Brand Labels', link: '/shop?category=woven-labels', icon: '🧵' },
+      { label: 'Printed Satin Labels', link: '/shop?category=satin-labels', icon: '🏷️' },
+      { label: 'Clothing Hang Tags', link: '/shop?category=hang-tags', icon: '🔖' },
+      { label: 'Wash Care Labels', link: '/shop?category=wash-care-labels', icon: '👕' },
+      { label: 'Barcode & SKU Stickers', link: '/shop?category=barcode-stickers', icon: '📊' }
     ]
   },
   {
     title: 'Stickers',
-    link: '/shop',
+    link: '/shop?category=stickers',
     items: [
-      { label: 'Waterproof Vinyl Stickers', link: '/shop', icon: '💧' },
-      { label: 'Custom Die-Cut Stickers', link: '/shop', icon: '✂️' },
-      { label: 'Round Product Stickers', link: '/shop', icon: '⚪' },
-      { label: 'Packaging Seal Labels', link: '/shop', icon: '🔒' }
+      { label: 'Waterproof Vinyl Stickers', link: '/shop?category=vinyl-stickers', icon: '💧' },
+      { label: 'Custom Die-Cut Stickers', link: '/shop?category=die-cut-stickers', icon: '✂️' },
+      { label: 'Round Product Stickers', link: '/shop?category=round-stickers', icon: '⚪' },
+      { label: 'Packaging Seal Labels', link: '/shop?category=seal-labels', icon: '🔒' }
     ]
   },
   {
     title: 'Advertising',
-    link: '/shop',
+    link: '/shop?category=advertising',
     items: [
-      { label: 'Visiting Cards & Cards', link: '/shop', icon: '📇' },
-      { label: 'Custom Thank You Cards', link: '/shop', icon: '💌' },
-      { label: 'Rubber Stamps & Seals', link: '/shop', icon: '💮' },
-      { label: 'Letterheads & Stationery', link: '/shop', icon: '📄' },
-      { label: 'QR Code Standees & Cards', link: '/shop', icon: '📱' }
+      { label: 'Visiting Cards & Cards', link: '/shop?category=visiting-cards', icon: '📇' },
+      { label: 'Custom Thank You Cards', link: '/shop?category=thank-you-cards', icon: '💌' },
+      { label: 'Rubber Stamps & Seals', link: '/shop?category=rubber-stamps', icon: '💮' },
+      { label: 'Letterheads & Stationery', link: '/shop?category=stationery', icon: '📄' },
+      { label: 'QR Code Standees & Cards', link: '/shop?category=qr-standees', icon: '📱' }
     ]
   },
   {
     title: 'Disposable Products',
-    link: '/shop',
+    link: '/shop?category=disposable',
     items: [
-      { label: 'Paper Dona & Bowls', link: '/shop', icon: '🥣' },
-      { label: 'Paper Plates & Platters', link: '/shop', icon: '🍽️' },
-      { label: 'Silver Dona', link: '/shop', icon: '✨' },
-      { label: 'Silver Laminated Plates', link: '/shop', icon: '🥈' }
+      { label: 'Paper Dona & Bowls', link: '/shop?category=paper-dona', icon: '🥣' },
+      { label: 'Paper Plates & Platters', link: '/shop?category=paper-plates', icon: '🍽️' },
+      { label: 'Silver Dona', link: '/shop?category=silver-dona', icon: '✨' },
+      { label: 'Silver Laminated Plates', link: '/shop?category=silver-plates', icon: '🥈' }
     ]
   }
 ];
 
 export function Header() {
   const router = useRouter();
-  const { cartCount, setIsCartOpen } = useCart();
+  const { cartCount, setIsCartOpen, setIsCategoryDrawerOpen } = useCart();
   const [tickerText, setTickerText] = useState(initialHomepageConfig.tickerText);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -112,6 +113,7 @@ export function Header() {
   
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const searchContainerRef = useRef<HTMLDivElement | null>(null);
+  const mobileSearchContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     // 1. Fetch Ticker Text & Active Products for Instant Search Indexing
@@ -174,7 +176,10 @@ export function Header() {
   // Click Outside to Close Search Autocomplete
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      const insideDesktop = searchContainerRef.current && searchContainerRef.current.contains(target);
+      const insideMobile = mobileSearchContainerRef.current && mobileSearchContainerRef.current.contains(target);
+      if (!insideDesktop && !insideMobile) {
         setIsSearchFocused(false);
       }
     }
@@ -192,10 +197,8 @@ export function Header() {
       };
     }
 
-    // 1. Matching text phrases
     const terms = POPULAR_SEARCH_TERMS.filter(t => t.toLowerCase().includes(q));
     
-    // Also include product titles that start with or contain query
     const productTitles = allProducts
       .map(p => p.title || p.name)
       .filter(Boolean)
@@ -203,7 +206,6 @@ export function Header() {
 
     const combinedTerms = Array.from(new Set([...terms, ...productTitles])).slice(0, 6);
 
-    // 2. Matching direct products
     const prods = allProducts.filter(p => {
       const name = (p.title || p.name || '').toLowerCase();
       const desc = (p.description || p.desc || '').toLowerCase();
@@ -256,19 +258,196 @@ export function Header() {
     router.push(`/products/${slug}`);
   };
 
+  // Reusable Live Autocomplete Suggestions Box
+  const renderSearchDropdown = () => (
+    <div 
+      style={{
+        position: 'absolute',
+        top: 'calc(100% + 6px)',
+        left: 0,
+        right: 0,
+        background: '#FFFFFF',
+        borderRadius: '12px',
+        border: '1px solid #E2E8F0',
+        boxShadow: '0 12px 32px rgba(0, 0, 0, 0.16)',
+        zIndex: 99999,
+        overflow: 'hidden',
+        maxHeight: '420px',
+        overflowY: 'auto'
+      }}
+    >
+      {/* Header Title */}
+      <div style={{ padding: '8px 14px', background: '#F8FAFC', borderBottom: '1px solid #F1F5F9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          {searchQuery.trim() ? 'Search Suggestions' : '🔥 Popular Searches'}
+        </span>
+        <span style={{ fontSize: '0.68rem', color: '#94A3B8' }}>Tap to select</span>
+      </div>
+
+      {/* 1. Suggested Query Keywords */}
+      {suggestedTerms.length > 0 && (
+        <div style={{ padding: '4px 0', borderBottom: matchingProducts.length > 0 ? '1px solid #F1F5F9' : 'none' }}>
+          {suggestedTerms.map((term, idx) => {
+            const qLower = searchQuery.trim().toLowerCase();
+            const termLower = term.toLowerCase();
+            const matchIndex = qLower ? termLower.indexOf(qLower) : -1;
+
+            return (
+              <div
+                key={idx}
+                onClick={() => handleSelectTerm(term)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '8px 16px',
+                  cursor: 'pointer',
+                  fontSize: '0.88rem',
+                  color: '#1E293B',
+                  transition: 'background 0.12s'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = '#F1F5F9')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+              >
+                <span style={{ color: '#94A3B8', fontSize: '0.85rem' }}>🔍</span>
+                <div style={{ flex: 1 }}>
+                  {matchIndex >= 0 ? (
+                    <span>
+                      {term.substring(0, matchIndex)}
+                      <strong style={{ color: '#0F172A', fontWeight: 800 }}>
+                        {term.substring(matchIndex, matchIndex + qLower.length)}
+                      </strong>
+                      {term.substring(matchIndex + qLower.length)}
+                    </span>
+                  ) : (
+                    <span>{term}</span>
+                  )}
+                </div>
+                <span style={{ color: '#CBD5E1', fontSize: '0.75rem' }}>↗</span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* 2. Direct Matching Products with Thumbnails & Rates */}
+      {matchingProducts.length > 0 && (
+        <div style={{ padding: '6px 0', background: '#FAFAFC' }}>
+          <div style={{ padding: '4px 16px 6px', fontSize: '0.72rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase' }}>
+            📦 Products Matching &quot;{searchQuery.trim() || 'Catalog'}&quot;
+          </div>
+          {matchingProducts.map((prod) => {
+            let firstImg = prod.image || '/assets/corrugated_box.jpg';
+            if (Array.isArray(prod.images) && prod.images.length > 0 && prod.images[0]) firstImg = prod.images[0];
+            const price = Number(prod.selling_price || prod.price || 10);
+            const title = prod.title || prod.name || 'Product';
+
+            return (
+              <div
+                key={prod.id}
+                onClick={() => handleSelectProduct(prod)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '8px 16px',
+                  cursor: 'pointer',
+                  background: '#FFFFFF',
+                  borderBottom: '1px solid #F1F5F9',
+                  transition: 'background 0.12s'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = '#F8FAFC')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = '#FFFFFF')}
+              >
+                <img
+                  src={firstImg}
+                  alt={title}
+                  style={{ width: '40px', height: '40px', objectFit: 'contain', borderRadius: '6px', background: '#F8FAFC', border: '1px solid #E2E8F0', flexShrink: 0 }}
+                  onError={(e: any) => { e.target.src = '/assets/corrugated_box.jpg'; }}
+                />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0F172A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {title}
+                  </div>
+                  <div style={{ fontSize: '0.72rem', color: '#64748B', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <span>{prod.categoryLabel || 'Packaging'}</span>
+                    <span>•</span>
+                    <span style={{ color: '#16A34A', fontWeight: 800 }}>₹{price.toFixed(2)}/pc</span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  style={{
+                    background: '#F1F5F9',
+                    border: '1px solid #CBD5E1',
+                    borderRadius: '4px',
+                    padding: '3px 8px',
+                    fontSize: '0.7rem',
+                    fontWeight: 700,
+                    color: '#0F172A'
+                  }}
+                >
+                  View
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* 3. See All Results Footer Row */}
+      {searchQuery.trim() && (
+        <div
+          onClick={() => handleSearchSubmit()}
+          style={{
+            padding: '10px 16px',
+            background: '#F0FDF4',
+            borderTop: '1px solid #DCFCE7',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+            fontSize: '0.82rem',
+            fontWeight: 700,
+            color: '#15803D'
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = '#DCFCE7')}
+          onMouseLeave={(e) => (e.currentTarget.style.background = '#F0FDF4')}
+        >
+          <span>See all results for &ldquo;<strong>{searchQuery}</strong>&rdquo;</span>
+          <span>➔</span>
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <>
       <style>{`
-        /* Mobile Header Optimizations */
+        /* Responsive Visibility Switches */
         @media (max-width: 768px) {
-          .header-container { flex-direction: column !important; gap: 12px !important; padding: 10px !important; }
-          .header-search-row { width: 100% !important; flex-direction: column !important; gap: 10px !important; }
-          .header-icons { width: 100% !important; justify-content: space-around !important; margin-top: 5px !important; gap: 10px !important; }
-          .top-socials { display: none !important; }
-          .dark-nav-container { overflow-x: auto !important; white-space: nowrap !important; justify-content: flex-start !important; padding: 12px 15px !important; gap: 20px !important; }
-          .dark-nav-container::-webkit-scrollbar { display: none; }
-          .logo-container { width: 200px !important; height: 56px !important; margin: 0 auto; }
-          .bulk-order-btn { width: 100%; padding: 10px !important; font-size: 0.95rem !important; }
+          .desktop-only-header {
+            display: none !important;
+          }
+          .mobile-only-header {
+            display: block !important;
+          }
+          .dark-nav-wrapper {
+            display: none !important;
+          }
+          .header-marquee-box {
+            padding: 5px 0 !important;
+            font-size: 0.76rem !important;
+          }
+        }
+
+        @media (min-width: 769px) {
+          .mobile-only-header {
+            display: none !important;
+          }
+          .desktop-only-header {
+            display: block !important;
+          }
         }
         
         /* Button & Ticker Animation */
@@ -310,7 +489,7 @@ export function Header() {
           animation-play-state: paused;
         }
 
-        /* Navigation Item & Dropdown Bridge */
+        /* Desktop Navigation Item & Dropdown Bridge */
         .nav-item-root {
           position: relative;
           padding: 12px 0;
@@ -335,7 +514,6 @@ export function Header() {
           color: #FBBF24;
         }
 
-        /* Invisible bridge above dropdown to guarantee hover never breaks */
         .nav-dropdown-panel {
           position: absolute;
           top: 100%;
@@ -350,7 +528,6 @@ export function Header() {
           animation: dropSlideDown 0.15s ease-out;
         }
 
-        /* Hover bridge overlay connecting trigger to panel */
         .nav-dropdown-panel::before {
           content: '';
           position: absolute;
@@ -362,14 +539,8 @@ export function Header() {
         }
 
         @keyframes dropSlideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-4px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         .dropdown-sub-link {
@@ -392,7 +563,6 @@ export function Header() {
           padding-left: 22px;
         }
 
-        /* Direct click button styles */
         .header-icon-action {
           background: none;
           border: none;
@@ -411,8 +581,8 @@ export function Header() {
         }
       `}</style>
       
-      {/* 1. Top Announcement Bar */}
-      <div className="header-marquee-box" style={{ background: '#E11D48', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '8px 0', overflow: 'hidden', display: 'flex', width: '100%' }}>
+      {/* 1. Top Announcement Marquee Bar */}
+      <div className="header-marquee-box" style={{ background: '#E11D48', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '7px 0', overflow: 'hidden', display: 'flex', width: '100%' }}>
         <div className="header-marquee">
           <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
           <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
@@ -421,14 +591,188 @@ export function Header() {
         </div>
       </div>
       
-      {/* 2. Main Header */}
-      <header style={{ background: '#F8FAFC', padding: '14px 0', borderBottom: '1px solid #E2E8F0' }}>
-        <div className="container header-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px' }}>
+      {/* 2. MEESHO-STYLE MOBILE HEADER (Shown on Mobile screens <= 768px) */}
+      <div className="mobile-only-header" style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0', padding: '10px 14px' }}>
+        {/* Top Row: Hamburger (Left) + Logo | Quick WhatsApp + Account + Cart (Right) */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
           
-          {/* Logo with Direct Home Redirect on Single Click */}
+          {/* Left: ☰ Hamburger Button & Brand Logo */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <button
+              type="button"
+              onClick={() => setIsCategoryDrawerOpen(true)}
+              aria-label="Open Categories Left Drawer"
+              style={{
+                background: 'none',
+                border: 'none',
+                padding: '6px',
+                margin: '-6px 0 -6px -4px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: '#0F172A',
+                borderRadius: '8px'
+              }}
+            >
+              <MenuIcon size={24} color="#0F172A" />
+            </button>
+
+            <Link 
+              href="/" 
+              title="AS Print Gallery Home"
+              style={{ display: 'flex', alignItems: 'center' }}
+            >
+              <img 
+                src="/logo.png" 
+                alt="AS Print Gallery" 
+                style={{ height: '36px', width: 'auto', maxHeight: '36px', objectFit: 'contain' }}
+              />
+            </Link>
+          </div>
+
+          {/* Right: Bulk Inquiry + Account + Cart */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            {/* Quick Bulk Inquiry Pill */}
+            <a
+              href="https://wa.me/919911678386?text=Hi%20AS%20Print%20Gallery,%20I%20need%20a%20bulk%20quote"
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                background: '#ECFDF5',
+                color: '#047857',
+                padding: '4px 8px',
+                borderRadius: '16px',
+                fontSize: '0.72rem',
+                fontWeight: 800,
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '3px',
+                border: '1px solid #A7F3D0'
+              }}
+            >
+              <span>💬</span>
+              <span>Bulk</span>
+            </a>
+
+            {/* Account Icon */}
+            <Link
+              href="/admin/login"
+              aria-label="Account Login"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                color: '#334155',
+                textDecoration: 'none',
+                padding: '4px'
+              }}
+            >
+              <UserIcon size={21} color="#334155" />
+            </Link>
+
+            {/* Cart Icon with Counter Badge */}
+            <button
+              type="button"
+              onClick={() => setIsCartOpen(true)}
+              aria-label="View Shopping Cart"
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                position: 'relative',
+                padding: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                color: '#334155'
+              }}
+            >
+              <ShoppingCartIcon size={22} color="#334155" />
+              {cartCount > 0 && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: '-3px',
+                    right: '-3px',
+                    background: '#E11D48',
+                    color: '#FFFFFF',
+                    fontSize: '0.62rem',
+                    fontWeight: 800,
+                    minWidth: '17px',
+                    height: '17px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0 3px',
+                    boxShadow: '0 2px 4px rgba(225, 29, 72, 0.4)'
+                  }}
+                >
+                  {cartCount}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Second Row: Clean Search Bar */}
+        <div ref={mobileSearchContainerRef} style={{ marginTop: '10px', position: 'relative' }}>
+          <form
+            onSubmit={handleSearchSubmit}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              background: '#F8FAFC',
+              border: isSearchFocused ? '1.5px solid #E11D48' : '1.5px solid #CBD5E1',
+              borderRadius: '24px',
+              padding: '2px 10px 2px 12px',
+              transition: 'all 0.2s ease',
+              boxShadow: isSearchFocused ? '0 0 0 3px rgba(225, 29, 72, 0.12)' : 'none'
+            }}
+          >
+            <span style={{ color: '#94A3B8', fontSize: '0.92rem', marginRight: '6px' }}>🔍</span>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setIsSearchFocused(true);
+              }}
+              onFocus={() => setIsSearchFocused(true)}
+              placeholder="Search boxes, labels, tags, stickers..."
+              style={{
+                flex: 1,
+                border: 'none',
+                background: 'transparent',
+                outline: 'none',
+                padding: '7px 2px',
+                fontSize: '0.86rem',
+                color: '#0F172A'
+              }}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                style={{ background: 'none', border: 'none', color: '#94A3B8', padding: '0 6px', cursor: 'pointer', fontSize: '0.85rem' }}
+                aria-label="Clear Search"
+              >
+                ✕
+              </button>
+            )}
+          </form>
+
+          {isSearchFocused && renderSearchDropdown()}
+        </div>
+      </div>
+
+      {/* 3. DESKTOP MAIN HEADER (Shown on Desktop screens > 768px) */}
+      <header className="desktop-only-header" style={{ background: '#F8FAFC', padding: '14px 0', borderBottom: '1px solid #E2E8F0' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px' }}>
+          
+          {/* Logo with Direct Home Redirect */}
           <Link 
             href="/" 
-            className="logo-container" 
             title="AS Print Gallery - Home"
             prefetch={true}
             style={{ 
@@ -439,8 +783,7 @@ export function Header() {
               width: '210px', 
               height: '65px', 
               overflow: 'hidden',
-              cursor: 'pointer',
-              touchAction: 'manipulation'
+              cursor: 'pointer'
             }}
           >
             <img 
@@ -456,7 +799,7 @@ export function Header() {
           </Link>
 
           {/* Center: Search & Bulk Order Button */}
-          <div className="header-search-row" style={{ flex: 1, display: 'flex', gap: '14px', alignItems: 'center', justifyContent: 'center', maxWidth: '650px', position: 'relative' }}>
+          <div style={{ flex: 1, display: 'flex', gap: '14px', alignItems: 'center', justifyContent: 'center', maxWidth: '650px', position: 'relative' }}>
             <div ref={searchContainerRef} style={{ flex: 1, width: '100%', position: 'relative' }}>
               <form onSubmit={handleSearchSubmit} style={{ width: '100%', display: 'flex', background: '#fff', border: isSearchFocused ? '1.5px solid #16A34A' : '1.5px solid #CBD5E1', borderRadius: '30px', overflow: 'hidden', padding: '2px 8px 2px 14px', boxShadow: isSearchFocused ? '0 0 0 3px rgba(22, 163, 74, 0.15)' : '0 2px 4px rgba(0,0,0,0.03)', transition: 'all 0.2s ease' }}>
                 <input 
@@ -485,176 +828,14 @@ export function Header() {
                 )}
                 <button 
                   type="submit" 
-                  style={{ background: 'none', border: 'none', color: '#16A34A', padding: '6px 10px', fontSize: '1.1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', touchAction: 'manipulation' }}
+                  style={{ background: 'none', border: 'none', color: '#16A34A', padding: '6px 10px', fontSize: '1.1rem', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                   aria-label="Search"
                 >
                   🔍
                 </button>
               </form>
 
-              {/* 🌟 AMAZON-STYLE LIVE AUTOCOMPLETE & SEARCH SUGGESTIONS DROPDOWN */}
-              {isSearchFocused && (
-                <div 
-                  style={{
-                    position: 'absolute',
-                    top: 'calc(100% + 6px)',
-                    left: 0,
-                    right: 0,
-                    background: '#FFFFFF',
-                    borderRadius: '12px',
-                    border: '1px solid #E2E8F0',
-                    boxShadow: '0 12px 32px rgba(0, 0, 0, 0.15)',
-                    zIndex: 99999,
-                    overflow: 'hidden',
-                    maxHeight: '460px',
-                    overflowY: 'auto',
-                    animation: 'fadeInDown 0.15s ease-out'
-                  }}
-                >
-                  {/* Header Title */}
-                  <div style={{ padding: '8px 14px', background: '#F8FAFC', borderBottom: '1px solid #F1F5F9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      {searchQuery.trim() ? 'Search Suggestions' : '🔥 Popular Searches'}
-                    </span>
-                    <span style={{ fontSize: '0.68rem', color: '#94A3B8' }}>Select to explore</span>
-                  </div>
-
-                  {/* 1. Suggested Query Keywords */}
-                  {suggestedTerms.length > 0 && (
-                    <div style={{ padding: '4px 0', borderBottom: matchingProducts.length > 0 ? '1px solid #F1F5F9' : 'none' }}>
-                      {suggestedTerms.map((term, idx) => {
-                        const qLower = searchQuery.trim().toLowerCase();
-                        const termLower = term.toLowerCase();
-                        const matchIndex = qLower ? termLower.indexOf(qLower) : -1;
-
-                        return (
-                          <div
-                            key={idx}
-                            onClick={() => handleSelectTerm(term)}
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '12px',
-                              padding: '8px 16px',
-                              cursor: 'pointer',
-                              fontSize: '0.88rem',
-                              color: '#1E293B',
-                              transition: 'background 0.12s'
-                            }}
-                            onMouseEnter={(e) => (e.currentTarget.style.background = '#F1F5F9')}
-                            onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-                          >
-                            <span style={{ color: '#94A3B8', fontSize: '0.85rem' }}>🔍</span>
-                            <div style={{ flex: 1 }}>
-                              {matchIndex >= 0 ? (
-                                <span>
-                                  {term.substring(0, matchIndex)}
-                                  <strong style={{ color: '#0F172A', fontWeight: 800 }}>
-                                    {term.substring(matchIndex, matchIndex + qLower.length)}
-                                  </strong>
-                                  {term.substring(matchIndex + qLower.length)}
-                                </span>
-                              ) : (
-                                <span>{term}</span>
-                              )}
-                            </div>
-                            <span style={{ color: '#CBD5E1', fontSize: '0.75rem' }}>↗</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {/* 2. Direct Matching Products with Thumbnails & Rates */}
-                  {matchingProducts.length > 0 && (
-                    <div style={{ padding: '6px 0', background: '#FAFAFC' }}>
-                      <div style={{ padding: '4px 16px 6px', fontSize: '0.72rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase' }}>
-                        📦 Products Matching &quot;{searchQuery.trim() || 'Catalog'}&quot;
-                      </div>
-                      {matchingProducts.map((prod) => {
-                        let firstImg = prod.image || '/assets/corrugated_box.jpg';
-                        if (Array.isArray(prod.images) && prod.images.length > 0 && prod.images[0]) firstImg = prod.images[0];
-                        const price = Number(prod.selling_price || prod.price || 10);
-                        const title = prod.title || prod.name || 'Product';
-
-                        return (
-                          <div
-                            key={prod.id}
-                            onClick={() => handleSelectProduct(prod)}
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '12px',
-                              padding: '8px 16px',
-                              cursor: 'pointer',
-                              background: '#FFFFFF',
-                              borderBottom: '1px solid #F1F5F9',
-                              transition: 'background 0.12s'
-                            }}
-                            onMouseEnter={(e) => (e.currentTarget.style.background = '#F8FAFC')}
-                            onMouseLeave={(e) => (e.currentTarget.style.background = '#FFFFFF')}
-                          >
-                            <img
-                              src={firstImg}
-                              alt={title}
-                              style={{ width: '40px', height: '40px', objectFit: 'contain', borderRadius: '6px', background: '#F8FAFC', border: '1px solid #E2E8F0', flexShrink: 0 }}
-                              onError={(e: any) => { e.target.src = '/assets/corrugated_box.jpg'; }}
-                            />
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0F172A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                {title}
-                              </div>
-                              <div style={{ fontSize: '0.72rem', color: '#64748B', display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                <span>{prod.categoryLabel || 'Packaging'}</span>
-                                <span>•</span>
-                                <span style={{ color: '#16A34A', fontWeight: 800 }}>₹{price.toFixed(2)}/pc</span>
-                              </div>
-                            </div>
-                            <button
-                              type="button"
-                              style={{
-                                background: '#F1F5F9',
-                                border: '1px solid #CBD5E1',
-                                borderRadius: '4px',
-                                padding: '3px 8px',
-                                fontSize: '0.7rem',
-                                fontWeight: 700,
-                                color: '#0F172A'
-                              }}
-                            >
-                              View
-                            </button>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {/* 3. See All Results Footer Row */}
-                  {searchQuery.trim() && (
-                    <div
-                      onClick={() => handleSearchSubmit()}
-                      style={{
-                        padding: '10px 16px',
-                        background: '#F0FDF4',
-                        borderTop: '1px solid #DCFCE7',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        cursor: 'pointer',
-                        fontSize: '0.82rem',
-                        fontWeight: 700,
-                        color: '#15803D'
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = '#DCFCE7')}
-                      onMouseLeave={(e) => (e.currentTarget.style.background = '#F0FDF4')}
-                    >
-                      <span>See all search results for &ldquo;<strong>{searchQuery}</strong>&rdquo;</span>
-                      <span>➔</span>
-                    </div>
-                  )}
-                </div>
-              )}
+              {isSearchFocused && renderSearchDropdown()}
             </div>
             
             <a 
@@ -662,23 +843,22 @@ export function Header() {
               target="_blank" 
               rel="noreferrer" 
               className="bulk-order-btn"
-              style={{ touchAction: 'manipulation' }}
             >
               💬 BULK ORDER
             </a>
           </div>
 
-          {/* Icons & Socials */}
-          <div className="header-icons" style={{ display: 'flex', gap: '22px', alignItems: 'center', flexShrink: 0 }}>
+          {/* Desktop Right Icons */}
+          <div style={{ display: 'flex', gap: '22px', alignItems: 'center', flexShrink: 0 }}>
              {/* Social Links */}
-             <div className="top-socials" style={{ display: 'flex', gap: '12px', alignItems: 'center', paddingRight: '15px', borderRight: '1.5px solid #E2E8F0' }}>
-               <a href="https://facebook.com" target="_blank" rel="noreferrer" style={{ textDecoration: 'none', display: 'flex', touchAction: 'manipulation' }} aria-label="Facebook">
+             <div style={{ display: 'flex', gap: '12px', alignItems: 'center', paddingRight: '15px', borderRight: '1.5px solid #E2E8F0' }}>
+               <a href="https://facebook.com" target="_blank" rel="noreferrer" style={{ textDecoration: 'none', display: 'flex' }} aria-label="Facebook">
                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                </a>
-               <a href="https://instagram.com" target="_blank" rel="noreferrer" style={{ textDecoration: 'none', display: 'flex', touchAction: 'manipulation' }} aria-label="Instagram">
+               <a href="https://instagram.com" target="_blank" rel="noreferrer" style={{ textDecoration: 'none', display: 'flex' }} aria-label="Instagram">
                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#E1306C"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                </a>
-               <a href="https://youtube.com" target="_blank" rel="noreferrer" style={{ textDecoration: 'none', display: 'flex', touchAction: 'manipulation' }} aria-label="YouTube">
+               <a href="https://youtube.com" target="_blank" rel="noreferrer" style={{ textDecoration: 'none', display: 'flex' }} aria-label="YouTube">
                  <svg width="22" height="22" viewBox="0 0 24 24" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                </a>
              </div>
@@ -689,7 +869,6 @@ export function Header() {
                className="header-icon-action"
                title="Admin & Account"
                prefetch={true}
-               style={{ touchAction: 'manipulation' }}
              >
                <span style={{ fontSize: '1.3rem' }}>👤</span>
                <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#334155' }}>Account</span>
@@ -700,7 +879,7 @@ export function Header() {
                type="button" 
                onClick={() => setIsCartOpen(true)}
                className="header-icon-action"
-               style={{ position: 'relative', touchAction: 'manipulation' }}
+               style={{ position: 'relative' }}
                aria-label="Open Cart"
              >
                <span style={{ fontSize: '1.3rem' }}>🛒</span>
@@ -728,9 +907,9 @@ export function Header() {
         </div>
       </header>
 
-      {/* 3. Dark Navigation Bar with 1-Click Smooth Dropdowns */}
-      <nav style={{ background: '#1E293B', color: '#fff', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <div className="container dark-nav-container" style={{ display: 'flex', justifyContent: 'center', gap: '32px', padding: '0' }}>
+      {/* 4. Desktop Dark Navigation Bar with Smooth Dropdowns (Hidden on Mobile) */}
+      <nav className="dark-nav-wrapper" style={{ background: '#1E293B', color: '#fff', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '32px', padding: '0' }}>
           
           {navCategories.map((category) => {
             const isOpen = activeDropdown === category.title;
@@ -745,7 +924,6 @@ export function Header() {
                   href={category.link}
                   className="nav-link-btn"
                   onClick={() => setActiveDropdown(null)}
-                  style={{ touchAction: 'manipulation' }}
                 >
                   <span>{category.title}</span>
                   <span style={{ fontSize: '0.65rem', opacity: 0.8, transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>▼</span>
@@ -763,7 +941,6 @@ export function Header() {
                         href={subItem.link}
                         className="dropdown-sub-link"
                         onClick={() => setActiveDropdown(null)}
-                        style={{ touchAction: 'manipulation' }}
                       >
                         {subItem.icon && <span style={{ fontSize: '1rem' }}>{subItem.icon}</span>}
                         <span>{subItem.label}</span>
@@ -780,7 +957,6 @@ export function Header() {
              <Link 
                href="/3d-box-builder" 
                className="nav-link-btn"
-               style={{ touchAction: 'manipulation' }}
              >
                <span>Customize</span>
              </Link>
@@ -791,7 +967,6 @@ export function Header() {
              <Link 
                href="/track-order" 
                className="nav-link-btn"
-               style={{ touchAction: 'manipulation' }}
              >
                <span>🚚 Track Order</span>
              </Link>

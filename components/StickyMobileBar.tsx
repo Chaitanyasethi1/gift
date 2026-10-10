@@ -7,17 +7,17 @@ import { useCart } from '@/context/CartContext';
 import { siteConfig } from '@/data/siteConfig';
 import { 
   HomeIcon, 
-  PackageIcon, 
+  CategoriesIcon,
+  ShoppingBagIcon, 
   FileTextIcon, 
-  BoxIcon, 
-  ShoppingCartIcon, 
+  UserIcon,
   WhatsAppIcon, 
   ChevronUpIcon 
 } from './Icons';
 
 export const StickyMobileBar: React.FC = () => {
   const pathname = usePathname();
-  const { cartCount, setIsCartOpen, setIsQuoteModalOpen } = useCart();
+  const { isCategoryDrawerOpen, setIsCategoryDrawerOpen, setIsQuoteModalOpen } = useCart();
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
@@ -45,6 +45,48 @@ export const StickyMobileBar: React.FC = () => {
 
   return (
     <>
+      <style>{`
+        /* Desktop Mode: Completely hide mobile bottom navigation */
+        .mobile-bottom-nav {
+          display: none !important;
+        }
+
+        .floating-actions-container {
+          position: fixed;
+          bottom: 24px;
+          right: 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          z-index: 1500;
+        }
+
+        /* Mobile Viewport Mode (<= 768px) */
+        @media (max-width: 768px) {
+          .mobile-bottom-nav {
+            display: block !important;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #FFFFFF;
+            border-top: 1px solid #E2E8F0;
+            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+            z-index: 1400;
+            padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px)) 4px;
+          }
+
+          .floating-actions-container {
+            bottom: 76px !important;
+            right: 16px !important;
+          }
+
+          body {
+            padding-bottom: 64px;
+          }
+        }
+      `}</style>
+
       {/* Floating Action Buttons */}
       <div 
         className="floating-actions-container"
@@ -75,97 +117,144 @@ export const StickyMobileBar: React.FC = () => {
         </a>
       </div>
 
-      {/* Mobile Bottom Sticky Navigation Bar (Hidden on Product Detail to allow full Action Bar) */}
+      {/* Meesho-Style Mobile Bottom Sticky Navigation Bar */}
       {!isProductDetailPage && (
-        <nav className="mobile-bottom-nav" aria-label="Mobile Bottom Navigation">
-          <div className="mobile-bottom-nav-inner">
+        <nav 
+          className="mobile-bottom-nav" 
+          aria-label="Mobile Bottom Navigation"
+        >
+          <div 
+            className="mobile-bottom-nav-inner"
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+              maxWidth: '540px',
+              margin: '0 auto'
+            }}
+          >
+            {/* 1. Home */}
             <Link
               href="/"
               className={`mobile-nav-item ${pathname === '/' ? 'active' : ''}`}
-            >
-              <span className="icon" style={{ display: 'inline-flex' }}>
-                <HomeIcon size={18} />
-              </span>
-              <span>Home</span>
-            </Link>
-
-            <Link
-              href="/products"
-              className={`mobile-nav-item ${pathname.startsWith('/products') ? 'active' : ''}`}
-            >
-              <span className="icon" style={{ display: 'inline-flex' }}>
-                <PackageIcon size={18} />
-              </span>
-              <span>Shop</span>
-            </Link>
-
-            <button
-              type="button"
-              className="mobile-nav-item mobile-quote-nav-btn"
-              onClick={() => setIsQuoteModalOpen(true)}
-              aria-label="Get Bulk Quote"
               style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                minHeight: '44px',
+                flex: 1,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                gap: '3px',
+                textDecoration: 'none',
+                color: pathname === '/' ? '#E11D48' : '#64748B',
+                padding: '4px 0',
+                transition: 'color 0.15s ease'
               }}
             >
-              <span className="icon" style={{ color: 'var(--primary)', display: 'inline-flex' }}>
-                <FileTextIcon size={18} />
-              </span>
-              <span style={{ color: 'var(--primary)', fontWeight: 800 }}>Get Quote</span>
-            </button>
-
-            <Link
-              href="/custom-box-builder"
-              className="mobile-nav-item"
-            >
               <span className="icon" style={{ display: 'inline-flex' }}>
-                <BoxIcon size={18} />
+                <HomeIcon size={20} color={pathname === '/' ? '#E11D48' : '#64748B'} />
               </span>
-              <span>Customize</span>
+              <span style={{ fontSize: '0.72rem', fontWeight: pathname === '/' ? 700 : 500 }}>Home</span>
             </Link>
 
+            {/* 2. Categories (Opens Left Drawer) */}
             <button
               type="button"
-              className="mobile-nav-item"
-              onClick={() => setIsCartOpen(true)}
-              aria-label="Open Shopping Cart"
+              onClick={() => setIsCategoryDrawerOpen(true)}
+              className={`mobile-nav-item ${isCategoryDrawerOpen ? 'active' : ''}`}
+              aria-label="Browse All Categories"
               style={{
+                flex: 1,
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
-                position: 'relative'
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '3px',
+                color: isCategoryDrawerOpen ? '#E11D48' : '#64748B',
+                padding: '4px 0',
+                transition: 'color 0.15s ease'
               }}
             >
               <span className="icon" style={{ display: 'inline-flex' }}>
-                <ShoppingCartIcon size={18} />
+                <CategoriesIcon size={20} color={isCategoryDrawerOpen ? '#E11D48' : '#64748B'} />
               </span>
-              <span>Cart</span>
-              {cartCount > 0 && (
-                <span className="mobile-cart-badge cart-badge-count">{cartCount}</span>
-              )}
+              <span style={{ fontSize: '0.72rem', fontWeight: isCategoryDrawerOpen ? 700 : 500 }}>Categories</span>
             </button>
 
-            <a
-              href={`https://wa.me/${siteConfig.phones.whatsappRaw}?text=Hi%20AS%20Print%20Gallery!%20I%20have%20an%20inquiry%20from%20your%20website.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mobile-nav-item"
-              onClick={handleWhatsAppClick}
-              style={{ color: '#0F172A' }}
-              aria-label="Chat with factory sales on WhatsApp"
+            {/* 3. Shop */}
+            <Link
+              href="/shop"
+              className={`mobile-nav-item ${pathname === '/shop' || pathname === '/products' ? 'active' : ''}`}
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '3px',
+                textDecoration: 'none',
+                color: (pathname === '/shop' || pathname === '/products') ? '#E11D48' : '#64748B',
+                padding: '4px 0',
+                transition: 'color 0.15s ease'
+              }}
             >
               <span className="icon" style={{ display: 'inline-flex' }}>
-                <WhatsAppIcon size={18} color="#25D366" />
+                <ShoppingBagIcon size={20} color={(pathname === '/shop' || pathname === '/products') ? '#E11D48' : '#64748B'} />
               </span>
-              <span style={{ color: '#0F172A', fontWeight: 600 }}>Chat</span>
-            </a>
+              <span style={{ fontSize: '0.72rem', fontWeight: (pathname === '/shop' || pathname === '/products') ? 700 : 500 }}>Shop</span>
+            </Link>
+
+            {/* 4. Get Quote */}
+            <button
+              type="button"
+              className="mobile-nav-item"
+              onClick={() => setIsQuoteModalOpen(true)}
+              aria-label="Get Wholesale Quote"
+              style={{
+                flex: 1,
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '3px',
+                color: '#64748B',
+                padding: '4px 0',
+                transition: 'color 0.15s ease'
+              }}
+            >
+              <span className="icon" style={{ display: 'inline-flex', color: '#E11D48' }}>
+                <FileTextIcon size={20} color="#E11D48" />
+              </span>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#E11D48' }}>Get Quote</span>
+            </button>
+
+            {/* 5. Account */}
+            <Link
+              href="/admin/login"
+              className={`mobile-nav-item ${pathname.startsWith('/admin') ? 'active' : ''}`}
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '3px',
+                textDecoration: 'none',
+                color: pathname.startsWith('/admin') ? '#E11D48' : '#64748B',
+                padding: '4px 0',
+                transition: 'color 0.15s ease'
+              }}
+            >
+              <span className="icon" style={{ display: 'inline-flex' }}>
+                <UserIcon size={20} color={pathname.startsWith('/admin') ? '#E11D48' : '#64748B'} />
+              </span>
+              <span style={{ fontSize: '0.72rem', fontWeight: pathname.startsWith('/admin') ? 700 : 500 }}>Account</span>
+            </Link>
           </div>
         </nav>
       )}

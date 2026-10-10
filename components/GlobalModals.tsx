@@ -7,6 +7,7 @@ import { QuoteModal } from './QuoteModal';
 import { SampleKitModal } from './SampleKitModal';
 import { PincodeModal } from './PincodeModal';
 import { CheckoutModal } from './CheckoutModal';
+import { CategoryDrawer } from './CategoryDrawer';
 
 export const GlobalModals: React.FC = () => {
   const { toastMessage } = useCart();
@@ -14,6 +15,9 @@ export const GlobalModals: React.FC = () => {
 
   return (
     <>
+      {/* Left Panel Category Navigation Drawer */}
+      <CategoryDrawer />
+
       {/* Slide-Out Shopping Cart Drawer */}
       <Cart onOpenCheckoutModal={() => setIsCheckoutModalOpen(true)} />
 

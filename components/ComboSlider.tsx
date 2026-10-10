@@ -129,6 +129,18 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
         startAutoSlide();
       }}
     >
+      <style>{`
+        @media (max-width: 768px) {
+          .slider-arrow-btn {
+            display: none !important;
+          }
+          .slider-dots-container {
+            bottom: 6px !important;
+            padding: 1px 6px !important;
+          }
+        }
+      `}</style>
+
       {/* Viewport & Horizontal Sliding Track */}
       <div style={{ width: '100%', overflow: 'hidden', position: 'relative' }}>
         <div
@@ -167,7 +179,7 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
                   style={{
                     width: '100%',
                     height: 'auto',
-                    minHeight: '180px',
+                    minHeight: '140px',
                     maxHeight: '620px',
                     objectFit: 'cover',
                     display: 'block'
@@ -178,9 +190,10 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
           ))}
         </div>
 
-        {/* Left Arrow Button */}
+        {/* Left Arrow Button (Hidden on Mobile) */}
         <button
           type="button"
+          className="slider-arrow-btn"
           onClick={handlePrev}
           aria-label="Previous Banner"
           style={{
@@ -191,8 +204,8 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
             background: 'rgba(0, 0, 0, 0.45)',
             color: '#FFFFFF',
             border: 'none',
-            width: '44px',
-            height: '44px',
+            width: '40px',
+            height: '40px',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
@@ -212,14 +225,15 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
             e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
           }}
         >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="15 18 9 12 15 6" />
           </svg>
         </button>
 
-        {/* Right Arrow Button */}
+        {/* Right Arrow Button (Hidden on Mobile) */}
         <button
           type="button"
+          className="slider-arrow-btn"
           onClick={handleNext}
           aria-label="Next Banner"
           style={{
@@ -230,8 +244,8 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
             background: 'rgba(0, 0, 0, 0.45)',
             color: '#FFFFFF',
             border: 'none',
-            width: '44px',
-            height: '44px',
+            width: '40px',
+            height: '40px',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
@@ -251,13 +265,14 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
             e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
           }}
         >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="9 18 15 12 9 6" />
           </svg>
         </button>
 
-        {/* Dot Indicators with Accessible Touch Targets */}
+        {/* Dot Indicators */}
         <div
+          className="slider-dots-container"
           style={{
             position: 'absolute',
             bottom: '10px',
@@ -282,9 +297,9 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
                 onClick={(e) => handleDotClick(dotIdx, e)}
                 aria-label={`Go to slide ${dotIdx + 1}`}
                 style={{
-                  minWidth: '40px',
-                  minHeight: '40px',
-                  padding: '10px 4px',
+                  minWidth: '24px',
+                  minHeight: '24px',
+                  padding: '4px 3px',
                   background: 'transparent',
                   border: 'none',
                   cursor: 'pointer',
@@ -296,12 +311,12 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
                 <span
                   style={{
                     display: 'block',
-                    width: '9px',
-                    height: '8px',
-                    borderRadius: '4px',
+                    width: '8px',
+                    height: '6px',
+                    borderRadius: '3px',
                     background: '#FFFFFF',
-                    transform: isActive ? 'scaleX(2.4)' : 'scaleX(1)',
-                    opacity: isActive ? 1 : 0.55,
+                    transform: isActive ? 'scaleX(2.2)' : 'scaleX(1)',
+                    opacity: isActive ? 1 : 0.45,
                     transformOrigin: 'center center',
                     transition: 'transform 0.25s ease, opacity 0.25s ease',
                     willChange: 'transform, opacity'

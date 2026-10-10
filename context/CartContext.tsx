@@ -38,6 +38,8 @@ interface CartContextType {
   finalTotal: number;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
+  isCategoryDrawerOpen: boolean;
+  setIsCategoryDrawerOpen: (open: boolean) => void;
   isQuoteModalOpen: boolean;
   setIsQuoteModalOpen: (open: boolean) => void;
   isSampleModalOpen: boolean;
@@ -57,6 +59,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [cart, setCart] = useState<CartItem[]>([]);
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isSampleModalOpen, setIsSampleModalOpen] = useState(false);
   const [isPincodeModalOpen, setIsPincodeModalOpen] = useState(false);
@@ -189,6 +192,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       finalTotal,
       isCartOpen,
       setIsCartOpen,
+      isCategoryDrawerOpen,
+      setIsCategoryDrawerOpen,
       isQuoteModalOpen,
       setIsQuoteModalOpen,
       isSampleModalOpen,
