@@ -10,19 +10,32 @@ interface ComboSliderProps {
 }
 
 export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideInterval }) => {
-  const [banners, setBanners] = useState<HeroBanner[]>(
-    initialBanners && initialBanners.length > 0
-      ? initialBanners.filter(b => b.active)
-      : initialHomepageConfig.heroBanners.filter(b => b.active)
-  );
-  const [intervalMs, setIntervalMs] = useState<number>(slideInterval || initialHomepageConfig.slideIntervalMs || 2000);
+  const [banners, setBanners] = useState<HeroBanner[]>(() => {
+    if (initialBanners && initialBanners.length > 0) {
+      const active = initialBanners.filter(b => b.active);
+      if (active.length > 0) return active;
+    }
+    return initialHomepageConfig.heroBanners.filter(b => b.active);
+  });
+  const [intervalMs, setIntervalMs] = useState<number>(slideInterval || initialHomepageConfig.slideIntervalMs || 2500);
 
-  // Fetch dynamic banners from Admin API
+  // Sync state if initialBanners changes (e.g. server revalidation)
   useEffect(() => {
+    if (initialBanners && initialBanners.length > 0) {
+      const active = initialBanners.filter(b => b.active);
+      if (active.length > 0) {
+        setBanners(active);
+      }
+    }
+  }, [initialBanners]);
+
+  // Fetch dynamic banners from Admin API to ensure latest real-time admin edits
+  useEffect(() => {
+    let isMounted = true;
     async function fetchBanners() {
       try {
         const res = await fetch('/api/homepage');
-        if (res.ok) {
+        if (res.ok && isMounted) {
           const data = await res.json();
           if (data?.heroBanners && Array.isArray(data.heroBanners)) {
             const activeOnly = data.heroBanners.filter((b: HeroBanner) => b.active);
@@ -39,14 +52,76 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
       }
     }
     fetchBanners();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const basePosters = banners.length > 0 ? banners : initialHomepageConfig.heroBanners;
+  const basePosters = banners.length > 0 ? banners : initialHomepageConfig.heroBanners.filter(b => b.active);
 
+  // ==========================================
+  // CASE 1: ONLY 1 BANNER IS ACTIVE OR SET
+  // ==========================================
+  // Render a rock-solid, static single banner.
+  // NO auto-sliding, NO clones, NO translateX, NO arrows, NO dots, NO white flashes!
+  if (basePosters.length <= 1) {
+    const singlePoster = basePosters[0] || initialHomepageConfig.heroBanners[0];
+    const bannerImgSrc = singlePoster?.img && singlePoster.img.trim() !== '' 
+      ? singlePoster.img 
+      : '/assets/banner_woven_labels.png';
+
+    return (
+      <section
+        style={{
+          padding: 0,
+          background: '#f8fafc',
+          position: 'relative',
+          width: '100%',
+          overflow: 'hidden'
+        }}
+      >
+        <div style={{ width: '100%', position: 'relative', lineHeight: 0 }}>
+          <Link
+            href={singlePoster?.link || '/shop'}
+            style={{ display: 'block', width: '100%', textDecoration: 'none', cursor: 'pointer' }}
+          >
+            <img
+              src={bannerImgSrc}
+              alt={singlePoster?.alt || 'AS Print Gallery Factory Packaging & Printing'}
+              width={1400}
+              height={500}
+              loading="eager"
+              // @ts-ignore
+              fetchPriority="high"
+              decoding="async"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes('/assets/banner_woven_labels.png')) {
+                  target.src = '/assets/banner_woven_labels.png';
+                }
+              }}
+              style={{
+                width: '100%',
+                height: 'auto',
+                minHeight: '140px',
+                maxHeight: '620px',
+                objectFit: 'cover',
+                display: 'block'
+              }}
+            />
+          </Link>
+        </div>
+      </section>
+    );
+  }
+
+  // ==========================================
+  // CASE 2: MULTIPLE BANNERS (2 OR MORE)
+  // ==========================================
   // Infinite loop slides: [cloneLast, ...basePosters, cloneFirst]
   const extendedSlides = [
     { ...basePosters[basePosters.length - 1], uniqueKey: 'clone-last' },
-    ...basePosters.map((p) => ({ ...p, uniqueKey: `real-${p.id}` })),
+    ...basePosters.map((p, i) => ({ ...p, uniqueKey: `real-${p.id || i}` })),
     { ...basePosters[0], uniqueKey: 'clone-first' }
   ];
 
@@ -55,8 +130,15 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
   const [isTransitioning, setIsTransitioning] = useState(true);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Reset index safely whenever banner list changes
+  useEffect(() => {
+    setCurrentIndex(1);
+    setIsTransitioning(false);
+  }, [basePosters.length]);
+
   const startAutoSlide = () => {
     if (timerRef.current) clearInterval(timerRef.current);
+    if (basePosters.length <= 1) return;
     timerRef.current = setInterval(() => {
       setIsTransitioning(true);
       setCurrentIndex((prev) => prev + 1);
@@ -72,10 +154,10 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
 
   // Handle seamless infinite loop jump when animation ends
   const handleTransitionEnd = () => {
-    if (currentIndex === extendedSlides.length - 1) {
+    if (currentIndex >= extendedSlides.length - 1) {
       setIsTransitioning(false);
       setCurrentIndex(1);
-    } else if (currentIndex === 0) {
+    } else if (currentIndex <= 0) {
       setIsTransitioning(false);
       setCurrentIndex(basePosters.length);
     }
@@ -105,11 +187,11 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
     startAutoSlide();
   };
 
-  // Compute active real dot index
+  // Compute active real dot index safely
   const activeDotIndex =
     currentIndex === 0
       ? basePosters.length - 1
-      : currentIndex === extendedSlides.length - 1
+      : currentIndex >= extendedSlides.length - 1
       ? 0
       : currentIndex - 1;
 
@@ -168,14 +250,20 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
                 style={{ display: 'block', width: '100%', textDecoration: 'none', cursor: 'pointer' }}
               >
                 <img
-                  src={poster.img}
+                  src={poster.img || '/assets/banner_woven_labels.png'}
                   alt={poster.alt || 'AS Print Gallery Factory Packaging & Printing'}
-                  width={1200}
-                  height={450}
+                  width={1400}
+                  height={500}
                   loading={idx === 1 ? 'eager' : 'lazy'}
                   // @ts-ignore
                   fetchPriority={idx === 1 ? 'high' : 'auto'}
                   decoding="async"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.includes('/assets/banner_woven_labels.png')) {
+                      target.src = '/assets/banner_woven_labels.png';
+                    }
+                  }}
                   style={{
                     width: '100%',
                     height: 'auto',

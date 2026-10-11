@@ -29,3 +29,12 @@ export async function logout() {
   revalidatePath('/', 'layout');
   redirect('/admin/login');
 }
+
+export async function logoutToHome() {
+  const supabase = createClient();
+  await supabase.auth.signOut();
+  
+  revalidatePath('/', 'layout');
+  redirect('/');
+}
+

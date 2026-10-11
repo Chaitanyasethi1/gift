@@ -667,21 +667,6 @@ export function Header() {
                 <span>Bulk Order</span>
               </a>
 
-            {/* Account Icon */}
-            <Link
-              href="/admin/login"
-              aria-label="Account Login"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                color: '#334155',
-                textDecoration: 'none',
-                padding: '4px'
-              }}
-            >
-              <UserIcon size={21} color="#334155" />
-            </Link>
-
             {/* Cart Icon with Counter Badge */}
             <button
               type="button"
@@ -875,17 +860,6 @@ export function Header() {
                  <svg width="22" height="22" viewBox="0 0 24 24" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                </a>
              </div>
-
-             {/* Admin / Account Direct Click Link */}
-             <Link 
-               href="/admin/login" 
-               className="header-icon-action"
-               title="Admin & Account"
-               prefetch={true}
-             >
-               <span style={{ fontSize: '1.3rem' }}>👤</span>
-               <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#334155' }}>Account</span>
-             </Link>
 
              {/* Cart Button with Count Badge */}
              <button 

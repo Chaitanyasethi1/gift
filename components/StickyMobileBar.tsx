@@ -10,7 +10,6 @@ import {
   CategoriesIcon,
   ShoppingBagIcon, 
   FileTextIcon, 
-  UserIcon,
   WhatsAppIcon, 
   ChevronUpIcon 
 } from './Icons';
@@ -243,29 +242,6 @@ export const StickyMobileBar: React.FC = () => {
               </span>
               <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#E11D48' }}>Get Quote</span>
             </button>
-
-            {/* 5. Account */}
-            <Link
-              href="/admin/login"
-              className={`mobile-nav-item ${pathname.startsWith('/admin') ? 'active' : ''}`}
-              style={{
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '3px',
-                textDecoration: 'none',
-                color: pathname.startsWith('/admin') ? '#E11D48' : '#64748B',
-                padding: '4px 0',
-                transition: 'color 0.15s ease'
-              }}
-            >
-              <span className="icon" style={{ display: 'inline-flex' }}>
-                <UserIcon size={20} color={pathname.startsWith('/admin') ? '#E11D48' : '#64748B'} />
-              </span>
-              <span style={{ fontSize: '0.72rem', fontWeight: pathname.startsWith('/admin') ? 700 : 500 }}>Account</span>
-            </Link>
           </div>
         </nav>
       )}

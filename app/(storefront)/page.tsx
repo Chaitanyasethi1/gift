@@ -8,16 +8,39 @@ import { createClient } from '@/utils/supabase/server';
 import { PRODUCTS } from '@/data/products';
 import { HomeCategories } from '@/components/HomeCategories';
 
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   let productsList = PRODUCTS;
+  let serverBanners = undefined;
+  let serverSlideInterval = undefined;
+
   try {
     const supabase = createClient();
     const { data: dbProducts } = await supabase.from('products').select('*').eq('is_active', true);
     if (dbProducts && dbProducts.length > 0) {
       productsList = dbProducts;
     }
+
+    const { data: siteSettings } = await supabase
+      .from('site_settings')
+      .select('homepage_config')
+      .eq('id', 1)
+      .maybeSingle();
+
+    if (siteSettings?.homepage_config) {
+      const cfg = typeof siteSettings.homepage_config === 'string'
+        ? JSON.parse(siteSettings.homepage_config)
+        : siteSettings.homepage_config;
+      if (cfg?.heroBanners && Array.isArray(cfg.heroBanners)) {
+        serverBanners = cfg.heroBanners.filter((b: any) => b.active);
+      }
+      if (cfg?.slideIntervalMs) {
+        serverSlideInterval = cfg.slideIntervalMs;
+      }
+    }
   } catch (err) {
-    console.warn('Supabase fetch in HomePage fallback to static products:', err);
+    console.warn('Supabase fetch in HomePage fallback:', err);
   }
 
   const hotDeals = productsList.filter(p => (p as any).flag_hot_deal) || [];
@@ -34,7 +57,7 @@ export default async function HomePage() {
   return (
     <>
       {/* 3. Hero Combo Banner (Dynamic Admin Managed) */}
-      <ComboSlider />
+      <ComboSlider initialBanners={serverBanners} slideInterval={serverSlideInterval} />
 
       {/* 5. Popular Categories (Dynamic Admin Managed) */}
       <HomeCategories />

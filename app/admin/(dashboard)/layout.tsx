@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { logout } from '@/app/admin/login/actions';
+import { logout, logoutToHome } from '@/app/admin/login/actions';
+import { AdminSessionGuard } from '@/components/admin/AdminSessionGuard';
 
 export const metadata = {
   title: 'Admin Panel | AS Print Gallery',
@@ -49,11 +50,30 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </Link>
         </nav>
         <div style={{ padding: '20px', borderTop: '1px solid #334155' }}>
-          <Link href="/" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '0.9rem' }}>
-            ← Back to Website
-          </Link>
+          <form action={logoutToHome}>
+            <button 
+              type="submit" 
+              style={{ 
+                background: 'transparent', 
+                border: 'none', 
+                color: '#94a3b8', 
+                fontSize: '0.9rem', 
+                cursor: 'pointer',
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontFamily: 'inherit',
+                width: '100%',
+                textAlign: 'left'
+              }}
+            >
+              ← Back to Website (Logout)
+            </button>
+          </form>
         </div>
       </aside>
+      <AdminSessionGuard />
 
       {/* Main Content */}
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
