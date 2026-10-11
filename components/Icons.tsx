@@ -74,12 +74,13 @@ export const IconPhone: React.FC<IconProps> = ({ size = 16, color = 'currentColo
 export const PhoneIcon = IconPhone;
 
 // 8. WhatsApp
-export const IconWhatsApp: React.FC<IconProps> = ({ size = 16, color = 'currentColor', className = '', ...props }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`ui-icon ${className}`} {...props}>
-    <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+export const IconWhatsApp: React.FC<IconProps> = ({ size = 18, color = 'currentColor', className = '', ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={color === 'currentColor' ? '#25D366' : color} className={`ui-icon ${className}`} {...props}>
+    <path d="M12.031 2C6.505 2 2.016 6.489 2.016 12.016c0 1.765.46 3.488 1.334 5.008L2 22l5.129-1.344c1.472.803 3.129 1.226 4.902 1.226 5.526 0 10.015-4.489 10.015-10.016S17.557 2 12.031 2zm5.82 14.383c-.244.686-1.42 1.314-1.956 1.396-.51.077-1.168.109-3.79-1.002-2.851-1.206-4.68-4.103-4.823-4.296-.14-.193-1.151-1.533-1.151-2.923 0-1.39.73-2.072.988-2.355.258-.284.567-.355.756-.355.19 0 .378.002.544.01.176.009.412-.067.643.488.244.588.831 2.028.904 2.176.073.149.122.324.024.519-.098.195-.147.316-.293.488-.146.173-.309.387-.44.52-.147.149-.3.312-.13.604.17.293.756 1.246 1.624 2.018 1.118.994 2.062 1.302 2.354 1.448.293.147.464.122.635-.073.17-.195.733-.853.928-1.146.195-.293.39-.244.658-.146.269.098 1.705.805 1.998.951.293.146.488.22.561.341.073.122.073.707-.171 1.393z" />
   </svg>
 );
 export const WhatsAppIcon = IconWhatsApp;
+export const WhatsAppBrandIcon = IconWhatsApp;
 
 // 9. MapPin
 export const IconMapPin: React.FC<IconProps> = ({ size = 16, color = 'currentColor', className = '', ...props }) => (

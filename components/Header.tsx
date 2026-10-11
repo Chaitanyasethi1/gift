@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { initialHomepageConfig } from '@/data/homepageData';
 import { PRODUCTS } from '@/data/products';
-import { MenuIcon, ShoppingCartIcon, UserIcon } from '@/components/Icons';
+import { MenuIcon, ShoppingCartIcon, UserIcon, WhatsAppIcon } from '@/components/Icons';
 
 interface NavCategory {
   title: string;
@@ -591,70 +591,81 @@ export function Header() {
         </div>
       </div>
       
-      {/* 2. MEESHO-STYLE MOBILE HEADER (Shown on Mobile screens <= 768px) */}
-      <div className="mobile-only-header" style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0', padding: '10px 14px' }}>
-        {/* Top Row: Hamburger (Left) + Logo | Quick WhatsApp + Account + Cart (Right) */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
-          
-          {/* Left: ☰ Hamburger Button & Brand Logo */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <button
-              type="button"
-              onClick={() => setIsCategoryDrawerOpen(true)}
-              aria-label="Open Categories Left Drawer"
-              style={{
-                background: 'none',
-                border: 'none',
-                padding: '6px',
-                margin: '-6px 0 -6px -4px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                color: '#0F172A',
-                borderRadius: '8px'
-              }}
-            >
-              <MenuIcon size={24} color="#0F172A" />
-            </button>
+      {/* STICKY HEADER & CATEGORY TASKBAR CONTAINER */}
+      <div 
+        className="site-sticky-header-wrapper" 
+        style={{ 
+          position: 'sticky', 
+          top: 0, 
+          zIndex: 1000, 
+          background: '#FFFFFF',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.06)'
+        }}
+      >
+        {/* 2. MEESHO-STYLE MOBILE HEADER (Shown on Mobile screens <= 768px) */}
+        <div className="mobile-only-header" style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0', padding: '10px 14px' }}>
+          {/* Top Row: Hamburger (Left) + Logo | Quick WhatsApp + Account + Cart (Right) */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+            
+            {/* Left: ☰ Hamburger Button & Brand Logo */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <button
+                type="button"
+                onClick={() => setIsCategoryDrawerOpen(true)}
+                aria-label="Open Categories Left Drawer"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  padding: '6px',
+                  margin: '-6px 0 -6px -4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  color: '#0F172A',
+                  borderRadius: '8px'
+                }}
+              >
+                <MenuIcon size={24} color="#0F172A" />
+              </button>
 
-            <Link 
-              href="/" 
-              title="AS Print Gallery Home"
-              style={{ display: 'flex', alignItems: 'center' }}
-            >
-              <img 
-                src="/logo.png" 
-                alt="AS Print Gallery" 
-                style={{ height: '36px', width: 'auto', maxHeight: '36px', objectFit: 'contain' }}
-              />
-            </Link>
-          </div>
+              <Link 
+                href="/" 
+                title="AS Print Gallery Home"
+                style={{ display: 'flex', alignItems: 'center' }}
+              >
+                <img 
+                  src="/logo.png" 
+                  alt="AS Print Gallery" 
+                  style={{ height: '36px', width: 'auto', maxHeight: '36px', objectFit: 'contain' }}
+                />
+              </Link>
+            </div>
 
-          {/* Right: Bulk Inquiry + Account + Cart */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            {/* Quick Bulk Inquiry Pill */}
-            <a
-              href="https://wa.me/919911678386?text=Hi%20AS%20Print%20Gallery,%20I%20need%20a%20bulk%20quote"
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                background: '#ECFDF5',
-                color: '#047857',
-                padding: '4px 8px',
-                borderRadius: '16px',
-                fontSize: '0.72rem',
-                fontWeight: 800,
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '3px',
-                border: '1px solid #A7F3D0'
-              }}
-            >
-              <span>💬</span>
-              <span>Bulk</span>
-            </a>
+            {/* Right: Bulk Inquiry + Account + Cart */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              {/* Quick Bulk Inquiry Pill */}
+              <a
+                href="https://wa.me/919911678386?text=Hi%20AS%20Print%20Gallery,%20I%20need%20a%20bulk%20quote"
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  background: '#ECFDF5',
+                  color: '#047857',
+                  padding: '4px 8px',
+                  borderRadius: '16px',
+                  fontSize: '0.72rem',
+                  fontWeight: 800,
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  border: '1px solid #A7F3D0'
+                }}
+              >
+                <WhatsAppIcon size={14} color="#047857" />
+                <span>Bulk Order</span>
+              </a>
 
             {/* Account Icon */}
             <Link
@@ -843,8 +854,10 @@ export function Header() {
               target="_blank" 
               rel="noreferrer" 
               className="bulk-order-btn"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
             >
-              💬 BULK ORDER
+              <WhatsAppIcon size={18} color="#FFFFFF" />
+              <span>BULK ORDER</span>
             </a>
           </div>
 
@@ -974,6 +987,7 @@ export function Header() {
           
         </div>
       </nav>
+      </div>
     </>
   );
 }

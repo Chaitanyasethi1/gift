@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
+import { AutocompleteInput } from '@/components/admin/AutocompleteInput';
 
 export default function SalesPage() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -206,12 +207,43 @@ export default function SalesPage() {
             </table>
           </div>
 
-          <div style="display:flex;justify-content:space-between;margin-top:20px;border-top:2px solid #000;padding-top:10px;">
+          <div style="display:flex;justify-content:space-between;margin-top:20px;border-top:2px solid #000;padding-top:14px;">
             <div>
               <div class="badge">${order.payment_status === 'Paid' ? 'PAID ONLINE (RAZORPAY)' : 'CASH ON DELIVERY (COLLECT CASH)'}</div>
+              ${order.courier_name ? `<div style="font-size:13px;margin-top:8px;"><strong>Courier Partner:</strong> ${order.courier_name}</div>` : ''}
+              ${order.tracking_number ? `<div style="font-size:13px;margin-top:3px;"><strong>AWB / Docket No:</strong> ${order.tracking_number}</div>` : ''}
             </div>
-            <div style="text-align:right;">
-              <div style="font-size:16px;font-weight:bold;">Total Amount: ₹${Number(order.total_amount).toFixed(2)}</div>
+            <div style="min-width: 300px;">
+              <table style="width:100%; border-collapse:collapse; font-size:13px; margin:0;">
+                <tbody>
+                  <tr>
+                    <td style="border:none; padding:4px 8px; color:#555;">Subtotal (Excl. Tax):</td>
+                    <td style="border:none; padding:4px 8px; text-align:right; font-weight:bold;">₹${(Number(order.subtotal || (order.order_items || []).reduce((acc: number, it: any) => acc + Number(it.total_price || (it.unit_price * it.quantity) || 0), 0) || order.total_amount)).toFixed(2)}</td>
+                  </tr>
+                  ${Number(order.discount_amount || 0) > 0 ? `
+                  <tr>
+                    <td style="border:none; padding:4px 8px; color:#16a34a;">Discount Applied:</td>
+                    <td style="border:none; padding:4px 8px; text-align:right; font-weight:bold; color:#16a34a;">-₹${Number(order.discount_amount).toFixed(2)}</td>
+                  </tr>
+                  ` : ''}
+                  ${Number(order.gst_amount || 0) > 0 ? `
+                  <tr>
+                    <td style="border:none; padding:4px 8px; color:#555;">GST (18% B2B Tax):</td>
+                    <td style="border:none; padding:4px 8px; text-align:right; font-weight:bold;">₹${Number(order.gst_amount).toFixed(2)}</td>
+                  </tr>
+                  ` : ''}
+                  ${Number(order.shipping_charges || order.delivery_fee || order.shipping_amount || 0) > 0 ? `
+                  <tr>
+                    <td style="border:none; padding:4px 8px; color:#555;">Delivery / Freight Charges:</td>
+                    <td style="border:none; padding:4px 8px; text-align:right; font-weight:bold;">₹${Number(order.shipping_charges || order.delivery_fee || order.shipping_amount).toFixed(2)}</td>
+                  </tr>
+                  ` : ''}
+                  <tr style="border-top:1.5px solid #000;">
+                    <td style="border:none; padding:8px 8px 4px 8px; font-weight:bold; font-size:15px;">Final Total Amount:</td>
+                    <td style="border:none; padding:8px 8px 4px 8px; text-align:right; font-weight:bold; font-size:16px;">₹${Number(order.total_amount).toFixed(2)}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
@@ -668,12 +700,11 @@ export default function SalesPage() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>Courier Partner Name</label>
-                  <input 
-                    type="text" 
+                  <AutocompleteInput 
                     value={courierName} 
-                    onChange={(e) => setCourierName(e.target.value)}
-                    placeholder="e.g. Delhivery, Bluedart, SafeXpress"
-                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1.5px solid #cbd5e1', boxSizing: 'border-box' }}
+                    onChange={setCourierName}
+                    placeholder="e.g. Blue Dart, Delhivery, DTDC..."
+                    storageKey="admin_courier_suggestions"
                   />
                 </div>
 

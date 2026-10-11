@@ -104,6 +104,28 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
     parsedImageList.length > 0 ? parsedImageList[0] : product.image
   );
 
+  // Zoom state for Amazon-style hover zoom
+  const [isHoveringZoom, setIsHoveringZoom] = useState(false);
+  const [zoomCoords, setZoomCoords] = useState({ x: 50, y: 50, lensX: 0, lensY: 0 });
+
+  const handleZoomMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+    const xPct = Math.max(0, Math.min(100, (offsetX / rect.width) * 100));
+    const yPct = Math.max(0, Math.min(100, (offsetY / rect.height) * 100));
+    setZoomCoords({ x: xPct, y: yPct, lensX: offsetX, lensY: offsetY });
+  };
+
+  // Show only as many images as the product actually has packs or uploaded images
+  const visibleThumbnails = useMemo(() => {
+    const maxCount = Math.min(
+      parsedImageList.length,
+      Math.max(tiers.length, variantList.length, 1)
+    );
+    return parsedImageList.slice(0, maxCount);
+  }, [parsedImageList, tiers.length, variantList.length]);
+
   const initialQty = useMemo(() => {
     return tiers.length > 0 ? tiers[0].qty : (product.moq || 50);
   }, [tiers]);
@@ -189,29 +211,101 @@ Please confirm order and delivery timeline.`
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', alignItems: 'start' }}>
-          {/* Left Column: Multi-Image Gallery */}
-          <div style={{ background: '#FFFFFF', padding: '20px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          {/* Left Column: Multi-Image Gallery (Sticky until right content scrolled, no half-cut) */}
+          <div 
+            style={{ 
+              background: '#FFFFFF', 
+              padding: '20px', 
+              borderRadius: '12px', 
+              border: '1px solid #E2E8F0', 
+              boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+              position: 'sticky',
+              top: '120px',
+              alignSelf: 'start',
+              maxHeight: 'calc(100vh - 140px)',
+              overflowY: 'auto',
+              scrollbarWidth: 'none',
+              zIndex: 10
+            }}
+          >
             
-            {/* Main Active Image Display */}
-            <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '8px', minHeight: '340px', maxHeight: '460px', background: '#F8FAFC', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {/* Main Active Image Display with Amazon-Style Hover Zoom */}
+            <div 
+              onMouseEnter={() => setIsHoveringZoom(true)}
+              onMouseLeave={() => setIsHoveringZoom(false)}
+              onMouseMove={handleZoomMove}
+              style={{ 
+                position: 'relative', 
+                overflow: 'hidden', 
+                borderRadius: '8px', 
+                minHeight: '340px', 
+                maxHeight: '440px', 
+                background: '#F8FAFC', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                cursor: 'crosshair'
+              }}
+            >
               <img
                 src={activeImage || product.image}
                 alt={product.title}
                 loading="eager"
                 decoding="async"
-                style={{ width: '100%', maxHeight: '440px', objectFit: 'contain', display: 'block', transition: 'opacity 0.2s' }}
+                style={{ width: '100%', maxHeight: '420px', objectFit: 'contain', display: 'block', transition: 'opacity 0.2s' }}
               />
               {product.badge && (
-                <div style={{ position: 'absolute', top: '14px', left: '14px' }}>
+                <div style={{ position: 'absolute', top: '14px', left: '14px', zIndex: 2 }}>
                   <span className={`badge-tag ${product.badgeClass || 'bestseller'}`}>{product.badge}</span>
                 </div>
               )}
+
+              {/* Cursor Zoom Lens Indicator */}
+              {isHoveringZoom && (
+                <div 
+                  style={{
+                    position: 'absolute',
+                    top: zoomCoords.lensY,
+                    left: zoomCoords.lensX,
+                    width: '120px',
+                    height: '120px',
+                    transform: 'translate(-50%, -50%)',
+                    border: '1.5px solid rgba(22, 163, 74, 0.7)',
+                    background: 'rgba(22, 163, 74, 0.12)',
+                    pointerEvents: 'none',
+                    borderRadius: '4px'
+                  }}
+                />
+              )}
+
+              {/* Amazon-Style Magnified Zoom View (Follows cursor position smoothly) */}
+              {isHoveringZoom && (
+                <div 
+                  className="amazon-zoom-preview-panel"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    background: '#FFFFFF',
+                    backgroundImage: `url(${activeImage || product.image})`,
+                    backgroundPosition: `${zoomCoords.x}% ${zoomCoords.y}%`,
+                    backgroundSize: '260%',
+                    backgroundRepeat: 'no-repeat',
+                    pointerEvents: 'none',
+                    zIndex: 5,
+                    borderRadius: '8px',
+                    boxShadow: 'inset 0 0 12px rgba(0,0,0,0.1)'
+                  }}
+                />
+              )}
             </div>
 
-            {/* Thumbnail Strip for Multi-photos */}
-            {parsedImageList.length > 1 && (
+            {/* Thumbnail Strip for Multi-photos (Show only as many images as packs or uploaded images) */}
+            {visibleThumbnails.length > 1 && (
               <div style={{ display: 'flex', gap: '10px', marginTop: '14px', overflowX: 'auto', paddingBottom: '6px' }}>
-                {parsedImageList.map((img, idx) => {
+                {visibleThumbnails.map((img, idx) => {
                   const isActive = (activeImage || product.image) === img;
                   return (
                     <button
@@ -231,6 +325,7 @@ Please confirm order and delivery timeline.`
                         transition: 'all 0.15s ease',
                         touchAction: 'manipulation'
                       }}
+                      title={`Image ${idx + 1}`}
                     >
                       <img src={img} alt={`Thumbnail ${idx + 1}`} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }} />
                     </button>
@@ -293,7 +388,12 @@ Please confirm order and delivery timeline.`
                       <button
                         key={`${v.size}-${v.price}-${idx}`}
                         type="button"
-                        onClick={() => setSelectedVariantIndex(idx)}
+                        onClick={() => {
+                          setSelectedVariantIndex(idx);
+                          if (parsedImageList.length > 0) {
+                            setActiveImage(parsedImageList[idx % parsedImageList.length]);
+                          }
+                        }}
                         style={{
                           padding: '8px 16px',
                           border: `2px solid ${isSelected ? '#16A34A' : '#CBD5E1'}`,
@@ -325,7 +425,7 @@ Please confirm order and delivery timeline.`
               </div>
             )}
 
-            {/* 2. PACK OF SELECTION (Deduplicated, Clean & Independent) */}
+            {/* 2. PACK OF SELECTION (Deduplicated, Clean & Independent - Linked to Images) */}
             <div style={{ marginBottom: '20px' }}>
               <label style={{ display: 'block', fontSize: '0.95rem', fontWeight: 800, color: '#0F172A', marginBottom: '10px' }}>
                 Pack Of
@@ -340,7 +440,12 @@ Please confirm order and delivery timeline.`
                     <button
                       key={`${tier.qty}-${tIdx}`}
                       type="button"
-                      onClick={() => setSelectedPackQty(tier.qty)}
+                      onClick={() => {
+                        setSelectedPackQty(tier.qty);
+                        if (parsedImageList.length > 0) {
+                          setActiveImage(parsedImageList[tIdx % parsedImageList.length]);
+                        }
+                      }}
                       style={{
                         padding: '9px 18px',
                         borderRadius: '8px',
@@ -475,7 +580,7 @@ Please confirm order and delivery timeline.`
                 transition: 'all 0.2s'
               }}
             >
-              <WhatsAppIcon size={20} color="#FFFFFF" /> Bulk order
+              <WhatsAppIcon size={20} color="#FFFFFF" /> Bulk Order
             </a>
 
             {/* Optional Custom Quote Link */}
@@ -631,7 +736,7 @@ Please confirm order and delivery timeline.`
             }}
           >
             <WhatsAppIcon size={18} color="#FFFFFF" />
-            Bulk order
+            Bulk Order
           </a>
         </div>
       </div>

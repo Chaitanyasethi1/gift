@@ -6,7 +6,6 @@ import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { siteConfig } from '@/data/siteConfig';
 import { CartProvider } from '@/context/CartContext';
-import { TopProgressBar } from '@/components/TopProgressBar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -312,9 +311,6 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <React.Suspense fallback={null}>
-          <TopProgressBar />
-        </React.Suspense>
         <CartProvider>
           {children}
         </CartProvider>
