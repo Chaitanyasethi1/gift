@@ -213,6 +213,7 @@ Please confirm order and delivery timeline.`
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', alignItems: 'start' }}>
           {/* Left Column: Multi-Image Gallery (Sticky until right content scrolled, no half-cut) */}
           <div 
+            className="pdp-sticky-gallery-col"
             style={{ 
               background: '#FFFFFF', 
               padding: '20px', 
@@ -220,9 +221,9 @@ Please confirm order and delivery timeline.`
               border: '1px solid #E2E8F0', 
               boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
               position: 'sticky',
-              top: '120px',
+              top: '160px',
               alignSelf: 'start',
-              maxHeight: 'calc(100vh - 140px)',
+              maxHeight: 'calc(100vh - 175px)',
               overflowY: 'auto',
               scrollbarWidth: 'none',
               zIndex: 10
@@ -238,8 +239,8 @@ Please confirm order and delivery timeline.`
                 position: 'relative', 
                 overflow: 'hidden', 
                 borderRadius: '8px', 
-                minHeight: '340px', 
-                maxHeight: '440px', 
+                minHeight: '320px', 
+                maxHeight: '400px', 
                 background: '#F8FAFC', 
                 display: 'flex', 
                 alignItems: 'center', 
@@ -252,7 +253,7 @@ Please confirm order and delivery timeline.`
                 alt={product.title}
                 loading="eager"
                 decoding="async"
-                style={{ width: '100%', maxHeight: '420px', objectFit: 'contain', display: 'block', transition: 'opacity 0.2s' }}
+                style={{ width: '100%', maxHeight: '380px', objectFit: 'contain', display: 'block', transition: 'opacity 0.2s' }}
               />
               {product.badge && (
                 <div style={{ position: 'absolute', top: '14px', left: '14px', zIndex: 2 }}>
@@ -672,22 +673,25 @@ Please confirm order and delivery timeline.`
 
       </div>
 
-      {/* 📱 STICKY BOTTOM ACTION BAR (Exact Screenshot Style: White Add to Cart + Purple Buy Now) */}
-      <div style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        background: '#FFFFFF',
-        borderTop: '1px solid #E2E8F0',
-        padding: '10px 16px',
-        boxShadow: '0 -4px 16px rgba(0,0,0,0.12)',
-        zIndex: 1500,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '12px'
-      }}>
+      {/* 📱 STICKY BOTTOM ACTION BAR (Mobile Viewport Only) */}
+      <div 
+        className="pdp-mobile-bottom-bar"
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          background: '#FFFFFF',
+          borderTop: '1px solid #E2E8F0',
+          padding: '10px 16px',
+          boxShadow: '0 -4px 16px rgba(0,0,0,0.12)',
+          zIndex: 1500,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '12px'
+        }}
+      >
         <div style={{ maxWidth: '600px', width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           <button
             type="button"
@@ -741,6 +745,27 @@ Please confirm order and delivery timeline.`
         </div>
       </div>
 
+      <style>{`
+        /* Desktop: sticky left gallery with clean clearance below sticky header */
+        @media (min-width: 769px) {
+          .pdp-sticky-gallery-col {
+            position: sticky !important;
+            top: 160px !important;
+            max-height: calc(100vh - 175px) !important;
+          }
+          .pdp-mobile-bottom-bar {
+            display: none !important;
+          }
+        }
+        /* Mobile: relative in-flow gallery */
+        @media (max-width: 768px) {
+          .pdp-sticky-gallery-col {
+            position: relative !important;
+            top: 0 !important;
+            max-height: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };
