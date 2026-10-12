@@ -397,9 +397,9 @@ Please confirm order and delivery timeline.`
                         }}
                         style={{
                           padding: '8px 16px',
-                          border: `2px solid ${isSelected ? '#E05A38' : '#CBD5E1'}`,
-                          background: isSelected ? '#FFF7ED' : '#FFFFFF',
-                          color: isSelected ? '#C2410C' : '#334155',
+                          border: `2px solid ${isSelected ? '#991B1B' : '#CBD5E1'}`,
+                          background: isSelected ? '#FEF2F2' : '#FFFFFF',
+                          color: isSelected ? '#7F1D1D' : '#334155',
                           borderRadius: '8px',
                           fontWeight: 700,
                           fontSize: '0.9rem',
@@ -409,13 +409,13 @@ Please confirm order and delivery timeline.`
                           flexDirection: 'column',
                           alignItems: 'center',
                           gap: '2px',
-                          boxShadow: isSelected ? '0 2px 6px rgba(224, 90, 56, 0.2)' : 'none',
+                          boxShadow: isSelected ? '0 2px 6px rgba(153, 27, 27, 0.2)' : 'none',
                           touchAction: 'manipulation'
                         }}
                       >
                         <span>{v.size}</span>
                         {v.price > 0 && (
-                          <span style={{ fontSize: '0.75rem', color: isSelected ? '#E05A38' : '#64748B', fontWeight: 600 }}>
+                          <span style={{ fontSize: '0.75rem', color: isSelected ? '#991B1B' : '#64748B', fontWeight: 600 }}>
                             ₹{v.price}
                           </span>
                         )}
@@ -450,14 +450,14 @@ Please confirm order and delivery timeline.`
                       style={{
                         padding: '9px 18px',
                         borderRadius: '8px',
-                        border: `2px solid ${isSelected ? '#E05A38' : '#CBD5E1'}`,
-                        background: isSelected ? '#FFF7ED' : '#FFFFFF',
-                        color: isSelected ? '#C2410C' : '#334155',
+                        border: `2px solid ${isSelected ? '#991B1B' : '#CBD5E1'}`,
+                        background: isSelected ? '#FEF2F2' : '#FFFFFF',
+                        color: isSelected ? '#7F1D1D' : '#334155',
                         fontWeight: isSelected ? 800 : 600,
                         fontSize: '0.92rem',
                         cursor: 'pointer',
                         transition: 'all 0.15s ease',
-                        boxShadow: isSelected ? '0 2px 6px rgba(224, 90, 56, 0.2)' : 'none',
+                        boxShadow: isSelected ? '0 2px 6px rgba(153, 27, 27, 0.2)' : 'none',
                         touchAction: 'manipulation'
                       }}
                     >
@@ -506,7 +506,7 @@ Please confirm order and delivery timeline.`
                   textAlign: 'center',
                   fontWeight: 800,
                   fontSize: '1.1rem',
-                  color: '#E05A38'
+                  color: '#991B1B'
                 }}>
                   {packCount}
                 </span>
@@ -518,7 +518,7 @@ Please confirm order and delivery timeline.`
                     height: '100%',
                     border: 'none',
                     background: 'transparent',
-                    color: '#E05A38',
+                    color: '#991B1B',
                     fontSize: '1.4rem',
                     fontWeight: 900,
                     cursor: 'pointer',
@@ -539,7 +539,7 @@ Please confirm order and delivery timeline.`
                 style={{
                   flex: 1,
                   height: '50px',
-                  background: '#E05A38',
+                  background: '#991B1B',
                   color: '#FFFFFF',
                   border: 'none',
                   borderRadius: '8px',
@@ -550,7 +550,7 @@ Please confirm order and delivery timeline.`
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  boxShadow: '0 4px 14px rgba(224, 90, 56, 0.28)',
+                  boxShadow: '0 4px 14px rgba(153, 27, 27, 0.28)',
                   transition: 'background 0.2s'
                 }}
               >
@@ -697,7 +697,7 @@ Please confirm order and delivery timeline.`
             type="button"
             onClick={handleAddToCart}
             style={{
-              background: '#E05A38',
+              background: '#991B1B',
               color: '#FFFFFF',
               border: 'none',
               borderRadius: '8px',
@@ -709,7 +709,7 @@ Please confirm order and delivery timeline.`
               alignItems: 'center',
               justifyContent: 'center',
               gap: '6px',
-              boxShadow: '0 2px 8px rgba(224, 90, 56, 0.28)',
+              boxShadow: '0 2px 8px rgba(153, 27, 27, 0.28)',
               touchAction: 'manipulation'
             }}
           >

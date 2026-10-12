@@ -197,7 +197,7 @@ export default async function OrderSuccessPage({
           <Link
             href="/products"
             style={{
-              background: '#E05A38',
+              background: '#991B1B',
               color: '#FFFFFF',
               padding: '14px 24px',
               borderRadius: '10px',
@@ -208,7 +208,7 @@ export default async function OrderSuccessPage({
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              boxShadow: '0 4px 14px rgba(224, 90, 56, 0.28)'
+              boxShadow: '0 4px 14px rgba(153, 27, 27, 0.28)'
             }}
           >
             📦 Shop More Products

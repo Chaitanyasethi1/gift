@@ -128,7 +128,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
           pincode: pincode
         },
         theme: {
-          color: '#E05A38'
+          color: '#991B1B'
         }
       };
 
@@ -265,7 +265,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
             <button
               type="submit"
               className="btn-primary-hero"
-              style={{ justifyContent: 'center', padding: '13px', marginTop: '8px', background: isProcessing ? '#94A3B8' : '#E05A38' }}
+              style={{ justifyContent: 'center', padding: '13px', marginTop: '8px', background: isProcessing ? '#94A3B8' : '#991B1B' }}
               disabled={isProcessing}
             >
               <ShieldCheckIcon size={16} color="#FFFFFF" /> {isProcessing ? 'Processing Payment...' : `Pay Securely ₹${finalTotal.toFixed(2)}`}

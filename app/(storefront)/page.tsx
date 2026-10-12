@@ -87,7 +87,7 @@ export default async function HomePage() {
               <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🔥 Hot Deals</h2>
               <CountdownTimer days={3} />
             </div>
-            <Link href="/shop" style={{ color: '#E05A38', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
+            <Link href="/shop" style={{ color: '#991B1B', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
           <ProductGrid products={finalHotDeals} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>
@@ -101,7 +101,7 @@ export default async function HomePage() {
               <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🏷️ Mega Sale</h2>
               <CountdownTimer days={12} />
             </div>
-            <Link href="/shop" style={{ color: '#E05A38', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
+            <Link href="/shop" style={{ color: '#991B1B', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
           <ProductGrid products={finalMegaSale} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>
@@ -112,7 +112,7 @@ export default async function HomePage() {
         <div className="container">
            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🌟 New Arrivals</h2>
-            <Link href="/shop" style={{ color: '#E05A38', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
+            <Link href="/shop" style={{ color: '#991B1B', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
           <ProductGrid products={finalNewArrivals} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>
@@ -123,7 +123,7 @@ export default async function HomePage() {
         <div className="container">
            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0 }}>🏆 Best Sellers</h2>
-            <Link href="/shop" style={{ color: '#E05A38', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
+            <Link href="/shop" style={{ color: '#991B1B', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
           <ProductGrid products={finalBestSellers} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>
@@ -134,7 +134,7 @@ export default async function HomePage() {
         <div className="container">
            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '16px', color: '#FFFFFF', letterSpacing: '-0.5px' }}>Elevate Your Brand Identity With Premium Printing</h2>
            <p style={{ fontSize: '1.1rem', color: '#94A3B8', maxWidth: '700px', margin: '0 auto 35px auto', lineHeight: 1.6 }}>Discover an extensive range of paper bags, custom boxes, premium labels, and branded packaging solutions tailored to make your products stand out.</p>
-           <Link href="/shop" style={{ display: 'inline-block', background: '#E05A38', color: '#fff', padding: '14px 36px', borderRadius: '8px', fontWeight: 700, fontSize: '1rem', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(224, 90, 56, 0.3)' }}>Explore Products &rarr;</Link>
+           <Link href="/shop" style={{ display: 'inline-block', background: '#991B1B', color: '#fff', padding: '14px 36px', borderRadius: '8px', fontWeight: 700, fontSize: '1rem', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(153, 27, 27, 0.3)' }}>Explore Products &rarr;</Link>
         </div>
       </section>
       
