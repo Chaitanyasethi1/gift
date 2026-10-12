@@ -441,7 +441,7 @@ export const CategoryDrawer: React.FC = () => {
                           alignItems: 'center',
                           gap: '6px',
                           padding: '8px 18px 10px 32px',
-                          color: '#991B1B',
+                          color: '#1D4ED8',
                           fontSize: '0.8rem',
                           fontWeight: 700,
                           textDecoration: 'none'
@@ -490,7 +490,7 @@ export const CategoryDrawer: React.FC = () => {
                 borderBottom: '1px solid #F1F5F9',
                 fontSize: '0.88rem',
                 fontWeight: 700,
-                color: '#991B1B',
+                color: '#1D4ED8',
                 cursor: 'pointer',
                 textAlign: 'left'
               }}

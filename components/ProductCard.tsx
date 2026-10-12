@@ -135,14 +135,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             position: 'absolute', 
             top: '12px', 
             left: '12px', 
-            background: '#991B1B', 
+            background: '#1D4ED8', 
             color: '#FFFFFF', 
             padding: '4px 10px', 
             borderRadius: '8px', 
             fontSize: '0.72rem', 
             fontWeight: 800, 
             letterSpacing: '0.4px',
-            boxShadow: '0 2px 6px rgba(153, 27, 27, 0.25)',
+            boxShadow: '0 2px 6px rgba(29, 78, 216, 0.25)',
             zIndex: 3
           }}
         >
@@ -246,7 +246,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           style={{
             width: '100%',
             marginTop: '12px',
-            background: '#991B1B',
+            background: '#1D4ED8',
             color: '#FFFFFF',
             border: 'none',
             borderRadius: '10px',
@@ -258,7 +258,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px',
-            boxShadow: '0 2px 6px rgba(153, 27, 27, 0.22)',
+            boxShadow: '0 2px 6px rgba(29, 78, 216, 0.22)',
             transition: 'all 0.15s ease'
           }}
           className="clean-card-add-btn"
@@ -284,7 +284,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           transform: scale(1.08);
         }
         .clean-card-add-btn:hover {
-          background: #7F1D1D !important;
+          background: #1E40AF !important;
           transform: translateY(-1px);
         }
         .clean-card-add-btn:active {

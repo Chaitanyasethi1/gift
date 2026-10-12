@@ -3,11 +3,11 @@ h1, h2, h3, h4, h5, h6, .brand-name, .section-title { font-family: var(--font-po
 
 :root {
   /* Unified E-Commerce Palette (Synchronized Brand Theme) */
-  --primary: #991B1B;
-  --primary-hover: #7F1D1D;
-  --primary-dark: #450A0A;
-  --primary-light: #FEF2F2;
-  --primary-glow: rgba(153, 27, 27, 0.15);
+  --primary: #1D4ED8;
+  --primary-hover: #1E40AF;
+  --primary-dark: #172554;
+  --primary-light: #EFF6FF;
+  --primary-glow: rgba(29, 78, 216, 0.18);
   
   --brand-red: #DC2626;
   --brand-red-dark: #B91C1C;

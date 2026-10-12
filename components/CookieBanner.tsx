@@ -92,7 +92,7 @@ export const CookieBanner: React.FC = () => {
             id="cookie-accept-all"
             onClick={handleAcceptAll}
             style={{
-              background: '#991B1B',
+              background: '#1D4ED8',
               color: '#FFFFFF',
               border: 'none',
               padding: '6px 14px',
@@ -101,7 +101,7 @@ export const CookieBanner: React.FC = () => {
               borderRadius: '6px',
               cursor: 'pointer',
               touchAction: 'manipulation',
-              boxShadow: '0 2px 8px rgba(153, 27, 27, 0.3)'
+              boxShadow: '0 2px 8px rgba(29, 78, 216, 0.3)'
             }}
           >
             Accept

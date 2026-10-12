@@ -161,7 +161,7 @@ export const StickyMobileBar: React.FC = () => {
               }}
             >
               <span className="icon" style={{ display: 'inline-flex' }}>
-                <HomeIcon size={20} color={pathname === '/' ? '#991B1B' : '#64748B'} />
+                <HomeIcon size={20} color={pathname === '/' ? '#1D4ED8' : '#64748B'} />
               </span>
               <span style={{ fontSize: '0.72rem', fontWeight: pathname === '/' ? 700 : 500 }}>Home</span>
             </Link>
@@ -182,13 +182,13 @@ export const StickyMobileBar: React.FC = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '3px',
-                color: isCategoryDrawerOpen ? '#991B1B' : '#64748B',
+                color: isCategoryDrawerOpen ? '#1D4ED8' : '#64748B',
                 padding: '4px 0',
                 transition: 'color 0.15s ease'
               }}
             >
               <span className="icon" style={{ display: 'inline-flex' }}>
-                <CategoriesIcon size={20} color={isCategoryDrawerOpen ? '#991B1B' : '#64748B'} />
+                <CategoriesIcon size={20} color={isCategoryDrawerOpen ? '#1D4ED8' : '#64748B'} />
               </span>
               <span style={{ fontSize: '0.72rem', fontWeight: isCategoryDrawerOpen ? 700 : 500 }}>Categories</span>
             </button>
@@ -205,13 +205,13 @@ export const StickyMobileBar: React.FC = () => {
                 justifyContent: 'center',
                 gap: '3px',
                 textDecoration: 'none',
-                color: (pathname === '/shop' || pathname === '/products') ? '#991B1B' : '#64748B',
+                color: (pathname === '/shop' || pathname === '/products') ? '#1D4ED8' : '#64748B',
                 padding: '4px 0',
                 transition: 'color 0.15s ease'
               }}
             >
               <span className="icon" style={{ display: 'inline-flex' }}>
-                <ShoppingBagIcon size={20} color={(pathname === '/shop' || pathname === '/products') ? '#991B1B' : '#64748B'} />
+                <ShoppingBagIcon size={20} color={(pathname === '/shop' || pathname === '/products') ? '#1D4ED8' : '#64748B'} />
               </span>
               <span style={{ fontSize: '0.72rem', fontWeight: (pathname === '/shop' || pathname === '/products') ? 700 : 500 }}>Shop</span>
             </Link>
@@ -237,10 +237,10 @@ export const StickyMobileBar: React.FC = () => {
                 transition: 'color 0.15s ease'
               }}
             >
-              <span className="icon" style={{ display: 'inline-flex', color: '#991B1B' }}>
-                <FileTextIcon size={20} color="#991B1B" />
+              <span className="icon" style={{ display: 'inline-flex', color: '#1D4ED8' }}>
+                <FileTextIcon size={20} color="#1D4ED8" />
               </span>
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#991B1B' }}>Get Quote</span>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#1D4ED8' }}>Get Quote</span>
             </button>
           </div>
         </nav>

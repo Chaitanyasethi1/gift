@@ -557,9 +557,9 @@ export function Header() {
           cursor: pointer;
         }
         .dropdown-sub-link:hover {
-          background: #FEF2F2;
-          color: #991B1B;
-          border-left: 3px solid #991B1B;
+          background: #EFF6FF;
+          color: #1D4ED8;
+          border-left: 3px solid #1D4ED8;
           padding-left: 22px;
         }
 
@@ -582,7 +582,7 @@ export function Header() {
       `}</style>
       
       {/* 1. Top Announcement Marquee Bar */}
-      <div className="header-marquee-box" style={{ background: '#991B1B', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '7px 0', overflow: 'hidden', display: 'flex', width: '100%' }}>
+      <div className="header-marquee-box" style={{ background: '#1D4ED8', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '7px 0', overflow: 'hidden', display: 'flex', width: '100%' }}>
         <div className="header-marquee">
           <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
           <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
@@ -690,7 +690,7 @@ export function Header() {
                     position: 'absolute',
                     top: '-3px',
                     right: '-3px',
-                    background: '#991B1B',
+                    background: '#1D4ED8',
                     color: '#FFFFFF',
                     fontSize: '0.62rem',
                     fontWeight: 800,
@@ -701,7 +701,7 @@ export function Header() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     padding: '0 3px',
-                    boxShadow: '0 2px 4px rgba(153, 27, 27, 0.4)'
+                    boxShadow: '0 2px 4px rgba(29, 78, 216, 0.4)'
                   }}
                 >
                   {cartCount}
@@ -719,11 +719,11 @@ export function Header() {
               display: 'flex',
               alignItems: 'center',
               background: '#F8FAFC',
-              border: isSearchFocused ? '1.5px solid #991B1B' : '1.5px solid #CBD5E1',
+              border: isSearchFocused ? '1.5px solid #1D4ED8' : '1.5px solid #CBD5E1',
               borderRadius: '24px',
               padding: '2px 10px 2px 12px',
               transition: 'all 0.2s ease',
-              boxShadow: isSearchFocused ? '0 0 0 3px rgba(153, 27, 27, 0.12)' : 'none'
+              boxShadow: isSearchFocused ? '0 0 0 3px rgba(29, 78, 216, 0.12)' : 'none'
             }}
           >
             <span style={{ color: '#94A3B8', fontSize: '0.92rem', marginRight: '6px' }}>🔍</span>
@@ -874,7 +874,7 @@ export function Header() {
                  position: 'absolute', 
                  top: '-6px', 
                  right: '-4px', 
-                 background: '#991B1B', 
+                 background: '#1D4ED8', 
                  color: '#fff', 
                  fontSize: '0.65rem', 
                  fontWeight: 800, 
@@ -884,7 +884,7 @@ export function Header() {
                  display: 'flex', 
                  alignItems: 'center', 
                  justifyContent: 'center',
-                 boxShadow: '0 2px 4px rgba(153, 27, 27, 0.4)'
+                 boxShadow: '0 2px 4px rgba(29, 78, 216, 0.4)'
                }}>
                  {cartCount}
                </span>
