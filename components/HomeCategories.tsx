@@ -10,13 +10,41 @@ export const HomeCategories: React.FC = () => {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const res = await fetch('/api/homepage');
-        if (res.ok) {
-          const data = await res.json();
+        const [homeRes, catRes] = await Promise.all([
+          fetch('/api/homepage'),
+          fetch('/api/categories')
+        ]);
+
+        let list: PopularCategoryItem[] = [...initialHomepageConfig.popularCategories];
+
+        if (homeRes.ok) {
+          const data = await homeRes.json();
           if (data?.popularCategories && Array.isArray(data.popularCategories) && data.popularCategories.length > 0) {
-            setCategories(data.popularCategories);
+            list = data.popularCategories;
           }
         }
+
+        if (catRes.ok) {
+          const catData = await catRes.json();
+          if (catData?.categories && Array.isArray(catData.categories)) {
+            const homeCats = catData.categories.filter((c: any) => c.show_in_home);
+            const existingSlugs = new Set(list.map(item => item.link.replace('/category/', '')));
+            
+            homeCats.forEach((hc: any) => {
+              if (!existingSlugs.has(hc.slug)) {
+                list.push({
+                  id: hc.id,
+                  title: hc.name,
+                  emoji: '📦',
+                  link: `/category/${hc.slug}`,
+                  order: hc.sort_order || 99
+                });
+              }
+            });
+          }
+        }
+
+        setCategories(list);
       } catch (err) {
         // Fallback already in place
       }
@@ -81,7 +109,7 @@ export const HomeCategories: React.FC = () => {
           <h2 className="section-title" style={{ fontSize: '1.8rem', fontWeight: 700, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>
             Our Popular Categories
           </h2>
-          <Link href="/shop" className="cat-view-all-link" style={{ color: '#B91C1C', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}>
+          <Link href="/shop" className="cat-view-all-link" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}>
             View All <span style={{ fontSize: '1.2rem' }}>&rarr;</span>
           </Link>
         </div>

@@ -307,3 +307,26 @@ export const ShoppingBagIcon: React.FC<IconProps> = ({ size = 20, color = 'curre
   </svg>
 );
 
+export const SlidersHorizontalIcon: React.FC<IconProps> = ({ size = 18, color = 'currentColor', className = '', ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`ui-icon ${className}`} {...props}>
+    <line x1="21" y1="4" x2="14" y2="4" />
+    <line x1="10" y1="4" x2="3" y2="4" />
+    <line x1="21" y1="12" x2="12" y2="12" />
+    <line x1="8" y1="12" x2="3" y2="12" />
+    <line x1="21" y1="20" x2="16" y2="20" />
+    <line x1="12" y1="20" x2="3" y2="20" />
+    <line x1="14" y1="2" x2="14" y2="6" />
+    <line x1="8" y1="10" x2="8" y2="14" />
+    <line x1="16" y1="18" x2="16" y2="22" />
+  </svg>
+);
+
+export const ArrowUpDownIcon: React.FC<IconProps> = ({ size = 18, color = 'currentColor', className = '', ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`ui-icon ${className}`} {...props}>
+    <path d="m21 16-4 4-4-4" />
+    <path d="M17 20V4" />
+    <path d="m3 8 4-4 4 4" />
+    <path d="M7 4v16" />
+  </svg>
+);
+

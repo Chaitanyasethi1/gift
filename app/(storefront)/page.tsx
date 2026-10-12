@@ -87,7 +87,7 @@ export default async function HomePage() {
               <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🔥 Hot Deals</h2>
               <CountdownTimer days={3} />
             </div>
-            <Link href="/shop" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
+            <Link href="/category/hot-deals" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
           <ProductGrid products={finalHotDeals} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>
@@ -101,7 +101,7 @@ export default async function HomePage() {
               <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🏷️ Mega Sale</h2>
               <CountdownTimer days={12} />
             </div>
-            <Link href="/shop" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
+            <Link href="/category/sale" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
           <ProductGrid products={finalMegaSale} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>
@@ -112,7 +112,7 @@ export default async function HomePage() {
         <div className="container">
            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🌟 New Arrivals</h2>
-            <Link href="/shop" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
+            <Link href="/category/new-arrivals" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
           <ProductGrid products={finalNewArrivals} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>
@@ -123,7 +123,7 @@ export default async function HomePage() {
         <div className="container">
            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0 }}>🏆 Best Sellers</h2>
-            <Link href="/shop" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
+            <Link href="/category/best-sellers" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
           <ProductGrid products={finalBestSellers} showAllButton={false} limit={8} hideTabs={true} isCarousel={true} />
         </div>

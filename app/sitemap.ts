@@ -119,12 +119,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   ];
 
-  // 2. Dynamic Categories Routes
-  const categoryRoutes: MetadataRoute.Sitemap = initialCategories.map((cat) => ({
-    url: `${baseUrl}/shop?category=${cat.slug}`,
+  // 2. Dynamic Categories Routes (Live from Supabase + fallback)
+  let categorySlugs = new Set<string>();
+  try {
+    const { data: dbCategories } = await supabaseAdmin.from('categories').select('slug');
+    if (dbCategories && dbCategories.length > 0) {
+      dbCategories.forEach(c => {
+        if (c.slug) categorySlugs.add(c.slug);
+      });
+    }
+  } catch (err) {}
+  initialCategories.forEach(c => categorySlugs.add(c.slug));
+  ['hot-deals', 'sale', 'new-arrivals', 'best-sellers'].forEach(s => categorySlugs.add(s));
+
+  const categoryRoutes: MetadataRoute.Sitemap = Array.from(categorySlugs).map((slug) => ({
+    url: `${baseUrl}/category/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
-    priority: 0.8
+    priority: 0.85
   }));
 
   // 3. Dynamic Products Routes (Fetch live from Supabase + fallback to PRODUCTS)

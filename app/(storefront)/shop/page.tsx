@@ -1,94 +1,52 @@
 import React from 'react';
-import { ProductGrid } from '@/components/ProductGrid';
-import { PRODUCTS } from '@/data/products';
-import { createClient } from '@/utils/supabase/server';
+import { Metadata } from 'next';
+import { CategoryCatalog } from '@/components/CategoryCatalog';
+import { getAllProducts, getAllCategories, resolveCategory, getProductsForCategory } from '@/lib/catalog';
+
+export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Shop All Packaging Products - Factory Direct Catalog | AS Print Gallery',
+  description: 'Explore our complete catalog of corrugated shipping cartons, kraft paper bags, woven labels, food boxes, and custom stickers at factory-direct wholesale prices.'
+};
 
 export default async function ShopPage({
   searchParams
 }: {
-  searchParams?: Promise<{ category?: string; q?: string }>;
+  searchParams?: Promise<{ category?: string; collection?: string; q?: string }>;
 }) {
   const resolvedParams = searchParams ? await searchParams : {};
-  const categorySlug = resolvedParams?.category;
+  const categorySlug = resolvedParams?.category || resolvedParams?.collection;
   const searchQuery = resolvedParams?.q;
 
-  let products: any[] = [];
-  let categoryName = '';
+  const [allProducts, allCategories] = await Promise.all([
+    getAllProducts(),
+    getAllCategories()
+  ]);
 
-  try {
-    const supabase = createClient();
-    let query = supabase.from('products').select('*').eq('is_active', true);
+  if (categorySlug) {
+    const category = await resolveCategory(categorySlug);
+    const categoryProducts = await getProductsForCategory(categorySlug);
 
-    if (categorySlug) {
-      const { data: cat } = await supabase
-        .from('categories')
-        .select('id, name')
-        .eq('slug', categorySlug)
-        .maybeSingle();
-
-      if (cat) {
-        categoryName = cat.name;
-        const { data: subCats } = await supabase
-          .from('categories')
-          .select('id')
-          .eq('parent_id', cat.id);
-
-        const catIds = [cat.id, ...(subCats || []).map((s: any) => s.id)];
-        query = query.in('category_id', catIds);
-      }
-    }
-
-    if (searchQuery) {
-      query = query.or(`name.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%,slug.ilike.%${searchQuery}%`);
-    }
-
-    const { data: dbProducts, error } = await query;
-    if (!error && dbProducts && dbProducts.length > 0) {
-      products = dbProducts;
-    }
-  } catch (err) {
-    console.warn('Supabase fetch in ShopPage fallback to local products:', err);
+    return (
+      <CategoryCatalog
+        category={category}
+        initialProducts={categoryProducts}
+        allCategories={allCategories}
+        isShopAll={false}
+        pageTitle={category?.name}
+        pageDescription={category?.description}
+      />
+    );
   }
-
-  // Fallback to static catalog if DB returned nothing or error occurred
-  if (products.length === 0) {
-    if (searchQuery) {
-      const qLower = searchQuery.toLowerCase();
-      products = PRODUCTS.filter(p => 
-        p.title?.toLowerCase().includes(qLower) || 
-        p.desc?.toLowerCase().includes(qLower) ||
-        p.categoryLabel?.toLowerCase().includes(qLower)
-      );
-    } else if (categorySlug) {
-      const slugLower = categorySlug.toLowerCase().replace(/-/g, ' ');
-      products = PRODUCTS.filter(p => 
-        p.categoryLabel?.toLowerCase().includes(slugLower) ||
-        p.slug?.toLowerCase().includes(categorySlug.toLowerCase())
-      );
-      if (products.length === 0) {
-        products = PRODUCTS;
-      }
-    } else {
-      products = PRODUCTS;
-    }
-  }
-
-  const heading = categoryName
-    ? categoryName
-    : categorySlug
-    ? `Category: ${categorySlug.replace(/-/g, ' ')}`
-    : searchQuery
-    ? `Search Results for "${searchQuery}"`
-    : 'Shop All Products';
 
   return (
-    <div style={{ padding: '40px 0 60px 0', background: '#FAFAFC', minHeight: '60vh' }}>
-      <div className="container">
-        <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '30px', textAlign: 'center', color: '#0F172A' }}>
-          {heading}
-        </h1>
-        <ProductGrid products={products} hideTabs={false} showAllButton={false} />
-      </div>
-    </div>
+    <CategoryCatalog
+      initialProducts={allProducts}
+      allCategories={allCategories}
+      isShopAll={true}
+      pageTitle={searchQuery ? `Search Results for "${searchQuery}"` : 'Shop All Products'}
+      pageDescription={searchQuery ? `Products matching your search query "${searchQuery}".` : 'Discover our extensive selection of corrugated cartons, bags, labels, tags, and industrial packaging.'}
+    />
   );
 }

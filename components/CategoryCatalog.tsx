@@ -1,0 +1,833 @@
+'use client';
+
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ProductCard } from '@/components/ProductCard';
+import { CategoryMeta } from '@/lib/catalog';
+import { 
+  ChevronRightIcon, 
+  XIcon, 
+  SlidersHorizontalIcon, 
+  ArrowUpDownIcon, 
+  PackageIcon, 
+  CheckCircleIcon 
+} from '@/components/Icons';
+
+export interface CategoryCatalogProps {
+  category?: CategoryMeta | null;
+  initialProducts: any[];
+  allCategories?: { id: string; name: string; slug: string; parent_id?: string | null }[];
+  isShopAll?: boolean;
+  pageTitle?: string;
+  pageDescription?: string;
+}
+
+export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
+  category,
+  initialProducts,
+  allCategories = [],
+  isShopAll = false,
+  pageTitle,
+  pageDescription
+}) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // 1. Parse initial filter & sort states from URL
+  const initialSort = searchParams?.get('sort') || 'popular';
+  const initialMinPrice = searchParams?.get('min_price') ? Number(searchParams.get('min_price')) : '';
+  const initialMaxPrice = searchParams?.get('max_price') ? Number(searchParams.get('max_price')) : '';
+  const initialSubcat = searchParams?.get('subcat') || '';
+  const initialInStock = searchParams?.get('in_stock') === 'true';
+  const initialDiscount = searchParams?.get('discount') ? Number(searchParams.get('discount')) : 0;
+  const initialRating = searchParams?.get('rating') ? Number(searchParams.get('rating')) : 0;
+  const initialSearch = searchParams?.get('q') || '';
+
+  // State hooks
+  const [sort, setSort] = useState<string>(initialSort);
+  const [minPrice, setMinPrice] = useState<number | ''>(initialMinPrice);
+  const [maxPrice, setMaxPrice] = useState<number | ''>(initialMaxPrice);
+  const [selectedSubcat, setSelectedSubcat] = useState<string>(initialSubcat);
+  const [inStockOnly, setInStockOnly] = useState<boolean>(initialInStock);
+  const [minDiscount, setMinDiscount] = useState<number>(initialDiscount);
+  const [minRating, setMinRating] = useState<number>(initialRating);
+  const [searchQuery, setSearchQuery] = useState<string>(initialSearch);
+
+  // Mobile drawer state
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+  // Sync state to URL without reloading page
+  const syncUrlParams = useCallback((
+    newSort: string,
+    newMin: number | '',
+    newMax: number | '',
+    newSubcat: string,
+    newStock: boolean,
+    newDisc: number,
+    newRate: number,
+    newQ: string
+  ) => {
+    const params = new URLSearchParams();
+    if (newSort && newSort !== 'popular') params.set('sort', newSort);
+    if (newMin !== '') params.set('min_price', String(newMin));
+    if (newMax !== '') params.set('max_price', String(newMax));
+    if (newSubcat) params.set('subcat', newSubcat);
+    if (newStock) params.set('in_stock', 'true');
+    if (newDisc > 0) params.set('discount', String(newDisc));
+    if (newRate > 0) params.set('rating', String(newRate));
+    if (newQ) params.set('q', newQ);
+
+    const queryString = params.toString();
+    const currentPath = window.location.pathname;
+    const newUrl = queryString ? `${currentPath}?${queryString}` : currentPath;
+
+    window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
+  }, []);
+
+  // Update URL whenever filters or sort change
+  useEffect(() => {
+    syncUrlParams(sort, minPrice, maxPrice, selectedSubcat, inStockOnly, minDiscount, minRating, searchQuery);
+  }, [sort, minPrice, maxPrice, selectedSubcat, inStockOnly, minDiscount, minRating, searchQuery, syncUrlParams]);
+
+  // Determine subcategory options
+  const subcategoryOptions = useMemo(() => {
+    if (category?.subcategories && category.subcategories.length > 0) {
+      return category.subcategories;
+    }
+    if (isShopAll && allCategories.length > 0) {
+      return allCategories
+        .filter(c => !c.parent_id)
+        .map(c => ({ id: c.id, name: c.name, slug: c.slug }));
+    }
+    return [];
+  }, [category, isShopAll, allCategories]);
+
+  // Compute price boundaries from product dataset
+  const { datasetMinPrice, datasetMaxPrice } = useMemo(() => {
+    if (!initialProducts || initialProducts.length === 0) {
+      return { datasetMinPrice: 0, datasetMaxPrice: 1000 };
+    }
+    const prices = initialProducts.map(p => Number(p.selling_price || p.price || 0));
+    return {
+      datasetMinPrice: Math.min(...prices),
+      datasetMaxPrice: Math.max(...prices)
+    };
+  }, [initialProducts]);
+
+  // Filter and sort products
+  const processedProducts = useMemo(() => {
+    let list = [...initialProducts];
+
+    // 1. Text search query
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      list = list.filter(p => {
+        const name = String(p.name || p.title || '').toLowerCase();
+        const desc = String(p.description || p.desc || '').toLowerCase();
+        const cat = String(p.categoryLabel || p.category_slug || '').toLowerCase();
+        return name.includes(q) || desc.includes(q) || cat.includes(q);
+      });
+    }
+
+    // 2. Subcategory filter
+    if (selectedSubcat) {
+      list = list.filter(p => {
+        const subSlug = selectedSubcat.toLowerCase();
+        const pCatSlug = String(p.category_slug || '').toLowerCase();
+        const pCatName = String(p.categoryLabel || '').toLowerCase();
+        const pName = String(p.name || p.title || '').toLowerCase();
+        return (
+          pCatSlug === subSlug ||
+          pCatName.includes(subSlug.replace(/-/g, ' ')) ||
+          pName.includes(subSlug.replace(/-/g, ' ')) ||
+          p.category_id === selectedSubcat
+        );
+      });
+    }
+
+    // 3. Price range filter
+    if (minPrice !== '') {
+      list = list.filter(p => Number(p.selling_price || p.price || 0) >= Number(minPrice));
+    }
+    if (maxPrice !== '') {
+      list = list.filter(p => Number(p.selling_price || p.price || 0) <= Number(maxPrice));
+    }
+
+    // 4. In Stock Availability filter
+    if (inStockOnly) {
+      list = list.filter(p => (p.stock_quantity ?? 100) > 0);
+    }
+
+    // 5. Discount Percentage filter
+    if (minDiscount > 0) {
+      list = list.filter(p => {
+        const mrp = Number(p.mrp || 0);
+        const sp = Number(p.selling_price || p.price || 0);
+        const disc = mrp > sp ? Math.round(((mrp - sp) / mrp) * 100) : 15;
+        return disc >= minDiscount;
+      });
+    }
+
+    // 6. Rating filter (4 stars and up)
+    if (minRating > 0) {
+      list = list.filter(p => {
+        const r = Number(p.rating || 4.5);
+        return r >= minRating;
+      });
+    }
+
+    // 7. Apply Sorting
+    list.sort((a, b) => {
+      const priceA = Number(a.selling_price || a.price || 0);
+      const priceB = Number(b.selling_price || b.price || 0);
+      const nameA = String(a.name || a.title || '');
+      const nameB = String(b.name || b.title || '');
+      const mrpA = Number(a.mrp || priceA * 1.33);
+      const mrpB = Number(b.mrp || priceB * 1.33);
+      const discA = mrpA > priceA ? ((mrpA - priceA) / mrpA) * 100 : 0;
+      const discB = mrpB > priceB ? ((mrpB - priceB) / mrpB) * 100 : 0;
+      const reviewsA = Number(a.reviews || a.reviews_count || 50);
+      const reviewsB = Number(b.reviews || b.reviews_count || 50);
+
+      switch (sort) {
+        case 'price_asc':
+          return priceA - priceB;
+        case 'price_desc':
+          return priceB - priceA;
+        case 'name_asc':
+          return nameA.localeCompare(nameB);
+        case 'discount_desc':
+          return discB - discA;
+        case 'newest':
+          return (new Date(b.created_at || 0).getTime()) - (new Date(a.created_at || 0).getTime());
+        case 'popular':
+        default:
+          return reviewsB - reviewsA;
+      }
+    });
+
+    return list;
+  }, [initialProducts, searchQuery, selectedSubcat, minPrice, maxPrice, inStockOnly, minDiscount, minRating, sort]);
+
+  // Count active filters
+  const activeFiltersCount = useMemo(() => {
+    let count = 0;
+    if (selectedSubcat) count++;
+    if (minPrice !== '') count++;
+    if (maxPrice !== '') count++;
+    if (inStockOnly) count++;
+    if (minDiscount > 0) count++;
+    if (minRating > 0) count++;
+    if (searchQuery) count++;
+    return count;
+  }, [selectedSubcat, minPrice, maxPrice, inStockOnly, minDiscount, minRating, searchQuery]);
+
+  const clearAllFilters = () => {
+    setMinPrice('');
+    setMaxPrice('');
+    setSelectedSubcat('');
+    setInStockOnly(false);
+    setMinDiscount(0);
+    setMinRating(0);
+    setSearchQuery('');
+    setSort('popular');
+  };
+
+  const titleText = pageTitle || category?.name || (isShopAll ? 'All Packaging Products' : 'Catalog');
+  const descText = pageDescription || category?.description || 'Browse factory-direct industrial boxes, labels, stickers, and bags.';
+
+  return (
+    <div style={{ background: '#FAFAFC', minHeight: '80vh', paddingBottom: '70px' }}>
+      {/* 1. Header & Breadcrumb Banner */}
+      <div style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0', padding: '24px 0 20px 0' }}>
+        <div className="container">
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="Breadcrumb" style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: '#64748B', flexWrap: 'wrap' }}>
+            <Link href="/" style={{ color: '#64748B', textDecoration: 'none', transition: 'color 0.15s' }}>
+              Home
+            </Link>
+            <span>/</span>
+            {isShopAll ? (
+              <span style={{ color: '#0F172A', fontWeight: 700 }}>All Products</span>
+            ) : (
+              <>
+                {category?.parentSlug && (
+                  <>
+                    <Link href={`/category/${category.parentSlug}`} style={{ color: '#64748B', textDecoration: 'none' }}>
+                      {category.parentName || 'Category'}
+                    </Link>
+                    <span>/</span>
+                  </>
+                )}
+                <span style={{ color: '#0F172A', fontWeight: 700 }}>{category?.name || 'Category'}</span>
+              </>
+            )}
+          </nav>
+
+          {/* Title & Product Count */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '12px' }}>
+            <div>
+              <h1 style={{ fontSize: '1.9rem', fontWeight: 800, color: '#0F172A', margin: '0 0 6px 0', letterSpacing: '-0.5px' }}>
+                {titleText}
+              </h1>
+              <p style={{ margin: 0, color: '#64748B', fontSize: '0.92rem', maxWidth: '750px', lineHeight: 1.5 }}>
+                {descText}
+              </p>
+            </div>
+            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#1D4ED8', background: '#EFF6FF', padding: '6px 14px', borderRadius: '20px', border: '1px solid #BFDBFE' }}>
+              {processedProducts.length} {processedProducts.length === 1 ? 'Product' : 'Products'} Found
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Main Catalog Area (Sidebar + Grid) */}
+      <div className="container" style={{ paddingTop: '24px' }}>
+        {/* Top Control Bar: Active Filter Chips & Sort Selector */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px', marginBottom: '20px', background: '#FFFFFF', padding: '14px 18px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+          {/* Mobile Filter Button */}
+          <button
+            type="button"
+            onClick={() => setIsMobileFilterOpen(true)}
+            className="mobile-filter-trigger-btn"
+            style={{
+              display: 'none',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '9px 16px',
+              background: '#1D4ED8',
+              color: '#FFFFFF',
+              border: 'none',
+              borderRadius: '8px',
+              fontWeight: 700,
+              fontSize: '0.88rem',
+              cursor: 'pointer'
+            }}
+          >
+            <SlidersHorizontalIcon size={16} />
+            <span>Filter &amp; Sort</span>
+            {activeFiltersCount > 0 && (
+              <span style={{ background: '#FFFFFF', color: '#1D4ED8', fontSize: '0.75rem', fontWeight: 800, padding: '2px 7px', borderRadius: '12px' }}>
+                {activeFiltersCount}
+              </span>
+            )}
+          </button>
+
+          {/* Active Filter Chips (Desktop & Mobile) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', flex: 1 }}>
+            {activeFiltersCount > 0 ? (
+              <>
+                <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#475569' }}>Active Filters:</span>
+                {selectedSubcat && (
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE', padding: '4px 10px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 700 }}>
+                    {subcategoryOptions.find(s => s.slug === selectedSubcat)?.name || selectedSubcat}
+                    <button type="button" onClick={() => setSelectedSubcat('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#1D4ED8', padding: 0, display: 'flex' }}>
+                      <XIcon size={13} />
+                    </button>
+                  </span>
+                )}
+                {(minPrice !== '' || maxPrice !== '') && (
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE', padding: '4px 10px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 700 }}>
+                    ₹{minPrice || 0} – ₹{maxPrice || 'Max'}
+                    <button type="button" onClick={() => { setMinPrice(''); setMaxPrice(''); }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#1D4ED8', padding: 0, display: 'flex' }}>
+                      <XIcon size={13} />
+                    </button>
+                  </span>
+                )}
+                {inStockOnly && (
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE', padding: '4px 10px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 700 }}>
+                    In Stock Only
+                    <button type="button" onClick={() => setInStockOnly(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#1D4ED8', padding: 0, display: 'flex' }}>
+                      <XIcon size={13} />
+                    </button>
+                  </span>
+                )}
+                {minDiscount > 0 && (
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE', padding: '4px 10px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 700 }}>
+                    {minDiscount}%+ OFF
+                    <button type="button" onClick={() => setMinDiscount(0)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#1D4ED8', padding: 0, display: 'flex' }}>
+                      <XIcon size={13} />
+                    </button>
+                  </span>
+                )}
+                {minRating > 0 && (
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE', padding: '4px 10px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 700 }}>
+                    4★ &amp; Above
+                    <button type="button" onClick={() => setMinRating(0)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#1D4ED8', padding: 0, display: 'flex' }}>
+                      <XIcon size={13} />
+                    </button>
+                  </span>
+                )}
+                <button
+                  type="button"
+                  onClick={clearAllFilters}
+                  style={{ background: 'none', border: 'none', color: '#EF4444', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer', textDecoration: 'underline' }}
+                >
+                  Clear All
+                </button>
+              </>
+            ) : (
+              <span style={{ fontSize: '0.85rem', color: '#64748B' }}>Showing verified factory packaging items</span>
+            )}
+          </div>
+
+          {/* Desktop Sort Dropdown */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <label htmlFor="catalog-sort" style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', whiteSpace: 'nowrap' }}>
+              Sort by:
+            </label>
+            <select
+              id="catalog-sort"
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+              style={{
+                padding: '8px 12px',
+                borderRadius: '8px',
+                border: '1.5px solid #CBD5E1',
+                background: '#FFFFFF',
+                fontSize: '0.88rem',
+                fontWeight: 600,
+                color: '#0F172A',
+                cursor: 'pointer'
+              }}
+            >
+              <option value="popular">Popularity / Best Sellers</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+              <option value="newest">Newest First</option>
+              <option value="name_asc">Name: A to Z</option>
+              <option value="discount_desc">Discount: Highest First</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Layout Grid: Desktop Sidebar + Product Cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: '270px 1fr', gap: '28px', alignItems: 'start' }} className="catalog-layout-grid">
+          {/* Desktop Filter Sidebar */}
+          <aside className="catalog-desktop-sidebar" style={{ background: '#FFFFFF', padding: '22px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', paddingBottom: '12px', borderBottom: '1px solid #F1F5F9' }}>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0F172A', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <SlidersHorizontalIcon size={18} color="#1D4ED8" />
+                <span>Filter Products</span>
+              </h3>
+              {activeFiltersCount > 0 && (
+                <button
+                  type="button"
+                  onClick={clearAllFilters}
+                  style={{ background: 'none', border: 'none', color: '#EF4444', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer' }}
+                >
+                  Reset
+                </button>
+              )}
+            </div>
+
+            {/* Subcategories (if any) */}
+            {subcategoryOptions.length > 0 && (
+              <div style={{ marginBottom: '24px' }}>
+                <h4 style={{ fontSize: '0.88rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
+                  {category ? 'Subcategories' : 'Categories'}
+                </h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', cursor: 'pointer', color: !selectedSubcat ? '#1D4ED8' : '#334155', fontWeight: !selectedSubcat ? 700 : 500 }}>
+                    <input
+                      type="radio"
+                      name="subcat"
+                      checked={!selectedSubcat}
+                      onChange={() => setSelectedSubcat('')}
+                      style={{ accentColor: '#1D4ED8' }}
+                    />
+                    <span>All {category?.name || 'Categories'}</span>
+                  </label>
+                  {subcategoryOptions.map(sub => (
+                    <label key={sub.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', cursor: 'pointer', color: selectedSubcat === sub.slug ? '#1D4ED8' : '#334155', fontWeight: selectedSubcat === sub.slug ? 700 : 500 }}>
+                      <input
+                        type="radio"
+                        name="subcat"
+                        checked={selectedSubcat === sub.slug}
+                        onChange={() => setSelectedSubcat(sub.slug)}
+                        style={{ accentColor: '#1D4ED8' }}
+                      />
+                      <span>{sub.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Price Range Filter */}
+            <div style={{ marginBottom: '24px', paddingBottom: '20px', borderBottom: '1px solid #F1F5F9' }}>
+              <h4 style={{ fontSize: '0.88rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
+                Price Range (₹)
+              </h4>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '10px' }}>
+                <input
+                  type="number"
+                  placeholder="Min"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value ? Number(e.target.value) : '')}
+                  style={{ width: '100%', padding: '7px 10px', borderRadius: '6px', border: '1px solid #CBD5E1', fontSize: '0.85rem' }}
+                />
+                <span style={{ color: '#94A3B8' }}>–</span>
+                <input
+                  type="number"
+                  placeholder="Max"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : '')}
+                  style={{ width: '100%', padding: '7px 10px', borderRadius: '6px', border: '1px solid #CBD5E1', fontSize: '0.85rem' }}
+                />
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                <button
+                  type="button"
+                  onClick={() => { setMinPrice(0); setMaxPrice(50); }}
+                  style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '3px 8px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 600, cursor: 'pointer' }}
+                >
+                  Under ₹50
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setMinPrice(50); setMaxPrice(200); }}
+                  style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '3px 8px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 600, cursor: 'pointer' }}
+                >
+                  ₹50 - ₹200
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setMinPrice(200); setMaxPrice(500); }}
+                  style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '3px 8px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 600, cursor: 'pointer' }}
+                >
+                  ₹200 - ₹500
+                </button>
+              </div>
+            </div>
+
+            {/* In Stock Availability */}
+            <div style={{ marginBottom: '24px', paddingBottom: '20px', borderBottom: '1px solid #F1F5F9' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.88rem', fontWeight: 700, color: '#1E293B', cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={inStockOnly}
+                  onChange={(e) => setInStockOnly(e.target.checked)}
+                  style={{ width: '16px', height: '16px', accentColor: '#1D4ED8', cursor: 'pointer' }}
+                />
+                <span>In Stock Only</span>
+              </label>
+            </div>
+
+            {/* Minimum Discount % Filter */}
+            <div style={{ marginBottom: '24px', paddingBottom: '20px', borderBottom: '1px solid #F1F5F9' }}>
+              <h4 style={{ fontSize: '0.88rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
+                Discount
+              </h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {[0, 10, 20, 30, 50].map((d) => (
+                  <label key={d} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', cursor: 'pointer', color: minDiscount === d ? '#1D4ED8' : '#334155', fontWeight: minDiscount === d ? 700 : 500 }}>
+                    <input
+                      type="radio"
+                      name="discount"
+                      checked={minDiscount === d}
+                      onChange={() => setMinDiscount(d)}
+                      style={{ accentColor: '#1D4ED8' }}
+                    />
+                    <span>{d === 0 ? 'All Items' : `${d}% or more`}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Customer Rating Filter */}
+            <div>
+              <h4 style={{ fontSize: '0.88rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
+                Customer Rating
+              </h4>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', cursor: 'pointer', color: minRating === 4 ? '#1D4ED8' : '#334155', fontWeight: minRating === 4 ? 700 : 500 }}>
+                <input
+                  type="checkbox"
+                  checked={minRating === 4}
+                  onChange={(e) => setMinRating(e.target.checked ? 4 : 0)}
+                  style={{ width: '16px', height: '16px', accentColor: '#1D4ED8', cursor: 'pointer' }}
+                />
+                <span>⭐ 4.0 &amp; Above</span>
+              </label>
+            </div>
+          </aside>
+
+          {/* Product Cards Grid Area */}
+          <main>
+            {processedProducts.length > 0 ? (
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+                  gap: '20px'
+                }}
+                className="catalog-products-grid"
+              >
+                {processedProducts.map(product => (
+                  <ProductCard key={product.id || product.slug} product={product} />
+                ))}
+              </div>
+            ) : (
+              /* Empty State */
+              <div
+                style={{
+                  background: '#FFFFFF',
+                  borderRadius: '16px',
+                  border: '1px solid #E2E8F0',
+                  padding: '60px 24px',
+                  textAlign: 'center',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.02)'
+                }}
+              >
+                <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>📦</div>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0F172A', marginBottom: '8px' }}>
+                  No Products Found
+                </h3>
+                <p style={{ color: '#64748B', fontSize: '0.95rem', maxWidth: '420px', margin: '0 auto 24px auto', lineHeight: 1.5 }}>
+                  {activeFiltersCount > 0
+                    ? 'No products match the selected filters. Please adjust your price or clear filters to see all available items.'
+                    : 'Currently no products have been added to this category yet. Check back soon or browse our full shop catalogue.'}
+                </p>
+                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                  {activeFiltersCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={clearAllFilters}
+                      style={{
+                        background: '#1D4ED8',
+                        color: '#FFFFFF',
+                        border: 'none',
+                        padding: '12px 24px',
+                        borderRadius: '8px',
+                        fontWeight: 700,
+                        fontSize: '0.92rem',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Clear All Filters
+                    </button>
+                  )}
+                  <Link
+                    href="/shop"
+                    style={{
+                      background: '#F1F5F9',
+                      color: '#0F172A',
+                      padding: '12px 24px',
+                      borderRadius: '8px',
+                      fontWeight: 700,
+                      fontSize: '0.92rem',
+                      textDecoration: 'none'
+                    }}
+                  >
+                    Browse All Products &rarr;
+                  </Link>
+                </div>
+              </div>
+            )}
+          </main>
+        </div>
+      </div>
+
+      {/* 3. Mobile Filter & Sort Drawer / Bottom Sheet */}
+      {isMobileFilterOpen && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', justifyContent: 'flex-end', background: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(3px)' }}>
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '380px',
+              height: '100%',
+              background: '#FFFFFF',
+              display: 'flex',
+              flexDirection: 'column',
+              boxShadow: '-4px 0 24px rgba(0,0,0,0.15)',
+              animation: 'slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+          >
+            {/* Drawer Header */}
+            <div style={{ padding: '16px 20px', borderBottom: '1px solid #E2E8F0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <SlidersHorizontalIcon size={18} color="#1D4ED8" />
+                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#0F172A' }}>Filters &amp; Sort</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsMobileFilterOpen(false)}
+                style={{ background: 'none', border: 'none', padding: '6px', cursor: 'pointer', color: '#64748B' }}
+                aria-label="Close filters"
+              >
+                <XIcon size={20} />
+              </button>
+            </div>
+
+            {/* Drawer Scrollable Content */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
+              {/* Mobile Sort */}
+              <div style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
+                <h4 style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
+                  Sort By
+                </h4>
+                <select
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value)}
+                  style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1.5px solid #CBD5E1', fontSize: '0.9rem', fontWeight: 600 }}
+                >
+                  <option value="popular">Popularity / Best Sellers</option>
+                  <option value="price_asc">Price: Low to High</option>
+                  <option value="price_desc">Price: High to Low</option>
+                  <option value="newest">Newest First</option>
+                  <option value="name_asc">Name: A to Z</option>
+                  <option value="discount_desc">Discount: Highest First</option>
+                </select>
+              </div>
+
+              {/* Subcategories */}
+              {subcategoryOptions.length > 0 && (
+                <div style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
+                  <h4 style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
+                    {category ? 'Subcategories' : 'Categories'}
+                  </h4>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.9rem', color: !selectedSubcat ? '#1D4ED8' : '#334155', fontWeight: !selectedSubcat ? 700 : 500 }}>
+                      <input
+                        type="radio"
+                        name="mobile_subcat"
+                        checked={!selectedSubcat}
+                        onChange={() => setSelectedSubcat('')}
+                        style={{ accentColor: '#1D4ED8' }}
+                      />
+                      <span>All {category?.name || 'Categories'}</span>
+                    </label>
+                    {subcategoryOptions.map(sub => (
+                      <label key={sub.id} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.9rem', color: selectedSubcat === sub.slug ? '#1D4ED8' : '#334155', fontWeight: selectedSubcat === sub.slug ? 700 : 500 }}>
+                        <input
+                          type="radio"
+                          name="mobile_subcat"
+                          checked={selectedSubcat === sub.slug}
+                          onChange={() => setSelectedSubcat(sub.slug)}
+                          style={{ accentColor: '#1D4ED8' }}
+                        />
+                        <span>{sub.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Price Range */}
+              <div style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
+                <h4 style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
+                  Price Range (₹)
+                </h4>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
+                  <input
+                    type="number"
+                    placeholder="Min"
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value ? Number(e.target.value) : '')}
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #CBD5E1', fontSize: '0.9rem' }}
+                  />
+                  <span style={{ color: '#94A3B8' }}>–</span>
+                  <input
+                    type="number"
+                    placeholder="Max"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : '')}
+                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #CBD5E1', fontSize: '0.9rem' }}
+                  />
+                </div>
+              </div>
+
+              {/* Availability */}
+              <div style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.92rem', fontWeight: 700, color: '#1E293B' }}>
+                  <input
+                    type="checkbox"
+                    checked={inStockOnly}
+                    onChange={(e) => setInStockOnly(e.target.checked)}
+                    style={{ width: '18px', height: '18px', accentColor: '#1D4ED8' }}
+                  />
+                  <span>In Stock Only</span>
+                </label>
+              </div>
+
+              {/* Discount */}
+              <div style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
+                <h4 style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
+                  Discount
+                </h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {[0, 10, 20, 30, 50].map((d) => (
+                    <label key={d} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.9rem', color: minDiscount === d ? '#1D4ED8' : '#334155', fontWeight: minDiscount === d ? 700 : 500 }}>
+                      <input
+                        type="radio"
+                        name="mobile_discount"
+                        checked={minDiscount === d}
+                        onChange={() => setMinDiscount(d)}
+                        style={{ accentColor: '#1D4ED8' }}
+                      />
+                      <span>{d === 0 ? 'All Items' : `${d}% or more`}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Rating */}
+              <div>
+                <h4 style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
+                  Customer Rating
+                </h4>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.92rem', color: minRating === 4 ? '#1D4ED8' : '#334155', fontWeight: minRating === 4 ? 700 : 500 }}>
+                  <input
+                    type="checkbox"
+                    checked={minRating === 4}
+                    onChange={(e) => setMinRating(e.target.checked ? 4 : 0)}
+                    style={{ width: '18px', height: '18px', accentColor: '#1D4ED8' }}
+                  />
+                  <span>⭐ 4.0 &amp; Above</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Drawer Footer Actions */}
+            <div style={{ padding: '16px 20px', borderTop: '1px solid #E2E8F0', background: '#F8FAFC', display: 'flex', gap: '12px' }}>
+              <button
+                type="button"
+                onClick={clearAllFilters}
+                style={{ flex: 1, padding: '12px', borderRadius: '8px', background: '#FFFFFF', border: '1px solid #CBD5E1', fontWeight: 700, fontSize: '0.9rem', color: '#475569', cursor: 'pointer' }}
+              >
+                Reset All
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsMobileFilterOpen(false)}
+                style={{ flex: 2, padding: '12px', borderRadius: '8px', background: '#1D4ED8', border: 'none', fontWeight: 800, fontSize: '0.92rem', color: '#FFFFFF', cursor: 'pointer', boxShadow: '0 2px 8px rgba(29, 78, 216, 0.3)' }}
+              >
+                Apply ({processedProducts.length})
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Responsive Styles */}
+      <style>{`
+        @media (max-width: 900px) {
+          .catalog-layout-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .catalog-desktop-sidebar {
+            display: none !important;
+          }
+          .mobile-filter-trigger-btn {
+            display: inline-flex !important;
+          }
+        }
+        @keyframes slideInRight {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
+        }
+      `}</style>
+    </div>
+  );
+};

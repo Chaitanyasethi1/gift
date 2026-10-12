@@ -26,66 +26,66 @@ interface NavCategory {
 const DEFAULT_CATEGORIES: NavCategory[] = [
   {
     title: 'Carry Bags',
-    link: '/shop?category=carry-bags',
+    link: '/category/carry-bags',
     items: [
-      { label: 'Kraft Paper Bags', link: '/shop?category=kraft-paper-bags', icon: '🛍️' },
-      { label: 'Printed Carry Bags', link: '/shop?category=printed-carry-bags', icon: '🎨' },
-      { label: 'Handle Paper Bags', link: '/shop?category=handle-paper-bags', icon: '👜' },
-      { label: 'Paper Mailers & Lifafa', link: '/shop?category=paper-courier-mailers', icon: '✉️' }
+      { label: 'Kraft Paper Bags', link: '/category/kraft-carry-bags', icon: '🛍️' },
+      { label: 'Printed Carry Bags', link: '/category/printed-carry-bags', icon: '🎨' },
+      { label: 'Handle Paper Bags', link: '/category/handle-carry-bags', icon: '👜' },
+      { label: 'Paper Mailers & Lifafa', link: '/category/paper-bags-mailers', icon: '✉️' }
     ]
   },
   {
     title: 'Packaging Material',
-    link: '/shop?category=packaging-material',
+    link: '/category/packaging-material',
     items: [
-      { label: 'Corrugated Boxes (3 & 5 Ply)', link: '/corrugated-boxes-delhi', icon: '📦' },
-      { label: 'Garment & Apparel Boxes', link: '/shop?category=garment-boxes', icon: '👔' },
-      { label: 'Gift & Luxury Boxes', link: '/shop?category=luxury-boxes', icon: '🎁' },
-      { label: 'Sweet & Bakery Boxes', link: '/shop?category=sweet-bakery-boxes', icon: '🍰' },
-      { label: 'Custom Printed Pizza Boxes', link: '/shop?category=pizza-boxes', icon: '🍕' },
-      { label: 'Custom Master Cartons', link: '/corrugated-boxes-ghaziabad', icon: '🏭' }
+      { label: 'Corrugated Boxes (3 & 5 Ply)', link: '/category/corrugated-boxes', icon: '📦' },
+      { label: 'Garment & Apparel Boxes', link: '/category/garment-boxes', icon: '👔' },
+      { label: 'Gift & Luxury Boxes', link: '/category/gift-boxes', icon: '🎁' },
+      { label: 'Sweet & Bakery Boxes', link: '/category/sweet-boxes', icon: '🍰' },
+      { label: 'Custom Printed Pizza Boxes', link: '/category/pizza-boxes', icon: '🍕' },
+      { label: 'Custom Master Cartons', link: '/category/corrugated-boxes', icon: '🏭' }
     ]
   },
   {
     title: 'Labels & Tags',
-    link: '/shop?category=labels-tags',
+    link: '/category/labels-tags',
     items: [
-      { label: 'Woven Brand Labels', link: '/shop?category=woven-labels', icon: '🧵' },
-      { label: 'Printed Satin Labels', link: '/shop?category=satin-labels', icon: '🏷️' },
-      { label: 'Clothing Hang Tags', link: '/shop?category=hang-tags', icon: '🔖' },
-      { label: 'Wash Care Labels', link: '/shop?category=wash-care-labels', icon: '👕' },
-      { label: 'Barcode & SKU Stickers', link: '/shop?category=barcode-stickers', icon: '📊' }
+      { label: 'Woven Brand Labels', link: '/category/woven-labels', icon: '🧵' },
+      { label: 'Printed Satin Labels', link: '/category/satin-labels', icon: '🏷️' },
+      { label: 'Clothing Hang Tags', link: '/category/hang-tags', icon: '🔖' },
+      { label: 'Wash Care Labels', link: '/category/wash-care-labels', icon: '👕' },
+      { label: 'Barcode & SKU Stickers', link: '/category/barcode-stickers', icon: '📊' }
     ]
   },
   {
     title: 'Stickers',
-    link: '/shop?category=stickers',
+    link: '/category/stickers',
     items: [
-      { label: 'Waterproof Vinyl Stickers', link: '/shop?category=vinyl-stickers', icon: '💧' },
-      { label: 'Custom Die-Cut Stickers', link: '/shop?category=die-cut-stickers', icon: '✂️' },
-      { label: 'Round Product Stickers', link: '/shop?category=round-stickers', icon: '⚪' },
-      { label: 'Packaging Seal Labels', link: '/shop?category=seal-labels', icon: '🔒' }
+      { label: 'Waterproof Vinyl Stickers', link: '/category/vinyl-stickers', icon: '💧' },
+      { label: 'Custom Die-Cut Stickers', link: '/category/die-cut-stickers', icon: '✂️' },
+      { label: 'Round Product Stickers', link: '/category/round-stickers', icon: '⚪' },
+      { label: 'Packaging Seal Labels', link: '/category/packaging-labels', icon: '🔒' }
     ]
   },
   {
     title: 'Advertising & Office',
-    link: '/shop?category=advertising',
+    link: '/category/advertising',
     items: [
-      { label: 'Visiting Cards & Cards', link: '/shop?category=visiting-cards', icon: '📇' },
-      { label: 'Custom Thank You Cards', link: '/shop?category=thank-you-cards', icon: '💌' },
-      { label: 'Rubber Stamps & Seals', link: '/shop?category=rubber-stamps', icon: '💮' },
-      { label: 'Letterheads & Stationery', link: '/shop?category=stationery', icon: '📄' },
-      { label: 'QR Code Standees & Cards', link: '/shop?category=qr-standees', icon: '📱' }
+      { label: 'Visiting Cards & Cards', link: '/category/visiting-cards', icon: '📇' },
+      { label: 'Custom Thank You Cards', link: '/category/thank-you-cards', icon: '💌' },
+      { label: 'Rubber Stamps & Seals', link: '/category/rubber-stamps', icon: '💮' },
+      { label: 'Letterheads & Stationery', link: '/category/letterheads', icon: '📄' },
+      { label: 'QR Code Standees & Cards', link: '/category/qr-code-cards', icon: '📱' }
     ]
   },
   {
     title: 'Disposable Products',
-    link: '/shop?category=disposable',
+    link: '/category/disposable-products',
     items: [
-      { label: 'Paper Dona & Bowls', link: '/shop?category=paper-dona', icon: '🥣' },
-      { label: 'Paper Plates & Platters', link: '/shop?category=paper-plates', icon: '🍽️' },
-      { label: 'Silver Dona', link: '/shop?category=silver-dona', icon: '✨' },
-      { label: 'Silver Laminated Plates', link: '/shop?category=silver-plates', icon: '🥈' }
+      { label: 'Paper Dona & Bowls', link: '/category/paper-dona', icon: '🥣' },
+      { label: 'Paper Plates & Platters', link: '/category/paper-plates', icon: '🍽️' },
+      { label: 'Silver Dona', link: '/category/silver-dona', icon: '✨' },
+      { label: 'Silver Laminated Plates', link: '/category/silver-plates', icon: '🥈' }
     ]
   }
 ];
@@ -115,14 +115,14 @@ export const CategoryDrawer: React.FC = () => {
 
               return {
                 title: m.name,
-                link: `/shop?category=${m.slug}`,
+                link: `/category/${m.slug}`,
                 items: subs.length > 0
                   ? subs.map(s => ({
                       label: s.name,
-                      link: `/shop?category=${s.slug}`,
+                      link: `/category/${s.slug}`,
                       icon: '📦'
                     }))
-                  : [{ label: `All ${m.name}`, link: `/shop?category=${m.slug}`, icon: '🛍️' }]
+                  : [{ label: `All ${m.name}`, link: `/category/${m.slug}`, icon: '🛍️' }]
               };
             });
             if (mapped.length > 0) {
