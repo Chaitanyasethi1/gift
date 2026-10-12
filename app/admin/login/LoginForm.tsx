@@ -10,10 +10,18 @@ export default function LoginForm() {
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setError(null);
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('admin_tab_session', 'active');
+      sessionStorage.setItem('admin_session_time', Date.now().toString());
+    }
     const result = await login(formData);
     if (result?.error) {
       setError(result.error);
       setLoading(false);
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem('admin_tab_session');
+        sessionStorage.removeItem('admin_session_time');
+      }
     }
   }
 
@@ -57,7 +65,7 @@ export default function LoginForm() {
           <button 
             type="submit" 
             disabled={loading}
-            style={{ width: '100%', padding: '12px', background: '#e11d48', color: '#fff', borderRadius: '6px', border: 'none', fontWeight: 600, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer' }}
+            style={{ width: '100%', padding: '12px', background: '#1D4ED8', color: '#fff', borderRadius: '6px', border: 'none', fontWeight: 600, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer' }}
           >
             {loading ? 'Logging in...' : 'Sign In'}
           </button>
