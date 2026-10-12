@@ -1,11 +1,11 @@
 
 :root {
   /* Refined Industrial B2B Light Palette (Clean, Airy, Luxury) */
-  --primary: #B81B54;
-  --primary-hover: #9E1647;
-  --primary-dark: #821039;
-  --primary-light: #FDF2F5;
-  --primary-glow: rgba(184, 27, 84, 0.1);
+  --primary: #E05A38;
+  --primary-hover: #C2410C;
+  --primary-dark: #9A3412;
+  --primary-light: #FFF7ED;
+  --primary-glow: rgba(224, 90, 56, 0.15);
   
   --brand-red: #DC2626;
   --brand-red-dark: #B91C1C;

@@ -179,7 +179,7 @@ export default function CheckoutPage() {
           pincode: pincode
         },
         theme: {
-          color: '#E11D48'
+          color: '#E05A38'
         }
       };
 
@@ -450,7 +450,7 @@ export default function CheckoutPage() {
                   justifyContent: 'center',
                   padding: '16px',
                   marginTop: '16px',
-                  background: isProcessing ? '#94A3B8' : (paymentMethod === 'cod' ? '#16A34A' : '#E11D48'),
+                  background: isProcessing ? '#94A3B8' : (paymentMethod === 'cod' ? '#16A34A' : '#E05A38'),
                   fontSize: '1.1rem',
                   borderRadius: '10px',
                   fontWeight: 800,

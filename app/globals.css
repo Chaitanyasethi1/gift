@@ -2,12 +2,12 @@ body, p, span, a, li, input, button { font-family: var(--font-inter), system-ui,
 h1, h2, h3, h4, h5, h6, .brand-name, .section-title { font-family: var(--font-poppins), system-ui, -apple-system, sans-serif !important; letter-spacing: -0.5px; }
 
 :root {
-  /* Refined Industrial B2B Light Palette (Clean, Airy, Luxury) */
-  --primary: #B81B54;
-  --primary-hover: #9E1647;
-  --primary-dark: #821039;
-  --primary-light: #FDF2F5;
-  --primary-glow: rgba(184, 27, 84, 0.1);
+  /* Unified E-Commerce Palette (Synchronized Brand Theme) */
+  --primary: #E05A38;
+  --primary-hover: #C2410C;
+  --primary-dark: #9A3412;
+  --primary-light: #FFF7ED;
+  --primary-glow: rgba(224, 90, 56, 0.15);
   
   --brand-red: #DC2626;
   --brand-red-dark: #B91C1C;
@@ -536,7 +536,7 @@ button, input, select, textarea {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, var(--primary) 0%, #9E1647 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   color: #FFFFFF;
   font-weight: 700;
   font-size: 0.82rem;
@@ -544,15 +544,15 @@ button, input, select, textarea {
   border-radius: var(--radius-full);
   border: none;
   cursor: pointer;
-  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 3px 10px var(--primary-glow);
   transition: var(--transition-fast);
   white-space: nowrap;
 }
 
 .btn-header-quote:hover {
-  background: linear-gradient(135deg, #B81B54 0%, #821039 100%);
+  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-dark) 100%);
   transform: translateY(-1px);
-  box-shadow: 0 5px 14px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 5px 14px var(--primary-glow);
 }
 
 /* Hamburger toggle for mobile */
@@ -1243,9 +1243,9 @@ button, input, select, textarea {
 }
 
 .choice-pill-btn.active {
-  background: #FDF2F5;
-  border-color: #B81B54;
-  box-shadow: 0 0 0 1px #B81B54;
+  background: var(--primary-light);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
 }
 
 .choice-title {
@@ -1321,8 +1321,8 @@ button, input, select, textarea {
 }
 
 .tier-item:hover, .tier-item.active {
-  background: #FDF2F5;
-  border-color: #B81B54;
+  background: var(--primary-light);
+  border-color: var(--primary);
 }
 
 .tier-qty {
@@ -1334,7 +1334,7 @@ button, input, select, textarea {
 .tier-rate {
   font-size: 0.85rem;
   font-weight: 700;
-  color: #B81B54;
+  color: var(--primary);
 }
 
 .builder-action-btns {
@@ -1580,7 +1580,7 @@ button, input, select, textarea {
 }
 
 .btn-quick-view:hover {
-  background: #B81B54;
+  background: var(--primary);
   color: #FFFFFF;
 }
 
@@ -2471,7 +2471,7 @@ button, input, select, textarea {
 }
 
 .verified-buyer-badge {
-  color: #B81B54;
+  color: var(--primary);
   font-size: 0.72rem;
   font-weight: 700;
   display: inline-flex;
@@ -3483,9 +3483,9 @@ button, input, select, textarea {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: #ECFDF5;
-  color: #B81B54;
-  border: 2px solid #A7F3D0;
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 2px solid var(--primary);
   font-size: 2.5rem;
   display: flex;
   align-items: center;
@@ -3616,8 +3616,8 @@ button, input, select, textarea {
   width: 64px;
   height: 64px;
   border-radius: var(--radius-md);
-  background: #ECFDF5;
-  color: #B81B54;
+  background: var(--primary-light);
+  color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;

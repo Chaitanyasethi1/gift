@@ -373,7 +373,7 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
               </div>
               <div className="cart-calc-row final-total" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.96rem', fontWeight: 800, color: '#0F172A', borderTop: '1px dashed #CBD5E1', paddingTop: '4px', marginTop: '2px' }}>
                 <span>Estimated Grand Total</span>
-                <span style={{ color: '#B81B54', fontWeight: 900 }}>₹{finalTotal.toFixed(2)}</span>
+                <span style={{ color: '#E05A38', fontWeight: 900 }}>₹{finalTotal.toFixed(2)}</span>
               </div>
             </div>
 
@@ -410,7 +410,7 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
                   router.push('/checkout');
                 }}
                 style={{
-                  background: '#9E1647',
+                  background: '#E05A38',
                   color: '#FFFFFF',
                   border: 'none',
                   fontWeight: 800,
@@ -422,7 +422,7 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
                   justifyContent: 'center',
                   gap: '6px',
                   cursor: 'pointer',
-                  boxShadow: '0 2px 6px rgba(158, 22, 71, 0.2)',
+                  boxShadow: '0 2px 8px rgba(224, 90, 56, 0.25)',
                   touchAction: 'manipulation'
                 }}
               >
