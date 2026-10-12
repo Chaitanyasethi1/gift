@@ -11,7 +11,9 @@ import {
   SlidersHorizontalIcon, 
   ArrowUpDownIcon, 
   PackageIcon, 
-  CheckCircleIcon 
+  CheckCircleIcon,
+  CheckIcon,
+  StarIcon
 } from '@/components/Icons';
 
 export interface CategoryCatalogProps {
@@ -405,151 +407,317 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
         {/* Layout Grid: Desktop Sidebar + Product Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: '270px 1fr', gap: '28px', alignItems: 'start' }} className="catalog-layout-grid">
           {/* Desktop Filter Sidebar */}
-          <aside className="catalog-desktop-sidebar" style={{ background: '#FFFFFF', padding: '22px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', paddingBottom: '12px', borderBottom: '1px solid #F1F5F9' }}>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0F172A', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <SlidersHorizontalIcon size={18} color="#1D4ED8" />
-                <span>Filter Products</span>
-              </h3>
+          <aside 
+            className="catalog-desktop-sidebar" 
+            style={{ 
+              background: '#FFFFFF', 
+              borderRadius: '16px', 
+              border: '1px solid #E2E8F0', 
+              boxShadow: '0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02)',
+              position: 'sticky',
+              top: '90px',
+              overflow: 'hidden'
+            }}
+          >
+            {/* Header */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderBottom: '1px solid #F1F5F9', background: '#FAFAFC' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#EFF6FF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <SlidersHorizontalIcon size={16} color="#1D4ED8" />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '0.98rem', fontWeight: 800, color: '#0F172A', margin: 0, lineHeight: 1.2 }}>
+                    Filters
+                  </h3>
+                  <div style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600 }}>
+                    {processedProducts.length} items found
+                  </div>
+                </div>
+              </div>
               {activeFiltersCount > 0 && (
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  style={{ background: 'none', border: 'none', color: '#EF4444', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer' }}
+                  style={{ 
+                    background: '#FEF2F2', 
+                    border: '1px solid #FECACA', 
+                    color: '#DC2626', 
+                    fontSize: '0.74rem', 
+                    fontWeight: 700, 
+                    padding: '4px 10px', 
+                    borderRadius: '20px', 
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
+                  }}
+                  title="Clear all active filters"
                 >
-                  Reset
+                  Reset ({activeFiltersCount})
                 </button>
               )}
             </div>
 
-            {/* Subcategories (if any) */}
-            {subcategoryOptions.length > 0 && (
-              <div style={{ marginBottom: '24px' }}>
-                <h4 style={{ fontSize: '0.88rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
-                  {category ? 'Subcategories' : 'Categories'}
-                </h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', cursor: 'pointer', color: !selectedSubcat ? '#1D4ED8' : '#334155', fontWeight: !selectedSubcat ? 700 : 500 }}>
+            <div style={{ padding: '20px' }}>
+              {/* Subcategories (if any) */}
+              {subcategoryOptions.length > 0 && (
+                <div style={{ marginBottom: '22px', paddingBottom: '20px', borderBottom: '1px solid #F1F5F9' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <h4 style={{ fontSize: '0.8rem', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>
+                      {category ? 'Subcategories' : 'Categories'}
+                    </h4>
+                    {selectedSubcat && (
+                      <span style={{ fontSize: '0.72rem', color: '#1D4ED8', fontWeight: 700, cursor: 'pointer' }} onClick={() => setSelectedSubcat('')}>
+                        Clear
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <div
+                      onClick={() => setSelectedSubcat('')}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '8px 10px',
+                        borderRadius: '8px',
+                        background: !selectedSubcat ? '#EFF6FF' : 'transparent',
+                        color: !selectedSubcat ? '#1D4ED8' : '#334155',
+                        fontWeight: !selectedSubcat ? 700 : 500,
+                        fontSize: '0.84rem',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <span>All {category?.name || 'Items'}</span>
+                      {!selectedSubcat && <CheckIcon size={14} color="#1D4ED8" />}
+                    </div>
+                    {subcategoryOptions.map(sub => {
+                      const isSelected = selectedSubcat === sub.slug;
+                      return (
+                        <div
+                          key={sub.id}
+                          onClick={() => setSelectedSubcat(isSelected ? '' : sub.slug)}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '8px 10px',
+                            borderRadius: '8px',
+                            background: isSelected ? '#EFF6FF' : 'transparent',
+                            color: isSelected ? '#1D4ED8' : '#334155',
+                            fontWeight: isSelected ? 700 : 500,
+                            fontSize: '0.84rem',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease'
+                          }}
+                        >
+                          <span>{sub.name}</span>
+                          {isSelected && <CheckIcon size={14} color="#1D4ED8" />}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Price Range Filter */}
+              <div style={{ marginBottom: '22px', paddingBottom: '20px', borderBottom: '1px solid #F1F5F9' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <h4 style={{ fontSize: '0.8rem', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>
+                    Price Range
+                  </h4>
+                  {(minPrice !== '' || maxPrice !== '') && (
+                    <span style={{ fontSize: '0.72rem', color: '#1D4ED8', fontWeight: 700, cursor: 'pointer' }} onClick={() => { setMinPrice(''); setMaxPrice(''); }}>
+                      Reset
+                    </span>
+                  )}
+                </div>
+
+                {/* Min / Max Input Boxes with integrated ₹ currency */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '8px', alignItems: 'center', marginBottom: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', background: '#F8FAFC', border: '1.5px solid #E2E8F0', borderRadius: '8px', padding: '0 10px', height: '36px' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#94A3B8', marginRight: '4px' }}>₹</span>
                     <input
-                      type="radio"
-                      name="subcat"
-                      checked={!selectedSubcat}
-                      onChange={() => setSelectedSubcat('')}
-                      style={{ accentColor: '#1D4ED8' }}
+                      type="number"
+                      placeholder="Min"
+                      value={minPrice}
+                      onChange={(e) => setMinPrice(e.target.value ? Number(e.target.value) : '')}
+                      style={{ width: '100%', border: 'none', background: 'transparent', fontSize: '0.85rem', fontWeight: 600, color: '#0F172A', outline: 'none' }}
                     />
-                    <span>All {category?.name || 'Categories'}</span>
-                  </label>
-                  {subcategoryOptions.map(sub => (
-                    <label key={sub.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', cursor: 'pointer', color: selectedSubcat === sub.slug ? '#1D4ED8' : '#334155', fontWeight: selectedSubcat === sub.slug ? 700 : 500 }}>
-                      <input
-                        type="radio"
-                        name="subcat"
-                        checked={selectedSubcat === sub.slug}
-                        onChange={() => setSelectedSubcat(sub.slug)}
-                        style={{ accentColor: '#1D4ED8' }}
-                      />
-                      <span>{sub.name}</span>
-                    </label>
-                  ))}
+                  </div>
+                  <span style={{ color: '#94A3B8', fontWeight: 600, fontSize: '0.8rem' }}>–</span>
+                  <div style={{ display: 'flex', alignItems: 'center', background: '#F8FAFC', border: '1.5px solid #E2E8F0', borderRadius: '8px', padding: '0 10px', height: '36px' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#94A3B8', marginRight: '4px' }}>₹</span>
+                    <input
+                      type="number"
+                      placeholder="Max"
+                      value={maxPrice}
+                      onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : '')}
+                      style={{ width: '100%', border: 'none', background: 'transparent', fontSize: '0.85rem', fontWeight: 600, color: '#0F172A', outline: 'none' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Quick Presets */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                  {[
+                    { label: 'Under ₹50', min: 0, max: 50 },
+                    { label: '₹50 – ₹200', min: 50, max: 200 },
+                    { label: '₹200 – ₹500', min: 200, max: 500 },
+                    { label: 'Above ₹500', min: 500, max: '' },
+                  ].map((bracket, idx) => {
+                    const isBracketActive = minPrice === bracket.min && maxPrice === bracket.max;
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => {
+                          if (isBracketActive) {
+                            setMinPrice('');
+                            setMaxPrice('');
+                          } else {
+                            setMinPrice(bracket.min);
+                            setMaxPrice(bracket.max);
+                          }
+                        }}
+                        style={{
+                          padding: '6px 8px',
+                          borderRadius: '8px',
+                          border: isBracketActive ? '1.5px solid #1D4ED8' : '1px solid #E2E8F0',
+                          background: isBracketActive ? '#1D4ED8' : '#F8FAFC',
+                          color: isBracketActive ? '#FFFFFF' : '#334155',
+                          fontSize: '0.74rem',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          transition: 'all 0.15s ease',
+                          textAlign: 'center'
+                        }}
+                      >
+                        {bracket.label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
-            )}
 
-            {/* Price Range Filter */}
-            <div style={{ marginBottom: '24px', paddingBottom: '20px', borderBottom: '1px solid #F1F5F9' }}>
-              <h4 style={{ fontSize: '0.88rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
-                Price Range (₹)
-              </h4>
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '10px' }}>
-                <input
-                  type="number"
-                  placeholder="Min"
-                  value={minPrice}
-                  onChange={(e) => setMinPrice(e.target.value ? Number(e.target.value) : '')}
-                  style={{ width: '100%', padding: '7px 10px', borderRadius: '6px', border: '1px solid #CBD5E1', fontSize: '0.85rem' }}
-                />
-                <span style={{ color: '#94A3B8' }}>–</span>
-                <input
-                  type="number"
-                  placeholder="Max"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : '')}
-                  style={{ width: '100%', padding: '7px 10px', borderRadius: '6px', border: '1px solid #CBD5E1', fontSize: '0.85rem' }}
-                />
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                <button
-                  type="button"
-                  onClick={() => { setMinPrice(0); setMaxPrice(50); }}
-                  style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '3px 8px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 600, cursor: 'pointer' }}
+              {/* In Stock Availability - Custom Toggle Card */}
+              <div style={{ marginBottom: '22px', paddingBottom: '20px', borderBottom: '1px solid #F1F5F9' }}>
+                <div
+                  onClick={() => setInStockOnly(!inStockOnly)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '10px 12px',
+                    background: inStockOnly ? '#F0FDF4' : '#F8FAFC',
+                    border: inStockOnly ? '1.5px solid #86EFAC' : '1px solid #E2E8F0',
+                    borderRadius: '10px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
                 >
-                  Under ₹50
-                </button>
-                <button
-                  type="button"
-                  onClick={() => { setMinPrice(50); setMaxPrice(200); }}
-                  style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '3px 8px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 600, cursor: 'pointer' }}
-                >
-                  ₹50 - ₹200
-                </button>
-                <button
-                  type="button"
-                  onClick={() => { setMinPrice(200); setMaxPrice(500); }}
-                  style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '3px 8px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 600, cursor: 'pointer' }}
-                >
-                  ₹200 - ₹500
-                </button>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: inStockOnly ? '#16A34A' : '#94A3B8', boxShadow: inStockOnly ? '0 0 0 3px rgba(34, 197, 94, 0.2)' : 'none' }} />
+                    <div>
+                      <div style={{ fontSize: '0.84rem', fontWeight: 700, color: inStockOnly ? '#166534' : '#1E293B', lineHeight: 1.2 }}>In Stock Only</div>
+                      <div style={{ fontSize: '0.7rem', color: '#64748B' }}>Exclude out of stock</div>
+                    </div>
+                  </div>
+                  {/* Modern Toggle Switch */}
+                  <div style={{ width: '34px', height: '20px', borderRadius: '12px', background: inStockOnly ? '#16A34A' : '#CBD5E1', padding: '2px', transition: 'all 0.2s ease', position: 'relative' }}>
+                    <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: '#FFFFFF', transform: inStockOnly ? 'translateX(14px)' : 'translateX(0)', transition: 'transform 0.2s ease', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* In Stock Availability */}
-            <div style={{ marginBottom: '24px', paddingBottom: '20px', borderBottom: '1px solid #F1F5F9' }}>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.88rem', fontWeight: 700, color: '#1E293B', cursor: 'pointer' }}>
-                <input
-                  type="checkbox"
-                  checked={inStockOnly}
-                  onChange={(e) => setInStockOnly(e.target.checked)}
-                  style={{ width: '16px', height: '16px', accentColor: '#1D4ED8', cursor: 'pointer' }}
-                />
-                <span>In Stock Only</span>
-              </label>
-            </div>
-
-            {/* Minimum Discount % Filter */}
-            <div style={{ marginBottom: '24px', paddingBottom: '20px', borderBottom: '1px solid #F1F5F9' }}>
-              <h4 style={{ fontSize: '0.88rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
-                Discount
-              </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {[0, 10, 20, 30, 50].map((d) => (
-                  <label key={d} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', cursor: 'pointer', color: minDiscount === d ? '#1D4ED8' : '#334155', fontWeight: minDiscount === d ? 700 : 500 }}>
-                    <input
-                      type="radio"
-                      name="discount"
-                      checked={minDiscount === d}
-                      onChange={() => setMinDiscount(d)}
-                      style={{ accentColor: '#1D4ED8' }}
-                    />
-                    <span>{d === 0 ? 'All Items' : `${d}% or more`}</span>
-                  </label>
-                ))}
+              {/* Minimum Discount Filter - Custom Styled List */}
+              <div style={{ marginBottom: '22px', paddingBottom: '20px', borderBottom: '1px solid #F1F5F9' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <h4 style={{ fontSize: '0.8rem', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>
+                    Discount
+                  </h4>
+                  {minDiscount > 0 && (
+                    <span style={{ fontSize: '0.72rem', color: '#1D4ED8', fontWeight: 700, cursor: 'pointer' }} onClick={() => setMinDiscount(0)}>
+                      Reset
+                    </span>
+                  )}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {[
+                    { val: 0, label: 'All Items' },
+                    { val: 10, label: '10% or more', badge: '10% OFF+' },
+                    { val: 20, label: '20% or more', badge: '20% OFF+' },
+                    { val: 30, label: '30% or more', badge: '30% OFF+' },
+                    { val: 50, label: '50% or more', badge: '50% OFF+' }
+                  ].map((d) => {
+                    const isSelected = minDiscount === d.val;
+                    return (
+                      <div
+                        key={d.val}
+                        onClick={() => setMinDiscount(d.val)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '7px 10px',
+                          borderRadius: '8px',
+                          background: isSelected ? '#EFF6FF' : 'transparent',
+                          border: isSelected ? '1px solid #BFDBFE' : '1px solid transparent',
+                          cursor: 'pointer',
+                          transition: 'all 0.15s ease'
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <div style={{ width: '16px', height: '16px', borderRadius: '50%', border: isSelected ? '5px solid #1D4ED8' : '2px solid #CBD5E1', background: '#FFFFFF', transition: 'all 0.15s ease', flexShrink: 0 }} />
+                          <span style={{ fontSize: '0.84rem', color: isSelected ? '#1D4ED8' : '#334155', fontWeight: isSelected ? 700 : 500 }}>
+                            {d.label}
+                          </span>
+                        </div>
+                        {d.badge && (
+                          <span style={{ fontSize: '0.68rem', fontWeight: 800, padding: '2px 6px', borderRadius: '4px', background: isSelected ? '#DBEAFE' : '#F1F5F9', color: isSelected ? '#1D4ED8' : '#64748B' }}>
+                            {d.badge}
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
 
-            {/* Customer Rating Filter */}
-            <div>
-              <h4 style={{ fontSize: '0.88rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
-                Customer Rating
-              </h4>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', cursor: 'pointer', color: minRating === 4 ? '#1D4ED8' : '#334155', fontWeight: minRating === 4 ? 700 : 500 }}>
-                <input
-                  type="checkbox"
-                  checked={minRating === 4}
-                  onChange={(e) => setMinRating(e.target.checked ? 4 : 0)}
-                  style={{ width: '16px', height: '16px', accentColor: '#1D4ED8', cursor: 'pointer' }}
-                />
-                <span>⭐ 4.0 &amp; Above</span>
-              </label>
+              {/* Customer Rating Filter - Star Card */}
+              <div>
+                <h4 style={{ fontSize: '0.8rem', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>
+                  Customer Rating
+                </h4>
+                <div
+                  onClick={() => setMinRating(minRating === 4 ? 0 : 4)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '10px 12px',
+                    background: minRating === 4 ? '#FEFCE8' : '#F8FAFC',
+                    border: minRating === 4 ? '1.5px solid #FDE047' : '1px solid #E2E8F0',
+                    borderRadius: '10px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ display: 'flex', gap: '2px' }}>
+                      {[1, 2, 3, 4].map(s => (
+                        <StarIcon key={s} size={14} color="#EAB308" filled={true} />
+                      ))}
+                      <StarIcon size={14} color="#CBD5E1" filled={false} />
+                    </div>
+                    <span style={{ fontSize: '0.84rem', fontWeight: 700, color: minRating === 4 ? '#854D0E' : '#1E293B' }}>
+                      4.0 &amp; Above
+                    </span>
+                  </div>
+                  <div style={{ width: '18px', height: '18px', borderRadius: '5px', border: minRating === 4 ? '2px solid #EAB308' : '2px solid #CBD5E1', background: minRating === 4 ? '#EAB308' : '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {minRating === 4 && <CheckIcon size={12} color="#FFFFFF" />}
+                  </div>
+                </div>
+              </div>
             </div>
           </aside>
 
@@ -683,109 +851,256 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
 
               {/* Subcategories */}
               {subcategoryOptions.length > 0 && (
-                <div style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
-                  <h4 style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
-                    {category ? 'Subcategories' : 'Categories'}
-                  </h4>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.9rem', color: !selectedSubcat ? '#1D4ED8' : '#334155', fontWeight: !selectedSubcat ? 700 : 500 }}>
-                      <input
-                        type="radio"
-                        name="mobile_subcat"
-                        checked={!selectedSubcat}
-                        onChange={() => setSelectedSubcat('')}
-                        style={{ accentColor: '#1D4ED8' }}
-                      />
-                      <span>All {category?.name || 'Categories'}</span>
-                    </label>
-                    {subcategoryOptions.map(sub => (
-                      <label key={sub.id} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.9rem', color: selectedSubcat === sub.slug ? '#1D4ED8' : '#334155', fontWeight: selectedSubcat === sub.slug ? 700 : 500 }}>
-                        <input
-                          type="radio"
-                          name="mobile_subcat"
-                          checked={selectedSubcat === sub.slug}
-                          onChange={() => setSelectedSubcat(sub.slug)}
-                          style={{ accentColor: '#1D4ED8' }}
-                        />
-                        <span>{sub.name}</span>
-                      </label>
-                    ))}
+                <div style={{ marginBottom: '22px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <h4 style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>
+                      {category ? 'Subcategories' : 'Categories'}
+                    </h4>
+                    {selectedSubcat && (
+                      <span style={{ fontSize: '0.72rem', color: '#1D4ED8', fontWeight: 700, cursor: 'pointer' }} onClick={() => setSelectedSubcat('')}>
+                        Clear
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <div
+                      onClick={() => setSelectedSubcat('')}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '9px 12px',
+                        borderRadius: '8px',
+                        background: !selectedSubcat ? '#EFF6FF' : 'transparent',
+                        color: !selectedSubcat ? '#1D4ED8' : '#334155',
+                        fontWeight: !selectedSubcat ? 700 : 500,
+                        fontSize: '0.86rem',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <span>All {category?.name || 'Items'}</span>
+                      {!selectedSubcat && <CheckIcon size={14} color="#1D4ED8" />}
+                    </div>
+                    {subcategoryOptions.map(sub => {
+                      const isSelected = selectedSubcat === sub.slug;
+                      return (
+                        <div
+                          key={sub.id}
+                          onClick={() => setSelectedSubcat(isSelected ? '' : sub.slug)}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '9px 12px',
+                            borderRadius: '8px',
+                            background: isSelected ? '#EFF6FF' : 'transparent',
+                            color: isSelected ? '#1D4ED8' : '#334155',
+                            fontWeight: isSelected ? 700 : 500,
+                            fontSize: '0.86rem',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <span>{sub.name}</span>
+                          {isSelected && <CheckIcon size={14} color="#1D4ED8" />}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
 
               {/* Price Range */}
-              <div style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
-                <h4 style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
-                  Price Range (₹)
-                </h4>
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
-                  <input
-                    type="number"
-                    placeholder="Min"
-                    value={minPrice}
-                    onChange={(e) => setMinPrice(e.target.value ? Number(e.target.value) : '')}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #CBD5E1', fontSize: '0.9rem' }}
-                  />
-                  <span style={{ color: '#94A3B8' }}>–</span>
-                  <input
-                    type="number"
-                    placeholder="Max"
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : '')}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #CBD5E1', fontSize: '0.9rem' }}
-                  />
+              <div style={{ marginBottom: '22px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <h4 style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>
+                    Price Range
+                  </h4>
+                  {(minPrice !== '' || maxPrice !== '') && (
+                    <span style={{ fontSize: '0.72rem', color: '#1D4ED8', fontWeight: 700, cursor: 'pointer' }} onClick={() => { setMinPrice(''); setMaxPrice(''); }}>
+                      Reset
+                    </span>
+                  )}
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '8px', alignItems: 'center', marginBottom: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', background: '#F8FAFC', border: '1.5px solid #E2E8F0', borderRadius: '8px', padding: '0 10px', height: '38px' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#94A3B8', marginRight: '4px' }}>₹</span>
+                    <input
+                      type="number"
+                      placeholder="Min"
+                      value={minPrice}
+                      onChange={(e) => setMinPrice(e.target.value ? Number(e.target.value) : '')}
+                      style={{ width: '100%', border: 'none', background: 'transparent', fontSize: '0.88rem', fontWeight: 600, color: '#0F172A', outline: 'none' }}
+                    />
+                  </div>
+                  <span style={{ color: '#94A3B8', fontWeight: 600, fontSize: '0.8rem' }}>–</span>
+                  <div style={{ display: 'flex', alignItems: 'center', background: '#F8FAFC', border: '1.5px solid #E2E8F0', borderRadius: '8px', padding: '0 10px', height: '38px' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#94A3B8', marginRight: '4px' }}>₹</span>
+                    <input
+                      type="number"
+                      placeholder="Max"
+                      value={maxPrice}
+                      onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : '')}
+                      style={{ width: '100%', border: 'none', background: 'transparent', fontSize: '0.88rem', fontWeight: 600, color: '#0F172A', outline: 'none' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Mobile Quick Price Presets */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                  {[
+                    { label: 'Under ₹50', min: 0, max: 50 },
+                    { label: '₹50 – ₹200', min: 50, max: 200 },
+                    { label: '₹200 – ₹500', min: 200, max: 500 },
+                    { label: 'Above ₹500', min: 500, max: '' },
+                  ].map((bracket, idx) => {
+                    const isBracketActive = minPrice === bracket.min && maxPrice === bracket.max;
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => {
+                          if (isBracketActive) {
+                            setMinPrice('');
+                            setMaxPrice('');
+                          } else {
+                            setMinPrice(bracket.min);
+                            setMaxPrice(bracket.max);
+                          }
+                        }}
+                        style={{
+                          padding: '7px 8px',
+                          borderRadius: '8px',
+                          border: isBracketActive ? '1.5px solid #1D4ED8' : '1px solid #E2E8F0',
+                          background: isBracketActive ? '#1D4ED8' : '#F8FAFC',
+                          color: isBracketActive ? '#FFFFFF' : '#334155',
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          textAlign: 'center'
+                        }}
+                      >
+                        {bracket.label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Availability */}
-              <div style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.92rem', fontWeight: 700, color: '#1E293B' }}>
-                  <input
-                    type="checkbox"
-                    checked={inStockOnly}
-                    onChange={(e) => setInStockOnly(e.target.checked)}
-                    style={{ width: '18px', height: '18px', accentColor: '#1D4ED8' }}
-                  />
-                  <span>In Stock Only</span>
-                </label>
-              </div>
-
-              {/* Discount */}
-              <div style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
-                <h4 style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
-                  Discount
-                </h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {[0, 10, 20, 30, 50].map((d) => (
-                    <label key={d} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.9rem', color: minDiscount === d ? '#1D4ED8' : '#334155', fontWeight: minDiscount === d ? 700 : 500 }}>
-                      <input
-                        type="radio"
-                        name="mobile_discount"
-                        checked={minDiscount === d}
-                        onChange={() => setMinDiscount(d)}
-                        style={{ accentColor: '#1D4ED8' }}
-                      />
-                      <span>{d === 0 ? 'All Items' : `${d}% or more`}</span>
-                    </label>
-                  ))}
+              {/* Availability - Custom Toggle Card */}
+              <div style={{ marginBottom: '22px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
+                <div
+                  onClick={() => setInStockOnly(!inStockOnly)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '10px 12px',
+                    background: inStockOnly ? '#F0FDF4' : '#F8FAFC',
+                    border: inStockOnly ? '1.5px solid #86EFAC' : '1px solid #E2E8F0',
+                    borderRadius: '10px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: inStockOnly ? '#16A34A' : '#94A3B8', boxShadow: inStockOnly ? '0 0 0 3px rgba(34, 197, 94, 0.2)' : 'none' }} />
+                    <div>
+                      <div style={{ fontSize: '0.86rem', fontWeight: 700, color: inStockOnly ? '#166534' : '#1E293B', lineHeight: 1.2 }}>In Stock Only</div>
+                      <div style={{ fontSize: '0.72rem', color: '#64748B' }}>Exclude out of stock items</div>
+                    </div>
+                  </div>
+                  <div style={{ width: '34px', height: '20px', borderRadius: '12px', background: inStockOnly ? '#16A34A' : '#CBD5E1', padding: '2px', position: 'relative' }}>
+                    <div style={{ width: '16px', height: '16px', borderRadius: '50%', background: '#FFFFFF', transform: inStockOnly ? 'translateX(14px)' : 'translateX(0)', transition: 'transform 0.2s ease', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                  </div>
                 </div>
               </div>
 
-              {/* Rating */}
+              {/* Discount - Custom Styled List */}
+              <div style={{ marginBottom: '22px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <h4 style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>
+                    Discount
+                  </h4>
+                  {minDiscount > 0 && (
+                    <span style={{ fontSize: '0.72rem', color: '#1D4ED8', fontWeight: 700, cursor: 'pointer' }} onClick={() => setMinDiscount(0)}>
+                      Reset
+                    </span>
+                  )}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {[
+                    { val: 0, label: 'All Items' },
+                    { val: 10, label: '10% or more', badge: '10% OFF+' },
+                    { val: 20, label: '20% or more', badge: '20% OFF+' },
+                    { val: 30, label: '30% or more', badge: '30% OFF+' },
+                    { val: 50, label: '50% or more', badge: '50% OFF+' }
+                  ].map((d) => {
+                    const isSelected = minDiscount === d.val;
+                    return (
+                      <div
+                        key={d.val}
+                        onClick={() => setMinDiscount(d.val)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '8px 12px',
+                          borderRadius: '8px',
+                          background: isSelected ? '#EFF6FF' : 'transparent',
+                          border: isSelected ? '1px solid #BFDBFE' : '1px solid transparent',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <div style={{ width: '16px', height: '16px', borderRadius: '50%', border: isSelected ? '5px solid #1D4ED8' : '2px solid #CBD5E1', background: '#FFFFFF', flexShrink: 0 }} />
+                          <span style={{ fontSize: '0.86rem', color: isSelected ? '#1D4ED8' : '#334155', fontWeight: isSelected ? 700 : 500 }}>
+                            {d.label}
+                          </span>
+                        </div>
+                        {d.badge && (
+                          <span style={{ fontSize: '0.68rem', fontWeight: 800, padding: '2px 6px', borderRadius: '4px', background: isSelected ? '#DBEAFE' : '#F1F5F9', color: isSelected ? '#1D4ED8' : '#64748B' }}>
+                            {d.badge}
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Rating - Star Card */}
               <div>
-                <h4 style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1E293B', marginBottom: '10px' }}>
+                <h4 style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>
                   Customer Rating
                 </h4>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.92rem', color: minRating === 4 ? '#1D4ED8' : '#334155', fontWeight: minRating === 4 ? 700 : 500 }}>
-                  <input
-                    type="checkbox"
-                    checked={minRating === 4}
-                    onChange={(e) => setMinRating(e.target.checked ? 4 : 0)}
-                    style={{ width: '18px', height: '18px', accentColor: '#1D4ED8' }}
-                  />
-                  <span>⭐ 4.0 &amp; Above</span>
-                </label>
+                <div
+                  onClick={() => setMinRating(minRating === 4 ? 0 : 4)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '10px 12px',
+                    background: minRating === 4 ? '#FEFCE8' : '#F8FAFC',
+                    border: minRating === 4 ? '1.5px solid #FDE047' : '1px solid #E2E8F0',
+                    borderRadius: '10px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ display: 'flex', gap: '2px' }}>
+                      {[1, 2, 3, 4].map(s => (
+                        <StarIcon key={s} size={14} color="#EAB308" filled={true} />
+                      ))}
+                      <StarIcon size={14} color="#CBD5E1" filled={false} />
+                    </div>
+                    <span style={{ fontSize: '0.86rem', fontWeight: 700, color: minRating === 4 ? '#854D0E' : '#1E293B' }}>
+                      4.0 &amp; Above
+                    </span>
+                  </div>
+                  <div style={{ width: '18px', height: '18px', borderRadius: '5px', border: minRating === 4 ? '2px solid #EAB308' : '2px solid #CBD5E1', background: minRating === 4 ? '#EAB308' : '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {minRating === 4 && <CheckIcon size={12} color="#FFFFFF" />}
+                  </div>
+                </div>
               </div>
             </div>
 
