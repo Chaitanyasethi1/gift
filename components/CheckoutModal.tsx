@@ -57,7 +57,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
       const orderResponse = await fetch('/api/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: amountPaise, currency: 'INR', receipt: 'receipt_' + Date.now() })
+        body: JSON.stringify({ 
+          amount: amountPaise, 
+          currency: 'INR', 
+          receipt: 'receipt_' + Date.now(),
+          coupon_code: appliedCoupon?.code || null,
+          cart: cart
+        })
       });
       
       const orderData = await orderResponse.json();
@@ -92,7 +98,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 subtotal: subtotal,
                 gstAmount: gstAmount,
                 finalTotal: finalTotal,
-                discount: discount
+                discount: discount,
+                coupon_code: appliedCoupon?.code || null
               })
             });
             const verifyData = await verifyRes.json();
@@ -259,6 +266,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
             {message && (
               <div style={{ padding: '10px', marginTop: '10px', background: message.includes('failed') || message.includes('error') ? '#FEE2E2' : '#ECFDF5', color: message.includes('failed') || message.includes('error') ? '#B91C1C' : '#047857', borderRadius: '4px', fontSize: '0.9rem', textAlign: 'center' }}>
                 {message}
+              </div>
+            )}
+            
+            {appliedCoupon && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ECFDF5', border: '1px solid #A7F3D0', padding: '8px 12px', borderRadius: '6px', fontSize: '0.85rem', color: '#065F46', fontWeight: 600, marginTop: '8px' }}>
+                <span>🏷️ Coupon {appliedCoupon.code} applied:</span>
+                <span>-₹{discount.toFixed(2)}</span>
               </div>
             )}
             

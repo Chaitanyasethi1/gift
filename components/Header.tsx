@@ -105,6 +105,7 @@ export function Header() {
   const router = useRouter();
   const { cartCount, setIsCartOpen, setIsCategoryDrawerOpen } = useCart();
   const [tickerText, setTickerText] = useState(initialHomepageConfig.tickerText);
+  const [tickerActive, setTickerActive] = useState(initialHomepageConfig.tickerActive);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [allProducts, setAllProducts] = useState<any[]>(PRODUCTS);
@@ -120,8 +121,9 @@ export function Header() {
     fetch('/api/homepage')
       .then(res => res.json())
       .then(data => {
-        if (data?.tickerText) {
-          setTickerText(data.tickerText);
+        if (data) {
+          if (data.tickerText !== undefined) setTickerText(data.tickerText);
+          if (data.tickerActive !== undefined) setTickerActive(data.tickerActive);
         }
       })
       .catch(() => {});
@@ -581,15 +583,17 @@ export function Header() {
         }
       `}</style>
       
-      {/* 1. Top Announcement Marquee Bar */}
-      <div className="header-marquee-box" style={{ background: '#1D4ED8', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '7px 0', overflow: 'hidden', display: 'flex', width: '100%' }}>
-        <div className="header-marquee">
-          <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
-          <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
-          <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
-          <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
+      {/* 1. Top Announcement Marquee Bar (Dynamically driven by active coupon/banner) */}
+      {tickerActive && tickerText ? (
+        <div className="header-marquee-box" style={{ background: '#1D4ED8', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '7px 0', overflow: 'hidden', display: 'flex', width: '100%' }}>
+          <div className="header-marquee">
+            <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
+            <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
+            <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
+            <span style={{ padding: '0 40px', letterSpacing: '0.5px' }}>{tickerText}</span>
+          </div>
         </div>
-      </div>
+      ) : null}
       
       {/* STICKY HEADER & CATEGORY TASKBAR CONTAINER */}
       <div 

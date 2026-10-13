@@ -178,3 +178,59 @@ CREATE POLICY "Allow all update products" ON public.products FOR UPDATE USING (t
 
 DROP POLICY IF EXISTS "Allow all delete products" ON public.products;
 CREATE POLICY "Allow all delete products" ON public.products FOR DELETE USING (true);
+
+
+-- ==============================================================================
+-- 6. Unlock Coupons Table & Schema for Advanced Coupon Engine
+-- ==============================================================================
+CREATE TABLE IF NOT EXISTS public.coupons (
+    id TEXT PRIMARY KEY,
+    code TEXT NOT NULL UNIQUE,
+    discount_type TEXT NOT NULL DEFAULT 'percentage',
+    discount_value NUMERIC NOT NULL,
+    max_discount_cap NUMERIC,
+    applies_to TEXT NOT NULL DEFAULT 'all',
+    applied_category_ids TEXT[] DEFAULT '{}',
+    applied_product_ids TEXT[] DEFAULT '{}',
+    excluded_category_ids TEXT[] DEFAULT '{}',
+    excluded_product_ids TEXT[] DEFAULT '{}',
+    min_order_value NUMERIC,
+    start_date TIMESTAMPTZ,
+    expiry_date TIMESTAMPTZ,
+    is_active BOOLEAN DEFAULT true,
+    usage_limit INT,
+    usage_count INT DEFAULT 0,
+    per_user_limit INT,
+    show_in_banner BOOLEAN DEFAULT false,
+    banner_text TEXT,
+    created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Ensure all columns exist on public.coupons if table already existed
+ALTER TABLE public.coupons ADD COLUMN IF NOT EXISTS applies_to TEXT DEFAULT 'all';
+ALTER TABLE public.coupons ADD COLUMN IF NOT EXISTS applied_category_ids TEXT[] DEFAULT '{}';
+ALTER TABLE public.coupons ADD COLUMN IF NOT EXISTS applied_product_ids TEXT[] DEFAULT '{}';
+ALTER TABLE public.coupons ADD COLUMN IF NOT EXISTS excluded_category_ids TEXT[] DEFAULT '{}';
+ALTER TABLE public.coupons ADD COLUMN IF NOT EXISTS excluded_product_ids TEXT[] DEFAULT '{}';
+ALTER TABLE public.coupons ADD COLUMN IF NOT EXISTS show_in_banner BOOLEAN DEFAULT false;
+ALTER TABLE public.coupons ADD COLUMN IF NOT EXISTS banner_text TEXT;
+
+-- Ensure orders table has coupon columns
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS coupon_code TEXT;
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS discount_amount NUMERIC DEFAULT 0;
+
+ALTER TABLE public.coupons ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow all read coupons" ON public.coupons;
+CREATE POLICY "Allow all read coupons" ON public.coupons FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow all insert coupons" ON public.coupons;
+CREATE POLICY "Allow all insert coupons" ON public.coupons FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow all update coupons" ON public.coupons;
+CREATE POLICY "Allow all update coupons" ON public.coupons FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Allow all delete coupons" ON public.coupons;
+CREATE POLICY "Allow all delete coupons" ON public.coupons FOR DELETE USING (true);
+

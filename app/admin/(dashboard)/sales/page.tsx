@@ -194,15 +194,21 @@ export default function SalesPage() {
                 </tr>
               </thead>
               <tbody>
-                ${(order.order_items || []).map((it: any, i: number) => `
+                ${(order.order_items || []).map((it: any, i: number) => {
+                  const itDiscount = Number(it.variant_details?.discount_amount || 0);
+                  return `
                   <tr>
                     <td>${i + 1}</td>
-                    <td><strong>${it.product_name}</strong> ${it.variant_details?.size ? `<br><small style="color:#666;">Size: ${it.variant_details.size}</small>` : ''}</td>
+                    <td>
+                      <strong>${it.product_name}</strong>
+                      ${it.variant_details?.size ? `<br><small style="color:#666;">Size: ${it.variant_details.size}</small>` : ''}
+                      ${itDiscount > 0 ? `<br><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:bold;">🏷️ Coupon Applied: -₹${itDiscount.toFixed(2)}</span>` : ''}
+                    </td>
                     <td><strong>${it.quantity} pcs</strong></td>
                     <td>₹${Number(it.unit_price).toFixed(2)}</td>
                     <td>₹${Number(it.total_price || (it.unit_price * it.quantity)).toFixed(2)}</td>
                   </tr>
-                `).join('')}
+                `}).join('')}
               </tbody>
             </table>
           </div>
@@ -210,7 +216,8 @@ export default function SalesPage() {
           <div style="display:flex;justify-content:space-between;margin-top:20px;border-top:2px solid #000;padding-top:14px;">
             <div>
               <div class="badge">${order.payment_status === 'Paid' ? 'PAID ONLINE (RAZORPAY)' : 'CASH ON DELIVERY (COLLECT CASH)'}</div>
-              ${order.courier_name ? `<div style="font-size:13px;margin-top:8px;"><strong>Courier Partner:</strong> ${order.courier_name}</div>` : ''}
+              ${order.coupon_code ? `<div style="font-size:13px;margin-top:6px;color:#16a34a;font-weight:bold;">🏷️ Coupon Applied: ${order.coupon_code}</div>` : ''}
+              ${order.courier_name ? `<div style="font-size:13px;margin-top:6px;"><strong>Courier Partner:</strong> ${order.courier_name}</div>` : ''}
               ${order.tracking_number ? `<div style="font-size:13px;margin-top:3px;"><strong>AWB / Docket No:</strong> ${order.tracking_number}</div>` : ''}
             </div>
             <div style="min-width: 300px;">
@@ -222,7 +229,7 @@ export default function SalesPage() {
                   </tr>
                   ${Number(order.discount_amount || 0) > 0 ? `
                   <tr>
-                    <td style="border:none; padding:4px 8px; color:#16a34a;">Discount Applied:</td>
+                    <td style="border:none; padding:4px 8px; color:#16a34a; font-weight:bold;">Coupon Discount ${order.coupon_code ? `(${order.coupon_code})` : ''}:</td>
                     <td style="border:none; padding:4px 8px; text-align:right; font-weight:bold; color:#16a34a;">-₹${Number(order.discount_amount).toFixed(2)}</td>
                   </tr>
                   ` : ''}
@@ -244,6 +251,158 @@ export default function SalesPage() {
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          <script>
+            window.onload = function() { window.print(); }
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
+  const printTaxInvoice = (order: any) => {
+    const addr = parseAddress(order.shipping_address);
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+
+    const subtotal = Number(order.subtotal || 0);
+    const discount = Number(order.discount_amount || 0);
+    const gst = Number(order.gst_amount || 0);
+    const total = Number(order.total_amount || 0);
+    const cgst = (gst / 2).toFixed(2);
+    const sgst = (gst / 2).toFixed(2);
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Tax Invoice - ${order.order_number}</title>
+          <style>
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 24px; color: #111; font-size: 13px; line-height: 1.4; }
+            .invoice-box { max-width: 800px; margin: auto; border: 1.5px solid #000; padding: 20px; }
+            .header-table { width: 100%; border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 14px; }
+            .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+            .meta-table td { border: 1px solid #ccc; padding: 8px; vertical-align: top; }
+            .items-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+            .items-table th, .items-table td { border: 1px solid #000; padding: 7px 8px; text-align: left; }
+            .items-table th { background: #f0f4f8; font-weight: 700; text-align: center; }
+            .summary-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+            .summary-table td { padding: 4px 8px; }
+            .sign-box { border-top: 1px solid #000; text-align: right; padding-top: 50px; font-weight: bold; margin-top: 30px; }
+          </style>
+        </head>
+        <body>
+          <div class="invoice-box">
+            <table class="header-table">
+              <tr>
+                <td style="width: 60%;">
+                  <h2 style="margin: 0 0 4px 0; color: #1a365d; font-size: 20px;">AS PRINT GALLERY</h2>
+                  <div style="font-size: 12px; color: #444;">Manufacturers &amp; Printers of Corrugated Boxes, Bags &amp; Commercial Packaging</div>
+                  <div style="font-size: 12px; margin-top: 4px;">Kh No. 2326/2, Shankar Garden, Ashok Vihar, Loni, Ghaziabad, UP - 201102</div>
+                  <div style="font-size: 12px; font-weight: bold; margin-top: 2px;">GSTIN: 09AWKPN5910E1ZG | State Code: 09 (Uttar Pradesh)</div>
+                  <div style="font-size: 12px;">Email: info@asprintgallery.com | Phone: +91 9911678386</div>
+                </td>
+                <td style="text-align: right; vertical-align: top;">
+                  <div style="border: 2px solid #1a365d; display: inline-block; padding: 4px 12px; font-weight: 800; font-size: 14px; background: #e2e8f0;">TAX INVOICE</div>
+                  <div style="margin-top: 8px; font-size: 13px;"><strong>Invoice No:</strong> INV-${order.order_number}</div>
+                  <div style="font-size: 13px;"><strong>Date:</strong> ${new Date(order.created_at).toLocaleDateString('en-IN')}</div>
+                  <div style="font-size: 13px;"><strong>Order Ref:</strong> ${order.order_number}</div>
+                  <div style="font-size: 13px;"><strong>Payment:</strong> ${order.payment_status === 'Paid' ? 'PAID ONLINE (Razorpay)' : 'CASH ON DELIVERY'}</div>
+                </td>
+              </tr>
+            </table>
+
+            <table class="meta-table">
+              <tr>
+                <td style="width: 50%;">
+                  <strong style="color: #1a365d; text-transform: uppercase;">Billed To (Buyer):</strong><br>
+                  <strong>${order.customer_name || 'Cash Customer'}</strong><br>
+                  Phone: ${order.customer_phone || 'N/A'}<br>
+                  GSTIN: <strong>${order.gst_number || 'Unregistered Consumer'}</strong>
+                </td>
+                <td style="width: 50%;">
+                  <strong style="color: #1a365d; text-transform: uppercase;">Shipped To (Delivery Destination):</strong><br>
+                  ${addr.address}<br>
+                  <strong>PIN Code: ${addr.pincode || 'N/A'}</strong><br>
+                  Place of Supply: ${addr.pincode?.startsWith('20') ? 'Uttar Pradesh (09)' : addr.pincode?.startsWith('11') ? 'Delhi (07)' : addr.pincode?.startsWith('12') ? 'Haryana (06)' : 'Other State'}
+                </td>
+              </tr>
+            </table>
+
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th style="width: 35px;">#</th>
+                  <th>Description of Goods / Packaging</th>
+                  <th style="width: 75px;">HSN/SAC</th>
+                  <th style="width: 60px;">Qty</th>
+                  <th style="width: 80px;">Rate (₹)</th>
+                  <th style="width: 75px;">Discount</th>
+                  <th style="width: 90px; text-align: right;">Taxable Value (₹)</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${(order.order_items || []).map((it: any, i: number) => {
+                  const itDiscount = Number(it.variant_details?.discount_amount || 0);
+                  const lineTotal = Number(it.total_price || (it.unit_price * it.quantity));
+                  return `
+                  <tr>
+                    <td style="text-align: center;">${i + 1}</td>
+                    <td>
+                      <strong>${it.product_name}</strong>
+                      ${it.variant_details?.size ? `<br><small style="color:#555;">Size: ${it.variant_details.size}</small>` : ''}
+                      ${itDiscount > 0 ? `<br><small style="color:#15803d; font-weight:bold;">🏷️ Coupon Applied</small>` : ''}
+                    </td>
+                    <td style="text-align: center;">4819</td>
+                    <td style="text-align: center;"><strong>${it.quantity}</strong></td>
+                    <td style="text-align: right;">₹${Number(it.unit_price).toFixed(2)}</td>
+                    <td style="text-align: right; color: #15803d;">${itDiscount > 0 ? `-₹${itDiscount.toFixed(2)}` : '₹0.00'}</td>
+                    <td style="text-align: right; font-weight: bold;">₹${lineTotal.toFixed(2)}</td>
+                  </tr>
+                `}).join('')}
+              </tbody>
+            </table>
+
+            <div style="display: flex; justify-content: space-between; border-top: 1.5px solid #000; padding-top: 10px;">
+              <div style="width: 50%; font-size: 11px;">
+                <strong>Terms &amp; Conditions:</strong><br>
+                1. Goods once sold will be covered under manufacturer defect replacement warranty.<br>
+                2. Subject to Ghaziabad / Delhi Jurisdiction.<br>
+                3. This is a computer generated tax invoice.
+              </div>
+              <div style="width: 45%;">
+                <table class="summary-table">
+                  <tr>
+                    <td style="color: #555;">Total Taxable Amount:</td>
+                    <td style="text-align: right; font-weight: bold;">₹${subtotal.toFixed(2)}</td>
+                  </tr>
+                  ${discount > 0 ? `
+                  <tr>
+                    <td style="color: #15803d; font-weight: bold;">Coupon Discount ${order.coupon_code ? `(${order.coupon_code})` : ''}:</td>
+                    <td style="text-align: right; font-weight: bold; color: #15803d;">-₹${discount.toFixed(2)}</td>
+                  </tr>
+                  ` : ''}
+                  <tr>
+                    <td style="color: #555;">CGST @ 9%:</td>
+                    <td style="text-align: right;">₹${cgst}</td>
+                  </tr>
+                  <tr>
+                    <td style="color: #555;">SGST @ 9%:</td>
+                    <td style="text-align: right;">₹${sgst}</td>
+                  </tr>
+                  <tr style="border-top: 1.5px solid #000; font-size: 15px;">
+                    <td style="font-weight: 800;">Grand Total (Incl. Taxes):</td>
+                    <td style="text-align: right; font-weight: 800; color: #1a365d;">₹${total.toFixed(2)}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="sign-box">
+              For AS PRINT GALLERY<br><br>
+              Authorized Signatory
             </div>
           </div>
 
@@ -438,6 +597,13 @@ export default function SalesPage() {
                         <div style={{ fontWeight: 900, color: '#0f172a', fontSize: '1.05rem' }}>
                           ₹{Number(order.total_amount || 0).toFixed(2)}
                         </div>
+                        {order.coupon_code && (
+                          <div style={{ marginTop: '3px' }}>
+                            <span style={{ background: '#f0fdf4', color: '#15803d', border: '1px solid #bbf7d0', padding: '2px 6px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 800 }}>
+                              🏷️ {order.coupon_code} (-₹{Number(order.discount_amount || 0).toFixed(0)})
+                            </span>
+                          </div>
+                        )}
                         <div style={{ marginTop: '4px' }}>
                           {isPaid ? (
                             <span style={{ background: '#dcfce7', color: '#166534', padding: '3px 8px', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 800 }}>
@@ -526,7 +692,13 @@ export default function SalesPage() {
                 </span>
               </div>
               
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <button 
+                  onClick={() => printTaxInvoice(selectedOrder)}
+                  style={{ background: '#f0fdf4', border: '1px solid #86efac', color: '#166534', padding: '8px 14px', borderRadius: '8px', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                >
+                  🧾 Print Tax Invoice
+                </button>
                 <button 
                   onClick={() => printDocket(selectedOrder)}
                   style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '8px 14px', borderRadius: '8px', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
@@ -632,20 +804,28 @@ export default function SalesPage() {
 
               {selectedOrder.order_items && selectedOrder.order_items.length > 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {selectedOrder.order_items.map((item: any, idx: number) => (
-                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.92rem', borderBottom: idx !== selectedOrder.order_items.length - 1 ? '1px solid #f1f5f9' : 'none', paddingBottom: '8px' }}>
-                      <div>
-                        <div style={{ fontWeight: 800, color: '#0f172a' }}>{item.product_name}</div>
-                        <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '2px' }}>
-                          Qty: <strong>{item.quantity} pcs</strong> • Rate: ₹{Number(item.unit_price).toFixed(2)}/pc
-                          {item.variant_details?.size && ` • Size: ${item.variant_details.size}`}
+                  {selectedOrder.order_items.map((item: any, idx: number) => {
+                    const itDiscount = Number(item.variant_details?.discount_amount || 0);
+                    return (
+                      <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.92rem', borderBottom: idx !== selectedOrder.order_items.length - 1 ? '1px solid #f1f5f9' : 'none', paddingBottom: '8px' }}>
+                        <div>
+                          <div style={{ fontWeight: 800, color: '#0f172a' }}>{item.product_name}</div>
+                          <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '2px' }}>
+                            Qty: <strong>{item.quantity} pcs</strong> • Rate: ₹{Number(item.unit_price).toFixed(2)}/pc
+                            {item.variant_details?.size && ` • Size: ${item.variant_details.size}`}
+                            {itDiscount > 0 && (
+                              <span style={{ marginLeft: '8px', background: '#ecfdf5', color: '#047857', padding: '2px 6px', borderRadius: '4px', fontWeight: 700, fontSize: '0.75rem' }}>
+                                🏷️ Coupon Applied: -₹{itDiscount.toFixed(2)}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div style={{ fontWeight: 900, color: '#0f172a', fontSize: '1rem' }}>
+                          ₹{Number(item.total_price || (item.unit_price * item.quantity)).toFixed(2)}
                         </div>
                       </div>
-                      <div style={{ fontWeight: 900, color: '#0f172a', fontSize: '1rem' }}>
-                        ₹{Number(item.total_price || (item.unit_price * item.quantity)).toFixed(2)}
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : (
                 <div style={{ color: '#64748b', fontSize: '0.9rem' }}>Standard package consignment.</div>
@@ -657,9 +837,15 @@ export default function SalesPage() {
                   <span>Subtotal (Excl. Tax):</span>
                   <span>₹{Number(selectedOrder.subtotal || selectedOrder.total_amount).toFixed(2)}</span>
                 </div>
-                {selectedOrder.discount_amount > 0 && (
+                {Number(selectedOrder.discount_amount || 0) > 0 && (
                   <div style={{ display: 'flex', justifyContent: 'space-between', color: '#16a34a', fontWeight: 700 }}>
-                    <span>Discount Applied:</span>
+                    <span>
+                      Coupon Discount {selectedOrder.coupon_code ? (
+                        <span style={{ background: '#ecfdf5', color: '#065f46', padding: '1px 6px', borderRadius: '4px', border: '1px solid #a7f3d0', fontFamily: 'monospace' }}>
+                          {selectedOrder.coupon_code}
+                        </span>
+                      ) : ''}:
+                    </span>
                     <span>-₹{Number(selectedOrder.discount_amount).toFixed(2)}</span>
                   </div>
                 )}

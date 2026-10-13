@@ -1,9 +1,13 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 
 export interface CartItem {
   id: string;
+  productId?: string;
+  slug?: string;
+  category?: string;
+  categoryId?: string;
   title: string;
   price: number;
   qty: number;
@@ -16,11 +20,21 @@ export interface CartItem {
   gstRate?: number;
 }
 
-export interface Coupon {
+export interface AppliedCoupon {
   code: string;
-  rate: number;
-  desc: string;
+  discountType: 'percentage' | 'flat';
+  discountValue: number;
+  maxDiscountCap?: number | null;
+  appliesTo: 'all' | 'categories' | 'products';
+  discountTotal: number;
+  eligibleItemIds: string[];
+  itemDiscounts: Record<string, number>;
+  desc?: string;
+  bannerText?: string | null;
 }
+
+// Backward compatibility alias for Coupon
+export type Coupon = AppliedCoupon;
 
 interface CartContextType {
   cart: CartItem[];
@@ -29,9 +43,11 @@ interface CartContextType {
   updateQty: (id: string, delta: number) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
-  appliedCoupon: Coupon | null;
-  applyCoupon: (code: string) => boolean;
+  appliedCoupon: AppliedCoupon | null;
+  applyCoupon: (code: string) => Promise<{ success: boolean; message?: string; error?: string }>;
   removeCoupon: () => void;
+  eligibleItemIds: string[];
+  itemDiscounts: Record<string, number>;
   subtotal: number;
   discount: number;
   gstAmount: number;
@@ -57,7 +73,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [appliedCoupon, setAppliedCoupon] = useState<AppliedCoupon | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
@@ -70,17 +86,22 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Load from localStorage on client mount
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('as_cart');
-      if (saved) {
-        setCart(JSON.parse(saved));
+      const savedCart = localStorage.getItem('as_cart');
+      if (savedCart) {
+        setCart(JSON.parse(savedCart));
+      }
+
+      const savedCoupon = localStorage.getItem('as_applied_coupon');
+      if (savedCoupon) {
+        setAppliedCoupon(JSON.parse(savedCoupon));
       }
     } catch (e) {
-      console.error('Error loading cart from localStorage', e);
+      console.error('Error loading cart/coupon from localStorage', e);
     }
     setIsLoaded(true);
   }, []);
 
-  // Save to localStorage whenever cart changes
+  // Save cart to localStorage whenever cart changes
   useEffect(() => {
     if (!isLoaded) return;
     try {
@@ -90,12 +111,26 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [cart, isLoaded]);
 
-  const showToast = (msg: string) => {
+  // Save coupon to localStorage whenever appliedCoupon changes
+  useEffect(() => {
+    if (!isLoaded) return;
+    try {
+      if (appliedCoupon) {
+        localStorage.setItem('as_applied_coupon', JSON.stringify(appliedCoupon));
+      } else {
+        localStorage.removeItem('as_applied_coupon');
+      }
+    } catch (e) {
+      console.error('Error saving coupon to localStorage', e);
+    }
+  }, [appliedCoupon, isLoaded]);
+
+  const showToast = useCallback((msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage(null);
-    }, 3200);
-  };
+    }, 3500);
+  }, []);
 
   const addToCart = (item: Omit<CartItem, 'qty'>, quantity = 1) => {
     const rawGst = item.gstRate as any;
@@ -106,7 +141,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setCart(prev => {
       const existing = prev.find(c => c.id === item.id);
       if (existing) {
-        return prev.map(c => c.id === item.id ? { ...c, qty: c.qty + quantity, gstRate: parsedItemGst } : c);
+        return prev.map(c => c.id === item.id ? { 
+          ...c, 
+          qty: c.qty + quantity, 
+          gstRate: parsedItemGst,
+          category: item.category || c.category,
+          categoryId: item.categoryId || c.categoryId,
+          slug: item.slug || c.slug
+        } : c);
       }
       return [...prev, { ...item, qty: quantity, gstRate: parsedItemGst }];
     });
@@ -133,47 +175,137 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const clearCart = () => {
     setCart([]);
+    setAppliedCoupon(null);
   };
 
-  const applyCoupon = (code: string) => {
-    const cleanCode = code.trim().toUpperCase();
-    if (cleanCode === 'WELCOME10') {
-      const c = { code: 'WELCOME10', rate: 0.10, desc: '10% Welcome Discount' };
-      setAppliedCoupon(c);
-      showToast('🎉 Coupon WELCOME10 applied! 10% discount added.');
-      return true;
-    } else if (cleanCode === 'BULK20') {
-      const c = { code: 'BULK20', rate: 0.20, desc: '20% Bulk Order Discount' };
-      setAppliedCoupon(c);
-      showToast('🔥 Coupon BULK20 applied! 20% discount added.');
-      return true;
+  // Re-validate coupon whenever cart items change to keep discounts strictly synchronized
+  useEffect(() => {
+    if (!isLoaded) return;
+    if (cart.length === 0) {
+      if (appliedCoupon) setAppliedCoupon(null);
+      return;
     }
-    showToast('Invalid coupon. Try WELCOME10 or BULK20');
-    return false;
+
+    if (appliedCoupon && appliedCoupon.code) {
+      // Background re-validation against current cart
+      fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: appliedCoupon.code, cart })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.valid) {
+            setAppliedCoupon(prev => prev ? {
+              ...prev,
+              discountTotal: data.discountTotal,
+              eligibleItemIds: data.eligibleItemIds || [],
+              itemDiscounts: data.itemDiscounts || {}
+            } : null);
+          } else {
+            // Coupon no longer valid (e.g. min order no longer met or no eligible items)
+            setAppliedCoupon(null);
+            showToast(`Coupon ${appliedCoupon.code} removed: ${data.error}`);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [cart, isLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const applyCoupon = async (rawCode: string): Promise<{ success: boolean; message?: string; error?: string }> => {
+    const code = (rawCode || '').trim().toUpperCase();
+    if (!code) {
+      const err = 'Please enter a coupon code.';
+      showToast(err);
+      return { success: false, error: err };
+    }
+
+    if (cart.length === 0) {
+      const err = 'Your cart is empty. Add products to apply a coupon.';
+      showToast(err);
+      return { success: false, error: err };
+    }
+
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, cart })
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.valid) {
+        const couponData: AppliedCoupon = {
+          code: data.coupon.code,
+          discountType: data.coupon.discount_type,
+          discountValue: data.coupon.discount_value,
+          maxDiscountCap: data.coupon.max_discount_cap,
+          appliesTo: data.coupon.applies_to,
+          discountTotal: data.discountTotal,
+          eligibleItemIds: data.eligibleItemIds || [],
+          itemDiscounts: data.itemDiscounts || {},
+          desc: data.coupon.discount_type === 'percentage' 
+            ? `${data.coupon.discount_value}% OFF`
+            : `Flat ₹${data.coupon.discount_value} OFF`,
+          bannerText: data.coupon.banner_text
+        };
+
+        setAppliedCoupon(couponData);
+        const successMsg = `🎉 Coupon ${couponData.code} applied! (-₹${data.discountTotal.toFixed(2)})`;
+        showToast(successMsg);
+        return { success: true, message: successMsg };
+      } else {
+        const errorMsg = data.error || `Invalid coupon "${code}".`;
+        showToast(errorMsg);
+        return { success: false, error: errorMsg };
+      }
+    } catch (err: any) {
+      const errorMsg = err.message || 'Failed to validate coupon. Please try again.';
+      showToast(errorMsg);
+      return { success: false, error: errorMsg };
+    }
   };
 
   const removeCoupon = () => {
-    setAppliedCoupon(null);
-    showToast('Coupon removed');
+    if (appliedCoupon) {
+      const code = appliedCoupon.code;
+      setAppliedCoupon(null);
+      showToast(`Coupon ${code} removed`);
+    }
   };
 
-  const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
-  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-  const discount = appliedCoupon ? subtotal * appliedCoupon.rate : 0;
-  const discountMultiplier = appliedCoupon ? (1 - appliedCoupon.rate) : 1;
+  const cartCount = useMemo(() => cart.reduce((sum, item) => sum + item.qty, 0), [cart]);
+  const subtotal = useMemo(() => cart.reduce((sum, item) => sum + (item.price * item.qty), 0), [cart]);
+
+  const eligibleItemIds = useMemo(() => appliedCoupon?.eligibleItemIds || [], [appliedCoupon]);
+  const itemDiscounts = useMemo(() => appliedCoupon?.itemDiscounts || {}, [appliedCoupon]);
+  const discount = useMemo(() => {
+    if (!appliedCoupon) return 0;
+    return appliedCoupon.discountTotal || 0;
+  }, [appliedCoupon]);
 
   // Exact Item-Wise Dynamic GST calculation based on each product's specific GST Rate (0%, 5%, 12%, 18%, 28%)
-  const gstAmount = cart.reduce((sum, item) => {
-    const rawRate = item.gstRate as any;
-    const rate = (rawRate !== null && rawRate !== undefined && rawRate !== '')
-      ? (typeof rawRate === 'number' ? rawRate : (parseFloat(String(rawRate).replace(/[^0-9.]/g, '')) ?? 18))
-      : 18;
-    const itemSubtotal = item.price * item.qty * discountMultiplier;
-    return sum + (itemSubtotal * (rate / 100));
-  }, 0);
+  // calculated accurately on post-discount taxable amounts
+  const gstAmount = useMemo(() => {
+    return cart.reduce((sum, item) => {
+      const rawRate = item.gstRate as any;
+      const rate = (rawRate !== null && rawRate !== undefined && rawRate !== '')
+        ? (typeof rawRate === 'number' ? rawRate : (parseFloat(String(rawRate).replace(/[^0-9.]/g, '')) ?? 18))
+        : 18;
 
-  const finalTotal = subtotal - discount + gstAmount;
+      const itemGross = item.price * item.qty;
+      const itemDisc = itemDiscounts[item.id] || 0;
+      const itemTaxable = Math.max(0, itemGross - itemDisc);
 
+      return sum + (itemTaxable * (rate / 100));
+    }, 0);
+  }, [cart, itemDiscounts]);
+
+  // Grand total can never go below 0
+  const finalTotal = useMemo(() => {
+    return Math.max(0, subtotal - discount + gstAmount);
+  }, [subtotal, discount, gstAmount]);
 
   return (
     <CartContext.Provider value={{
@@ -186,6 +318,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       appliedCoupon,
       applyCoupon,
       removeCoupon,
+      eligibleItemIds,
+      itemDiscounts,
       subtotal,
       discount,
       gstAmount,

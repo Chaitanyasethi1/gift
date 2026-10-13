@@ -198,6 +198,13 @@ export const ChevronLeftIcon: React.FC<IconProps> = ({ size = 16, color = 'curre
   </svg>
 );
 
+export const ArrowRightIcon: React.FC<IconProps> = ({ size = 16, color = 'currentColor', className = '', ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`ui-icon ${className}`} {...props}>
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+
 export const ChevronRightIcon: React.FC<IconProps> = ({ size = 16, color = 'currentColor', className = '', ...props }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`ui-icon ${className}`} {...props}>
     <path d="m9 18 6-6-6-6" />

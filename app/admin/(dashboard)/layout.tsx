@@ -33,6 +33,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/admin/banners" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
             🎨 Banners &amp; Homepage
           </Link>
+          <Link href="/admin/coupons" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
+            🏷️ Coupons
+          </Link>
           <Link href="/admin/categories" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
             🗂️ Categories &amp; Menu
           </Link>

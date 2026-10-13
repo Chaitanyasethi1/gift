@@ -32,6 +32,8 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
     appliedCoupon,
     applyCoupon,
     removeCoupon,
+    eligibleItemIds,
+    itemDiscounts,
     subtotal,
     discount,
     gstAmount,
@@ -39,6 +41,8 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
   } = useCart();
 
   const [couponCode, setCouponCode] = useState('');
+  const [couponError, setCouponError] = useState<string | null>(null);
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
   const [suggestedList, setSuggestedList] = useState<any[]>([]);
 
   // Fetch real database products for recommendations
@@ -95,12 +99,18 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
 
   if (!isCartOpen) return null;
 
-  const handleApplyCoupon = (e: React.FormEvent) => {
+  const handleApplyCoupon = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!couponCode.trim()) return;
-    const ok = applyCoupon(couponCode);
-    if (ok) {
+    setIsApplyingCoupon(true);
+    setCouponError(null);
+    const res = await applyCoupon(couponCode);
+    setIsApplyingCoupon(false);
+    if (res.success) {
       setCouponCode('');
+      setCouponError(null);
+    } else {
+      setCouponError(res.error || 'Invalid coupon code.');
     }
   };
 
@@ -213,6 +223,14 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
                     </div>
                   )}
 
+                  {itemDiscounts[item.id] > 0 && (
+                    <div style={{ marginTop: '3px' }}>
+                      <span style={{ background: '#DCFCE7', color: '#15803D', fontSize: '0.66rem', fontWeight: 800, padding: '2px 6px', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        🏷️ {appliedCoupon?.code} Discount Applied
+                      </span>
+                    </div>
+                  )}
+
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px' }}>
                     <div className="cart-qty-stepper" style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--border-light)', borderRadius: '4px', height: '24px' }}>
                       <button
@@ -237,9 +255,20 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
                     </div>
 
                     <div style={{ textAlign: 'right' }}>
-                      <span style={{ fontSize: '0.84rem', fontWeight: 800, color: 'var(--text-dark)' }}>
-                        ₹{(item.price * item.qty).toFixed(2)}
-                      </span>
+                      {itemDiscounts[item.id] > 0 ? (
+                        <div>
+                          <div style={{ textDecoration: 'line-through', color: '#94A3B8', fontSize: '0.7rem' }}>
+                            ₹{(item.price * item.qty).toFixed(2)}
+                          </div>
+                          <div style={{ fontSize: '0.86rem', fontWeight: 900, color: '#16A34A' }}>
+                            ₹{((item.price * item.qty) - itemDiscounts[item.id]).toFixed(2)}
+                          </div>
+                        </div>
+                      ) : (
+                        <span style={{ fontSize: '0.84rem', fontWeight: 800, color: 'var(--text-dark)' }}>
+                          ₹{(item.price * item.qty).toFixed(2)}
+                        </span>
+                      )}
                       <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
                         <span style={{ color: '#0284C7', fontWeight: 600 }}>{item.gstRate ?? 18}% GST</span>
                       </div>
@@ -319,34 +348,57 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
         {/* Compact Cart Footer / Checkout Box */}
         {cart.length > 0 && (
           <div className="cart-footer" style={{ padding: '10px 16px', background: '#FFFFFF', borderTop: '1px solid #E2E8F0' }}>
-            {/* Coupon Code */}
-            <form onSubmit={handleApplyCoupon} className="coupon-row" style={{ display: 'flex', gap: '6px', marginBottom: '8px' }}>
+            {/* Coupon Code Section */}
+            <form onSubmit={handleApplyCoupon} className="coupon-row" style={{ display: 'flex', gap: '6px', marginBottom: '6px' }}>
               <input
                 type="text"
                 className="coupon-input"
-                placeholder="COUPON (E.G. WELCOME10)"
+                placeholder="HAVE A COUPON CODE? (E.G. AS20)"
                 value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
-                style={{ flex: 1, border: '1px solid #CBD5E1', borderRadius: '5px', padding: '5px 8px', fontSize: '0.74rem', textTransform: 'uppercase', outline: 'none' }}
+                onChange={(e) => {
+                  setCouponCode(e.target.value.toUpperCase());
+                  if (couponError) setCouponError(null);
+                }}
+                style={{ flex: 1, border: couponError ? '1px solid #EF4444' : '1px solid #CBD5E1', borderRadius: '5px', padding: '6px 9px', fontSize: '0.74rem', textTransform: 'uppercase', outline: 'none' }}
               />
               <button 
                 type="submit" 
+                disabled={isApplyingCoupon || !couponCode.trim()}
                 className="coupon-apply-btn" 
-                style={{ background: '#B81B54', color: '#FFF', border: 'none', borderRadius: '5px', padding: '5px 12px', fontSize: '0.74rem', fontWeight: 700, cursor: 'pointer' }}
+                style={{ 
+                  background: '#B81B54', 
+                  color: '#FFF', 
+                  border: 'none', 
+                  borderRadius: '5px', 
+                  padding: '6px 14px', 
+                  fontSize: '0.74rem', 
+                  fontWeight: 700, 
+                  cursor: isApplyingCoupon || !couponCode.trim() ? 'not-allowed' : 'pointer',
+                  opacity: isApplyingCoupon || !couponCode.trim() ? 0.7 : 1
+                }}
               >
-                Apply
+                {isApplyingCoupon ? 'Checking...' : 'Apply'}
               </button>
             </form>
 
+            {couponError && (
+              <div style={{ fontSize: '0.72rem', color: '#B91C1C', background: '#FEF2F2', border: '1px solid #FECACA', padding: '4px 8px', borderRadius: '4px', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span>⚠️</span> <span>{couponError}</span>
+              </div>
+            )}
+
             {appliedCoupon && (
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.72rem', color: '#10B981', background: '#ECFDF5', padding: '3px 6px', borderRadius: '4px', marginBottom: '6px' }}>
-                <span>Coupon <strong>{appliedCoupon.code}</strong> applied ({appliedCoupon.desc})</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.72rem', color: '#065F46', background: '#ECFDF5', border: '1px solid #A7F3D0', padding: '6px 8px', borderRadius: '5px', marginBottom: '8px' }}>
+                <div>
+                  <div style={{ fontWeight: 800 }}>🎉 Coupon <strong>{appliedCoupon.code}</strong> Applied</div>
+                  <div style={{ color: '#047857', fontSize: '0.68rem' }}>Saved ₹{discount.toFixed(2)} ({appliedCoupon.desc})</div>
+                </div>
                 <button
                   type="button"
                   onClick={removeCoupon}
-                  style={{ background: 'none', border: 'none', color: '#EF4444', cursor: 'pointer', fontWeight: 700 }}
+                  style={{ background: '#FEE2E2', border: '1px solid #FCA5A5', color: '#B91C1C', cursor: 'pointer', fontWeight: 800, fontSize: '0.68rem', padding: '3px 8px', borderRadius: '4px' }}
                 >
-                  ✕
+                  Remove
                 </button>
               </div>
             )}
@@ -359,7 +411,7 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
               </div>
               {appliedCoupon && (
                 <div className="cart-calc-row" style={{ display: 'flex', justifyContent: 'space-between', color: '#10B981', fontWeight: 700 }}>
-                  <span>Discount ({appliedCoupon.code})</span>
+                  <span>Coupon {appliedCoupon.code} (-₹{discount.toFixed(2)})</span>
                   <span>-₹{discount.toFixed(2)}</span>
                 </div>
               )}

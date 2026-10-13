@@ -9,7 +9,20 @@ import Link from 'next/link';
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { cart, subtotal, discount, gstAmount, finalTotal, appliedCoupon, clearCart, isLoaded } = useCart();
+  const { 
+    cart, 
+    subtotal, 
+    discount, 
+    gstAmount, 
+    finalTotal, 
+    appliedCoupon, 
+    applyCoupon,
+    removeCoupon,
+    eligibleItemIds,
+    itemDiscounts,
+    clearCart, 
+    isLoaded 
+  } = useCart();
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -17,6 +30,11 @@ export default function CheckoutPage() {
   const [pincode, setPincode] = useState('');
   const [gstin, setGstin] = useState('');
   const [consent, setConsent] = useState(false);
+
+  // Coupon state in checkout
+  const [couponInput, setCouponInput] = useState('');
+  const [couponError, setCouponError] = useState<string | null>(null);
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
   
   // Payment Method Selection: 'cod' | 'online'
   const isCodDisabled = finalTotal > 999;
@@ -24,6 +42,21 @@ export default function CheckoutPage() {
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [message, setMessage] = useState('');
+
+  const handleApplyCoupon = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!couponInput.trim()) return;
+    setIsApplyingCoupon(true);
+    setCouponError(null);
+    const res = await applyCoupon(couponInput);
+    setIsApplyingCoupon(false);
+    if (res.success) {
+      setCouponInput('');
+      setCouponError(null);
+    } else {
+      setCouponError(res.error || 'Invalid coupon code.');
+    }
+  };
 
   useEffect(() => {
     // If total exceeds 999, auto-switch to online payment
@@ -74,7 +107,8 @@ export default function CheckoutPage() {
           subtotal: subtotal,
           gstAmount: gstAmount,
           finalTotal: finalTotal,
-          discount: discount
+          discount: discount,
+          coupon_code: appliedCoupon?.code || null
         })
       });
 
@@ -107,7 +141,13 @@ export default function CheckoutPage() {
       const orderResponse = await fetch('/api/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: amountPaise, currency: 'INR', receipt: 'receipt_' + Date.now() })
+        body: JSON.stringify({ 
+          amount: amountPaise, 
+          currency: 'INR', 
+          receipt: 'receipt_' + Date.now(),
+          coupon_code: appliedCoupon?.code || null,
+          cart: cart
+        })
       });
       
       const orderData = await orderResponse.json();
@@ -142,7 +182,8 @@ export default function CheckoutPage() {
                 subtotal: subtotal,
                 gstAmount: gstAmount,
                 finalTotal: finalTotal,
-                discount: discount
+                discount: discount,
+                coupon_code: appliedCoupon?.code || null
               })
             });
             const verifyData = await verifyRes.json();
@@ -475,21 +516,131 @@ export default function CheckoutPage() {
               <Link href="/" style={{ color: 'var(--primary)', fontSize: '0.9rem', textDecoration: 'none' }}>Edit Cart</Link>
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }}>
-              {cart.map((item) => (
-                <div key={item.id} style={{ display: 'flex', gap: '12px' }}>
-                  <img src={item.image} alt={item.title} style={{ width: '60px', height: '60px', borderRadius: '6px', objectFit: 'cover' }} />
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 600, fontSize: '0.95rem', color: '#1E293B', lineHeight: 1.2, marginBottom: '4px' }}>{item.title}</div>
-                    <div style={{ fontSize: '0.82rem', color: '#64748B' }}>
-                      Qty: {item.qty} • <span style={{ color: '#0284C7', fontWeight: 600 }}>{item.gstRate ?? 18}% GST</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '20px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }}>
+              {cart.map((item) => {
+                const itemDiscount = itemDiscounts[item.id] || 0;
+                const isEligible = eligibleItemIds.includes(item.id);
+                const originalTotal = item.price * item.qty;
+                const discountedTotal = Math.max(0, originalTotal - itemDiscount);
+
+                return (
+                  <div key={item.id} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                    <img src={item.image} alt={item.title} style={{ width: '60px', height: '60px', borderRadius: '6px', objectFit: 'cover' }} />
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 600, fontSize: '0.95rem', color: '#1E293B', lineHeight: 1.2, marginBottom: '4px' }}>{item.title}</div>
+                      <div style={{ fontSize: '0.82rem', color: '#64748B' }}>
+                        Qty: {item.qty} • <span style={{ color: '#0284C7', fontWeight: 600 }}>{item.gstRate ?? 18}% GST</span>
+                      </div>
+                      {appliedCoupon && isEligible && itemDiscount > 0 && (
+                        <div style={{ marginTop: '4px', display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', fontWeight: 700, color: '#047857', background: '#ECFDF5', padding: '2px 6px', borderRadius: '4px' }}>
+                          🏷️ {appliedCoupon.code} applied: -₹{itemDiscount.toFixed(2)}
+                        </div>
+                      )}
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      {appliedCoupon && isEligible && itemDiscount > 0 ? (
+                        <>
+                          <div style={{ fontWeight: 700, color: '#0F172A' }}>₹{discountedTotal.toFixed(2)}</div>
+                          <div style={{ fontSize: '0.78rem', color: '#94A3B8', textDecoration: 'line-through' }}>₹{originalTotal.toFixed(2)}</div>
+                        </>
+                      ) : (
+                        <div style={{ fontWeight: 700, color: '#0F172A' }}>₹{originalTotal.toFixed(2)}</div>
+                      )}
                     </div>
                   </div>
-                  <div style={{ fontWeight: 700, color: '#0F172A' }}>
-                    ₹{(item.price * item.qty).toFixed(2)}
+                );
+              })}
+            </div>
+
+            {/* Coupon Section */}
+            <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '16px', marginBottom: '20px' }}>
+              {appliedCoupon ? (
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '10px 14px',
+                  background: '#ECFDF5',
+                  border: '1px solid #A7F3D0',
+                  borderRadius: '8px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '1.1rem' }}>🎉</span>
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#065F46' }}>
+                        Coupon <span style={{ fontFamily: 'monospace', letterSpacing: '0.5px' }}>{appliedCoupon.code}</span> Applied
+                      </div>
+                      <div style={{ fontSize: '0.75rem', color: '#047857' }}>
+                        {appliedCoupon.discount_type === 'percentage'
+                          ? `${appliedCoupon.discount_value}% OFF`
+                          : `Flat ₹${appliedCoupon.discount_value} OFF`}
+                        {' '}(Saved ₹{discount.toFixed(2)})
+                      </div>
+                    </div>
                   </div>
+                  <button
+                    type="button"
+                    onClick={removeCoupon}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: '#DC2626',
+                      fontWeight: 700,
+                      fontSize: '0.82rem',
+                      cursor: 'pointer',
+                      padding: '4px 8px',
+                      borderRadius: '4px'
+                    }}
+                  >
+                    Remove
+                  </button>
                 </div>
-              ))}
+              ) : (
+                <form onSubmit={handleApplyCoupon} style={{ display: 'flex', gap: '8px' }}>
+                  <input
+                    type="text"
+                    value={couponInput}
+                    onChange={(e) => {
+                      setCouponInput(e.target.value.toUpperCase());
+                      if (couponError) setCouponError(null);
+                    }}
+                    placeholder="Have a coupon code? (e.g. AS20)"
+                    style={{
+                      flex: 1,
+                      padding: '10px 12px',
+                      fontSize: '0.88rem',
+                      fontWeight: 600,
+                      border: couponError ? '1.5px solid #EF4444' : '1px solid #CBD5E1',
+                      borderRadius: '8px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      outline: 'none'
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={isApplyingCoupon || !couponInput.trim()}
+                    style={{
+                      padding: '10px 18px',
+                      background: isApplyingCoupon || !couponInput.trim() ? '#94A3B8' : '#1E293B',
+                      color: '#FFF',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontWeight: 700,
+                      fontSize: '0.88rem',
+                      cursor: isApplyingCoupon || !couponInput.trim() ? 'not-allowed' : 'pointer',
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    {isApplyingCoupon ? 'Applying...' : 'Apply'}
+                  </button>
+                </form>
+              )}
+              {couponError && (
+                <div style={{ marginTop: '8px', color: '#DC2626', fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>⚠️</span> {couponError}
+                </div>
+              )}
             </div>
 
             <div style={{ borderTop: '1px dashed #CBD5E1', paddingTop: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -499,8 +650,8 @@ export default function CheckoutPage() {
               </div>
               
               {appliedCoupon && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#10B981', fontWeight: 600 }}>
-                  <span>Discount ({appliedCoupon.code})</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#10B981', fontWeight: 700 }}>
+                  <span>Coupon {appliedCoupon.code} (-₹{discount.toFixed(2)})</span>
                   <span>-₹{discount.toFixed(2)}</span>
                 </div>
               )}

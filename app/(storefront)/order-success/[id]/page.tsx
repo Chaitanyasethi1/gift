@@ -129,6 +129,15 @@ export default async function OrderSuccessPage({
               <div style={{ fontSize: '1.2rem', fontWeight: 900, color: '#0F172A', marginTop: '4px' }}>{totalAmount}</div>
             </div>
           )}
+
+          {order?.coupon_code && (
+            <div style={{ background: '#ECFDF5', padding: '14px', borderRadius: '12px', border: '1px solid #A7F3D0' }}>
+              <div style={{ fontSize: '0.75rem', color: '#065F46', fontWeight: 600 }}>Coupon Applied</div>
+              <div style={{ fontSize: '1rem', fontWeight: 900, color: '#047857', marginTop: '4px' }}>
+                🏷️ {order.coupon_code} {Number(order.discount_amount || 0) > 0 ? `(-₹${Number(order.discount_amount).toFixed(0)})` : ''}
+              </div>
+            </div>
+          )}
           
           <div style={{ background: '#FFFFFF', padding: '14px', borderRadius: '12px', border: '1px solid #E2E8F0' }}>
             <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600 }}>Dispatch Time</div>

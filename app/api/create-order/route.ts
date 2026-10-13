@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
+import { validateCouponForCart } from '@/lib/coupons';
 
 export async function POST(req: Request) {
   try {
@@ -14,9 +15,39 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const amount = Number(body?.amount);
+    let amount = Number(body?.amount);
     const currency = body?.currency || 'INR';
     const receipt = body?.receipt || `rcpt_${Date.now()}`;
+    const couponCode = body?.coupon_code ? String(body.coupon_code).trim().toUpperCase() : null;
+    const cart = Array.isArray(body?.cart) ? body.cart : null;
+
+    // Server-side verification and recalculation if cart is provided
+    if (cart && cart.length > 0) {
+      if (couponCode) {
+        const validation = await validateCouponForCart(couponCode, cart, body?.customer_phone);
+        if (validation.isValid) {
+          amount = Math.round(validation.finalTotal * 100);
+        } else {
+          // If coupon was provided but invalid/expired, reject to prevent mismatched payments
+          return NextResponse.json(
+            { error: validation.errorMessage || 'The applied coupon is invalid or no longer applicable.' },
+            { status: 400 }
+          );
+        }
+      } else {
+        // Standard cart recalculation
+        const subtotal = cart.reduce((acc: number, item: any) => acc + (Number(item.price) * Number(item.qty)), 0);
+        const gst = cart.reduce((acc: number, item: any) => {
+          const line = Number(item.price) * Number(item.qty);
+          const rate = Number(item.gstRate ?? 18);
+          return acc + (line * (rate / 100));
+        }, 0);
+        const serverTotalPaise = Math.round((subtotal + gst) * 100);
+        if (serverTotalPaise > 0) {
+          amount = serverTotalPaise;
+        }
+      }
+    }
 
     // Minimum amount validation: 100 paise (₹1.00)
     if (!amount || isNaN(amount) || amount < 100) {
