@@ -11,7 +11,7 @@ interface CategoryItem {
 }
 
 interface ProductItem {
-  id: string | number;
+  id: string | number;  
   title?: string;
   name?: string;
   slug?: string;
