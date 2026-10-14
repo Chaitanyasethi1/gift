@@ -350,15 +350,15 @@ export default function OfflineOrdersPage() {
                 <tbody>
                   <tr>
                     <td>Total Order Value</td>
-                    <td style="text-align: right; font-weight: bold;">₹${order.total_amount.toFixed(2)}</td>
+                    <td style="text-align: right; font-weight: bold;">₹${(Number(order.total_amount) || 0).toFixed(2)}</td>
                   </tr>
                   <tr>
                     <td>Advance / Amount Received (${order.payment_mode})</td>
-                    <td style="text-align: right; font-weight: bold; color: green;">₹${order.paid_amount.toFixed(2)}</td>
+                    <td style="text-align: right; font-weight: bold; color: green;">₹${(Number(order.paid_amount) || 0).toFixed(2)}</td>
                   </tr>
                   <tr style="background: #fff1f2;">
                     <td><strong style="color: #be123c;">Balance Due (Baki)</strong></td>
-                    <td style="text-align: right; font-weight: 900; color: #be123c; font-size: 16px;">₹${order.balance_amount.toFixed(2)}</td>
+                    <td style="text-align: right; font-weight: 900; color: #be123c; font-size: 16px;">₹${(Number(order.balance_amount) || 0).toFixed(2)}</td>
                   </tr>
                 </tbody>
               </table>
@@ -643,7 +643,7 @@ export default function OfflineOrdersPage() {
                       <td style={{ padding: '14px 16px', whiteSpace: 'nowrap' }}>
                         {hasDue ? (
                           <span style={{ background: '#fee2e2', color: '#b91c1c', padding: '4px 8px', borderRadius: '6px', fontSize: '0.88rem', fontWeight: 900, border: '1px solid #fca5a5', display: 'inline-block' }}>
-                            ₹{order.balance_amount.toFixed(2)} Baki
+                            ₹{(Number(order.balance_amount) || 0).toFixed(2)} Baki
                           </span>
                         ) : (
                           <span style={{ background: '#dcfce7', color: '#166534', padding: '3px 8px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 800 }}>
@@ -972,15 +972,15 @@ export default function OfflineOrdersPage() {
               <div style={{ background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '0.85rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                   <span>Total Order:</span>
-                  <strong>₹{paymentModalOrder.total_amount.toFixed(2)}</strong>
+                  <strong>₹{(Number(paymentModalOrder.total_amount) || 0).toFixed(2)}</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', color: '#166534' }}>
                   <span>Already Received:</span>
-                  <strong>₹{paymentModalOrder.paid_amount.toFixed(2)}</strong>
+                  <strong>₹{(Number(paymentModalOrder.paid_amount) || 0).toFixed(2)}</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', color: '#be123c', fontWeight: 800 }}>
                   <span>Current Balance Due:</span>
-                  <span>₹{paymentModalOrder.balance_amount.toFixed(2)}</span>
+                  <span>₹{(Number(paymentModalOrder.balance_amount) || 0).toFixed(2)}</span>
                 </div>
               </div>
 

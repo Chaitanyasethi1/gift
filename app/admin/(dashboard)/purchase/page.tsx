@@ -480,7 +480,7 @@ export default function PurchasePage() {
                       <td style={{ padding: '14px 16px', whiteSpace: 'nowrap' }}>
                         {hasDue ? (
                           <span style={{ background: '#fee2e2', color: '#b91c1c', padding: '4px 8px', borderRadius: '6px', fontSize: '0.88rem', fontWeight: 900, border: '1px solid #fca5a5', display: 'inline-block' }}>
-                            ₹{item.balance_due.toFixed(2)} Dues
+                            ₹{(Number(item.balance_due) || 0).toFixed(2)} Dues
                           </span>
                         ) : (
                           <span style={{ background: '#dcfce7', color: '#166534', padding: '3px 8px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 800 }}>
@@ -865,15 +865,15 @@ export default function PurchasePage() {
               <div style={{ background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '0.85rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                   <span>Total Bill:</span>
-                  <strong>₹{payModalItem.total_amount.toFixed(2)}</strong>
+                  <strong>₹{(Number(payModalItem.total_amount) || 0).toFixed(2)}</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', color: '#166534' }}>
                   <span>Already Paid:</span>
-                  <strong>₹{payModalItem.paid_amount.toFixed(2)}</strong>
+                  <strong>₹{(Number(payModalItem.paid_amount) || 0).toFixed(2)}</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', color: '#be123c', fontWeight: 800 }}>
                   <span>Current Dues (Baki):</span>
-                  <span>₹{payModalItem.balance_due.toFixed(2)}</span>
+                  <span>₹{(Number(payModalItem.balance_due) || 0).toFixed(2)}</span>
                 </div>
               </div>
 

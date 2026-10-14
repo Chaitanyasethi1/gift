@@ -57,7 +57,10 @@ export default function DashboardOverviewClient({
     try {
       const saved = localStorage.getItem('as_offline_orders_v1');
       if (saved) {
-        setOfflineOrders(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setOfflineOrders(parsed);
+        }
       }
     } catch (e) {
       console.warn('Could not load offline orders in dashboard:', e);
@@ -97,10 +100,10 @@ export default function DashboardOverviewClient({
       try {
         const parsed = JSON.parse(shippingAddress);
         if (typeof parsed === 'object' && parsed !== null) {
-          rawAddress = parsed.address || parsed.street || parsed.line1 || '';
-          rawPincode = parsed.pincode || parsed.pin || parsed.postal_code || '';
-          if (parsed.city && !rawAddress.includes(parsed.city)) rawAddress += `, ${parsed.city}`;
-          if (parsed.state && !rawAddress.includes(parsed.state)) rawAddress += `, ${parsed.state}`;
+          rawAddress = String(parsed.address || parsed.street || parsed.line1 || '');
+          rawPincode = String(parsed.pincode || parsed.pin || parsed.postal_code || '');
+          if (parsed.city && !rawAddress.includes(String(parsed.city))) rawAddress += `, ${parsed.city}`;
+          if (parsed.state && !rawAddress.includes(String(parsed.state))) rawAddress += `, ${parsed.state}`;
         } else {
           rawAddress = shippingAddress;
         }
@@ -108,10 +111,10 @@ export default function DashboardOverviewClient({
         rawAddress = shippingAddress;
       }
     } else if (typeof shippingAddress === 'object') {
-      rawAddress = shippingAddress.address || shippingAddress.street || shippingAddress.line1 || '';
-      rawPincode = shippingAddress.pincode || shippingAddress.pin || shippingAddress.postal_code || '';
-      if (shippingAddress.city && !rawAddress.includes(shippingAddress.city)) rawAddress += `, ${shippingAddress.city}`;
-      if (shippingAddress.state && !rawAddress.includes(shippingAddress.state)) rawAddress += `, ${shippingAddress.state}`;
+      rawAddress = String(shippingAddress.address || shippingAddress.street || shippingAddress.line1 || '');
+      rawPincode = String(shippingAddress.pincode || shippingAddress.pin || shippingAddress.postal_code || '');
+      if (shippingAddress.city && !rawAddress.includes(String(shippingAddress.city))) rawAddress += `, ${shippingAddress.city}`;
+      if (shippingAddress.state && !rawAddress.includes(String(shippingAddress.state))) rawAddress += `, ${shippingAddress.state}`;
     } else {
       rawAddress = String(shippingAddress);
     }
@@ -127,6 +130,7 @@ export default function DashboardOverviewClient({
   const isToday = (dateStr: string) => {
     if (!dateStr) return false;
     const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return false;
     const today = new Date();
     return (
       d.getDate() === today.getDate() &&
@@ -139,6 +143,7 @@ export default function DashboardOverviewClient({
   const getMonthKey = (dateStr: string) => {
     if (!dateStr) return '';
     const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return '';
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, '0');
     return `${y}-${m}`;
@@ -147,9 +152,11 @@ export default function DashboardOverviewClient({
   // Format month for display (e.g. "October 2026")
   const formatMonthDisplay = (monthKey: string) => {
     if (!monthKey || monthKey === 'ALL') return 'All Months';
-    const [year, month] = monthKey.split('-').map(Number);
-    if (!year || !month) return monthKey;
-    const d = new Date(year, month - 1, 1);
+    if (monthKey === 'Other') return 'Other Period';
+    const parts = monthKey.split('-').map(Number);
+    if (parts.length < 2 || isNaN(parts[0]) || isNaN(parts[1])) return monthKey;
+    const d = new Date(parts[0], parts[1] - 1, 1);
+    if (isNaN(d.getTime())) return monthKey;
     return d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
   };
 
@@ -337,14 +344,22 @@ export default function DashboardOverviewClient({
       const q = searchQuery.toLowerCase().trim();
       list = list.filter((o) => {
         const addr = parseAddress(o.shipping_address);
+        const orderNum = String(o.order_number || '').toLowerCase();
+        const custName = String(o.customer_name || '').toLowerCase();
+        const custPhone = String(o.customer_phone || '');
+        const addrText = String(addr.address || '').toLowerCase();
+        const pinText = String(addr.pincode || '');
+        const gstText = String(o.gst_number || '').toLowerCase();
+        const amountText = String(o.total_amount || '');
+
         return (
-          o.order_number?.toLowerCase().includes(q) ||
-          o.customer_name?.toLowerCase().includes(q) ||
-          o.customer_phone?.includes(q) ||
-          addr.address.toLowerCase().includes(q) ||
-          addr.pincode.includes(q) ||
-          o.gst_number?.toLowerCase().includes(q) ||
-          o.total_amount?.toString().includes(q)
+          orderNum.includes(q) ||
+          custName.includes(q) ||
+          custPhone.includes(q) ||
+          addrText.includes(q) ||
+          pinText.includes(q) ||
+          gstText.includes(q) ||
+          amountText.includes(q)
         );
       });
     }
@@ -801,7 +816,7 @@ export default function DashboardOverviewClient({
             <div style={{ marginTop: '6px', display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
               <span style={{ color: '#15803d', fontWeight: 600 }}>Collection Ratio:</span>
               <strong style={{ color: '#166534' }}>
-                {totalSaleAmount > 0 ? `${((paymentConfirmedAmount / totalSaleAmount) * 100).toFixed(1)}%` : '0%'}
+                {totalSaleAmount > 0 ? `${(Number((paymentConfirmedAmount / totalSaleAmount) * 100) || 0).toFixed(1)}%` : '0%'}
               </strong>
             </div>
 
@@ -847,7 +862,7 @@ export default function DashboardOverviewClient({
             <div style={{ marginTop: '6px', display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem' }}>
               <span style={{ color: '#be123c', fontWeight: 600 }}>Pending Ratio:</span>
               <strong style={{ color: '#9f1239' }}>
-                {totalSaleAmount > 0 ? `${((paymentPendingAmount / totalSaleAmount) * 100).toFixed(1)}%` : '0%'}
+                {totalSaleAmount > 0 ? `${(Number((paymentPendingAmount / totalSaleAmount) * 100) || 0).toFixed(1)}%` : '0%'}
               </strong>
             </div>
 
@@ -992,7 +1007,7 @@ export default function DashboardOverviewClient({
                             />
                           </div>
                           <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569' }}>
-                            {row.collectionRate.toFixed(0)}%
+                            {(Number(row.collectionRate) || 0).toFixed(0)}%
                           </span>
                         </div>
                       </td>
@@ -1208,8 +1223,11 @@ export default function DashboardOverviewClient({
                 {filteredOrders.map((order) => {
                   const addr = parseAddress(order.shipping_address);
                   const isPaid = order.payment_status === 'Paid';
-                  const orderDate = new Date(order.created_at);
+                  const orderDate = order.created_at ? new Date(order.created_at) : null;
+                  const isValidDate = orderDate && !isNaN(orderDate.getTime());
                   const isOrderToday = isToday(order.created_at);
+                  const rawPhone = String(order.customer_phone || '').trim();
+                  const cleanPhone = rawPhone.replace(/\D/g, '');
 
                   return (
                     <tr
@@ -1229,7 +1247,9 @@ export default function DashboardOverviewClient({
                           {order.order_number}
                         </div>
                         <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          {orderDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                          {isValidDate
+                            ? orderDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+                            : '—'}
                           {isOrderToday && (
                             <span style={{ background: '#dbeafe', color: '#1d4ed8', padding: '1px 5px', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 800 }}>
                               TODAY
@@ -1245,15 +1265,15 @@ export default function DashboardOverviewClient({
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '3px' }}>
                           <a
-                            href={`tel:${order.customer_phone}`}
+                            href={rawPhone ? `tel:${rawPhone}` : '#'}
                             onClick={(e) => e.stopPropagation()}
                             style={{ color: '#0284c7', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}
                           >
-                            📞 {order.customer_phone || 'N/A'}
+                            📞 {rawPhone || 'N/A'}
                           </a>
-                          {order.customer_phone && (
+                          {cleanPhone.length >= 10 && (
                             <a
-                              href={`https://wa.me/91${order.customer_phone.replace(/\D/g, '').slice(-10)}?text=Hi%20${encodeURIComponent(order.customer_name || 'Customer')},%20we%20have%20an%20update%20regarding%20your%20Order%20${order.order_number}`}
+                              href={`https://wa.me/91${cleanPhone.slice(-10)}?text=Hi%20${encodeURIComponent(order.customer_name || 'Customer')},%20we%20have%20an%20update%20regarding%20your%20Order%20${order.order_number}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
@@ -1410,91 +1430,104 @@ export default function DashboardOverviewClient({
         </div>
 
         {/* 4 Mini Summary Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', marginBottom: '18px' }}>
-          <div style={{ background: '#f8fafc', padding: '14px 16px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Offline Orders</span>
-            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', marginTop: '2px' }}>{offlineOrders.length}</div>
-          </div>
-          <div style={{ background: '#f8fafc', padding: '14px 16px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Total Offline Value</span>
-            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', marginTop: '2px' }}>
-              {formatINR(offlineOrders.reduce((sum, o) => sum + (Number(o.total_amount) || 0), 0))}
-            </div>
-          </div>
-          <div style={{ background: '#f0fdf4', padding: '14px 16px', borderRadius: '10px', border: '1px solid #bbf7d0' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#166534', textTransform: 'uppercase' }}>Advance Received</span>
-            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#15803d', marginTop: '2px' }}>
-              {formatINR(offlineOrders.reduce((sum, o) => sum + (Number(o.paid_amount) || 0), 0))}
-            </div>
-          </div>
-          <div style={{ background: '#fff1f2', padding: '14px 16px', borderRadius: '10px', border: '1px solid #fecdd3' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#9f1239', textTransform: 'uppercase' }}>Total Baki Due</span>
-            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#be123c', marginTop: '2px' }}>
-              {formatINR(offlineOrders.reduce((sum, o) => sum + (Number(o.balance_amount) || 0), 0))}
-            </div>
-          </div>
-        </div>
+        {(() => {
+          const safeOfflineOrders = Array.isArray(offlineOrders) ? offlineOrders : [];
+          return (
+            <>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', marginBottom: '18px' }}>
+                <div style={{ background: '#f8fafc', padding: '14px 16px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Offline Orders</span>
+                  <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', marginTop: '2px' }}>{safeOfflineOrders.length}</div>
+                </div>
+                <div style={{ background: '#f8fafc', padding: '14px 16px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Total Offline Value</span>
+                  <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', marginTop: '2px' }}>
+                    {formatINR(safeOfflineOrders.reduce((sum, o) => sum + (Number(o.total_amount) || 0), 0))}
+                  </div>
+                </div>
+                <div style={{ background: '#f0fdf4', padding: '14px 16px', borderRadius: '10px', border: '1px solid #bbf7d0' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#166534', textTransform: 'uppercase' }}>Advance Received</span>
+                  <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#15803d', marginTop: '2px' }}>
+                    {formatINR(safeOfflineOrders.reduce((sum, o) => sum + (Number(o.paid_amount) || 0), 0))}
+                  </div>
+                </div>
+                <div style={{ background: '#fff1f2', padding: '14px 16px', borderRadius: '10px', border: '1px solid #fecdd3' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#9f1239', textTransform: 'uppercase' }}>Total Baki Due</span>
+                  <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#be123c', marginTop: '2px' }}>
+                    {formatINR(safeOfflineOrders.reduce((sum, o) => sum + (Number(o.balance_amount) || 0), 0))}
+                  </div>
+                </div>
+              </div>
 
-        {/* Offline Orders Table Preview */}
-        {offlineOrders.length === 0 ? (
-          <div style={{ padding: '24px', textAlign: 'center', color: '#64748b', background: '#f8fafc', borderRadius: '8px', fontSize: '0.9rem' }}>
-            Koi offline order abhi save nahi hai. Factory walk-in ya direct customer order add karne ke liye upar "+ Naya Offline Order" par click karein.
-          </div>
-        ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '850px' }}>
-              <thead>
-                <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0', color: '#475569', fontSize: '0.76rem', textTransform: 'uppercase' }}>
-                  <th style={{ padding: '10px 12px' }}>Customer &amp; Phone</th>
-                  <th style={{ padding: '10px 12px' }}>Kaam Kya Hai</th>
-                  <th style={{ padding: '10px 12px' }}>Aaya Kisse</th>
-                  <th style={{ padding: '10px 12px' }}>Total Amount</th>
-                  <th style={{ padding: '10px 12px' }}>Kitne Aa Gaye</th>
-                  <th style={{ padding: '10px 12px' }}>Baki (Due)</th>
-                  <th style={{ padding: '10px 12px' }}>Payment Terms</th>
-                </tr>
-              </thead>
-              <tbody>
-                {offlineOrders.slice(0, 5).map((ord) => (
-                  <tr key={ord.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                    <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
-                      <strong style={{ color: '#0f172a', fontSize: '0.88rem' }}>{ord.customer_name}</strong>
-                      <div style={{ fontSize: '0.75rem', color: '#0284c7', marginTop: '2px' }}>
-                        📞 {ord.customer_phone}
-                      </div>
-                    </td>
-                    <td style={{ padding: '10px 12px', fontSize: '0.85rem', color: '#334155', maxWidth: '240px' }}>
-                      {ord.work_description}
-                    </td>
-                    <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
-                      <span style={{ background: '#f1f5f9', padding: '3px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, color: '#475569' }}>
-                        {ord.source}
-                      </span>
-                    </td>
-                    <td style={{ padding: '10px 12px', fontWeight: 800, color: '#0f172a', whiteSpace: 'nowrap', fontSize: '0.9rem' }}>
-                      {formatINR(ord.total_amount)}
-                    </td>
-                    <td style={{ padding: '10px 12px', fontWeight: 800, color: '#16a34a', whiteSpace: 'nowrap', fontSize: '0.88rem' }}>
-                      {formatINR(ord.paid_amount)}
-                    </td>
-                    <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
-                      {ord.balance_amount > 0 ? (
-                        <span style={{ background: '#fee2e2', color: '#b91c1c', padding: '3px 6px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 900 }}>
-                          ₹{ord.balance_amount.toFixed(2)} Baki
-                        </span>
-                      ) : (
-                        <span style={{ color: '#16a34a', fontSize: '0.8rem', fontWeight: 800 }}>✓ Full Paid</span>
-                      )}
-                    </td>
-                    <td style={{ padding: '10px 12px', fontSize: '0.78rem', color: '#475569', fontWeight: 600 }}>
-                      {ord.payment_terms}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+              {/* Offline Orders Table Preview */}
+              {safeOfflineOrders.length === 0 ? (
+                <div style={{ padding: '24px', textAlign: 'center', color: '#64748b', background: '#f8fafc', borderRadius: '8px', fontSize: '0.9rem' }}>
+                  Koi offline order abhi save nahi hai. Factory walk-in ya direct customer order add karne ke liye upar "+ Naya Offline Order" par click karein.
+                </div>
+              ) : (
+                <div style={{ overflowX: 'auto' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '850px' }}>
+                    <thead>
+                      <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0', color: '#475569', fontSize: '0.76rem', textTransform: 'uppercase' }}>
+                        <th style={{ padding: '10px 12px' }}>Customer &amp; Phone</th>
+                        <th style={{ padding: '10px 12px' }}>Kaam Kya Hai</th>
+                        <th style={{ padding: '10px 12px' }}>Aaya Kisse</th>
+                        <th style={{ padding: '10px 12px' }}>Total Amount</th>
+                        <th style={{ padding: '10px 12px' }}>Kitne Aa Gaye</th>
+                        <th style={{ padding: '10px 12px' }}>Baki (Due)</th>
+                        <th style={{ padding: '10px 12px' }}>Payment Terms</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {safeOfflineOrders.slice(0, 5).map((ord) => {
+                        const total = Number(ord.total_amount) || 0;
+                        const paid = Number(ord.paid_amount) || 0;
+                        const balance = Number(ord.balance_amount) || 0;
+
+                        return (
+                          <tr key={ord.id || ord.order_number} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                            <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
+                              <strong style={{ color: '#0f172a', fontSize: '0.88rem' }}>{ord.customer_name || 'Walk-in Customer'}</strong>
+                              <div style={{ fontSize: '0.75rem', color: '#0284c7', marginTop: '2px' }}>
+                                📞 {ord.customer_phone || 'N/A'}
+                              </div>
+                            </td>
+                            <td style={{ padding: '10px 12px', fontSize: '0.85rem', color: '#334155', maxWidth: '240px' }}>
+                              {ord.work_description || 'Printing Job'}
+                            </td>
+                            <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
+                              <span style={{ background: '#f1f5f9', padding: '3px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, color: '#475569' }}>
+                                {ord.source || 'Direct'}
+                              </span>
+                            </td>
+                            <td style={{ padding: '10px 12px', fontWeight: 800, color: '#0f172a', whiteSpace: 'nowrap', fontSize: '0.9rem' }}>
+                              {formatINR(total)}
+                            </td>
+                            <td style={{ padding: '10px 12px', fontWeight: 800, color: '#16a34a', whiteSpace: 'nowrap', fontSize: '0.88rem' }}>
+                              {formatINR(paid)}
+                            </td>
+                            <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
+                              {balance > 0 ? (
+                                <span style={{ background: '#fee2e2', color: '#b91c1c', padding: '3px 6px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 900 }}>
+                                  ₹{balance.toFixed(2)} Baki
+                                </span>
+                              ) : (
+                                <span style={{ color: '#16a34a', fontSize: '0.8rem', fontWeight: 800 }}>✓ Full Paid</span>
+                              )}
+                            </td>
+                            <td style={{ padding: '10px 12px', fontSize: '0.78rem', color: '#475569', fontWeight: 600 }}>
+                              {ord.payment_terms || 'Payment on Delivery'}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </>
+          );
+        })()}
       </div>
 
       {/* ─────────────────────────────────────────────────────────
@@ -1598,7 +1631,9 @@ export default function DashboardOverviewClient({
                   {selectedOrder.order_number}
                 </h2>
                 <span style={{ fontSize: '0.8rem', color: '#64748b' }}>
-                  Placed: {new Date(selectedOrder.created_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}
+                  Placed: {selectedOrder.created_at && !isNaN(new Date(selectedOrder.created_at).getTime())
+                    ? new Date(selectedOrder.created_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
+                    : '—'}
                 </span>
               </div>
               <button
