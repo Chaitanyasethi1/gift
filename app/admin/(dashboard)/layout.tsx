@@ -48,8 +48,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/admin/purchase" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
             🛒 Purchase
           </Link>
-          <Link href="/admin/billing" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
-            🧾 Billing
+          <Link href="/admin/offline-orders" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
+            🏬 Offline Orders
           </Link>
         </nav>
         <div style={{ padding: '20px', borderTop: '1px solid #334155' }}>

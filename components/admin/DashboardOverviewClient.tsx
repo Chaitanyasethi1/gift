@@ -51,6 +51,18 @@ export default function DashboardOverviewClient({
   const [activeTab, setActiveTab] = useState<string>('ALL'); // 'ALL' | 'DAILY' | 'CONFIRMED' | 'DISPATCHED' | 'PENDING' | 'PAID' | 'PAYMENT_PENDING'
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [offlineOrders, setOfflineOrders] = useState<any[]>([]);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('as_offline_orders_v1');
+      if (saved) {
+        setOfflineOrders(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.warn('Could not load offline orders in dashboard:', e);
+    }
+  }, []);
 
   const supabase = createClient();
 
@@ -444,7 +456,27 @@ export default function DashboardOverviewClient({
               boxShadow: '0 4px 12px rgba(255, 255, 255, 0.15)'
             }}
           >
-            <span>📦 Full Sales &amp; Dispatch →</span>
+            <span>📦 Sales &amp; Dispatch →</span>
+          </Link>
+
+          {/* Go to Offline Orders */}
+          <Link
+            href="/admin/offline-orders"
+            style={{
+              background: '#10b981',
+              color: '#fff',
+              textDecoration: 'none',
+              padding: '10px 18px',
+              borderRadius: '10px',
+              fontWeight: 800,
+              fontSize: '0.88rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+            }}
+          >
+            <span>🏬 Offline Orders →</span>
           </Link>
         </div>
       </div>
@@ -1309,6 +1341,156 @@ export default function DashboardOverviewClient({
                     </tr>
                   );
                 })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* ─────────────────────────────────────────────────────────
+          SECTION 5: OFFLINE FACTORY ORDERS & DIRECT CLIENTS
+      ───────────────────────────────────────────────────────── */}
+      <div style={{
+        background: '#ffffff',
+        borderRadius: '16px',
+        border: '1.5px solid #e2e8f0',
+        padding: '24px 28px',
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '12px' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '1.4rem' }}>🏬</span>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                Offline Factory Orders &amp; Direct Jobs (ऑफलाइन ग्राहक व जॉब वर्क)
+              </h2>
+              <span style={{ background: '#dcfce7', color: '#166534', fontSize: '0.72rem', fontWeight: 800, padding: '3px 8px', borderRadius: '6px' }}>
+                Walk-in &amp; B2B Tracker
+              </span>
+            </div>
+            <p style={{ color: '#64748b', fontSize: '0.85rem', margin: '4px 0 0 0' }}>
+              Customer contact, kaam details, advance received, baki payment aur payment terms
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Link
+              href="/admin/offline-orders"
+              style={{
+                background: '#10b981',
+                color: '#fff',
+                textDecoration: 'none',
+                padding: '8px 16px',
+                borderRadius: '8px',
+                fontWeight: 700,
+                fontSize: '0.85rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 2px 6px rgba(16, 185, 129, 0.25)'
+              }}
+            >
+              <span>➕ Naya Offline Order</span>
+            </Link>
+            <Link
+              href="/admin/offline-orders"
+              style={{
+                background: '#0f172a',
+                color: '#fff',
+                textDecoration: 'none',
+                padding: '8px 16px',
+                borderRadius: '8px',
+                fontWeight: 700,
+                fontSize: '0.85rem'
+              }}
+            >
+              Open Full Manager →
+            </Link>
+          </div>
+        </div>
+
+        {/* 4 Mini Summary Cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', marginBottom: '18px' }}>
+          <div style={{ background: '#f8fafc', padding: '14px 16px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Offline Orders</span>
+            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', marginTop: '2px' }}>{offlineOrders.length}</div>
+          </div>
+          <div style={{ background: '#f8fafc', padding: '14px 16px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Total Offline Value</span>
+            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', marginTop: '2px' }}>
+              {formatINR(offlineOrders.reduce((sum, o) => sum + (Number(o.total_amount) || 0), 0))}
+            </div>
+          </div>
+          <div style={{ background: '#f0fdf4', padding: '14px 16px', borderRadius: '10px', border: '1px solid #bbf7d0' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#166534', textTransform: 'uppercase' }}>Advance Received</span>
+            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#15803d', marginTop: '2px' }}>
+              {formatINR(offlineOrders.reduce((sum, o) => sum + (Number(o.paid_amount) || 0), 0))}
+            </div>
+          </div>
+          <div style={{ background: '#fff1f2', padding: '14px 16px', borderRadius: '10px', border: '1px solid #fecdd3' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#9f1239', textTransform: 'uppercase' }}>Total Baki Due</span>
+            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#be123c', marginTop: '2px' }}>
+              {formatINR(offlineOrders.reduce((sum, o) => sum + (Number(o.balance_amount) || 0), 0))}
+            </div>
+          </div>
+        </div>
+
+        {/* Offline Orders Table Preview */}
+        {offlineOrders.length === 0 ? (
+          <div style={{ padding: '24px', textAlign: 'center', color: '#64748b', background: '#f8fafc', borderRadius: '8px', fontSize: '0.9rem' }}>
+            Koi offline order abhi save nahi hai. Factory walk-in ya direct customer order add karne ke liye upar "+ Naya Offline Order" par click karein.
+          </div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '850px' }}>
+              <thead>
+                <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0', color: '#475569', fontSize: '0.76rem', textTransform: 'uppercase' }}>
+                  <th style={{ padding: '10px 12px' }}>Customer &amp; Phone</th>
+                  <th style={{ padding: '10px 12px' }}>Kaam Kya Hai</th>
+                  <th style={{ padding: '10px 12px' }}>Aaya Kisse</th>
+                  <th style={{ padding: '10px 12px' }}>Total Amount</th>
+                  <th style={{ padding: '10px 12px' }}>Kitne Aa Gaye</th>
+                  <th style={{ padding: '10px 12px' }}>Baki (Due)</th>
+                  <th style={{ padding: '10px 12px' }}>Payment Terms</th>
+                </tr>
+              </thead>
+              <tbody>
+                {offlineOrders.slice(0, 5).map((ord) => (
+                  <tr key={ord.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                    <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
+                      <strong style={{ color: '#0f172a', fontSize: '0.88rem' }}>{ord.customer_name}</strong>
+                      <div style={{ fontSize: '0.75rem', color: '#0284c7', marginTop: '2px' }}>
+                        📞 {ord.customer_phone}
+                      </div>
+                    </td>
+                    <td style={{ padding: '10px 12px', fontSize: '0.85rem', color: '#334155', maxWidth: '240px' }}>
+                      {ord.work_description}
+                    </td>
+                    <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
+                      <span style={{ background: '#f1f5f9', padding: '3px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, color: '#475569' }}>
+                        {ord.source}
+                      </span>
+                    </td>
+                    <td style={{ padding: '10px 12px', fontWeight: 800, color: '#0f172a', whiteSpace: 'nowrap', fontSize: '0.9rem' }}>
+                      {formatINR(ord.total_amount)}
+                    </td>
+                    <td style={{ padding: '10px 12px', fontWeight: 800, color: '#16a34a', whiteSpace: 'nowrap', fontSize: '0.88rem' }}>
+                      {formatINR(ord.paid_amount)}
+                    </td>
+                    <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
+                      {ord.balance_amount > 0 ? (
+                        <span style={{ background: '#fee2e2', color: '#b91c1c', padding: '3px 6px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 900 }}>
+                          ₹{ord.balance_amount.toFixed(2)} Baki
+                        </span>
+                      ) : (
+                        <span style={{ color: '#16a34a', fontSize: '0.8rem', fontWeight: 800 }}>✓ Full Paid</span>
+                      )}
+                    </td>
+                    <td style={{ padding: '10px 12px', fontSize: '0.78rem', color: '#475569', fontWeight: 600 }}>
+                      {ord.payment_terms}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
