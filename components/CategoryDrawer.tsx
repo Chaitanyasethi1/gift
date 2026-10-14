@@ -173,8 +173,7 @@ export const CategoryDrawer: React.FC = () => {
         .category-drawer-backdrop {
           position: fixed;
           inset: 0;
-          background: rgba(15, 23, 42, 0.65);
-          backdrop-filter: blur(4px);
+          background: rgba(15, 23, 42, 0.7);
           z-index: 99990;
           animation: fadeInDrawerBackdrop 0.25s ease-out;
         }

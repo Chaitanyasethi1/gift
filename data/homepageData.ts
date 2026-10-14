@@ -28,7 +28,7 @@ export interface HomepageConfig {
 export const initialHomepageConfig: HomepageConfig = {
   tickerText: '⚡ MEGA FACTORY SALE: Flat 20% OFF on all Corrugated Cartons! Use code AS20 ⚡',
   tickerActive: true,
-  slideIntervalMs: 2000,
+  slideIntervalMs: 5000,
   heroBanners: [
     { id: 'banner-1', img: '/assets/banner_woven_labels.png', alt: 'Woven Labels - AS Print Gallery', link: '/category/woven-labels', active: true, order: 1 },
     { id: 'banner-2', img: '/assets/banner_corrugated_box.png', alt: 'Corrugated Box - AS Print Gallery', link: '/category/corrugated-boxes', active: true, order: 2 },

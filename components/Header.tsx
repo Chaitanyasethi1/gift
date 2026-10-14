@@ -482,10 +482,11 @@ export function Header() {
           display: flex;
           white-space: nowrap;
           animation: headerMarqueeAnim 22s linear infinite;
+          will-change: transform;
         }
         @keyframes headerMarqueeAnim {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
         }
         .header-marquee-box:hover .header-marquee {
           animation-play-state: paused;

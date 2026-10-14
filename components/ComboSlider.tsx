@@ -17,7 +17,7 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
     }
     return initialHomepageConfig.heroBanners.filter(b => b.active);
   });
-  const [intervalMs, setIntervalMs] = useState<number>(slideInterval || initialHomepageConfig.slideIntervalMs || 2500);
+  const [intervalMs, setIntervalMs] = useState<number>(slideInterval || initialHomepageConfig.slideIntervalMs || 5000);
 
   // Sync state if initialBanners changes (e.g. server revalidation)
   useEffect(() => {
@@ -230,7 +230,7 @@ export const ComboSlider: React.FC<ComboSliderProps> = ({ initialBanners, slideI
           style={{
             display: 'flex',
             width: '100%',
-            transform: `translateX(-${currentIndex * 100}%)`,
+            transform: `translate3d(-${currentIndex * 100}%, 0, 0)`,
             transition: isTransitioning ? 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)' : 'none',
             willChange: 'transform'
           }}

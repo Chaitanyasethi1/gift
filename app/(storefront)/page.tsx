@@ -69,13 +69,14 @@ export default async function HomePage() {
         }
         .marquee-content {
           animation: marquee 20s linear infinite;
+          will-change: transform;
         }
         .marquee-wrapper:hover .marquee-content {
           animation-play-state: paused;
         }
         @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
         }
       `}</style>
 
@@ -306,10 +307,10 @@ export default async function HomePage() {
 
           @keyframes partnerMarqueeAnim {
             0% {
-              transform: translateX(0);
+              transform: translate3d(0, 0, 0);
             }
             100% {
-              transform: translateX(-50%);
+              transform: translate3d(-50%, 0, 0);
             }
           }
 

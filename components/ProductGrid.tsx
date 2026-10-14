@@ -76,8 +76,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   const checkScroll = React.useCallback(() => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 10);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+      const hasLeft = scrollLeft > 10;
+      const hasRight = scrollLeft < scrollWidth - clientWidth - 10;
+      setCanScrollLeft(prev => (prev !== hasLeft ? hasLeft : prev));
+      setCanScrollRight(prev => (prev !== hasRight ? hasRight : prev));
     }
   }, []);
 
@@ -85,14 +87,24 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
     if (!enableCarousel) return;
     const el = scrollRef.current;
     if (el) {
-      // Delay check slightly for items to measure
+      let ticking = false;
+      const onScroll = () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            checkScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      };
+
       const timer = setTimeout(checkScroll, 100);
-      el.addEventListener('scroll', checkScroll, { passive: true });
-      window.addEventListener('resize', checkScroll);
+      el.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
       return () => {
         clearTimeout(timer);
-        el.removeEventListener('scroll', checkScroll);
-        window.removeEventListener('resize', checkScroll);
+        el.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onScroll);
       };
     }
   }, [filteredProducts, enableCarousel, checkScroll]);

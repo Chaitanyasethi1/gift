@@ -307,39 +307,59 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return Math.max(0, subtotal - discount + gstAmount);
   }, [subtotal, discount, gstAmount]);
 
+  const contextValue = useMemo(() => ({
+    cart,
+    cartCount,
+    addToCart,
+    updateQty,
+    removeFromCart,
+    clearCart,
+    appliedCoupon,
+    applyCoupon,
+    removeCoupon,
+    eligibleItemIds,
+    itemDiscounts,
+    subtotal,
+    discount,
+    gstAmount,
+    finalTotal,
+    isCartOpen,
+    setIsCartOpen,
+    isCategoryDrawerOpen,
+    setIsCategoryDrawerOpen,
+    isQuoteModalOpen,
+    setIsQuoteModalOpen,
+    isSampleModalOpen,
+    setIsSampleModalOpen,
+    isPincodeModalOpen,
+    setIsPincodeModalOpen,
+    selectedQuoteProduct,
+    setSelectedQuoteProduct,
+    toastMessage,
+    showToast,
+    isLoaded
+  }), [
+    cart,
+    cartCount,
+    appliedCoupon,
+    eligibleItemIds,
+    itemDiscounts,
+    subtotal,
+    discount,
+    gstAmount,
+    finalTotal,
+    isCartOpen,
+    isCategoryDrawerOpen,
+    isQuoteModalOpen,
+    isSampleModalOpen,
+    isPincodeModalOpen,
+    selectedQuoteProduct,
+    toastMessage,
+    isLoaded
+  ]);
+
   return (
-    <CartContext.Provider value={{
-      cart,
-      cartCount,
-      addToCart,
-      updateQty,
-      removeFromCart,
-      clearCart,
-      appliedCoupon,
-      applyCoupon,
-      removeCoupon,
-      eligibleItemIds,
-      itemDiscounts,
-      subtotal,
-      discount,
-      gstAmount,
-      finalTotal,
-      isCartOpen,
-      setIsCartOpen,
-      isCategoryDrawerOpen,
-      setIsCategoryDrawerOpen,
-      isQuoteModalOpen,
-      setIsQuoteModalOpen,
-      isSampleModalOpen,
-      setIsSampleModalOpen,
-      isPincodeModalOpen,
-      setIsPincodeModalOpen,
-      selectedQuoteProduct,
-      setSelectedQuoteProduct,
-      toastMessage,
-      showToast,
-      isLoaded
-    }}>
+    <CartContext.Provider value={contextValue}>
       {children}
     </CartContext.Provider>
   );
