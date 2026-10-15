@@ -1446,13 +1446,13 @@ export default function DashboardOverviewClient({
                   </div>
                 </div>
                 <div style={{ background: '#f0fdf4', padding: '14px 16px', borderRadius: '10px', border: '1px solid #bbf7d0' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#166534', textTransform: 'uppercase' }}>Advance Received</span>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#166534', textTransform: 'uppercase' }}>Advance Payment</span>
                   <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#15803d', marginTop: '2px' }}>
                     {formatINR(safeOfflineOrders.reduce((sum, o) => sum + (Number(o.paid_amount) || 0), 0))}
                   </div>
                 </div>
                 <div style={{ background: '#fff1f2', padding: '14px 16px', borderRadius: '10px', border: '1px solid #fecdd3' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#9f1239', textTransform: 'uppercase' }}>Total Baki Due</span>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#9f1239', textTransform: 'uppercase' }}>Balance Due</span>
                   <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#be123c', marginTop: '2px' }}>
                     {formatINR(safeOfflineOrders.reduce((sum, o) => sum + (Number(o.balance_amount) || 0), 0))}
                   </div>
@@ -1469,12 +1469,12 @@ export default function DashboardOverviewClient({
                   <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '850px' }}>
                     <thead>
                       <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0', color: '#475569', fontSize: '0.76rem', textTransform: 'uppercase' }}>
-                        <th style={{ padding: '10px 12px' }}>Customer &amp; Phone</th>
+                        <th style={{ padding: '10px 12px' }}>Customer Details</th>
                         <th style={{ padding: '10px 12px' }}>Kaam Kya Hai</th>
                         <th style={{ padding: '10px 12px' }}>Aaya Kisse</th>
                         <th style={{ padding: '10px 12px' }}>Total Amount</th>
-                        <th style={{ padding: '10px 12px' }}>Kitne Aa Gaye</th>
-                        <th style={{ padding: '10px 12px' }}>Baki (Due)</th>
+                        <th style={{ padding: '10px 12px' }}>Advance Payment</th>
+                        <th style={{ padding: '10px 12px' }}>Balance Due</th>
                         <th style={{ padding: '10px 12px' }}>Payment Terms</th>
                       </tr>
                     </thead>
@@ -1509,7 +1509,7 @@ export default function DashboardOverviewClient({
                             <td style={{ padding: '10px 12px', whiteSpace: 'nowrap' }}>
                               {balance > 0 ? (
                                 <span style={{ background: '#fee2e2', color: '#b91c1c', padding: '3px 6px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 900 }}>
-                                  ₹{balance.toFixed(2)} Baki
+                                  ₹{balance.toFixed(2)} Balance Due
                                 </span>
                               ) : (
                                 <span style={{ color: '#16a34a', fontSize: '0.8rem', fontWeight: 800 }}>✓ Full Paid</span>

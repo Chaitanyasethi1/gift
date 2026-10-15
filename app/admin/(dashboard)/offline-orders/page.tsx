@@ -484,14 +484,14 @@ export default function OfflineOrdersPage() {
 
         {/* Advance Received */}
         <div style={{ background: '#f0fdf4', padding: '20px', borderRadius: '14px', border: '1px solid #bbf7d0', boxShadow: '0 2px 4px rgba(22,163,74,0.05)' }}>
-          <span style={{ color: '#166534', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Advance Received (Aaye Hue)</span>
+          <span style={{ color: '#166534', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Advance Payment</span>
           <div style={{ fontSize: '1.9rem', fontWeight: 900, color: '#15803d', marginTop: '4px' }}>{formatINR(totalAdvanceReceived)}</div>
           <span style={{ fontSize: '0.78rem', color: '#166534' }}>Cash / UPI / Bank Captured</span>
         </div>
 
         {/* Pending Balance Due */}
         <div style={{ background: '#fff1f2', padding: '20px', borderRadius: '14px', border: '1px solid #fecdd3', boxShadow: '0 2px 4px rgba(225,29,72,0.05)' }}>
-          <span style={{ color: '#9f1239', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Pending Balance (Baki Lena Hai)</span>
+          <span style={{ color: '#9f1239', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Balance Due</span>
           <div style={{ fontSize: '1.9rem', fontWeight: 900, color: '#be123c', marginTop: '4px' }}>{formatINR(totalBalanceDue)}</div>
           <span style={{ fontSize: '0.78rem', color: '#9f1239' }}>To be collected on delivery</span>
         </div>
@@ -558,12 +558,12 @@ export default function OfflineOrdersPage() {
               <thead>
                 <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0', color: '#475569', fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                   <th style={{ padding: '14px 16px' }}>Order ID &amp; Date</th>
-                  <th style={{ padding: '14px 16px' }}>👤 Customer &amp; No.</th>
+                  <th style={{ padding: '14px 16px' }}>👤 Customer Details</th>
                   <th style={{ padding: '14px 16px', width: '280px' }}>📦 Kaam Kya Hai (Job Work)</th>
                   <th style={{ padding: '14px 16px' }}>📍 Aaya Kisse (Source)</th>
                   <th style={{ padding: '14px 16px' }}>💰 Total Amount</th>
-                  <th style={{ padding: '14px 16px' }}>✅ Kitne Aa Gaye</th>
-                  <th style={{ padding: '14px 16px' }}>⚠️ Baki (Balance)</th>
+                  <th style={{ padding: '14px 16px' }}>✅ Advance Payment</th>
+                  <th style={{ padding: '14px 16px' }}>⚠️ Balance Due</th>
                   <th style={{ padding: '14px 16px' }}>📋 Payment Terms</th>
                   <th style={{ padding: '14px 16px', textAlign: 'center' }}>⚡ Actions</th>
                 </tr>
@@ -639,11 +639,11 @@ export default function OfflineOrdersPage() {
                         <div style={{ fontSize: '0.7rem', color: '#64748b' }}>via {order.payment_mode}</div>
                       </td>
 
-                      {/* Baki (Balance) */}
+                      {/* Balance Due */}
                       <td style={{ padding: '14px 16px', whiteSpace: 'nowrap' }}>
                         {hasDue ? (
                           <span style={{ background: '#fee2e2', color: '#b91c1c', padding: '4px 8px', borderRadius: '6px', fontSize: '0.88rem', fontWeight: 900, border: '1px solid #fca5a5', display: 'inline-block' }}>
-                            ₹{(Number(order.balance_amount) || 0).toFixed(2)} Baki
+                            ₹{(Number(order.balance_amount) || 0).toFixed(2)} Balance Due
                           </span>
                         ) : (
                           <span style={{ background: '#dcfce7', color: '#166534', padding: '3px 8px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 800 }}>
@@ -851,7 +851,7 @@ export default function OfflineOrdersPage() {
 
                   <div>
                     <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 800, color: '#16a34a', marginBottom: '4px' }}>
-                      Kitne Aa Gaye / Advance (₹)
+                      Advance Payment (₹)
                     </label>
                     <input
                       type="number"
@@ -865,7 +865,7 @@ export default function OfflineOrdersPage() {
 
                   <div>
                     <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 800, color: '#be123c', marginBottom: '4px' }}>
-                      Baki Kitna Reh Gaya (₹)
+                      Balance Due (₹)
                     </label>
                     <div style={{ width: '100%', padding: '10px', background: '#fee2e2', border: '1.5px solid #fca5a5', borderRadius: '8px', fontSize: '1.05rem', fontWeight: 900, color: '#9f1239', boxSizing: 'border-box' }}>
                       ₹{Math.max(0, Number(totalAmount || 0) - Number(paidAmount || 0)).toFixed(2)}
