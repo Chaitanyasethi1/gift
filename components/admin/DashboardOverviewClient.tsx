@@ -49,9 +49,19 @@ export default function DashboardOverviewClient({
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState<string>('ALL'); // 'ALL' | 'TODAY' | 'YYYY-MM'
   const [activeTab, setActiveTab] = useState<string>('ALL'); // 'ALL' | 'DAILY' | 'CONFIRMED' | 'DISPATCHED' | 'PENDING' | 'PAID' | 'PAYMENT_PENDING'
+  const [orderScope, setOrderScope] = useState<'ONLINE' | 'OFFLINE' | 'ALL'>('ONLINE'); // 'ONLINE' (Website Store) | 'OFFLINE' (Factory Jobs) | 'ALL'
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [offlineOrders, setOfflineOrders] = useState<any[]>([]);
+
+  // Helpers to isolate online website orders vs offline factory orders
+  const isOnlineOrder = (o: Order) => {
+    const num = String(o.order_number || '');
+    const addr = typeof o.shipping_address === 'string' ? o.shipping_address : JSON.stringify(o.shipping_address || {});
+    return !num.startsWith('OFF-') && !addr.includes('Offline / Factory Order Pickup');
+  };
+
+  const isOfflineOrder = (o: Order) => !isOnlineOrder(o);
 
   useEffect(() => {
     try {
@@ -169,31 +179,43 @@ export default function DashboardOverviewClient({
     }).format(amount || 0);
   };
 
-  // Extract all unique months present in orders
+  // Active scoped orders based on selected scope (Online vs Offline vs All)
+  const scopedOrders = useMemo(() => {
+    if (orderScope === 'ONLINE') {
+      return orders.filter(isOnlineOrder);
+    }
+    if (orderScope === 'OFFLINE') {
+      return orders.filter(isOfflineOrder);
+    }
+    return orders;
+  }, [orders, orderScope]);
+
+  // Extract all unique months present in scoped orders
   const availableMonths = useMemo(() => {
     const monthSet = new Set<string>();
-    orders.forEach((o) => {
+    scopedOrders.forEach((o) => {
       const key = getMonthKey(o.created_at);
       if (key) monthSet.add(key);
     });
     return Array.from(monthSet).sort().reverse();
-  }, [orders]);
+  }, [scopedOrders]);
 
   // Orders filtered by the selected period (ALL, TODAY, or YYYY-MM)
   const periodFilteredOrders = useMemo(() => {
-    if (selectedMonth === 'ALL') return orders;
+    let list = scopedOrders;
+    if (selectedMonth === 'ALL') return list;
     if (selectedMonth === 'TODAY') {
-      return orders.filter((o) => isToday(o.created_at));
+      return list.filter((o) => isToday(o.created_at));
     }
-    return orders.filter((o) => getMonthKey(o.created_at) === selectedMonth);
-  }, [orders, selectedMonth]);
+    return list.filter((o) => getMonthKey(o.created_at) === selectedMonth);
+  }, [scopedOrders, selectedMonth]);
 
   // -------------------------------------------------------------
   // SECTION 1 & 2 CALCULATIONS (Directly from handwritten note)
   // -------------------------------------------------------------
 
   // 1. Total Order (Daily) - specifically orders placed today
-  const dailyOrders = useMemo(() => orders.filter((o) => isToday(o.created_at)), [orders]);
+  const dailyOrders = useMemo(() => scopedOrders.filter((o) => isToday(o.created_at)), [scopedOrders]);
   const dailyOrdersCount = dailyOrders.length;
   const dailySalesTotal = dailyOrders.reduce((acc, o) => acc + (Number(o.total_amount) || 0), 0);
 
@@ -272,7 +294,7 @@ export default function DashboardOverviewClient({
   const monthlyListingData: MonthlyRow[] = useMemo(() => {
     const map = new Map<string, Order[]>();
 
-    orders.forEach((order) => {
+    scopedOrders.forEach((order) => {
       const key = getMonthKey(order.created_at) || 'Other';
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(order);
@@ -316,7 +338,7 @@ export default function DashboardOverviewClient({
     });
 
     return rows.sort((a, b) => b.monthKey.localeCompare(a.monthKey));
-  }, [orders]);
+  }, [scopedOrders]);
 
   // -------------------------------------------------------------
   // SECTION 4: TABLE FILTERING (Tabs + Search)
@@ -400,9 +422,61 @@ export default function DashboardOverviewClient({
           </p>
         </div>
 
-        {/* Action Buttons & Period Selector */}
+        {/* Action Buttons, Scope Switcher & Period Selector */}
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
           
+          {/* Order Scope Switcher: Online vs Offline vs All */}
+          <div style={{ display: 'inline-flex', background: '#334155', padding: '3px', borderRadius: '10px', border: '1px solid #475569' }}>
+            <button
+              type="button"
+              onClick={() => setOrderScope('ONLINE')}
+              style={{
+                background: orderScope === 'ONLINE' ? '#3b82f6' : 'transparent',
+                color: '#fff',
+                border: 'none',
+                padding: '7px 14px',
+                borderRadius: '8px',
+                fontWeight: 800,
+                fontSize: '0.84rem',
+                cursor: 'pointer'
+              }}
+            >
+              🌐 Online Store
+            </button>
+            <button
+              type="button"
+              onClick={() => setOrderScope('OFFLINE')}
+              style={{
+                background: orderScope === 'OFFLINE' ? '#10b981' : 'transparent',
+                color: '#fff',
+                border: 'none',
+                padding: '7px 14px',
+                borderRadius: '8px',
+                fontWeight: 800,
+                fontSize: '0.84rem',
+                cursor: 'pointer'
+              }}
+            >
+              🏬 Offline Jobs
+            </button>
+            <button
+              type="button"
+              onClick={() => setOrderScope('ALL')}
+              style={{
+                background: orderScope === 'ALL' ? '#6366f1' : 'transparent',
+                color: '#fff',
+                border: 'none',
+                padding: '7px 14px',
+                borderRadius: '8px',
+                fontWeight: 800,
+                fontSize: '0.84rem',
+                cursor: 'pointer'
+              }}
+            >
+              📊 Combined
+            </button>
+          </div>
+
           {/* Period Selector Dropdown */}
           <div style={{ display: 'flex', alignItems: 'center', background: '#334155', borderRadius: '10px', padding: '4px 10px', border: '1px solid #475569' }}>
             <span style={{ fontSize: '0.82rem', color: '#cbd5e1', fontWeight: 700, marginRight: '8px' }}>
@@ -493,6 +567,69 @@ export default function DashboardOverviewClient({
           >
             <span>🏬 Offline Orders →</span>
           </Link>
+        </div>
+      </div>
+
+      {/* Active Scope Banner */}
+      <div style={{
+        background: orderScope === 'ONLINE' ? '#eff6ff' : orderScope === 'OFFLINE' ? '#f0fdf4' : '#f8fafc',
+        border: `1.5px solid ${orderScope === 'ONLINE' ? '#bfdbfe' : orderScope === 'OFFLINE' ? '#bbf7d0' : '#cbd5e1'}`,
+        borderRadius: '14px',
+        padding: '14px 20px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '12px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span style={{ fontSize: '1.4rem' }}>
+            {orderScope === 'ONLINE' ? '🌐' : orderScope === 'OFFLINE' ? '🏬' : '📊'}
+          </span>
+          <div>
+            <strong style={{ fontSize: '0.96rem', color: '#0f172a' }}>
+              {orderScope === 'ONLINE' && 'Active View: Online Website Orders & Revenue (वेबसाइट ऑर्डर्स)'}
+              {orderScope === 'OFFLINE' && 'Active View: Offline Factory & Job Work Orders (ऑफलाइन फैक्ट्री जॉब्स)'}
+              {orderScope === 'ALL' && 'Active View: Combined View (ऑनलाइन स्टोर + ऑफलाइन फैक्ट्री दोनों)'}
+            </strong>
+            <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '2px' }}>
+              {orderScope === 'ONLINE' && 'Website checkout orders, online payments & courier dispatches (offline jobs excluded)'}
+              {orderScope === 'OFFLINE' && 'Factory direct walk-in clients, advance payments & balance dues'}
+              {orderScope === 'ALL' && 'Total consolidated view of all factory business'}
+            </div>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button
+            onClick={() => setOrderScope('ONLINE')}
+            style={{
+              background: orderScope === 'ONLINE' ? '#2563eb' : '#fff',
+              color: orderScope === 'ONLINE' ? '#fff' : '#334155',
+              border: '1px solid #cbd5e1',
+              padding: '6px 14px',
+              borderRadius: '8px',
+              fontSize: '0.82rem',
+              fontWeight: 800,
+              cursor: 'pointer'
+            }}
+          >
+            🌐 Only Online Store
+          </button>
+          <button
+            onClick={() => setOrderScope('OFFLINE')}
+            style={{
+              background: orderScope === 'OFFLINE' ? '#16a34a' : '#fff',
+              color: orderScope === 'OFFLINE' ? '#fff' : '#334155',
+              border: '1px solid #cbd5e1',
+              padding: '6px 14px',
+              borderRadius: '8px',
+              fontSize: '0.82rem',
+              fontWeight: 800,
+              cursor: 'pointer'
+            }}
+          >
+            🏬 Only Offline Jobs
+          </button>
         </div>
       </div>
 
@@ -1452,7 +1589,7 @@ export default function DashboardOverviewClient({
                   </div>
                 </div>
                 <div style={{ background: '#fff1f2', padding: '14px 16px', borderRadius: '10px', border: '1px solid #fecdd3' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#9f1239', textTransform: 'uppercase' }}>Balance Due</span>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#9f1239', textTransform: 'uppercase' }}>Total Balance Due</span>
                   <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#be123c', marginTop: '2px' }}>
                     {formatINR(safeOfflineOrders.reduce((sum, o) => sum + (Number(o.balance_amount) || 0), 0))}
                   </div>

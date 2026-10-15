@@ -9,6 +9,7 @@ export default function SalesPage() {
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
+  const [orderChannel, setOrderChannel] = useState<'ONLINE' | 'OFFLINE' | 'ALL'>('ONLINE');
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
   
@@ -135,6 +136,11 @@ export default function SalesPage() {
       (addr.pincode && addr.pincode.includes(term));
 
     const matchesStatus = statusFilter === 'ALL' || o.status === statusFilter || (statusFilter === 'Paid' && o.payment_status === 'Paid');
+
+    const isOffline = (o.order_number && String(o.order_number).startsWith('OFF-')) || (addr.address && addr.address.includes('Offline'));
+    if (orderChannel === 'ONLINE' && isOffline) return false;
+    if (orderChannel === 'OFFLINE' && !isOffline) return false;
+
     return matchesSearch && matchesStatus;
   });
 
@@ -456,14 +462,66 @@ export default function SalesPage() {
           )}
         </div>
 
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+          {/* Channel Selector: Online Store vs Offline Jobs */}
+          <div style={{ display: 'inline-flex', background: '#f1f5f9', padding: '3px', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
+            <button
+              type="button"
+              onClick={() => setOrderChannel('ONLINE')}
+              style={{
+                background: orderChannel === 'ONLINE' ? '#0f172a' : 'transparent',
+                color: orderChannel === 'ONLINE' ? '#fff' : '#475569',
+                border: 'none',
+                padding: '6px 12px',
+                borderRadius: '6px',
+                fontWeight: 700,
+                fontSize: '0.8rem',
+                cursor: 'pointer'
+              }}
+            >
+              🌐 Online Store
+            </button>
+            <button
+              type="button"
+              onClick={() => setOrderChannel('OFFLINE')}
+              style={{
+                background: orderChannel === 'OFFLINE' ? '#10b981' : 'transparent',
+                color: orderChannel === 'OFFLINE' ? '#fff' : '#475569',
+                border: 'none',
+                padding: '6px 12px',
+                borderRadius: '6px',
+                fontWeight: 700,
+                fontSize: '0.8rem',
+                cursor: 'pointer'
+              }}
+            >
+              🏬 Offline Orders
+            </button>
+            <button
+              type="button"
+              onClick={() => setOrderChannel('ALL')}
+              style={{
+                background: orderChannel === 'ALL' ? '#334155' : 'transparent',
+                color: orderChannel === 'ALL' ? '#fff' : '#475569',
+                border: 'none',
+                padding: '6px 12px',
+                borderRadius: '6px',
+                fontWeight: 700,
+                fontSize: '0.8rem',
+                cursor: 'pointer'
+              }}
+            >
+              All
+            </button>
+          </div>
+
           <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569' }}>Filter Status:</span>
           <select 
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             style={{ padding: '8px 14px', borderRadius: '8px', border: '1.5px solid #cbd5e1', background: '#fff', fontWeight: 700, fontSize: '0.88rem' }}
           >
-            <option value="ALL">All Orders ({orders.length})</option>
+            <option value="ALL">All Status ({orders.length})</option>
             <option value="Confirmed">Confirmed</option>
             <option value="Pending">Pending / COD</option>
             <option value="In Production">In Production</option>

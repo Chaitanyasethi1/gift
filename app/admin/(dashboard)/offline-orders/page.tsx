@@ -128,9 +128,43 @@ export default function OfflineOrdersPage() {
             (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
           );
 
+          // AUTO-SEQUENCE serial numbers if any order has legacy random numbers >= 1000
+          // Makes order numbers serial-wise: OFF-2026-001, OFF-2026-002, etc.
+          const needsRenumbering = merged.some(o => {
+            const m = String(o.order_number || '').match(/OFF(?:-\d{4})?-(\d+)/i);
+            return m && parseInt(m[1], 10) >= 1000;
+          });
+
+          if (needsRenumbering) {
+            const chronoSorted = [...merged].sort(
+              (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+            );
+            chronoSorted.forEach((ord, index) => {
+              const year = new Date(ord.created_at || Date.now()).getFullYear();
+              ord.order_number = `OFF-${year}-${String(index + 1).padStart(3, '0')}`;
+            });
+          }
+
           setOrders(merged);
           localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
         } else {
+          // Check localData for legacy random numbers
+          const needsRenumbering = localData.some(o => {
+            const m = String(o.order_number || '').match(/OFF(?:-\d{4})?-(\d+)/i);
+            return m && parseInt(m[1], 10) >= 1000;
+          });
+
+          if (needsRenumbering && localData.length > 0) {
+            const chronoSorted = [...localData].sort(
+              (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+            );
+            chronoSorted.forEach((ord, index) => {
+              const year = new Date(ord.created_at || Date.now()).getFullYear();
+              ord.order_number = `OFF-${year}-${String(index + 1).padStart(3, '0')}`;
+            });
+            localData = chronoSorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(localData));
+          }
           setOrders(localData);
         }
       } catch (err) {
@@ -179,7 +213,21 @@ export default function OfflineOrdersPage() {
     }
 
     setIsSaving(true);
-    const orderNum = `OFF-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+    
+    // Generate next strictly sequential serial order number (OFF-YYYY-001, OFF-YYYY-002, etc.)
+    const year = new Date().getFullYear();
+    let maxSerial = 0;
+    orders.forEach((o) => {
+      const match = String(o.order_number || '').match(/OFF-(?:20\d\d-)?(\d+)/i);
+      if (match) {
+        const n = parseInt(match[1], 10);
+        if (!isNaN(n) && n < 1000 && n > maxSerial) {
+          maxSerial = n;
+        }
+      }
+    });
+    const nextSerial = maxSerial > 0 ? maxSerial + 1 : orders.length + 1;
+    const orderNum = `OFF-${year}-${String(nextSerial).padStart(3, '0')}`;
     const finalSource = source === 'Other' && customSource.trim() ? customSource.trim() : source;
     const finalTotal = Number(totalAmount || 0);
     const finalPaid = Number(paidAmount || 0);
@@ -491,7 +539,7 @@ export default function OfflineOrdersPage() {
 
         {/* Pending Balance Due */}
         <div style={{ background: '#fff1f2', padding: '20px', borderRadius: '14px', border: '1px solid #fecdd3', boxShadow: '0 2px 4px rgba(225,29,72,0.05)' }}>
-          <span style={{ color: '#9f1239', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Balance Due</span>
+          <span style={{ color: '#9f1239', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Total Balance Due</span>
           <div style={{ fontSize: '1.9rem', fontWeight: 900, color: '#be123c', marginTop: '4px' }}>{formatINR(totalBalanceDue)}</div>
           <span style={{ fontSize: '0.78rem', color: '#9f1239' }}>To be collected on delivery</span>
         </div>
