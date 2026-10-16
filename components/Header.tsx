@@ -117,6 +117,8 @@ export function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const dropdownEnterTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const navWrapperRef = useRef<HTMLElement | null>(null);
   const searchContainerRef = useRef<HTMLDivElement | null>(null);
   const mobileSearchContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -179,7 +181,7 @@ export function Header() {
       .catch(() => {});
   }, []);
 
-  // Click Outside to Close Search Autocomplete
+  // Click Outside to Close Search Autocomplete & Nav Dropdowns
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       const target = e.target as Node;
@@ -187,6 +189,11 @@ export function Header() {
       const insideMobile = mobileSearchContainerRef.current && mobileSearchContainerRef.current.contains(target);
       if (!insideDesktop && !insideMobile) {
         setIsSearchFocused(false);
+      }
+
+      const insideNav = navWrapperRef.current && navWrapperRef.current.contains(target);
+      if (!insideNav) {
+        setActiveDropdown(null);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -230,16 +237,44 @@ export function Header() {
       clearTimeout(dropdownTimeoutRef.current);
       dropdownTimeoutRef.current = null;
     }
-    setActiveDropdown(title);
+    if (dropdownEnterTimeoutRef.current) {
+      clearTimeout(dropdownEnterTimeoutRef.current);
+    }
+    
+    // If another menu is already open, switch smoothly with 70ms
+    if (activeDropdown && activeDropdown !== title) {
+      dropdownEnterTimeoutRef.current = setTimeout(() => {
+        setActiveDropdown(title);
+      }, 70);
+    } else if (!activeDropdown) {
+      // First open requires intentional hover (140ms) so accidental mouse passing doesn't trigger dropdowns
+      dropdownEnterTimeoutRef.current = setTimeout(() => {
+        setActiveDropdown(title);
+      }, 140);
+    }
   };
 
   const handleMouseLeave = () => {
+    if (dropdownEnterTimeoutRef.current) {
+      clearTimeout(dropdownEnterTimeoutRef.current);
+      dropdownEnterTimeoutRef.current = null;
+    }
     if (dropdownTimeoutRef.current) {
       clearTimeout(dropdownTimeoutRef.current);
     }
     dropdownTimeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
-    }, 120);
+    }, 320); // 320ms generous buffer prevents fluttering
+  };
+
+  const handleCategoryToggle = (e: React.MouseEvent, category: NavCategory) => {
+    if (category.items && category.items.length > 0) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (dropdownEnterTimeoutRef.current) clearTimeout(dropdownEnterTimeoutRef.current);
+      if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+      setActiveDropdown(prev => prev === category.title ? null : category.title);
+    }
   };
 
   const handleSearchSubmit = (e?: React.FormEvent) => {
@@ -538,10 +573,10 @@ export function Header() {
         .nav-dropdown-panel::before {
           content: '';
           position: absolute;
-          top: -14px;
-          left: 0;
-          right: 0;
-          height: 14px;
+          top: -24px;
+          left: -30px;
+          right: -30px;
+          height: 28px;
           background: transparent;
         }
 
@@ -904,11 +939,12 @@ export function Header() {
       </header>
 
       {/* 4. Desktop Dark Navigation Bar with Smooth Dropdowns (Hidden on Mobile) */}
-      <nav className="dark-nav-wrapper" style={{ background: '#1E293B', color: '#fff', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+      <nav ref={navWrapperRef} className="dark-nav-wrapper" style={{ background: '#1E293B', color: '#fff', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '32px', padding: '0' }}>
           
           {navCategories.map((category) => {
             const isOpen = activeDropdown === category.title;
+            const hasItems = category.items && category.items.length > 0;
             return (
               <div 
                 key={category.title}
@@ -916,19 +952,27 @@ export function Header() {
                 onMouseEnter={() => handleMouseEnter(category.title)}
                 onMouseLeave={handleMouseLeave}
               >
-                <Link 
-                  href={category.link}
+                <button 
+                  type="button"
                   className="nav-link-btn"
-                  onClick={() => setActiveDropdown(null)}
+                  onClick={(e) => handleCategoryToggle(e, category)}
+                  aria-expanded={isOpen}
                 >
                   <span>{category.title}</span>
-                  <span style={{ fontSize: '0.65rem', opacity: 0.8, transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>▼</span>
-                </Link>
+                  {hasItems && (
+                    <span style={{ fontSize: '0.65rem', opacity: 0.8, transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>▼</span>
+                  )}
+                </button>
 
-                {isOpen && (
+                {isOpen && hasItems && (
                   <div 
                     className="nav-dropdown-panel"
-                    onMouseEnter={() => handleMouseEnter(category.title)}
+                    onMouseEnter={() => {
+                      if (dropdownTimeoutRef.current) {
+                        clearTimeout(dropdownTimeoutRef.current);
+                        dropdownTimeoutRef.current = null;
+                      }
+                    }}
                     onMouseLeave={handleMouseLeave}
                   >
                     {category.items.map((subItem) => (
@@ -942,6 +986,17 @@ export function Header() {
                         <span>{subItem.label}</span>
                       </Link>
                     ))}
+                    <div style={{ borderTop: '1px solid #F1F5F9', marginTop: 4, paddingTop: 4 }}>
+                      <Link
+                        href={category.link}
+                        className="dropdown-sub-link"
+                        style={{ color: '#EA580C', fontWeight: 600 }}
+                        onClick={() => setActiveDropdown(null)}
+                      >
+                        <span style={{ fontSize: '0.9rem' }}>📂</span>
+                        <span>View All {category.title} →</span>
+                      </Link>
+                    </div>
                   </div>
                 )}
               </div>
