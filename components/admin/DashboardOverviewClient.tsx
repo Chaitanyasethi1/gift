@@ -1607,10 +1607,10 @@ export default function DashboardOverviewClient({
                     <thead>
                       <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0', color: '#475569', fontSize: '0.76rem', textTransform: 'uppercase' }}>
                         <th style={{ padding: '10px 12px' }}>Customer Details</th>
-                        <th style={{ padding: '10px 12px' }}>Kaam Kya Hai</th>
-                        <th style={{ padding: '10px 12px' }}>Aaya Kisse</th>
+                        <th style={{ padding: '10px 12px' }}>Job Work Description</th>
+                        <th style={{ padding: '10px 12px' }}>Order Source</th>
                         <th style={{ padding: '10px 12px' }}>Total Amount</th>
-                        <th style={{ padding: '10px 12px' }}>Advance Payment</th>
+                        <th style={{ padding: '10px 12px' }}>Advance Paid</th>
                         <th style={{ padding: '10px 12px' }}>Balance Due</th>
                         <th style={{ padding: '10px 12px' }}>Payment Terms</th>
                       </tr>

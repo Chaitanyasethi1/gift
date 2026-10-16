@@ -607,10 +607,10 @@ export default function OfflineOrdersPage() {
                 <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0', color: '#475569', fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                   <th style={{ padding: '14px 16px' }}>Order ID &amp; Date</th>
                   <th style={{ padding: '14px 16px' }}>👤 Customer Details</th>
-                  <th style={{ padding: '14px 16px', width: '280px' }}>📦 Kaam Kya Hai (Job Work)</th>
-                  <th style={{ padding: '14px 16px' }}>📍 Aaya Kisse (Source)</th>
+                  <th style={{ padding: '14px 16px', width: '280px' }}>📦 Job Work / Order Description</th>
+                  <th style={{ padding: '14px 16px' }}>📍 Order Source</th>
                   <th style={{ padding: '14px 16px' }}>💰 Total Amount</th>
-                  <th style={{ padding: '14px 16px' }}>✅ Advance Payment</th>
+                  <th style={{ padding: '14px 16px' }}>✅ Advance Paid</th>
                   <th style={{ padding: '14px 16px' }}>⚠️ Balance Due</th>
                   <th style={{ padding: '14px 16px' }}>📋 Payment Terms</th>
                   <th style={{ padding: '14px 16px', textAlign: 'center' }}>⚡ Actions</th>
@@ -766,10 +766,10 @@ export default function OfflineOrdersPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '12px', marginBottom: '18px' }}>
               <div>
                 <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', margin: 0 }}>
-                  ➕ Naya Offline / Factory Order Dalein
+                  ➕ Create Offline / Factory Order
                 </h2>
                 <span style={{ fontSize: '0.82rem', color: '#64748b' }}>
-                  Walk-in customer details, kaam, advance, baki payment aur reference record karein
+                  Walk-in customer details, job work description, advance payment, and balance due
                 </span>
               </div>
               <button
@@ -787,7 +787,7 @@ export default function OfflineOrdersPage() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
-                    Customer / Party Ka Naam *
+                    Customer / Party Name *
                   </label>
                   <input
                     required
@@ -801,7 +801,7 @@ export default function OfflineOrdersPage() {
 
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
-                    Customer Ka Mobile No. *
+                    Customer Mobile No. *
                   </label>
                   <input
                     required
@@ -814,10 +814,10 @@ export default function OfflineOrdersPage() {
                 </div>
               </div>
 
-              {/* Row 2: Kaam Kya Hai (Work description) */}
+              {/* Row 2: Work description */}
               <div>
                 <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
-                  📦 Kaam Kya Hai (Job Work / Product Details) *
+                  📦 Order Description &amp; Specifications *
                 </label>
                 <textarea
                   required
@@ -829,25 +829,25 @@ export default function OfflineOrdersPage() {
                 />
               </div>
 
-              {/* Row 3: Aaya Kisse (Source) & Payment Terms */}
+              {/* Row 3: Source & Payment Terms */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
-                    📍 Aaya Kisse (Reference / Source)
+                    📍 Order Source / Reference
                   </label>
                   <select
                     value={source}
                     onChange={(e) => setSource(e.target.value)}
                     style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.88rem', background: '#fff', boxSizing: 'border-box' }}
                   >
-                    <option value="Walk-in (Factory)">Walk-in (Factory Par Aaye)</option>
+                    <option value="Walk-in (Factory)">Walk-in (Factory Direct)</option>
                     <option value="Direct Phone Call">Direct Phone Call</option>
                     <option value="WhatsApp Enquiry">WhatsApp Enquiry</option>
                     <option value="Old / Regular Client">Old / Regular Client</option>
                     <option value="IndiaMart / B2B Portal">IndiaMart / B2B Portal</option>
-                    <option value="Friend / Relative Reference">Friend / Relative Reference</option>
-                    <option value="Agent / Commission Broker">Agent / Commission Broker</option>
-                    <option value="Other">Other (Custom Source)</option>
+                    <option value="Client Reference">Client Reference</option>
+                    <option value="Broker / Agent">Broker / Agent</option>
+                    <option value="Other">Other Reference</option>
                   </select>
                   {source === 'Other' && (
                     <input
@@ -862,7 +862,7 @@ export default function OfflineOrdersPage() {
 
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
-                    📋 Payment Terms Kya Hain?
+                    📋 Payment Terms
                   </label>
                   <select
                     value={paymentTerms}
@@ -873,18 +873,18 @@ export default function OfflineOrdersPage() {
                     <option value="100% Full Advance Paid">100% Full Advance Paid</option>
                     <option value="30% Advance + 70% on Delivery">30% Advance + 70% on Delivery</option>
                     <option value="Full Payment on Delivery (COD)">Full Payment on Delivery (COD)</option>
-                    <option value="Credit (15 Days / Baki Khata)">Credit (15 Days / Baki Khata)</option>
-                    <option value="Credit (30 Days / Baki Khata)">Credit (30 Days / Baki Khata)</option>
+                    <option value="Credit (15 Days / Baki Khata)">Credit (15 Days Credit Period)</option>
+                    <option value="Credit (30 Days / Baki Khata)">Credit (30 Days Credit Period)</option>
                   </select>
                 </div>
               </div>
 
-              {/* Row 4: Financials (Total, Kitne Aa Gaye, Balance Due) */}
+              {/* Row 4: Financials (Total, Advance, Balance Due) */}
               <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1.5px solid #cbd5e1' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
                   <div>
                     <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
-                      Kul Kaam Ka Total (₹) *
+                      Total Order Amount (₹) *
                     </label>
                     <input
                       required
@@ -923,14 +923,14 @@ export default function OfflineOrdersPage() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '12px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '4px' }}>Payment Aaya Kisme? (Mode)</label>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#475569', marginBottom: '4px' }}>Payment Mode</label>
                     <select
                       value={paymentMode}
                       onChange={(e) => setPaymentMode(e.target.value)}
                       style={{ width: '100%', padding: '8px 10px', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.85rem', background: '#fff' }}
                     >
-                      <option value="Cash">Cash (Nagad)</option>
-                      <option value="UPI (GPay / PhonePe / Paytm)">UPI (GPay / PhonePe / Paytm)</option>
+                      <option value="Cash">Cash</option>
+                      <option value="UPI (GPay / PhonePe / Paytm)">UPI (GPay / PhonePe / QR)</option>
                       <option value="Bank Transfer (NEFT/RTGS)">Bank Transfer (NEFT / RTGS / IMPS)</option>
                       <option value="Cheque">Cheque</option>
                     </select>
@@ -943,10 +943,10 @@ export default function OfflineOrdersPage() {
                       onChange={(e) => setStatus(e.target.value)}
                       style={{ width: '100%', padding: '8px 10px', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '0.85rem', background: '#fff' }}
                     >
-                      <option value="Confirmed">Confirmed (Order Pakka)</option>
-                      <option value="In Production">In Production (Machine Par Chalu)</option>
+                      <option value="Confirmed">Confirmed</option>
+                      <option value="In Production">In Production</option>
                       <option value="Ready for Pickup">Ready for Pickup / Dispatch</option>
-                      <option value="Completed">Completed (Mal Delivery Ho Gaya)</option>
+                      <option value="Completed">Completed (Delivered)</option>
                     </select>
                   </div>
                 </div>
@@ -956,7 +956,7 @@ export default function OfflineOrdersPage() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#475569', marginBottom: '4px' }}>
-                    Delivery Date / Target Time (Optional)
+                    Estimated Delivery Date (Optional)
                   </label>
                   <input
                     type="date"
@@ -968,7 +968,7 @@ export default function OfflineOrdersPage() {
 
                 <div>
                   <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#475569', marginBottom: '4px' }}>
-                    Extra Note / Yaad Rakhne Wali Baat
+                    Order Notes / Remarks (Optional)
                   </label>
                   <input
                     type="text"
@@ -994,7 +994,7 @@ export default function OfflineOrdersPage() {
                   disabled={isSaving}
                   style={{ flex: 2, padding: '12px', border: 'none', background: '#0f172a', color: '#fff', borderRadius: '8px', fontWeight: 800, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 12px rgba(15, 23, 42, 0.25)' }}
                 >
-                  {isSaving ? 'Saving...' : '💾 Save Offline Order & Record'}
+                  {isSaving ? 'Saving...' : '💾 Save Offline Order'}
                 </button>
               </div>
 
