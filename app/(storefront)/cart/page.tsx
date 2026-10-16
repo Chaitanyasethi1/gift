@@ -202,14 +202,14 @@ export default function CartPage() {
                         }}>
                           <button
                             type="button"
-                            onClick={() => updateQty(item.id, item.qty - (item.packQty || 1))}
-                            disabled={item.qty <= (item.packQty || 1)}
+                            onClick={() => updateQty(item.id, item.qty - ((item as any).packQty || 1))}
+                            disabled={item.qty <= ((item as any).packQty || 1)}
                             style={{
                               padding: '6px 10px',
                               background: 'none',
                               border: 'none',
-                              cursor: item.qty <= (item.packQty || 1) ? 'not-allowed' : 'pointer',
-                              color: item.qty <= (item.packQty || 1) ? '#CBD5E1' : '#475569'
+                              cursor: item.qty <= ((item as any).packQty || 1) ? 'not-allowed' : 'pointer',
+                              color: item.qty <= ((item as any).packQty || 1) ? '#CBD5E1' : '#475569'
                             }}
                           >
                             <MinusIcon size={14} />
@@ -219,7 +219,7 @@ export default function CartPage() {
                           </span>
                           <button
                             type="button"
-                            onClick={() => updateQty(item.id, item.qty + (item.packQty || 1))}
+                            onClick={() => updateQty(item.id, item.qty + ((item as any).packQty || 1))}
                             style={{
                               padding: '6px 10px',
                               background: 'none',
@@ -305,9 +305,9 @@ export default function CartPage() {
                         Coupon <span style={{ fontFamily: 'monospace', letterSpacing: '0.5px' }}>{appliedCoupon.code}</span> Applied
                       </div>
                       <div style={{ fontSize: '0.78rem', color: '#047857' }}>
-                        {appliedCoupon.discount_type === 'percentage'
-                          ? `${appliedCoupon.discount_value}% OFF`
-                          : `Flat ₹${appliedCoupon.discount_value} OFF`}
+                        {(appliedCoupon.discountType || (appliedCoupon as any).discount_type) === 'percentage'
+                          ? `${appliedCoupon.discountValue || (appliedCoupon as any).discount_value}% OFF`
+                          : `Flat ₹${appliedCoupon.discountValue || (appliedCoupon as any).discount_value} OFF`}
                         {' '}(Saved ₹{discount.toFixed(2)})
                       </div>
                     </div>

@@ -132,19 +132,35 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
       });
     }
 
-    // 2. Subcategory filter
+    // 2. Subcategory / Category filter
     if (selectedSubcat) {
+      const subSlug = selectedSubcat.toLowerCase();
+      const matchedCat = allCategories.find(c => c.slug.toLowerCase() === subSlug || c.id === selectedSubcat);
+      
+      let targetIds: string[] = [];
+      let targetSlugs: string[] = [subSlug];
+
+      if (matchedCat) {
+        targetIds.push(matchedCat.id);
+        targetSlugs.push(matchedCat.slug.toLowerCase());
+        // If it's a parent category, include all children
+        if (!matchedCat.parent_id) {
+          const children = allCategories.filter(c => c.parent_id === matchedCat.id);
+          children.forEach(c => {
+            targetIds.push(c.id);
+            targetSlugs.push(c.slug.toLowerCase());
+          });
+        }
+      } else {
+        targetIds.push(selectedSubcat);
+      }
+
       list = list.filter(p => {
-        const subSlug = selectedSubcat.toLowerCase();
+        if (p.category_id) {
+          return targetIds.includes(p.category_id);
+        }
         const pCatSlug = String(p.category_slug || '').toLowerCase();
-        const pCatName = String(p.categoryLabel || '').toLowerCase();
-        const pName = String(p.name || p.title || '').toLowerCase();
-        return (
-          pCatSlug === subSlug ||
-          pCatName.includes(subSlug.replace(/-/g, ' ')) ||
-          pName.includes(subSlug.replace(/-/g, ' ')) ||
-          p.category_id === selectedSubcat
-        );
+        return targetSlugs.includes(pCatSlug);
       });
     }
 
@@ -472,30 +488,44 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                     <div
-                      onClick={() => setSelectedSubcat('')}
+                      onClick={() => {
+                        if (category?.parentId && category.parentSlug) {
+                          router.push(`/category/${category.parentSlug}`);
+                        } else {
+                          setSelectedSubcat('');
+                        }
+                      }}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         padding: '8px 10px',
                         borderRadius: '8px',
-                        background: !selectedSubcat ? '#EFF6FF' : 'transparent',
-                        color: !selectedSubcat ? '#1D4ED8' : '#334155',
-                        fontWeight: !selectedSubcat ? 700 : 500,
+                        background: (!selectedSubcat && !category?.parentId) ? '#EFF6FF' : 'transparent',
+                        color: (!selectedSubcat && !category?.parentId) ? '#1D4ED8' : '#334155',
+                        fontWeight: (!selectedSubcat && !category?.parentId) ? 700 : 500,
                         fontSize: '0.84rem',
                         cursor: 'pointer',
                         transition: 'all 0.15s ease'
                       }}
                     >
-                      <span>All {category?.name || 'Items'}</span>
-                      {!selectedSubcat && <CheckIcon size={14} color="#1D4ED8" />}
+                      <span>All {category?.parentName || category?.name || 'Items'}</span>
+                      {!selectedSubcat && !category?.parentId && <CheckIcon size={14} color="#1D4ED8" />}
                     </div>
                     {subcategoryOptions.map(sub => {
-                      const isSelected = selectedSubcat === sub.slug;
+                      const isSelected = category?.parentId ? category.slug === sub.slug : selectedSubcat === sub.slug;
                       return (
                         <div
                           key={sub.id}
-                          onClick={() => setSelectedSubcat(isSelected ? '' : sub.slug)}
+                          onClick={() => {
+                            if (category?.parentId) {
+                              if (category.slug !== sub.slug) {
+                                router.push(`/category/${sub.slug}`);
+                              }
+                            } else {
+                              setSelectedSubcat(isSelected ? '' : sub.slug);
+                            }
+                          }}
                           style={{
                             display: 'flex',
                             alignItems: 'center',
@@ -576,7 +606,7 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
                             setMaxPrice('');
                           } else {
                             setMinPrice(bracket.min);
-                            setMaxPrice(bracket.max);
+                            setMaxPrice(bracket.max as number | '');
                           }
                         }}
                         style={{
@@ -864,29 +894,45 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                     <div
-                      onClick={() => setSelectedSubcat('')}
+                      onClick={() => {
+                        if (category?.parentId && category.parentSlug) {
+                          setIsMobileFilterOpen(false);
+                          router.push(`/category/${category.parentSlug}`);
+                        } else {
+                          setSelectedSubcat('');
+                        }
+                      }}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         padding: '9px 12px',
                         borderRadius: '8px',
-                        background: !selectedSubcat ? '#EFF6FF' : 'transparent',
-                        color: !selectedSubcat ? '#1D4ED8' : '#334155',
-                        fontWeight: !selectedSubcat ? 700 : 500,
+                        background: (!selectedSubcat && !category?.parentId) ? '#EFF6FF' : 'transparent',
+                        color: (!selectedSubcat && !category?.parentId) ? '#1D4ED8' : '#334155',
+                        fontWeight: (!selectedSubcat && !category?.parentId) ? 700 : 500,
                         fontSize: '0.86rem',
                         cursor: 'pointer'
                       }}
                     >
-                      <span>All {category?.name || 'Items'}</span>
-                      {!selectedSubcat && <CheckIcon size={14} color="#1D4ED8" />}
+                      <span>All {category?.parentName || category?.name || 'Items'}</span>
+                      {!selectedSubcat && !category?.parentId && <CheckIcon size={14} color="#1D4ED8" />}
                     </div>
                     {subcategoryOptions.map(sub => {
-                      const isSelected = selectedSubcat === sub.slug;
+                      const isSelected = category?.parentId ? category.slug === sub.slug : selectedSubcat === sub.slug;
                       return (
                         <div
                           key={sub.id}
-                          onClick={() => setSelectedSubcat(isSelected ? '' : sub.slug)}
+                          onClick={() => {
+                            if (category?.parentId) {
+                              setIsMobileFilterOpen(false);
+                              if (category.slug !== sub.slug) {
+                                router.push(`/category/${sub.slug}`);
+                              }
+                            } else {
+                              setSelectedSubcat(isSelected ? '' : sub.slug);
+                            }
+                          }}
                           style={{
                             display: 'flex',
                             alignItems: 'center',
@@ -965,7 +1011,7 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
                             setMaxPrice('');
                           } else {
                             setMinPrice(bracket.min);
-                            setMaxPrice(bracket.max);
+                            setMaxPrice(bracket.max as number | '');
                           }
                         }}
                         style={{

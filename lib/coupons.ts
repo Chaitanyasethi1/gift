@@ -766,7 +766,7 @@ export async function validateCouponForCart(
 /**
  * Increments coupon usage count when an order is successfully confirmed
  */
-export async function recordCouponUsage(rawCode: string, orderNumber: string): Promise<void> {
+export async function recordCouponUsage(rawCode: string, orderNumber: string, customerPhone?: string): Promise<void> {
   const code = normalizeCouponCode(rawCode);
   if (!code) return;
 

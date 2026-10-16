@@ -28,64 +28,68 @@ const DEFAULT_CATEGORIES: NavCategory[] = [
     title: 'Carry Bags',
     link: '/category/carry-bags',
     items: [
-      { label: 'Kraft Paper Bags', link: '/category/kraft-carry-bags', icon: '🛍️' },
-      { label: 'Printed Carry Bags', link: '/category/printed-carry-bags', icon: '🎨' },
-      { label: 'Handle Paper Bags', link: '/category/handle-carry-bags', icon: '👜' },
-      { label: 'Paper Mailers & Lifafa', link: '/category/paper-bags-mailers', icon: '✉️' }
+      { label: 'Craft Paper Bag', link: '/category/kraft-carry-bags', icon: '🛍️' },
+      { label: 'Non Woven Bag', link: '/category/printed-carry-bags', icon: '🎨' },
+      { label: 'Jute Bag', link: '/category/handle-carry-bags', icon: '👜' },
+      { label: 'Laminate Bag', link: '/category/paper-bags-mailers', icon: '✉️' },
+      { label: 'Multi Colour Paper Bag', link: '/category/multi-colour-paper-bag', icon: '🛍️' }
     ]
   },
   {
     title: 'Packaging Material',
-    link: '/category/packaging-material',
+    link: '/category/packaging-boxes',
     items: [
-      { label: 'Corrugated Boxes (3 & 5 Ply)', link: '/category/corrugated-boxes', icon: '📦' },
-      { label: 'Garment & Apparel Boxes', link: '/category/garment-boxes', icon: '👔' },
-      { label: 'Gift & Luxury Boxes', link: '/category/gift-boxes', icon: '🎁' },
-      { label: 'Sweet & Bakery Boxes', link: '/category/sweet-boxes', icon: '🍰' },
-      { label: 'Custom Printed Pizza Boxes', link: '/category/pizza-boxes', icon: '🍕' },
-      { label: 'Custom Master Cartons', link: '/category/corrugated-boxes', icon: '🏭' }
+      { label: '3 Ply Corrugated Boxes', link: '/category/craft-3-ply-box', icon: '📦' },
+      { label: '3 Ply White Boxes', link: '/category/3-ply-white-corrugated-boxes', icon: '📦' },
+      { label: 'Brown Flap Box', link: '/category/brown-flap-box', icon: '📦' },
+      { label: 'White Flap Box', link: '/category/white-flap-box', icon: '📦' },
+      { label: 'Garments Boxes', link: '/category/garment-boxes', icon: '👔' },
+      { label: 'Hamper Boxes', link: '/category/gift-boxes', icon: '🎁' },
+      { label: 'Sweet Boxes', link: '/category/sweet-boxes', icon: '🍰' },
+      { label: 'Pizza Boxes', link: '/category/pizza-boxes', icon: '🍕' }
     ]
   },
   {
     title: 'Labels & Tags',
     link: '/category/labels-tags',
     items: [
-      { label: 'Woven Brand Labels', link: '/category/woven-labels', icon: '🧵' },
-      { label: 'Printed Satin Labels', link: '/category/satin-labels', icon: '🏷️' },
-      { label: 'Clothing Hang Tags', link: '/category/hang-tags', icon: '🔖' },
-      { label: 'Wash Care Labels', link: '/category/wash-care-labels', icon: '👕' },
-      { label: 'Barcode & SKU Stickers', link: '/category/barcode-stickers', icon: '📊' }
+      { label: 'Woven Labels', link: '/category/woven-labels', icon: '🧵' },
+      { label: 'Satin Labels', link: '/category/satin-labels', icon: '🏷️' },
+      { label: 'Hang Tags', link: '/category/hang-tags', icon: '🔖' }
     ]
   },
   {
     title: 'Stickers',
     link: '/category/stickers',
     items: [
-      { label: 'Waterproof Vinyl Stickers', link: '/category/vinyl-stickers', icon: '💧' },
-      { label: 'Custom Die-Cut Stickers', link: '/category/die-cut-stickers', icon: '✂️' },
-      { label: 'Round Product Stickers', link: '/category/round-stickers', icon: '⚪' },
-      { label: 'Packaging Seal Labels', link: '/category/packaging-labels', icon: '🔒' }
+      { label: 'Product & Packaging', link: '/category/product-stickers', icon: '💧' },
+      { label: 'School & Stationery', link: '/category/round-stickers', icon: '⚪' },
+      { label: 'Barcode & QR', link: '/category/custom-stickers', icon: '✂️' },
+      { label: 'Food & Bakery', link: '/category/packaging-labels', icon: '🔒' },
+      { label: 'Garment Stickers', link: '/category/garment-stickers', icon: '🏷️' }
     ]
   },
   {
-    title: 'Advertising & Office',
+    title: 'Advertising',
     link: '/category/advertising',
     items: [
-      { label: 'Visiting Cards & Cards', link: '/category/visiting-cards', icon: '📇' },
-      { label: 'Custom Thank You Cards', link: '/category/thank-you-cards', icon: '💌' },
-      { label: 'Rubber Stamps & Seals', link: '/category/rubber-stamps', icon: '💮' },
-      { label: 'Letterheads & Stationery', link: '/category/letterheads', icon: '📄' },
-      { label: 'QR Code Standees & Cards', link: '/category/qr-code-cards', icon: '📱' }
+      { label: 'Visiting Cards & Thank You Cards', link: '/category/visiting-cards', icon: '📇' },
+      { label: 'Key Chain', link: '/category/thank-you-cards', icon: '🔑' },
+      { label: 'Bill Book', link: '/category/qr-code-cards', icon: '📖' },
+      { label: 'Rubber Stamps', link: '/category/rubber-stamps', icon: '💮' },
+      { label: 'Letterheads', link: '/category/letterheads', icon: '📄' }
     ]
   },
   {
     title: 'Disposable Products',
     link: '/category/disposable-products',
     items: [
-      { label: 'Paper Dona & Bowls', link: '/category/paper-dona', icon: '🥣' },
-      { label: 'Paper Plates & Platters', link: '/category/paper-plates', icon: '🍽️' },
-      { label: 'Silver Dona', link: '/category/silver-dona', icon: '✨' },
-      { label: 'Silver Laminated Plates', link: '/category/silver-plates', icon: '🥈' }
+      { label: 'Plastic Jar', link: '/category/paper-dona', icon: '🥣' },
+      { label: 'Glass Jar', link: '/category/paper-plates', icon: '🍽️' },
+      { label: 'Paper Cups & Glass', link: '/category/paper-cups-glass', icon: '🥤' },
+      { label: 'Tissue & Napkins', link: '/category/silver-plates', icon: '🥈' },
+      { label: 'Food Containers & Trays', link: '/category/food-containers-trays', icon: '🍱' },
+      { label: 'Cutlery Set', link: '/category/silver-dona', icon: '✨' }
     ]
   }
 ];

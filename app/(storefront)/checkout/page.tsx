@@ -571,9 +571,9 @@ export default function CheckoutPage() {
                         Coupon <span style={{ fontFamily: 'monospace', letterSpacing: '0.5px' }}>{appliedCoupon.code}</span> Applied
                       </div>
                       <div style={{ fontSize: '0.75rem', color: '#047857' }}>
-                        {appliedCoupon.discount_type === 'percentage'
-                          ? `${appliedCoupon.discount_value}% OFF`
-                          : `Flat ₹${appliedCoupon.discount_value} OFF`}
+                        {(appliedCoupon.discountType || (appliedCoupon as any).discount_type) === 'percentage'
+                          ? `${appliedCoupon.discountValue || (appliedCoupon as any).discount_value}% OFF`
+                          : `Flat ₹${appliedCoupon.discountValue || (appliedCoupon as any).discount_value} OFF`}
                         {' '}(Saved ₹{discount.toFixed(2)})
                       </div>
                     </div>

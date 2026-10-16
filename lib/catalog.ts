@@ -54,21 +54,15 @@ export async function getAllCategories(): Promise<CategoryItem[]> {
       .order('sort_order', { ascending: true });
 
     if (!error && data && data.length > 0) {
-      // Merge with initialCategories ensuring no missing slugs
-      const map = new Map<string, CategoryItem>();
-      initialCategories.forEach(c => map.set(c.slug, c));
-      data.forEach(c => {
-        map.set(c.slug, {
-          id: c.id,
-          name: c.name,
-          slug: c.slug,
-          parent_id: c.parent_id,
-          sort_order: c.sort_order || 0,
-          show_in_menu: c.show_in_menu !== false,
-          show_in_home: !!c.show_in_home
-        });
-      });
-      return Array.from(map.values());
+      return data.map(c => ({
+        id: c.id,
+        name: c.name,
+        slug: c.slug,
+        parent_id: c.parent_id,
+        sort_order: c.sort_order || 0,
+        show_in_menu: c.show_in_menu !== false,
+        show_in_home: !!c.show_in_home
+      }));
     }
   } catch (err) {
     console.warn('Supabase categories fetch fallback:', err);
@@ -89,11 +83,8 @@ export async function getAllProducts(): Promise<any[]> {
       .order('created_at', { ascending: false });
 
     if (!error && data && data.length > 0) {
-      // Return Supabase products combined with static catalog if needed
-      // (deduplicating by slug or id)
-      const slugSet = new Set(data.map(p => p.slug));
-      const staticFallbacks = PRODUCTS.filter(sp => !slugSet.has(sp.slug));
-      return [...data, ...staticFallbacks];
+      // If store has active products in Supabase, return them as the primary source of truth
+      return data;
     }
   } catch (err) {
     console.warn('Supabase products fetch fallback:', err);
@@ -124,33 +115,37 @@ export async function resolveCategory(slug: string): Promise<CategoryMeta | null
 
   const allCategories = await getAllCategories();
 
-  // Alias mappings (e.g. packaging-boxes -> packaging-material)
-  const aliasMap: Record<string, string> = {
-    'packaging-boxes': 'packaging-material',
-    'disposable': 'disposable-products',
-    'paper-courier-mailers': 'paper-bags-mailers',
-    'craft-3-ply-box': 'corrugated-boxes',
-    'pizza-packaging': 'pizza-boxes'
-  };
+  // 1. Direct match by slug or id first
+  let category = allCategories.find(c => c.slug.toLowerCase() === normalizedSlug || c.id === normalizedSlug);
 
-  const targetSlug = aliasMap[normalizedSlug] || normalizedSlug;
-
-  // Search category by slug or id
-  let category = allCategories.find(c => c.slug.toLowerCase() === targetSlug || c.slug.toLowerCase() === normalizedSlug);
-
-  // If not found directly, try fuzzy search by name
+  // 2. If not found, check known aliases
   if (!category) {
-    const cleaned = targetSlug.replace(/-/g, ' ');
+    const aliasMap: Record<string, string> = {
+      'packaging-boxes': 'packaging-material',
+      'packaging-material': 'packaging-boxes',
+      'disposable': 'disposable-products',
+      'paper-courier-mailers': 'paper-bags-mailers',
+      'pizza-packaging': 'pizza-boxes'
+    };
+    const mapped = aliasMap[normalizedSlug];
+    if (mapped) {
+      category = allCategories.find(c => c.slug.toLowerCase() === mapped || c.id === mapped);
+    }
+  }
+
+  // 3. If not found directly, try fuzzy search by name
+  if (!category) {
+    const cleaned = normalizedSlug.replace(/-/g, ' ');
     category = allCategories.find(c => c.name.toLowerCase().includes(cleaned) || cleaned.includes(c.name.toLowerCase()));
   }
 
   if (!category) {
     // Generate a graceful fallback category if admin created product with custom slug
-    const formattedName = targetSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    const formattedName = normalizedSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
     return {
-      id: `cat-${targetSlug}`,
+      id: `cat-${normalizedSlug}`,
       name: formattedName,
-      slug: targetSlug,
+      slug: normalizedSlug,
       parentId: null,
       subcategories: [],
       description: `Factory direct quality ${formattedName} manufactured in-house by AS Print Gallery.`
@@ -167,6 +162,10 @@ export async function resolveCategory(slug: string): Promise<CategoryMeta | null
     if (parent) {
       parentName = parent.name;
       parentSlug = parent.slug;
+      // Also provide sibling subcategories from parent so customer can navigate among them
+      subcategories = allCategories
+        .filter(c => c.parent_id === parent.id)
+        .map(c => ({ id: c.id, name: c.name, slug: c.slug }));
     }
   } else {
     // If it's a main category, find all child subcategories
@@ -189,7 +188,8 @@ export async function resolveCategory(slug: string): Promise<CategoryMeta | null
 
 /**
  * Filter products belonging to a given category or collection.
- * Parent categories will also return products from all their subcategories.
+ * Parent categories will return products from all their subcategories.
+ * Specific subcategories will strictly return ONLY products assigned to that subcategory.
  */
 export async function getProductsForCategory(categorySlug: string): Promise<any[]> {
   const allProducts = await getAllProducts();
@@ -198,87 +198,96 @@ export async function getProductsForCategory(categorySlug: string): Promise<any[
 
   // 1. Special collections
   if (normalizedSlug === 'hot-deals') {
-    const deals = allProducts.filter(p => {
+    return allProducts.filter(p => {
       const mrp = Number(p.mrp || 0);
       const sp = Number(p.selling_price || p.price || 0);
       const discount = mrp > sp ? ((mrp - sp) / mrp) * 100 : 0;
       return p.flag_hot_deal || discount >= 20 || p.badge === 'BESTSELLER';
     });
-    return deals.length > 0 ? deals : allProducts.slice(0, 8);
   }
 
   if (normalizedSlug === 'sale' || normalizedSlug === 'mega-sale') {
-    const saleItems = allProducts.filter(p => {
+    return allProducts.filter(p => {
       const mrp = Number(p.mrp || 0);
       const sp = Number(p.selling_price || p.price || 0);
       return p.flag_mega_sale || (mrp > sp);
     });
-    return saleItems.length > 0 ? saleItems : allProducts.slice(2, 10);
   }
 
   if (normalizedSlug === 'new-arrivals') {
-    const newItems = allProducts.filter(p => p.flag_new_arrival || p.badgeClass === 'new');
-    return newItems.length > 0 ? newItems : allProducts.slice(4, 12);
+    return allProducts.filter(p => p.flag_new_arrival || p.badgeClass === 'new');
   }
 
   if (normalizedSlug === 'best-sellers') {
-    const bestItems = allProducts.filter(p => p.flag_best_seller || p.badge === 'BESTSELLER' || (p.reviews && p.reviews > 300));
-    return bestItems.length > 0 ? bestItems : allProducts.slice(0, 8);
+    return allProducts.filter(p => p.flag_best_seller || p.badge === 'BESTSELLER' || (p.reviews && p.reviews > 300));
   }
 
   // 2. Database category resolution
-  const category = allCategories.find(c => c.slug.toLowerCase() === normalizedSlug);
+  let category = allCategories.find(c => c.slug.toLowerCase() === normalizedSlug || c.id === normalizedSlug);
+  if (!category) {
+    const aliasMap: Record<string, string> = {
+      'packaging-boxes': 'packaging-material',
+      'packaging-material': 'packaging-boxes',
+      'disposable': 'disposable-products',
+      'paper-courier-mailers': 'paper-bags-mailers',
+      'pizza-packaging': 'pizza-boxes'
+    };
+    const mapped = aliasMap[normalizedSlug];
+    if (mapped) {
+      category = allCategories.find(c => c.slug.toLowerCase() === mapped || c.id === mapped);
+    }
+  }
 
   let targetCatIds: string[] = [];
   let childSlugs: string[] = [];
 
   if (category) {
     targetCatIds.push(category.id);
+    childSlugs.push(category.slug.toLowerCase());
+
     // If it's a parent category, collect all subcategory IDs & slugs
-    const childCats = allCategories.filter(c => c.parent_id === category.id);
-    childCats.forEach(c => {
-      targetCatIds.push(c.id);
-      childSlugs.push(c.slug.toLowerCase());
-    });
+    if (!category.parent_id) {
+      const childCats = allCategories.filter(c => c.parent_id === category.id);
+      childCats.forEach(c => {
+        targetCatIds.push(c.id);
+        childSlugs.push(c.slug.toLowerCase());
+      });
+    }
+  } else {
+    childSlugs.push(normalizedSlug);
   }
 
-  // Filter products matching either ID, slug, or semantic category
+  // Filter products:
+  // Products with category_id MUST strictly match targetCatIds.
   const filtered = allProducts.filter(p => {
-    // A. Match by Supabase category_id
-    if (p.category_id && targetCatIds.includes(p.category_id)) {
-      return true;
+    // A. Match by Supabase category_id (Strict assignment)
+    if (p.category_id) {
+      return targetCatIds.includes(p.category_id);
     }
 
-    // B. Match by product's own slug or category_slug
+    // B. Match by product's own slug or category_slug (legacy static items)
     const pCatSlug = String(p.category_slug || '').toLowerCase();
     if (pCatSlug && (pCatSlug === normalizedSlug || childSlugs.includes(pCatSlug))) {
       return true;
     }
 
-    // C. Match static product category codes
-    // Map category slugs to static categories
+    // C. Static fallback if no category_id is present
     const staticMap: Record<string, string[]> = {
-      'corrugated': ['corrugated-boxes', 'packaging-material', 'craft-3-ply-box', '3-ply-white-corrugated-boxes', 'brown-flap-box', 'white-flap-box'],
-      'food': ['food-pizza', 'pizza-boxes', 'sweet-boxes', 'packaging-material', 'packaging-labels'],
-      'packaging': ['packaging-material', 'garment-boxes', 'gift-boxes', 'luxury-boxes', 'custom-printed-boxes'],
-      'label': ['labels-tags', 'woven-labels', 'satin-labels', 'printed-labels', 'hang-tags', 'wash-care-labels'],
-      'sticker': ['stickers', 'product-stickers', 'round-stickers', 'custom-stickers', 'barcode-stickers', 'vinyl-stickers'],
-      'bags': ['carry-bags', 'kraft-carry-bags', 'printed-carry-bags', 'handle-carry-bags', 'paper-bags-mailers', 'courier-bags', 'paper-courier-mailers']
+      'corrugated': ['corrugated-boxes', 'packaging-material', 'packaging-boxes', 'craft-3-ply-box', '3-ply-white-corrugated-boxes', 'brown-flap-box', 'white-flap-box'],
+      'food': ['food-pizza', 'pizza-boxes', 'sweet-boxes', 'packaging-material', 'packaging-boxes'],
+      'packaging': ['packaging-material', 'packaging-boxes', 'garment-boxes', 'gift-boxes'],
+      'label': ['labels-tags', 'woven-labels', 'satin-labels', 'printed-labels', 'hang-tags'],
+      'sticker': ['stickers', 'product-stickers', 'round-stickers', 'custom-stickers', 'packaging-labels'],
+      'bags': ['carry-bags', 'kraft-carry-bags', 'printed-carry-bags', 'handle-carry-bags', 'paper-bags-mailers', 'multi-colour-paper-bag']
     };
 
     if (p.category && staticMap[p.category]) {
-      if (staticMap[p.category].includes(normalizedSlug) || staticMap[p.category].some(s => childSlugs.includes(s))) {
+      // Main category matches static category bucket
+      if (category && !category.parent_id && staticMap[p.category].includes(normalizedSlug)) {
         return true;
       }
-    }
-
-    // D. Semantic fallback on product title or category label
-    const titleLower = String(p.name || p.title || '').toLowerCase();
-    const labelLower = String(p.categoryLabel || '').toLowerCase();
-    const slugKeywords = normalizedSlug.replace(/-/g, ' ').split(' ').filter(w => w.length > 2);
-
-    for (const kw of slugKeywords) {
-      if (titleLower.includes(kw) || labelLower.includes(kw)) {
+      // Subcategory matches specific static product slug
+      if (p.slug && p.slug.toLowerCase().includes(normalizedSlug)) {
         return true;
       }
     }

@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 export default async function ShopPage({
   searchParams
 }: {
-  searchParams?: Promise<{ category?: string; collection?: string; q?: string }>;
+  searchParams?: Promise<{ category?: string; collection?: string; q?: string; sub?: string; subcat?: string }>;
 }) {
   const resolvedParams = searchParams ? await searchParams : {};
-  const categorySlug = resolvedParams?.category || resolvedParams?.collection;
+  const categorySlug = resolvedParams?.subcat || resolvedParams?.sub || resolvedParams?.category || resolvedParams?.collection;
   const searchQuery = resolvedParams?.q;
 
   const [allProducts, allCategories] = await Promise.all([
