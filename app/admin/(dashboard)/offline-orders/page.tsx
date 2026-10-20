@@ -37,6 +37,10 @@ export default function OfflineOrdersPage() {
   const [additionalPayment, setAdditionalPayment] = useState<number>(0);
   const [additionalPaymentMode, setAdditionalPaymentMode] = useState<string>('Cash');
 
+  // Edit Order Modal
+  const [editingOrder, setEditingOrder] = useState<OfflineOrder | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   // Form Fields
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
@@ -53,6 +57,34 @@ export default function OfflineOrdersPage() {
 
   const supabase = createClient();
 
+  // Helper to deduplicate orders by order number or customer signature
+  const deduplicateOrders = (list: OfflineOrder[]): OfflineOrder[] => {
+    const map = new Map<string, OfflineOrder>();
+    list.forEach((item) => {
+      const key = (item.order_number || item.id || '').trim().toUpperCase();
+      if (key && !map.has(key)) {
+        map.set(key, item);
+      }
+    });
+
+    const values = Array.from(map.values());
+    const result: OfflineOrder[] = [];
+    const seenContent = new Set<string>();
+
+    values.forEach((ord) => {
+      const phone = (ord.customer_phone || '').replace(/\D/g, '');
+      const work = (ord.work_description || '').trim().toLowerCase();
+      const contentKey = `${phone}|${work}|${ord.total_amount}`;
+      if (phone && work && seenContent.has(contentKey)) {
+        return; // Skip duplicate customer + work description + amount
+      }
+      if (phone && work) seenContent.add(contentKey);
+      result.push(ord);
+    });
+
+    return result;
+  };
+
   // Load orders from Supabase & localStorage fallback
   useEffect(() => {
     async function loadData() {
@@ -61,7 +93,7 @@ export default function OfflineOrdersPage() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
-          localData = JSON.parse(saved);
+          localData = deduplicateOrders(JSON.parse(saved));
         }
       } catch (e) {
         console.warn('Could not read local offline orders:', e);
@@ -119,12 +151,23 @@ export default function OfflineOrdersPage() {
             };
           });
 
-          // Merge: Put Supabase orders + any unique local orders
+          // Merge: Put localData first, then Supabase overrides so Supabase ID & data are source of truth
           const combinedMap = new Map<string, OfflineOrder>();
-          localData.forEach(item => combinedMap.set(item.id, item));
-          parsedSupa.forEach(item => combinedMap.set(item.id, item));
+          localData.forEach(item => {
+            const k = (item.order_number || item.id).trim().toUpperCase();
+            combinedMap.set(k, item);
+          });
+          parsedSupa.forEach(item => {
+            const k = (item.order_number || item.id).trim().toUpperCase();
+            const existing = combinedMap.get(k);
+            combinedMap.set(k, {
+              ...existing,
+              ...item,
+              id: item.id // Keep Supabase UUID
+            });
+          });
 
-          const merged = Array.from(combinedMap.values()).sort(
+          const merged = deduplicateOrders(Array.from(combinedMap.values())).sort(
             (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
           );
 
@@ -149,27 +192,30 @@ export default function OfflineOrdersPage() {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
         } else {
           // Check localData for legacy random numbers
-          const needsRenumbering = localData.some(o => {
+          const cleanLocal = deduplicateOrders(localData);
+          const needsRenumbering = cleanLocal.some(o => {
             const m = String(o.order_number || '').match(/OFF(?:-\d{4})?-(\d+)/i);
             return m && parseInt(m[1], 10) >= 1000;
           });
 
-          if (needsRenumbering && localData.length > 0) {
-            const chronoSorted = [...localData].sort(
+          if (needsRenumbering && cleanLocal.length > 0) {
+            const chronoSorted = [...cleanLocal].sort(
               (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
             );
             chronoSorted.forEach((ord, index) => {
               const year = new Date(ord.created_at || Date.now()).getFullYear();
               ord.order_number = `OFF-${year}-${String(index + 1).padStart(3, '0')}`;
             });
-            localData = chronoSorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(localData));
+            cleanLocal.splice(0, cleanLocal.length, ...chronoSorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()));
           }
-          setOrders(localData);
+          setOrders(cleanLocal);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanLocal));
         }
       } catch (err) {
         console.warn('Error loading offline orders from Supabase:', err);
-        setOrders(localData);
+        const cleanLocal = deduplicateOrders(localData);
+        setOrders(cleanLocal);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanLocal));
       } finally {
         setLoading(false);
       }
@@ -252,12 +298,12 @@ export default function OfflineOrdersPage() {
     };
 
     // Save locally first for instant feedback
-    const updated = [newOrder, ...orders];
+    const updated = deduplicateOrders([newOrder, ...orders]);
     persistOrders(updated);
 
     // Save to Supabase orders table
     try {
-      await supabase.from('orders').insert({
+      const { data: inserted, error: insertErr } = await supabase.from('orders').insert({
         order_number: orderNum,
         customer_name: newOrder.customer_name,
         customer_phone: newOrder.customer_phone,
@@ -267,7 +313,17 @@ export default function OfflineOrdersPage() {
         payment_status: finalPaid >= finalTotal ? 'Paid' : 'Pending',
         shipping_address: { address: 'Offline / Factory Order Pickup', pincode: '201102' },
         internal_notes: `Offline Order | Work: ${newOrder.work_description} | Source: ${finalSource} | Paid: ₹${finalPaid} | Balance: ₹${finalBalance} | Terms: ${paymentTerms} | Mode: ${paymentMode} | Notes: ${notes}`
-      });
+      }).select('id, created_at').single();
+
+      if (!insertErr && inserted?.id) {
+        newOrder.id = inserted.id;
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed: OfflineOrder[] = JSON.parse(saved);
+          const updatedWithId = parsed.map(o => o.order_number === orderNum ? { ...o, id: inserted.id } : o);
+          persistOrders(deduplicateOrders(updatedWithId));
+        }
+      }
     } catch (err) {
       console.warn('Supabase offline order sync bypassed:', err);
     }
@@ -317,14 +373,78 @@ export default function OfflineOrdersPage() {
     setAdditionalPayment(0);
   };
 
-  // Delete Order
-  const handleDeleteOrder = async (id: string, orderNum: string) => {
-    if (!confirm(`Kya aap sure hain ki Order ${orderNum} delete karna chahte hain?`)) return;
-    const updated = orders.filter((o) => o.id !== id);
+  // Quick Status Change from Row Dropdown
+  const handleQuickStatusChange = async (order: OfflineOrder, newStatus: string) => {
+    const updated = orders.map(o => o.id === order.id ? { ...o, status: newStatus } : o);
     persistOrders(updated);
 
     try {
-      await supabase.from('orders').delete().eq('order_number', orderNum);
+      await supabase
+        .from('orders')
+        .update({
+          status: newStatus,
+          updated_at: new Date().toISOString()
+        })
+        .eq('order_number', order.order_number);
+    } catch (err) {
+      console.warn('Status update sync error:', err);
+    }
+  };
+
+  // Open Edit Modal with order data
+  const handleOpenEditModal = (order: OfflineOrder) => {
+    setEditingOrder({ ...order });
+    setIsEditModalOpen(true);
+  };
+
+  // Save Edit Order
+  const handleSaveEditOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingOrder) return;
+
+    const finalTotal = Number(editingOrder.total_amount) || 0;
+    const finalPaid = Number(editingOrder.paid_amount) || 0;
+    const finalBalance = Math.max(0, finalTotal - finalPaid);
+
+    const updatedOrder: OfflineOrder = {
+      ...editingOrder,
+      total_amount: finalTotal,
+      paid_amount: finalPaid,
+      balance_amount: finalBalance
+    };
+
+    const updated = orders.map(o => o.id === updatedOrder.id ? updatedOrder : o);
+    persistOrders(updated);
+
+    try {
+      await supabase
+        .from('orders')
+        .update({
+          customer_name: updatedOrder.customer_name,
+          customer_phone: updatedOrder.customer_phone,
+          total_amount: finalTotal,
+          subtotal: finalTotal,
+          status: updatedOrder.status,
+          payment_status: finalPaid >= finalTotal ? 'Paid' : 'Pending',
+          internal_notes: `Offline Order | Work: ${updatedOrder.work_description} | Source: ${updatedOrder.source} | Paid: ₹${finalPaid} | Balance: ₹${finalBalance} | Terms: ${updatedOrder.payment_terms} | Mode: ${updatedOrder.payment_mode} | Notes: ${updatedOrder.notes || ''}`
+        })
+        .eq('order_number', updatedOrder.order_number);
+    } catch (err) {
+      console.warn('Supabase update offline order failed:', err);
+    }
+
+    setIsEditModalOpen(false);
+    setEditingOrder(null);
+  };
+
+  // Delete Order
+  const handleDeleteOrder = async (id: string, orderNum: string) => {
+    if (!confirm(`Kya aap sure hain ki Order ${orderNum} delete karna chahte hain?`)) return;
+    const updated = orders.filter((o) => o.id !== id && o.order_number !== orderNum);
+    persistOrders(updated);
+
+    try {
+      await supabase.from('orders').delete().or(`id.eq.${id},order_number.eq.${orderNum}`);
     } catch (e) {
       console.warn('Supabase delete skipped:', e);
     }
@@ -457,7 +577,8 @@ export default function OfflineOrdersPage() {
         (statusFilter === 'DUE' && o.balance_amount > 0) ||
         (statusFilter === 'PAID' && o.balance_amount <= 0) ||
         (statusFilter === 'PRODUCTION' && o.status === 'In Production') ||
-        (statusFilter === 'COMPLETED' && o.status === 'Completed');
+        (statusFilter === 'DISPATCHED' && o.status === 'Dispatched') ||
+        (statusFilter === 'COMPLETED' && (o.status === 'Completed' || o.status === 'Delivered'));
 
       return matchesSearch && matchesStatus;
     });
@@ -491,26 +612,60 @@ export default function OfflineOrdersPage() {
           </p>
         </div>
 
-        <button
-          onClick={() => { resetForm(); setIsAddModalOpen(true); }}
-          style={{
-            background: '#10b981',
-            color: '#fff',
-            border: 'none',
-            padding: '12px 22px',
-            borderRadius: '10px',
-            fontWeight: 800,
-            fontSize: '0.95rem',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-          }}
-        >
-          <span>➕</span>
-          <span>Naya Offline Order Add Karein</span>
-        </button>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          {orders.length > 0 && (
+            <button
+              onClick={async () => {
+                if (window.confirm('Kya aap sure hain ki Offline Orders ka sara data zero (0) karna chahte hain?')) {
+                  persistOrders([]);
+                  try {
+                    await supabase.from('orders').delete().like('order_number', 'OFF-%');
+                  } catch (e) {
+                    console.warn('Supabase offline reset error:', e);
+                  }
+                }
+              }}
+              style={{
+                background: '#ef4444',
+                color: '#fff',
+                border: 'none',
+                padding: '12px 18px',
+                borderRadius: '10px',
+                fontWeight: 800,
+                fontSize: '0.88rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 4px 12px rgba(239, 68, 68, 0.25)'
+              }}
+            >
+              <span>🗑️</span>
+              <span>Reset Offline Orders (0)</span>
+            </button>
+          )}
+
+          <button
+            onClick={() => { resetForm(); setIsAddModalOpen(true); }}
+            style={{
+              background: '#10b981',
+              color: '#fff',
+              border: 'none',
+              padding: '12px 22px',
+              borderRadius: '10px',
+              fontWeight: 800,
+              fontSize: '0.95rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+            }}
+          >
+            <span>➕</span>
+            <span>Naya Offline Order Add Karein</span>
+          </button>
+        </div>
       </div>
 
       {/* KPI Cards */}
@@ -585,7 +740,13 @@ export default function OfflineOrdersPage() {
             onClick={() => setStatusFilter('PRODUCTION')}
             style={{ padding: '6px 12px', borderRadius: '6px', border: statusFilter === 'PRODUCTION' ? '2px solid #0284c7' : '1px solid #cbd5e1', background: statusFilter === 'PRODUCTION' ? '#0284c7' : '#fff', color: statusFilter === 'PRODUCTION' ? '#fff' : '#0284c7', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' }}
           >
-            ⚙️ In Production
+            ⚙️ In Production ({orders.filter(o => o.status === 'In Production').length})
+          </button>
+          <button
+            onClick={() => setStatusFilter('DISPATCHED')}
+            style={{ padding: '6px 12px', borderRadius: '6px', border: statusFilter === 'DISPATCHED' ? '2px solid #4f46e5' : '1px solid #cbd5e1', background: statusFilter === 'DISPATCHED' ? '#4f46e5' : '#fff', color: statusFilter === 'DISPATCHED' ? '#fff' : '#4f46e5', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' }}
+          >
+            🚚 Dispatched ({orders.filter(o => o.status === 'Dispatched').length})
           </button>
         </div>
       </div>
@@ -700,28 +861,46 @@ export default function OfflineOrdersPage() {
                         )}
                       </td>
 
-                      {/* Payment Terms & Status */}
+                      {/* Payment Terms & Interactive Status Selector */}
                       <td style={{ padding: '14px 16px' }}>
-                        <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#334155' }}>
+                        <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#334155', marginBottom: '6px' }}>
                           {order.payment_terms}
                         </div>
-                        <span style={{
-                          display: 'inline-block',
-                          marginTop: '4px',
-                          background: order.status === 'Completed' ? '#dcfce7' : order.status === 'In Production' ? '#e0f2fe' : '#fef3c7',
-                          color: order.status === 'Completed' ? '#166534' : order.status === 'In Production' ? '#0369a1' : '#92400e',
-                          padding: '2px 6px',
-                          borderRadius: '4px',
-                          fontSize: '0.7rem',
-                          fontWeight: 800
-                        }}>
-                          {order.status}
-                        </span>
+                        <select
+                          value={order.status}
+                          onChange={(e) => handleQuickStatusChange(order, e.target.value)}
+                          style={{
+                            padding: '4px 8px',
+                            borderRadius: '6px',
+                            fontSize: '0.78rem',
+                            fontWeight: 800,
+                            border: '1.5px solid #cbd5e1',
+                            background: order.status === 'Dispatched' ? '#e0e7ff' : order.status === 'Completed' || order.status === 'Delivered' ? '#dcfce7' : order.status === 'In Production' ? '#e0f2fe' : order.status === 'Cancelled' ? '#fee2e2' : '#fef3c7',
+                            color: order.status === 'Dispatched' ? '#3730a3' : order.status === 'Completed' || order.status === 'Delivered' ? '#166534' : order.status === 'In Production' ? '#0369a1' : order.status === 'Cancelled' ? '#991b1b' : '#92400e',
+                            cursor: 'pointer',
+                            outline: 'none'
+                          }}
+                        >
+                          <option value="Confirmed">🟡 Confirmed</option>
+                          <option value="In Production">⚙️ In Production</option>
+                          <option value="Dispatched">🚚 Dispatched</option>
+                          <option value="Ready for Pickup">📦 Ready for Pickup</option>
+                          <option value="Delivered">✅ Delivered</option>
+                          <option value="Completed">✅ Completed</option>
+                          <option value="Cancelled">❌ Cancelled</option>
+                        </select>
                       </td>
 
                       {/* Actions */}
                       <td style={{ padding: '14px 16px', textAlign: 'center', whiteSpace: 'nowrap' }}>
                         <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                          <button
+                            onClick={() => handleOpenEditModal(order)}
+                            style={{ background: '#3b82f6', color: '#fff', border: 'none', padding: '5px 8px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}
+                            title="Edit offline order details"
+                          >
+                            ✏️ Edit
+                          </button>
                           {hasDue && (
                             <button
                               onClick={() => { setPaymentModalOrder(order); setAdditionalPayment(order.balance_amount); }}
@@ -1077,6 +1256,207 @@ export default function OfflineOrdersPage() {
                   style={{ flex: 2, padding: '10px', border: 'none', background: '#10b981', color: '#fff', borderRadius: '8px', fontWeight: 800, cursor: 'pointer' }}
                 >
                   ✓ Update Balance
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ─────────────────────────────────────────────────────────
+          MODAL: EDIT OFFLINE ORDER
+      ───────────────────────────────────────────────────────── */}
+      {isEditModalOpen && editingOrder && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}>
+          <div style={{ background: '#fff', padding: '28px', borderRadius: '16px', width: '100%', maxWidth: '680px', maxHeight: '92vh', overflowY: 'auto', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}>
+            
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '12px', marginBottom: '18px' }}>
+              <div>
+                <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', margin: 0 }}>
+                  ✏️ Edit Order: {editingOrder.order_number}
+                </h2>
+                <span style={{ fontSize: '0.82rem', color: '#64748b' }}>
+                  Update customer info, work details, dispatch status, amount and notes
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => { setIsEditModalOpen(false); setEditingOrder(null); }}
+                style={{ background: '#f1f5f9', border: 'none', borderRadius: '50%', width: '32px', height: '32px', fontSize: '1.1rem', cursor: 'pointer', color: '#64748b' }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEditOrder} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* Customer Details */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
+                    Customer / Business Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editingOrder.customer_name}
+                    onChange={(e) => setEditingOrder({ ...editingOrder, customer_name: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', boxSizing: 'border-box' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
+                    Customer Mobile / WhatsApp *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={editingOrder.customer_phone}
+                    onChange={(e) => setEditingOrder({ ...editingOrder, customer_phone: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', boxSizing: 'border-box' }}
+                  />
+                </div>
+              </div>
+
+              {/* Work Description */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
+                  Job Work Description (Kam kya hai) *
+                </label>
+                <textarea
+                  required
+                  rows={3}
+                  value={editingOrder.work_description}
+                  onChange={(e) => setEditingOrder({ ...editingOrder, work_description: e.target.value })}
+                  style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', boxSizing: 'border-box', resize: 'vertical' }}
+                />
+              </div>
+
+              {/* Source & Payment Terms */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
+                    Order Source
+                  </label>
+                  <input
+                    type="text"
+                    value={editingOrder.source}
+                    onChange={(e) => setEditingOrder({ ...editingOrder, source: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', boxSizing: 'border-box' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
+                    Payment Terms
+                  </label>
+                  <input
+                    type="text"
+                    value={editingOrder.payment_terms}
+                    onChange={(e) => setEditingOrder({ ...editingOrder, payment_terms: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', boxSizing: 'border-box' }}
+                  />
+                </div>
+              </div>
+
+              {/* Total & Paid Amounts */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '14px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
+                    Total Job Amount (₹) *
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    required
+                    value={editingOrder.total_amount}
+                    onChange={(e) => setEditingOrder({ ...editingOrder, total_amount: parseFloat(e.target.value) || 0 })}
+                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.95rem', fontWeight: 800, boxSizing: 'border-box' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#166534', marginBottom: '4px' }}>
+                    Paid Amount (₹) *
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    required
+                    value={editingOrder.paid_amount}
+                    onChange={(e) => setEditingOrder({ ...editingOrder, paid_amount: parseFloat(e.target.value) || 0 })}
+                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #86efac', borderRadius: '8px', fontSize: '0.95rem', fontWeight: 800, color: '#166534', boxSizing: 'border-box' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#991b1b', marginBottom: '4px' }}>
+                    Calculated Balance Due
+                  </label>
+                  <div style={{ padding: '10px 12px', background: '#fee2e2', borderRadius: '8px', fontWeight: 900, color: '#991b1b', fontSize: '0.95rem', border: '1px solid #fecdd3' }}>
+                    ₹{Math.max(0, (Number(editingOrder.total_amount) || 0) - (Number(editingOrder.paid_amount) || 0)).toFixed(2)}
+                  </div>
+                </div>
+              </div>
+
+              {/* Status & Delivery Date */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 800, color: '#1d4ed8', marginBottom: '4px' }}>
+                    🚚 Order Status
+                  </label>
+                  <select
+                    value={editingOrder.status}
+                    onChange={(e) => setEditingOrder({ ...editingOrder, status: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', border: '2px solid #3b82f6', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 700, background: '#eff6ff', boxSizing: 'border-box' }}
+                  >
+                    <option value="Confirmed">🟡 Confirmed</option>
+                    <option value="In Production">⚙️ In Production</option>
+                    <option value="Dispatched">🚚 Dispatched</option>
+                    <option value="Ready for Pickup">📦 Ready for Pickup</option>
+                    <option value="Delivered">✅ Delivered</option>
+                    <option value="Completed">✅ Completed</option>
+                    <option value="Cancelled">❌ Cancelled</option>
+                  </select>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
+                    Promised Delivery Date
+                  </label>
+                  <input
+                    type="date"
+                    value={editingOrder.delivery_date || ''}
+                    onChange={(e) => setEditingOrder({ ...editingOrder, delivery_date: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', boxSizing: 'border-box' }}
+                  />
+                </div>
+              </div>
+
+              {/* Notes */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
+                  Internal Notes &amp; Updates
+                </label>
+                <textarea
+                  rows={2}
+                  value={editingOrder.notes || ''}
+                  onChange={(e) => setEditingOrder({ ...editingOrder, notes: e.target.value })}
+                  style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', boxSizing: 'border-box', resize: 'vertical' }}
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div style={{ display: 'flex', gap: '12px', marginTop: '10px', borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
+                <button
+                  type="button"
+                  onClick={() => { setIsEditModalOpen(false); setEditingOrder(null); }}
+                  style={{ flex: 1, padding: '12px', border: '1px solid #cbd5e1', background: '#f1f5f9', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', fontSize: '0.95rem' }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  style={{ flex: 2, padding: '12px', border: 'none', background: '#10b981', color: '#fff', borderRadius: '8px', fontWeight: 800, cursor: 'pointer', fontSize: '0.95rem', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)' }}
+                >
+                  ✓ Save Changes
                 </button>
               </div>
             </form>

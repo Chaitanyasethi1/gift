@@ -1,28 +1,33 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { createClient } from '@/utils/supabase/client';
 
 interface Category {
   id: string;
   name: string;
   slug: string;
   parent_id: string | null;
+  image_url?: string | null;
   sort_order: number;
   show_in_menu: boolean;
   show_in_home: boolean;
 }
 
 export default function AdminCategoriesPage() {
+  const supabase = createClient();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const defaultForm = {
     name: '',
     slug: '',
     parent_id: '',
+    image_url: '',
     sort_order: 1,
     show_in_menu: true,
     show_in_home: false
@@ -68,11 +73,34 @@ export default function AdminCategoriesPage() {
       name: cat.name,
       slug: cat.slug,
       parent_id: cat.parent_id || '',
+      image_url: cat.image_url || '',
       sort_order: cat.sort_order || 1,
       show_in_menu: cat.show_in_menu !== false,
       show_in_home: !!cat.show_in_home
     });
     setIsModalOpen(true);
+  }
+
+  async function handleCategoryImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    try {
+      if (!e.target.files || e.target.files.length === 0) return;
+      setUploadingImage(true);
+      const file = e.target.files[0];
+      const fileExt = file.name.split('.').pop();
+      const fileName = `cat-${Date.now()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage.from('product-images').upload(fileName, file);
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from('product-images').getPublicUrl(fileName);
+      if (data?.publicUrl) {
+        setFormData(prev => ({ ...prev, image_url: data.publicUrl }));
+      }
+    } catch (err: any) {
+      alert('Error uploading category image: ' + err.message);
+    } finally {
+      setUploadingImage(false);
+    }
   }
 
   async function handleSave(e: React.FormEvent) {
@@ -476,6 +504,40 @@ export default function AdminCategoriesPage() {
                     }}
                   />
                 </div>
+              </div>
+
+              {/* Category Image Upload */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#334155', marginBottom: '6px' }}>
+                  📁 Category Image / Icon (Optional)
+                </label>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCategoryImageUpload}
+                    disabled={uploadingImage}
+                    style={{ fontSize: '0.85rem', flex: 1 }}
+                  />
+                </div>
+                {uploadingImage && (
+                  <span style={{ fontSize: '0.78rem', color: '#7C3AED', fontWeight: 700, display: 'block', marginTop: '4px' }}>
+                    ⏳ Uploading image to storage...
+                  </span>
+                )}
+                {formData.image_url && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '8px', background: '#F8FAFC', padding: '8px 12px', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
+                    <img src={formData.image_url} alt="Category" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '6px' }} />
+                    <span style={{ fontSize: '0.75rem', color: '#16A34A', fontWeight: 700 }}>✓ Image Uploaded</span>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, image_url: '' })}
+                      style={{ background: 'none', border: 'none', color: '#EF4444', fontSize: '0.75rem', cursor: 'pointer', fontWeight: 700, marginLeft: 'auto' }}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Display Toggles */}

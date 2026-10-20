@@ -865,8 +865,8 @@ export default function SalesPage() {
                   {selectedOrder.order_items.map((item: any, idx: number) => {
                     const itDiscount = Number(item.variant_details?.discount_amount || 0);
                     return (
-                      <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.92rem', borderBottom: idx !== selectedOrder.order_items.length - 1 ? '1px solid #f1f5f9' : 'none', paddingBottom: '8px' }}>
-                        <div>
+                      <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '0.92rem', borderBottom: idx !== selectedOrder.order_items.length - 1 ? '1px solid #f1f5f9' : 'none', paddingBottom: '12px' }}>
+                        <div style={{ flex: 1 }}>
                           <div style={{ fontWeight: 800, color: '#0f172a' }}>{item.product_name}</div>
                           <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '2px' }}>
                             Qty: <strong>{item.quantity} pcs</strong> • Rate: ₹{Number(item.unit_price).toFixed(2)}/pc
@@ -877,8 +877,37 @@ export default function SalesPage() {
                               </span>
                             )}
                           </div>
+
+                          {/* Customer Uploaded Logo / Artwork Display */}
+                          {item.variant_details?.logo && (
+                            <div style={{ marginTop: '8px', padding: '8px 12px', background: '#f0f9ff', borderRadius: '8px', border: '1px solid #bae6fd', display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+                              <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#0369a1' }}>🎨 Customer Logo / Design:</span>
+                              {String(item.variant_details.logo).startsWith('http') ? (
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                  <img 
+                                    src={item.variant_details.logo} 
+                                    alt="Customer Logo" 
+                                    style={{ width: '42px', height: '42px', objectFit: 'contain', borderRadius: '4px', border: '1px solid #cbd5e1', background: '#fff' }} 
+                                  />
+                                  <a 
+                                    href={item.variant_details.logo} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    download 
+                                    style={{ padding: '4px 10px', background: '#0284c7', color: '#fff', borderRadius: '6px', textDecoration: 'none', fontSize: '0.76rem', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                                  >
+                                    ⬇️ Download Logo
+                                  </a>
+                                </div>
+                              ) : (
+                                <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#334155' }}>
+                                  📁 {item.variant_details.logo}
+                                </span>
+                              )}
+                            </div>
+                          )}
                         </div>
-                        <div style={{ fontWeight: 900, color: '#0f172a', fontSize: '1rem' }}>
+                        <div style={{ fontWeight: 900, color: '#0f172a', fontSize: '1rem', marginLeft: '12px' }}>
                           ₹{Number(item.total_price || (item.unit_price * item.quantity)).toFixed(2)}
                         </div>
                       </div>

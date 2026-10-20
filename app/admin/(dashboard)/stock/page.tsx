@@ -78,6 +78,7 @@ export default function StockProductsPage() {
     } else {
       parsedBulk = [
         { qty: 50, rate: item.selling_price || 0, label: '50 pcs Pack' },
+        { qty: 100, rate: item.selling_price || 0, label: '100 pcs Pack' },
         { qty: 200, rate: Math.round((item.selling_price || 0) * 0.95), label: '200 pcs Pack (5% OFF)' },
         { qty: 500, rate: Math.round((item.selling_price || 0) * 0.90), label: '500 pcs Pack (10% OFF)' },
         { qty: 1000, rate: Math.round((item.selling_price || 0) * 0.85), label: '1000 pcs Pack (Bulk Rate)' }
@@ -628,6 +629,7 @@ export default function StockProductsPage() {
                   </div>
                   <div style={{ display: 'flex', gap: '6px' }}>
                     <button type="button" onClick={() => addBulkRow(50)} style={{ background: '#DBEAFE', color: '#1E40AF', border: '1px solid #BFDBFE', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}>+ 50 pc</button>
+                    <button type="button" onClick={() => addBulkRow(100)} style={{ background: '#DBEAFE', color: '#1E40AF', border: '1px solid #BFDBFE', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}>+ 100 pc</button>
                     <button type="button" onClick={() => addBulkRow(200)} style={{ background: '#DBEAFE', color: '#1E40AF', border: '1px solid #BFDBFE', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}>+ 200 pc</button>
                     <button type="button" onClick={() => addBulkRow(500)} style={{ background: '#DBEAFE', color: '#1E40AF', border: '1px solid #BFDBFE', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}>+ 500 pc</button>
                     <button type="button" onClick={() => addBulkRow(1000)} style={{ background: '#DBEAFE', color: '#1E40AF', border: '1px solid #BFDBFE', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}>+ 1000 pc</button>

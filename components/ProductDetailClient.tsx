@@ -16,6 +16,7 @@ import {
   PlusIcon
 } from './Icons';
 import { ProductReviewsSection } from './ProductReviewsSection';
+import { createClient } from '@/utils/supabase/client';
 
 interface SizeVariantItem {
   size: string;
@@ -66,6 +67,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
       ? product.tiers
       : [
           { qty: product.moq || 50, rate: activeBasePrice, label: `${product.moq || 50} pcs Pack` },
+          { qty: 100, rate: activeBasePrice, label: '100 pcs Pack' },
           { qty: 200, rate: Math.round(activeBasePrice * 0.95), label: '200 pcs Pack' },
           { qty: 500, rate: Math.round(activeBasePrice * 0.90), label: '500 pcs Pack' },
           { qty: 1000, rate: Math.round(activeBasePrice * 0.85), label: 'Pack of 1000' }
@@ -133,6 +135,35 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   const [selectedPackQty, setSelectedPackQty] = useState<number>(initialQty);
   const [packCount, setPackCount] = useState<number>(1);
   const [uploadedLogo, setUploadedLogo] = useState<File | null>(null);
+  const [uploadedLogoUrl, setUploadedLogoUrl] = useState<string | null>(null);
+  const [isUploadingLogo, setIsUploadingLogo] = useState<boolean>(false);
+
+  const supabase = createClient();
+
+  const handleLogoFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploadingLogo(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `logos/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const { error: uploadErr } = await supabase.storage
+        .from('product-images')
+        .upload(fileName, file, { cacheControl: '3600', upsert: true });
+
+      if (uploadErr) throw uploadErr;
+
+      const { data } = supabase.storage.from('product-images').getPublicUrl(fileName);
+      if (data?.publicUrl) {
+        setUploadedLogoUrl(data.publicUrl);
+        setUploadedLogo(file);
+      }
+    } catch (err: any) {
+      alert('Logo upload failed: ' + err.message);
+    } finally {
+      setIsUploadingLogo(false);
+    }
+  };
 
   const activeTier = useMemo(() => {
     return tiers.find((t) => t.qty === selectedPackQty) || tiers[0];
@@ -175,7 +206,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
       specs: product.specs,
       dimensions: product.dimensions,
       size: selectedVariant ? selectedVariant.size : null,
-      logo: uploadedLogo ? uploadedLogo.name : null,
+      logo: uploadedLogoUrl || (uploadedLogo ? uploadedLogo.name : null),
       gstRate: gstRate
     }, packCount);
     setIsCartOpen(true);
@@ -605,17 +636,39 @@ Please confirm order and delivery timeline.`
 
             {/* Logo / Design Upload */}
             {(product as any).allowLogoUpload && (
-              <div style={{ marginBottom: '20px', padding: '14px', border: '1px dashed #94A3B8', borderRadius: '8px', background: '#F8FAFC' }}>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#1E293B', marginBottom: '6px' }}>
-                  🎨 Upload Your Brand Logo/Design (Optional):
+              <div style={{ marginBottom: '20px', padding: '16px', border: '1.5px dashed #3B82F6', borderRadius: '10px', background: '#EFF6FF' }}>
+                <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#1E40AF', marginBottom: '6px' }}>
+                  🎨 Upload Your Brand Logo / Artwork:
                 </label>
                 <input 
                   type="file" 
                   accept="image/*,.pdf,.ai,.eps" 
-                  onChange={(e) => setUploadedLogo(e.target.files ? e.target.files[0] : null)}
-                  style={{ fontSize: '0.85rem', width: '100%' }}
+                  onChange={handleLogoFileUpload}
+                  style={{ fontSize: '0.85rem', width: '100%', padding: '6px 0' }}
+                  disabled={isUploadingLogo}
                 />
-                <p style={{ fontSize: '0.75rem', color: '#64748B', marginTop: '6px', marginBottom: 0 }}>Supported formats: PNG, JPG, PDF, AI. We will send a digital proof before printing.</p>
+                {isUploadingLogo && (
+                  <div style={{ color: '#2563EB', fontSize: '0.82rem', fontWeight: 700, marginTop: '6px' }}>
+                    ⏳ Uploading logo securely to server...
+                  </div>
+                )}
+                {uploadedLogoUrl && (
+                  <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', gap: '10px', background: '#FFFFFF', padding: '8px 12px', borderRadius: '8px', border: '1px solid #BFDBFE' }}>
+                    <img src={uploadedLogoUrl} alt="Uploaded logo preview" style={{ width: '45px', height: '45px', objectFit: 'contain', borderRadius: '4px', border: '1px solid #E2E8F0' }} />
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#16A34A', display: 'block' }}>✓ Logo Uploaded Successfully!</span>
+                      <span style={{ fontSize: '0.72rem', color: '#64748B', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{uploadedLogo?.name}</span>
+                    </div>
+                    <button 
+                      type="button" 
+                      onClick={() => { setUploadedLogoUrl(null); setUploadedLogo(null); }}
+                      style={{ background: '#FEE2E2', border: 'none', color: '#DC2626', borderRadius: '4px', padding: '4px 8px', fontSize: '0.72rem', fontWeight: 700, cursor: 'pointer' }}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
+                <p style={{ fontSize: '0.75rem', color: '#64748B', marginTop: '6px', marginBottom: 0 }}>Supported formats: PNG, JPG, PDF, AI. Our factory team will send a digital proof before printing.</p>
               </div>
             )}
 

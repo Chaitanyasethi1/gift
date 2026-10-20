@@ -34,7 +34,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, slug, parent_id, sort_order, show_in_menu, show_in_home } = body;
+    const { name, slug, parent_id, image_url, sort_order, show_in_menu, show_in_home } = body;
 
     const generatedSlug = slug || name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
@@ -42,6 +42,7 @@ export async function POST(request: Request) {
       name,
       slug: generatedSlug,
       parent_id: parent_id || null,
+      image_url: image_url || null,
       sort_order: sort_order ?? 0,
       show_in_menu: show_in_menu !== false,
       show_in_home: !!show_in_home
@@ -54,6 +55,7 @@ export async function POST(request: Request) {
         name,
         slug: generatedSlug,
         parent_id: parent_id || null,
+        image_url: image_url || null,
         sort_order: sort_order ?? 0,
         show_in_menu: show_in_menu !== false,
         show_in_home: !!show_in_home
@@ -75,7 +77,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { id, name, slug, parent_id, sort_order, show_in_menu, show_in_home } = body;
+    const { id, name, slug, parent_id, image_url, sort_order, show_in_menu, show_in_home } = body;
 
     if (!id) {
       return NextResponse.json({ error: 'Category ID is required' }, { status: 400 });
@@ -85,6 +87,7 @@ export async function PUT(request: Request) {
       name,
       slug,
       parent_id: parent_id || null,
+      image_url: image_url || null,
       sort_order: sort_order ?? 0,
       show_in_menu: show_in_menu !== false,
       show_in_home: !!show_in_home
@@ -96,6 +99,7 @@ export async function PUT(request: Request) {
       name,
       slug,
       parent_id: parent_id || null,
+      image_url: image_url || null,
       sort_order: sort_order ?? 0,
       show_in_menu: show_in_menu !== false,
       show_in_home: !!show_in_home

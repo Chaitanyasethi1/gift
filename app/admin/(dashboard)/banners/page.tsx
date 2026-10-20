@@ -22,6 +22,8 @@ export default function BannersAndHomepageAdmin() {
   const [newCatImg, setNewCatImg] = useState('');
   const [newCatLink, setNewCatLink] = useState('/shop');
   const [newCatSpecial, setNewCatSpecial] = useState(false);
+  const [uploadingCategoryImg, setUploadingCategoryImg] = useState(false);
+  const [uploadingBubbleId, setUploadingBubbleId] = useState<string | null>(null);
 
   // Active Tab
   const [activeTab, setActiveTab] = useState<'banners' | 'ticker' | 'categories'>('banners');
@@ -136,6 +138,59 @@ export default function BannersAndHomepageAdmin() {
     };
     setConfig(updated);
     handleSaveAll(updated);
+  };
+
+  // Upload Category Bubble Image to Supabase Storage
+  const handleCategoryFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      if (!e.target.files || e.target.files.length === 0) return;
+      setUploadingCategoryImg(true);
+      const file = e.target.files[0];
+      const fileExt = file.name.split('.').pop();
+      const fileName = `cat-bubble-${Date.now()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage.from('product-images').upload(fileName, file);
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from('product-images').getPublicUrl(fileName);
+      if (data?.publicUrl) {
+        setNewCatImg(data.publicUrl);
+      }
+    } catch (err: any) {
+      alert('Error uploading category image: ' + err.message);
+    } finally {
+      setUploadingCategoryImg(false);
+    }
+  };
+
+  // Replace image for an existing category bubble
+  const handleBubbleImageReplace = async (bubbleId: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      if (!e.target.files || e.target.files.length === 0) return;
+      setUploadingBubbleId(bubbleId);
+      const file = e.target.files[0];
+      const fileExt = file.name.split('.').pop();
+      const fileName = `cat-bubble-${Date.now()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage.from('product-images').upload(fileName, file);
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from('product-images').getPublicUrl(fileName);
+      if (data?.publicUrl) {
+        const updated = {
+          ...config,
+          popularCategories: config.popularCategories.map(c => 
+            c.id === bubbleId ? { ...c, image: data.publicUrl } : c
+          )
+        };
+        setConfig(updated);
+        await handleSaveAll(updated);
+      }
+    } catch (err: any) {
+      alert('Error updating category bubble image: ' + err.message);
+    } finally {
+      setUploadingBubbleId(null);
+    }
   };
 
   // Add Popular Category
@@ -516,7 +571,7 @@ export default function BannersAndHomepageAdmin() {
               + Add Popular Category Bubble
             </h3>
 
-            <form onSubmit={handleAddCategory} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', alignItems: 'flex-end' }}>
+            <form onSubmit={handleAddCategory} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', alignItems: 'flex-start' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>Title *</label>
                 <input
@@ -525,30 +580,61 @@ export default function BannersAndHomepageAdmin() {
                   placeholder="e.g. Gift Boxes"
                   value={newCatTitle}
                   onChange={(e) => setNewCatTitle(e.target.value)}
-                  style={{ width: '100%', padding: '8px 12px', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '9px 12px', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.85rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>Emoji (if no image)</label>
-                <input
-                  type="text"
-                  placeholder="🎁"
-                  value={newCatEmoji}
-                  onChange={(e) => setNewCatEmoji(e.target.value)}
-                  style={{ width: '100%', padding: '8px 12px', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.85rem' }}
-                />
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>
+                  📁 Upload Category Photo (Phone/PC)
+                </label>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCategoryFileUpload}
+                    disabled={uploadingCategoryImg}
+                    style={{ fontSize: '0.82rem', width: '100%' }}
+                  />
+                </div>
+                {uploadingCategoryImg && (
+                  <span style={{ fontSize: '0.75rem', color: '#7C3AED', fontWeight: 700, display: 'block', marginTop: '4px' }}>
+                    ⏳ Uploading image to storage...
+                  </span>
+                )}
+                {newCatImg && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '6px' }}>
+                    <img src={newCatImg} alt="Preview" style={{ width: '36px', height: '36px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #CBD5E1' }} />
+                    <span style={{ fontSize: '0.72rem', color: '#16A34A', fontWeight: 700 }}>✓ Image Selected</span>
+                    <button
+                      type="button"
+                      onClick={() => setNewCatImg('')}
+                      style={{ background: 'none', border: 'none', color: '#EF4444', fontSize: '0.72rem', cursor: 'pointer', fontWeight: 700 }}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>Image URL (Optional)</label>
-                <input
-                  type="text"
-                  placeholder="/assets/image.png or URL"
-                  value={newCatImg}
-                  onChange={(e) => setNewCatImg(e.target.value)}
-                  style={{ width: '100%', padding: '8px 12px', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.85rem' }}
-                />
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#334155', marginBottom: '4px' }}>Or Image URL / Emoji Fallback</label>
+                <div style={{ display: 'flex', gap: '6px' }}>
+                  <input
+                    type="text"
+                    placeholder="📦 Emoji"
+                    value={newCatEmoji}
+                    onChange={(e) => setNewCatEmoji(e.target.value)}
+                    style={{ width: '65px', padding: '9px 8px', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.85rem', textAlign: 'center' }}
+                  />
+                  <input
+                    type="text"
+                    placeholder="/assets/image.png or URL"
+                    value={newCatImg}
+                    onChange={(e) => setNewCatImg(e.target.value)}
+                    style={{ flex: 1, padding: '9px 12px', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.85rem' }}
+                  />
+                </div>
               </div>
 
               <div>
@@ -558,12 +644,12 @@ export default function BannersAndHomepageAdmin() {
                   placeholder="/shop"
                   value={newCatLink}
                   onChange={(e) => setNewCatLink(e.target.value)}
-                  style={{ width: '100%', padding: '8px 12px', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '9px 12px', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.85rem' }}
                 />
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingBottom: '10px' }}>
-                <label style={{ fontSize: '0.82rem', color: '#334155', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <label style={{ fontSize: '0.82rem', color: '#334155', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', marginTop: '6px' }}>
                   <input
                     type="checkbox"
                     checked={newCatSpecial}
@@ -571,11 +657,10 @@ export default function BannersAndHomepageAdmin() {
                   />
                   Highlight / Special
                 </label>
-              </div>
 
-              <div>
                 <button
                   type="submit"
+                  disabled={uploadingCategoryImg}
                   style={{
                     background: '#10B981',
                     color: '#FFF',
@@ -584,18 +669,18 @@ export default function BannersAndHomepageAdmin() {
                     borderRadius: '6px',
                     fontWeight: 800,
                     fontSize: '0.88rem',
-                    cursor: 'pointer',
+                    cursor: uploadingCategoryImg ? 'not-allowed' : 'pointer',
                     width: '100%'
                   }}
                 >
-                  + Add Item
+                  {uploadingCategoryImg ? 'Uploading...' : '+ Add Category Bubble'}
                 </button>
               </div>
             </form>
           </div>
 
           {/* Grid of Category Bubbles */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '14px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '14px' }}>
             {config.popularCategories.map((cat) => (
               <div
                 key={cat.id}
@@ -615,13 +700,14 @@ export default function BannersAndHomepageAdmin() {
                   type="button"
                   onClick={() => handleDeleteCategory(cat.id)}
                   style={{ position: 'absolute', top: '6px', right: '6px', background: 'none', border: 'none', color: '#DC2626', fontSize: '0.85rem', cursor: 'pointer', fontWeight: 800 }}
+                  title="Delete Bubble"
                 >
                   ✕
                 </button>
 
                 <div style={{
-                  width: '55px',
-                  height: '55px',
+                  width: '60px',
+                  height: '60px',
                   borderRadius: '14px',
                   background: cat.isSpecial ? '#FEE2E2' : '#F8FAFC',
                   display: 'flex',
@@ -630,7 +716,8 @@ export default function BannersAndHomepageAdmin() {
                   fontSize: '1.8rem',
                   overflow: 'hidden',
                   marginBottom: '8px',
-                  border: '1px solid #CBD5E1'
+                  border: '1px solid #CBD5E1',
+                  position: 'relative'
                 }}>
                   {cat.image ? (
                     <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -639,12 +726,35 @@ export default function BannersAndHomepageAdmin() {
                   )}
                 </div>
 
-                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: cat.isSpecial ? '#B91C1C' : '#0F172A', lineHeight: 1.2 }}>
+                <div style={{ fontSize: '0.85rem', fontWeight: 800, color: cat.isSpecial ? '#B91C1C' : '#0F172A', lineHeight: 1.2 }}>
                   {cat.title}
                 </div>
-                <div style={{ fontSize: '0.72rem', color: '#64748B', marginTop: '4px' }}>
+                <div style={{ fontSize: '0.72rem', color: '#64748B', marginTop: '3px' }}>
                   {cat.link}
                 </div>
+
+                {/* Instant Change Photo Button */}
+                <label style={{
+                  marginTop: '8px',
+                  display: 'inline-block',
+                  background: '#F1F5F9',
+                  border: '1px solid #CBD5E1',
+                  color: '#334155',
+                  padding: '3px 8px',
+                  borderRadius: '4px',
+                  fontSize: '0.7rem',
+                  fontWeight: 700,
+                  cursor: 'pointer'
+                }}>
+                  {uploadingBubbleId === cat.id ? '⏳ Uploading...' : '📷 Change Photo'}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={(e) => handleBubbleImageReplace(cat.id, e)}
+                    disabled={uploadingBubbleId === cat.id}
+                  />
+                </label>
               </div>
             ))}
           </div>

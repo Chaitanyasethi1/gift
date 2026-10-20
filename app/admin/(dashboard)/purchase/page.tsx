@@ -76,52 +76,9 @@ export default function PurchasePage() {
       if (saved) {
         setPurchases(JSON.parse(saved));
       } else {
-        // Seed some sample factory raw materials if empty so it looks lively
-        const initialSample: PurchaseItem[] = [
-          {
-            id: 'pur-1',
-            bill_number: 'INV-KP-892',
-            bill_date: new Date(Date.now() - 3 * 86400000).toISOString().split('T')[0],
-            vendor_name: 'Shree Krishna Paper Mills Ltd',
-            vendor_phone: '9810234567',
-            vendor_gst: '07AAACS1429B1Z4',
-            category: '📜 Kraft Paper Reels / Fluting Medium',
-            item_name: '180 GSM Virgin Kraft Paper Reels (Deckle 44")',
-            quantity: 4.5,
-            unit: 'Tons',
-            unit_rate: 34000,
-            gst_rate: 12,
-            total_amount: 171360,
-            paid_amount: 100000,
-            balance_due: 71360,
-            payment_status: 'Partial',
-            payment_mode: 'Bank Transfer (NEFT/RTGS)',
-            due_date: new Date(Date.now() + 10 * 86400000).toISOString().split('T')[0],
-            notes: 'Advance given. Balance due on 15 days credit term.',
-            created_at: new Date(Date.now() - 3 * 86400000).toISOString()
-          },
-          {
-            id: 'pur-2',
-            bill_number: 'INV-GL-441',
-            bill_date: new Date(Date.now() - 5 * 86400000).toISOString().split('T')[0],
-            vendor_name: 'Apex Adhesives & Starches',
-            vendor_phone: '9911456789',
-            category: '🧪 Corrugation Starch / Gum Adhesive',
-            item_name: 'Modified Maize Starch Corrugation Gum (50kg Bags)',
-            quantity: 30,
-            unit: 'Bags',
-            unit_rate: 1100,
-            gst_rate: 5,
-            total_amount: 34650,
-            paid_amount: 34650,
-            balance_due: 0,
-            payment_status: 'Paid',
-            payment_mode: 'UPI',
-            created_at: new Date(Date.now() - 5 * 86400000).toISOString()
-          }
-        ];
-        setPurchases(initialSample);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(initialSample));
+        // Start completely clean at 0 purchases
+        setPurchases([]);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
       }
     } catch (e) {
       console.warn('Storage read error:', e);
@@ -309,26 +266,55 @@ export default function PurchasePage() {
           </p>
         </div>
 
-        <button
-          onClick={() => { resetForm(); setIsAddModalOpen(true); }}
-          style={{
-            background: '#3b82f6',
-            color: '#fff',
-            border: 'none',
-            padding: '12px 22px',
-            borderRadius: '10px',
-            fontWeight: 800,
-            fontSize: '0.95rem',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
-          }}
-        >
-          <span>➕</span>
-          <span>Naya Purchase Bill Dalein</span>
-        </button>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          {purchases.length > 0 && (
+            <button
+              onClick={() => {
+                if (window.confirm('Kya aap sure hain ki purchases ka sara data zero (0) karna chahte hain?')) {
+                  persistPurchases([]);
+                }
+              }}
+              style={{
+                background: '#ef4444',
+                color: '#fff',
+                border: 'none',
+                padding: '12px 18px',
+                borderRadius: '10px',
+                fontWeight: 800,
+                fontSize: '0.88rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 4px 12px rgba(239, 68, 68, 0.25)'
+              }}
+            >
+              <span>🗑️</span>
+              <span>Reset Purchases (0)</span>
+            </button>
+          )}
+
+          <button
+            onClick={() => { resetForm(); setIsAddModalOpen(true); }}
+            style={{
+              background: '#3b82f6',
+              color: '#fff',
+              border: 'none',
+              padding: '12px 22px',
+              borderRadius: '10px',
+              fontWeight: 800,
+              fontSize: '0.95rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
+            }}
+          >
+            <span>➕</span>
+            <span>Naya Purchase Bill Dalein</span>
+          </button>
+        </div>
       </div>
 
       {/* KPI Cards */}

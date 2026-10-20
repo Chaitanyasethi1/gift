@@ -63,16 +63,18 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({ product }) => {
     e.preventDefault();
     e.stopPropagation();
     const gstRate = parseGst(product.gst_rate ?? product.gst_percentage);
+    const minPack = Number(product.moq) > 1 ? Number(product.moq) : 100;
+    const packPrice = sellingPrice * minPack;
     addToCart({
-      id: `${product.id}`,
-      title: product.name || product.title || 'Product',
-      price: sellingPrice,
+      id: `${product.id}-pack-${minPack}`,
+      title: `${product.name || product.title || 'Product'} (Pack of ${minPack})`,
+      price: packPrice,
       image: primaryImage,
       specs: product.specs || [],
       gstRate: gstRate
-    }, product.moq || 1);
+    }, 1);
     setIsCartOpen(true);
-    showToast(`🛒 Added ${product.name || product.title || 'Product'} to cart`);
+    showToast(`🛒 Added ${product.name || product.title || 'Product'} (Pack of ${minPack}) to cart`);
   };
 
   const handleWishlistClick = (e: React.MouseEvent) => {
