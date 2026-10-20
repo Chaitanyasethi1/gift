@@ -200,6 +200,8 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   const handleAddToCart = () => {
     addToCart({
       id: `${product.id}-${selectedVariant ? `${selectedVariant.size}-${selectedVariant.price}` : 'std'}-${selectedPackQty}`,
+      productId: product.id,
+      piecesPerPack: selectedPackQty,
       title: `${product.title} (Pack of ${selectedPackQty}${selectedVariant ? ` - ${selectedVariant.size}` : ''})`,
       price: singlePackPrice,
       image: activeImage || product.image,
@@ -388,7 +390,7 @@ Please confirm order and delivery timeline.`
             </h1>
 
             {/* Rating */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
               <div style={{ display: 'flex', gap: '2px', color: '#F59E0B' }}>
                 {[...Array(5)].map((_, i) => (
                   <StarIcon key={i} size={15} filled={true} />
@@ -396,6 +398,19 @@ Please confirm order and delivery timeline.`
               </div>
               <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#334155' }}>{product.rating ? product.rating.toFixed(1) : '4.9'}</span>
               <span style={{ fontSize: '0.82rem', color: '#64748B' }}>({product.reviews || 120} verified orders)</span>
+            </div>
+
+            {/* Live Stock Availability Badge */}
+            <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {(product as any).stock_quantity !== undefined && (product as any).stock_quantity !== null && Number((product as any).stock_quantity) <= 0 ? (
+                <span style={{ background: '#FEE2E2', color: '#DC2626', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '5px', border: '1px solid #FECDD3' }}>
+                  <span>🏭</span> Made to Order (Manufacturing in 3-5 days)
+                </span>
+              ) : (
+                <span style={{ background: '#DCFCE7', color: '#15803D', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '5px', border: '1px solid #BBF7D0' }}>
+                  <span>✓</span> In Stock (Ready for Dispatch from Ghaziabad Factory)
+                </span>
+              )}
             </div>
 
             <p style={{ fontSize: '0.92rem', color: '#475569', lineHeight: 1.55, marginBottom: '20px' }}>

@@ -18,6 +18,8 @@ export interface CartItem {
   logo?: string | null;
   isCustomBox?: boolean;
   gstRate?: number;
+  piecesPerPack?: number;
+  packQty?: number;
 }
 
 export interface AppliedCoupon {

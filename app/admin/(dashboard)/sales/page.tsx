@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { AutocompleteInput } from '@/components/admin/AutocompleteInput';
+import { restoreStockForOrder } from '@/lib/inventory';
 
 export default function SalesPage() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -50,6 +51,17 @@ export default function SalesPage() {
     e.preventDefault();
     setIsUpdating(true);
     
+    // If order is cancelled, restore inventory
+    if (status === 'Cancelled' && selectedOrder?.status !== 'Cancelled') {
+      if (selectedOrder?.order_items && selectedOrder.order_items.length > 0) {
+        try {
+          await restoreStockForOrder(selectedOrder.order_items);
+        } catch (stockErr) {
+          console.warn('Failed to restore stock for cancelled order:', stockErr);
+        }
+      }
+    }
+
     const { error } = await supabase
       .from('orders')
       .update({

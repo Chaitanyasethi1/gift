@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { createClient } from '@/utils/supabase/server';
 import { validateCouponForCart, recordCouponUsage } from '@/lib/coupons';
+import { deductStockForOrder } from '@/lib/inventory';
 
 export async function POST(req: Request) {
   try {
@@ -145,6 +146,13 @@ export async function POST(req: Request) {
           });
 
           await supabase.from('order_items').insert(orderItems);
+
+          // Automatically deduct product stock
+          try {
+            await deductStockForOrder(cart);
+          } catch (invErr) {
+            console.error('[Inventory] Error deducting stock on Razorpay payment:', invErr);
+          }
         }
 
         // Record coupon usage in persistent storage

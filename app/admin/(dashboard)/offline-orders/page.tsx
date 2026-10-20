@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
+import { deductStockForOrder } from '@/lib/inventory';
 
 export interface OfflineOrder {
   id: string;
@@ -54,6 +55,11 @@ export default function OfflineOrdersPage() {
   const [status, setStatus] = useState('Confirmed');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [notes, setNotes] = useState('');
+
+  // Catalog Products (for stock auto-deduction)
+  const [catalogProducts, setCatalogProducts] = useState<any[]>([]);
+  const [selectedCatalogProductId, setSelectedCatalogProductId] = useState<string>('');
+  const [selectedProductPieces, setSelectedProductPieces] = useState<number | ''>('');
 
   const supabase = createClient();
 
@@ -216,6 +222,16 @@ export default function OfflineOrdersPage() {
         const cleanLocal = deduplicateOrders(localData);
         setOrders(cleanLocal);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanLocal));
+      }
+
+      try {
+        const { data: prods } = await supabase
+          .from('products')
+          .select('id, name, stock_quantity, selling_price')
+          .order('name');
+        if (prods) setCatalogProducts(prods);
+      } catch (e) {
+        console.warn('Could not load catalog products for offline order linking:', e);
       } finally {
         setLoading(false);
       }
@@ -248,6 +264,8 @@ export default function OfflineOrdersPage() {
     setStatus('Confirmed');
     setDeliveryDate('');
     setNotes('');
+    setSelectedCatalogProductId('');
+    setSelectedProductPieces('');
   };
 
   // Create New Offline Order
@@ -326,6 +344,26 @@ export default function OfflineOrdersPage() {
       }
     } catch (err) {
       console.warn('Supabase offline order sync bypassed:', err);
+    }
+
+    // Deduct stock if a catalog product was chosen
+    if (selectedCatalogProductId && Number(selectedProductPieces) > 0) {
+      try {
+        await deductStockForOrder([
+          {
+            productId: selectedCatalogProductId,
+            qty: Number(selectedProductPieces),
+            piecesPerPack: 1
+          }
+        ]);
+        const { data: updatedProds } = await supabase
+          .from('products')
+          .select('id, name, stock_quantity, selling_price')
+          .order('name');
+        if (updatedProds) setCatalogProducts(updatedProds);
+      } catch (err) {
+        console.warn('Could not deduct catalog stock for offline order:', err);
+      }
     }
 
     setIsSaving(false);
@@ -1006,6 +1044,53 @@ export default function OfflineOrdersPage() {
                   onChange={(e) => setWorkDescription(e.target.value)}
                   style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', boxSizing: 'border-box', lineHeight: 1.4 }}
                 />
+              </div>
+
+              {/* Optional Catalog Product Link & Auto Stock Deduction */}
+              <div style={{ background: '#f0fdf4', padding: '12px 14px', borderRadius: '10px', border: '1.5px dashed #86efac' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <label style={{ fontSize: '0.82rem', fontWeight: 800, color: '#166534', margin: 0 }}>
+                    📦 Link Catalog Product &amp; Deduct Live Stock (Optional)
+                  </label>
+                  <span style={{ fontSize: '0.75rem', color: '#15803d', fontWeight: 600 }}>
+                    Auto-decrements factory inventory
+                  </span>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '10px' }}>
+                  <div>
+                    <select
+                      value={selectedCatalogProductId}
+                      onChange={(e) => {
+                        const pid = e.target.value;
+                        setSelectedCatalogProductId(pid);
+                        if (pid) {
+                          const p = catalogProducts.find(item => item.id === pid);
+                          if (p && !workDescription) {
+                            setWorkDescription(`${p.name} (Factory Offline Order)`);
+                          }
+                        }
+                      }}
+                      style={{ width: '100%', padding: '8px 10px', border: '1.5px solid #86efac', borderRadius: '6px', fontSize: '0.84rem', background: '#fff' }}
+                    >
+                      <option value="">-- None (Pure Custom Factory Job) --</option>
+                      {catalogProducts.map(p => (
+                        <option key={p.id} value={p.id}>
+                          {p.name} (Stock: {p.stock_quantity ?? 0} pcs)
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <input
+                      type="number"
+                      min="1"
+                      placeholder="Pieces to deduct..."
+                      value={selectedProductPieces}
+                      onChange={(e) => setSelectedProductPieces(e.target.value ? parseInt(e.target.value, 10) : '')}
+                      style={{ width: '100%', padding: '8px 10px', border: '1.5px solid #86efac', borderRadius: '6px', fontSize: '0.84rem', background: '#fff', boxSizing: 'border-box' }}
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Row 3: Source & Payment Terms */}

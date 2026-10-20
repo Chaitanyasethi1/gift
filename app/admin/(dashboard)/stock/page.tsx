@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
 
 interface SizeVariant {
@@ -19,6 +19,9 @@ export default function StockProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [stockFilter, setStockFilter] = useState<'ALL' | 'IN_STOCK' | 'LOW_STOCK' | 'OUT_OF_STOCK'>('ALL');
+  const [stockAdjustingId, setStockAdjustingId] = useState<string | null>(null);
   
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,6 +40,54 @@ export default function StockProductsPage() {
   const [newImageUrl, setNewImageUrl] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
+
+  // Quick Stock Adjustments (+100, +500, -100)
+  async function handleQuickStockAdjust(productId: string, delta: number) {
+    const prod = products.find(p => p.id === productId);
+    if (!prod) return;
+    const current = Number(prod.stock_quantity ?? 0);
+    const newStock = Math.max(0, current + delta);
+
+    setStockAdjustingId(productId);
+    // Optimistic UI update
+    setProducts(prev => prev.map(p => p.id === productId ? { ...p, stock_quantity: newStock } : p));
+
+    const { error } = await supabase
+      .from('products')
+      .update({ stock_quantity: newStock, updated_at: new Date().toISOString() })
+      .eq('id', productId);
+
+    setStockAdjustingId(null);
+    if (error) {
+      alert('Error updating stock: ' + error.message);
+      fetchData();
+    }
+  }
+
+  // Set Exact Stock
+  async function handleSetExactStock(productId: string, currentVal: number) {
+    const entered = window.prompt(`Enter new stock quantity in pieces:`, String(currentVal));
+    if (entered === null) return;
+    const val = parseInt(entered, 10);
+    if (isNaN(val) || val < 0) {
+      alert('Please enter a valid positive number.');
+      return;
+    }
+
+    setStockAdjustingId(productId);
+    setProducts(prev => prev.map(p => p.id === productId ? { ...p, stock_quantity: val } : p));
+
+    const { error } = await supabase
+      .from('products')
+      .update({ stock_quantity: val, updated_at: new Date().toISOString() })
+      .eq('id', productId);
+
+    setStockAdjustingId(null);
+    if (error) {
+      alert('Error updating stock: ' + error.message);
+      fetchData();
+    }
+  }
 
   async function fetchData() {
     setLoading(true);
@@ -317,23 +368,127 @@ export default function StockProductsPage() {
     }
   }
 
+  const totalProducts = products.length;
+  const totalStockPcs = products.reduce((acc, p) => acc + Number(p.stock_quantity || 0), 0);
+  const lowStockCount = products.filter(p => Number(p.stock_quantity || 0) > 0 && Number(p.stock_quantity || 0) <= 200).length;
+  const outOfStockCount = products.filter(p => Number(p.stock_quantity || 0) <= 0).length;
+  const inStockCount = products.filter(p => Number(p.stock_quantity || 0) > 200).length;
+
+  const filteredProducts = useMemo(() => {
+    return products.filter((p) => {
+      const q = searchQuery.toLowerCase().trim();
+      const matchesSearch = !q || (p.name && p.name.toLowerCase().includes(q)) || (p.categories?.name && p.categories.name.toLowerCase().includes(q));
+      
+      const stock = Number(p.stock_quantity ?? 0);
+      let matchesFilter = true;
+      if (stockFilter === 'IN_STOCK') {
+        matchesFilter = stock > 200;
+      } else if (stockFilter === 'LOW_STOCK') {
+        matchesFilter = stock > 0 && stock <= 200;
+      } else if (stockFilter === 'OUT_OF_STOCK') {
+        matchesFilter = stock <= 0;
+      }
+
+      return matchesSearch && matchesFilter;
+    });
+  }, [products, searchQuery, stockFilter]);
+
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '15px' }}>
+    <div style={{ maxWidth: '1240px', margin: '0 auto', paddingBottom: '50px' }}>
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '22px', flexWrap: 'wrap', gap: '15px' }}>
         <div>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>
-            📦 Products & Stock Management
+          <h1 style={{ fontSize: '1.8rem', fontWeight: 900, color: '#0F172A', margin: 0 }}>
+            📦 Factory Products &amp; Live Stock Inventory
           </h1>
-          <p style={{ color: '#64748B', margin: '4px 0 0 0', fontSize: '0.95rem' }}>
-            Product prices, size variations, and pack quantity tiers manage karein.
+          <p style={{ color: '#64748B', margin: '4px 0 0 0', fontSize: '0.92rem' }}>
+            Catalogue products, live available stock in pieces, prices, and pack quantity tiers. Orders aane par stock automatically kam hota hai.
           </p>
         </div>
         <button 
           onClick={handleAddNew}
-          style={{ background: '#10b981', color: '#fff', padding: '12px 24px', borderRadius: '8px', border: 'none', fontWeight: 700, cursor: 'pointer', fontSize: '0.95rem', boxShadow: '0 4px 6px -1px rgba(16, 185, 129, 0.2)' }}
+          style={{ background: '#10b981', color: '#fff', padding: '12px 24px', borderRadius: '10px', border: 'none', fontWeight: 800, cursor: 'pointer', fontSize: '0.95rem', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.25)', display: 'flex', alignItems: 'center', gap: '8px' }}
         >
-          + Add New Product
+          <span>➕</span>
+          <span>Add New Product</span>
         </button>
+      </div>
+
+      {/* KPI Cards Strip */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '22px' }}>
+        <div style={{ background: '#fff', padding: '18px 20px', borderRadius: '14px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.03)' }}>
+          <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase' }}>Total Products</span>
+          <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#0f172a', marginTop: '4px' }}>{totalProducts} SKUs</div>
+          <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Active in catalogue</span>
+        </div>
+
+        <div style={{ background: '#F0FDF4', padding: '18px 20px', borderRadius: '14px', border: '1px solid #BBF7D0', boxShadow: '0 2px 4px rgba(22,163,74,0.04)' }}>
+          <span style={{ color: '#166534', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase' }}>Total Stock in Factory</span>
+          <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#15803D', marginTop: '4px' }}>{totalStockPcs.toLocaleString('en-IN')} pcs</div>
+          <span style={{ fontSize: '0.75rem', color: '#166534' }}>{inStockCount} products in healthy stock</span>
+        </div>
+
+        <div 
+          onClick={() => setStockFilter(stockFilter === 'LOW_STOCK' ? 'ALL' : 'LOW_STOCK')}
+          style={{ background: '#FEF3C7', padding: '18px 20px', borderRadius: '14px', border: stockFilter === 'LOW_STOCK' ? '2px solid #D97706' : '1px solid #FDE68A', cursor: 'pointer', transition: 'all 0.15s ease' }}
+        >
+          <span style={{ color: '#92400E', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase' }}>⚠️ Low Stock Alert (&le; 200 pcs)</span>
+          <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#B45309', marginTop: '4px' }}>{lowStockCount} Products</div>
+          <span style={{ fontSize: '0.75rem', color: '#92400E' }}>Click to filter low inventory</span>
+        </div>
+
+        <div 
+          onClick={() => setStockFilter(stockFilter === 'OUT_OF_STOCK' ? 'ALL' : 'OUT_OF_STOCK')}
+          style={{ background: '#FEE2E2', padding: '18px 20px', borderRadius: '14px', border: stockFilter === 'OUT_OF_STOCK' ? '2px solid #DC2626' : '1px solid #FECDD3', cursor: 'pointer', transition: 'all 0.15s ease' }}
+        >
+          <span style={{ color: '#991B1B', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase' }}>🔴 Out of Stock (0 pcs)</span>
+          <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#DC2626', marginTop: '4px' }}>{outOfStockCount} Products</div>
+          <span style={{ fontSize: '0.75rem', color: '#991B1B' }}>Click to view out-of-stock</span>
+        </div>
+      </div>
+
+      {/* Filter & Search Bar */}
+      <div style={{ background: '#fff', padding: '14px 18px', borderRadius: '14px', border: '1px solid #e2e8f0', display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+        <div style={{ flex: 1, minWidth: '260px', display: 'flex', alignItems: 'center', background: '#f8fafc', border: '1.5px solid #cbd5e1', borderRadius: '8px', padding: '7px 12px' }}>
+          <span style={{ marginRight: '8px' }}>🔍</span>
+          <input
+            type="text"
+            placeholder="Search product by name or category..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{ width: '100%', border: 'none', background: 'transparent', outline: 'none', fontSize: '0.88rem', fontWeight: 500 }}
+          />
+          {searchQuery && (
+            <button onClick={() => setSearchQuery('')} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontWeight: 800 }}>✕</button>
+          )}
+        </div>
+
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => setStockFilter('ALL')}
+            style={{ padding: '6px 12px', borderRadius: '6px', border: stockFilter === 'ALL' ? '2px solid #0f172a' : '1px solid #cbd5e1', background: stockFilter === 'ALL' ? '#0f172a' : '#fff', color: stockFilter === 'ALL' ? '#fff' : '#334155', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer' }}
+          >
+            All ({totalProducts})
+          </button>
+          <button
+            onClick={() => setStockFilter('IN_STOCK')}
+            style={{ padding: '6px 12px', borderRadius: '6px', border: stockFilter === 'IN_STOCK' ? '2px solid #16a34a' : '1px solid #cbd5e1', background: stockFilter === 'IN_STOCK' ? '#16a34a' : '#fff', color: stockFilter === 'IN_STOCK' ? '#fff' : '#16a34a', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' }}
+          >
+            🟢 In Stock ({inStockCount})
+          </button>
+          <button
+            onClick={() => setStockFilter('LOW_STOCK')}
+            style={{ padding: '6px 12px', borderRadius: '6px', border: stockFilter === 'LOW_STOCK' ? '2px solid #d97706' : '1px solid #cbd5e1', background: stockFilter === 'LOW_STOCK' ? '#d97706' : '#fff', color: stockFilter === 'LOW_STOCK' ? '#fff' : '#d97706', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' }}
+          >
+            ⚠️ Low Stock ({lowStockCount})
+          </button>
+          <button
+            onClick={() => setStockFilter('OUT_OF_STOCK')}
+            style={{ padding: '6px 12px', borderRadius: '6px', border: stockFilter === 'OUT_OF_STOCK' ? '2px solid #dc2626' : '1px solid #cbd5e1', background: stockFilter === 'OUT_OF_STOCK' ? '#dc2626' : '#fff', color: stockFilter === 'OUT_OF_STOCK' ? '#fff' : '#dc2626', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' }}
+          >
+            🔴 Out of Stock ({outOfStockCount})
+          </button>
+        </div>
       </div>
 
       {/* Product Form Modal */}
@@ -743,6 +898,7 @@ export default function StockProductsPage() {
               <th style={{ padding: '15px 20px' }}>Image</th>
               <th style={{ padding: '15px 20px' }}>Product Name</th>
               <th style={{ padding: '15px 20px' }}>Category</th>
+              <th style={{ padding: '15px 20px' }}>📦 Live Stock (Pcs)</th>
               <th style={{ padding: '15px 20px' }}>Sizes Configured</th>
               <th style={{ padding: '15px 20px' }}>Base Price</th>
               <th style={{ padding: '15px 20px' }}>Pack Tiers</th>
@@ -752,13 +908,19 @@ export default function StockProductsPage() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={8} style={{ padding: '30px', textAlign: 'center', color: '#64748b' }}>Loading products...</td></tr>
-            ) : products.length === 0 ? (
-              <tr><td colSpan={8} style={{ padding: '30px', textAlign: 'center', color: '#64748b' }}>No products found. Click "+ Add New Product" to create one.</td></tr>
+              <tr><td colSpan={9} style={{ padding: '30px', textAlign: 'center', color: '#64748b' }}>Loading products...</td></tr>
+            ) : filteredProducts.length === 0 ? (
+              <tr><td colSpan={9} style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🔍</div>
+                <strong style={{ color: '#0F172A', display: 'block', marginBottom: '4px' }}>Koi Product Nahi Mila</strong>
+                <span style={{ fontSize: '0.88rem' }}>Search query clear karein ya dusra filter select karein.</span>
+              </td></tr>
             ) : (
-              products.map((item) => {
+              filteredProducts.map((item) => {
                 const variantsCount = Array.isArray(item.variants) ? item.variants.length : (item.sizes ? (typeof item.sizes === 'string' ? item.sizes.split(',').length : item.sizes.length) : 0);
                 const tiersCount = Array.isArray(item.bulk_pricing) ? item.bulk_pricing.length : 0;
+                const stockQty = Number(item.stock_quantity ?? 0);
+
                 return (
                   <tr key={item.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
                     <td style={{ padding: '15px 20px' }}>
@@ -773,6 +935,66 @@ export default function StockProductsPage() {
                       <span style={{ fontSize: '0.78rem', color: '#64748B' }}>MOQ: {item.moq || 50} pcs</span>
                     </td>
                     <td style={{ padding: '15px 20px', color: '#64748b', fontSize: '0.9rem' }}>{item.categories?.name || '-'}</td>
+                    
+                    {/* Live Stock Quantity Column with Quick Adjust */}
+                    <td style={{ padding: '15px 20px', whiteSpace: 'nowrap' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                        {stockQty <= 0 ? (
+                          <span style={{ background: '#FEE2E2', color: '#DC2626', padding: '3px 8px', borderRadius: '6px', fontSize: '0.78rem', fontWeight: 800, border: '1px solid #FECDD3' }}>
+                            🔴 Out of Stock (0)
+                          </span>
+                        ) : stockQty <= 200 ? (
+                          <span style={{ background: '#FEF3C7', color: '#D97706', padding: '3px 8px', borderRadius: '6px', fontSize: '0.78rem', fontWeight: 800, border: '1px solid #FDE68A' }}>
+                            ⚠️ {stockQty.toLocaleString('en-IN')} pcs
+                          </span>
+                        ) : (
+                          <span style={{ background: '#DCFCE7', color: '#15803D', padding: '3px 8px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 900, border: '1px solid #BBF7D0' }}>
+                            🟢 {stockQty.toLocaleString('en-IN')} pcs
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Quick Adjust Buttons */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <button
+                          type="button"
+                          disabled={stockAdjustingId === item.id}
+                          onClick={() => handleQuickStockAdjust(item.id, -100)}
+                          title="Deduct 100 pcs from stock"
+                          style={{ padding: '2px 6px', background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 800, color: '#dc2626', cursor: 'pointer' }}
+                        >
+                          -100
+                        </button>
+                        <button
+                          type="button"
+                          disabled={stockAdjustingId === item.id}
+                          onClick={() => handleQuickStockAdjust(item.id, +100)}
+                          title="Add 100 pcs to stock"
+                          style={{ padding: '2px 6px', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 800, color: '#16a34a', cursor: 'pointer' }}
+                        >
+                          +100
+                        </button>
+                        <button
+                          type="button"
+                          disabled={stockAdjustingId === item.id}
+                          onClick={() => handleQuickStockAdjust(item.id, +500)}
+                          title="Add 500 pcs to stock"
+                          style={{ padding: '2px 6px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 800, color: '#2563eb', cursor: 'pointer' }}
+                        >
+                          +500
+                        </button>
+                        <button
+                          type="button"
+                          disabled={stockAdjustingId === item.id}
+                          onClick={() => handleSetExactStock(item.id, stockQty)}
+                          title="Type exact stock number"
+                          style={{ padding: '2px 6px', background: '#faf5ff', border: '1px solid #e9d5ff', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700, color: '#7c3aed', cursor: 'pointer' }}
+                        >
+                          ✏️ Set
+                        </button>
+                      </div>
+                    </td>
+
                     <td style={{ padding: '15px 20px' }}>
                       <span style={{ background: '#DCFCE7', color: '#166534', padding: '3px 8px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 700 }}>
                         {variantsCount > 0 ? `${variantsCount} Sizes` : 'Default Size'}
