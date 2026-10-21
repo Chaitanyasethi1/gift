@@ -16,20 +16,25 @@ export interface DeductStockItem {
   quantity?: number;
   piecesPerPack?: number;
   packQty?: number;
+  variant_details?: any;
 }
 
 /**
  * Extracts product UUID from various item properties
  */
 export function extractProductUuid(item: DeductStockItem): string | null {
-  if (item.productId && typeof item.productId === 'string' && item.productId.length > 20) {
-    return item.productId;
+  const uuidRegex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
+
+  if (item.productId && typeof item.productId === 'string') {
+    const match = item.productId.match(uuidRegex);
+    if (match) return match[0];
   }
-  if (item.product_id && typeof item.product_id === 'string' && item.product_id.length > 20) {
-    return item.product_id;
+  if (item.product_id && typeof item.product_id === 'string') {
+    const match = item.product_id.match(uuidRegex);
+    if (match) return match[0];
   }
   if (item.id && typeof item.id === 'string') {
-    const match = item.id.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i);
+    const match = item.id.match(uuidRegex);
     if (match) return match[0];
   }
   return null;
@@ -46,6 +51,20 @@ export function calculateItemPieces(item: DeductStockItem): number {
   }
   if (item.packQty && item.packQty > 0) {
     return count * Number(item.packQty);
+  }
+
+  // Check variant_details if available
+  if (item.variant_details) {
+    let vd: any = item.variant_details;
+    if (typeof vd === 'string') {
+      try { vd = JSON.parse(vd); } catch {}
+    }
+    if (vd?.piecesPerPack && Number(vd.piecesPerPack) > 0) {
+      return count * Number(vd.piecesPerPack);
+    }
+    if (vd?.packQty && Number(vd.packQty) > 0) {
+      return count * Number(vd.packQty);
+    }
   }
 
   // Check title or id for "Pack of X"

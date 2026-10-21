@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { createClient } from '@/utils/supabase/server';
 import { validateCouponForCart, recordCouponUsage } from '@/lib/coupons';
-import { deductStockForOrder } from '@/lib/inventory';
+import { deductStockForOrder, extractProductUuid } from '@/lib/inventory';
 
 export async function POST(req: Request) {
   try {
@@ -130,7 +130,7 @@ export async function POST(req: Request) {
             const itDiscount = itemDiscounts[item.id] || 0;
             return {
               order_id: order.id,
-              product_id: item.id && !item.id.toString().startsWith('temp') ? item.id : null,
+              product_id: extractProductUuid(item),
               product_name: item.title,
               quantity: item.qty,
               unit_price: item.price,
@@ -139,6 +139,7 @@ export async function POST(req: Request) {
                 size: item.dimensions || item.size, 
                 logo: item.logo,
                 gstRate: item.gstRate,
+                piecesPerPack: Number(item.piecesPerPack || (item.title?.match(/Pack\s+of\s+(\d+)/i)?.[1] ? parseInt(item.title.match(/Pack\s+of\s+(\d+)/i)[1], 10) : 1)),
                 discount_amount: itDiscount,
                 coupon_applied: itDiscount > 0 ? (couponCode || true) : false
               }
