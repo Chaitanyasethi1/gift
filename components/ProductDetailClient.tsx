@@ -16,6 +16,7 @@ import {
   PlusIcon
 } from './Icons';
 import { ProductReviewsSection } from './ProductReviewsSection';
+import { ProductDetailedDescriptionSection } from './ProductDetailedDescriptionSection';
 import { createClient } from '@/utils/supabase/client';
 
 interface SizeVariantItem {
@@ -735,6 +736,9 @@ Please confirm order and delivery timeline.`
             </div>
           </div>
         </div>
+
+        {/* 📋 DETAILED DESCRIPTION SECTION (EXACT USER SCREENSHOT MATCH) */}
+        <ProductDetailedDescriptionSection product={product} />
 
         {/* 🌟 CUSTOMER RATINGS & REVIEWS + SIMILAR PRODUCTS + PINCODE CHECK (FROM SCREENSHOT) */}
         <ProductReviewsSection currentProduct={product} similarProducts={similarProducts} />
