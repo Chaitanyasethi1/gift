@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
+import { parseProductDescription, combineProductDescription } from '@/lib/productDescription';
 
 interface SizeVariant {
   size: string;
@@ -26,6 +27,10 @@ export default function StockProductsPage() {
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+
+  // Dual-description state (Top Buy-Box Highlights & Bottom Detailed Description)
+  const [shortDesc, setShortDesc] = useState('');
+  const [detailedDesc, setDetailedDesc] = useState('');
   
   const defaultItem = { 
     name: '', slug: '', category_id: '', description: '', mrp: 0, selling_price: 0, stock_quantity: 1000, is_active: true, images: [] as string[],
@@ -153,6 +158,10 @@ export default function StockProductsPage() {
 
     const itemGst = typeof item.gst_rate === 'number' ? item.gst_rate : (typeof item.gst_percentage === 'number' ? item.gst_percentage : 18);
 
+    const descParts = parseProductDescription(item.description || '');
+    setShortDesc(descParts.shortSummary);
+    setDetailedDesc(descParts.detailedText);
+
     setNewItem({
       name: item.name,
       slug: item.slug,
@@ -179,6 +188,8 @@ export default function StockProductsPage() {
 
   function handleAddNew() {
     setEditingId(null);
+    setShortDesc('');
+    setDetailedDesc('');
     setNewItem({
       ...defaultItem,
       variants: [
@@ -312,11 +323,13 @@ export default function StockProductsPage() {
     const sizeNames = newItem.variants.map(v => v.size).filter(Boolean);
     const sizesString = sizeNames.join(', ');
 
+    const fullCombinedDesc = combineProductDescription(shortDesc, detailedDesc);
+
     const payload = { 
       name: newItem.name,
       slug,
       category_id: newItem.category_id ? newItem.category_id : null,
-      description: newItem.description,
+      description: fullCombinedDesc || newItem.description,
       mrp: newItem.mrp,
       selling_price: newItem.selling_price,
       gst_rate: Number(newItem.gst_rate ?? 18),
@@ -538,18 +551,49 @@ export default function StockProductsPage() {
                 </div>
               </div>
               
-              {/* Product Description */}
-              <div>
-                <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.85rem', fontWeight: 700, color: '#334155' }}>
-                  Product Description &amp; Details *
-                </label>
-                <textarea
-                  rows={4}
-                  placeholder="Describe product quality, material (e.g. Virgin Kraft / Fluting type / GSM / Adhesive), printing, dimensions, uses, etc."
-                  value={newItem.description}
-                  onChange={e => setNewItem({...newItem, description: e.target.value})}
-                  style={{ width: '100%', padding: '10px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.9rem', lineHeight: 1.5, boxSizing: 'border-box' }}
-                />
+              {/* Structured Product Descriptions: Short (Top) & Detailed (Bottom) */}
+              <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '10px', border: '1px solid #CBD5E1', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px', flexWrap: 'wrap', gap: '4px' }}>
+                    <label style={{ fontSize: '0.88rem', fontWeight: 800, color: '#0F172A' }}>
+                      🌟 1. Top Highlights / Quick Summary (Buy-Box Overview) *
+                    </label>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#2563EB', background: '#EFF6FF', padding: '2px 8px', borderRadius: '4px' }}>
+                      Photos ke paas top par dikhega
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', color: '#64748B', display: 'block', marginBottom: '8px' }}>
+                    Yahan 3-5 main bullet points likhein (e.g. Box Size, Material, Strength, Free Shipping). Customer ko sabse pehle yahi highlights dikhte hain.
+                  </span>
+                  <textarea
+                    rows={4}
+                    placeholder={'📐 Box Size: 4x4x4 inches (10.16x10.16x10.16 cm)\n📦 Strong 3-Ply Build – High strength kraft paper\n🚚 PAN-India Fast Dispatch with Bulk Discounts\n💰 Bulk Savings – 15% OFF on orders above ₹1500'}
+                    value={shortDesc}
+                    onChange={e => setShortDesc(e.target.value)}
+                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #CBD5E1', borderRadius: '8px', fontSize: '0.88rem', lineHeight: 1.5, boxSizing: 'border-box' }}
+                  />
+                </div>
+
+                <div style={{ borderTop: '1px dashed #CBD5E1', paddingTop: '12px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px', flexWrap: 'wrap', gap: '4px' }}>
+                    <label style={{ fontSize: '0.88rem', fontWeight: 800, color: '#0F172A' }}>
+                      📋 2. Detailed Description, Uses &amp; FAQs (Bottom Section)
+                    </label>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#16A34A', background: '#DCFCE7', padding: '2px 8px', borderRadius: '4px' }}>
+                      Neeche Detailed Section me dikhega
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '0.78rem', color: '#64748B', display: 'block', marginBottom: '8px' }}>
+                    Yahan product ki deep information, key features, packaging uses, aur FAQs daalein. Yeh page ke neeche table aur full breakdown ke sath aayega.
+                  </span>
+                  <textarea
+                    rows={6}
+                    placeholder={'Key Features & Benefits:\n• Superior stackability and drop resistance\n• Eco-friendly and 100% recyclable\n\nFrequently Asked Questions:\nQ: What is this box best used for?\nA: Perfect for e-commerce, courier shipping, cosmetics, and jewelry.'}
+                    value={detailedDesc}
+                    onChange={e => setDetailedDesc(e.target.value)}
+                    style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #CBD5E1', borderRadius: '8px', fontSize: '0.88rem', lineHeight: 1.5, boxSizing: 'border-box' }}
+                  />
+                </div>
               </div>
 
               {/* Multi-Photo Gallery & Upload */}

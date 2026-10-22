@@ -12,7 +12,7 @@ export const ProductDetailedDescriptionSection: React.FC<ProductDetailedDescript
   const detailInfo = getProductDetailInfo(product?.slug, product);
 
   return (
-    <div style={{
+    <div id="detailed-specs-section" style={{
       marginTop: '40px',
       marginBottom: '40px',
       background: '#FFFFFF',

@@ -17,6 +17,7 @@ import {
 } from './Icons';
 import { ProductReviewsSection } from './ProductReviewsSection';
 import { ProductDetailedDescriptionSection } from './ProductDetailedDescriptionSection';
+import { parseProductDescription } from '@/lib/productDescription';
 import { createClient } from '@/utils/supabase/client';
 
 interface SizeVariantItem {
@@ -232,6 +233,10 @@ Please confirm order and delivery timeline.`
     );
   }, [product.title, selectedVariant, selectedPackQty, packCount, totalPieces, grandTotal, gstRate]);
 
+  const parsedDesc = useMemo(() => {
+    return parseProductDescription(product.fullDesc || product.desc || '');
+  }, [product.fullDesc, product.desc]);
+
   return (
     <div style={{ padding: '30px 0 100px 0', background: '#FAFAFC', minHeight: '100vh' }}>
       <div className="container">
@@ -414,9 +419,46 @@ Please confirm order and delivery timeline.`
               )}
             </div>
 
-            <p style={{ fontSize: '0.92rem', color: '#475569', lineHeight: 1.55, marginBottom: '20px' }}>
-              {product.fullDesc || product.desc}
-            </p>
+            {/* Short Highlights / Overview (Keeps Buy-Box Compact & Clean) */}
+            {parsedDesc.bulletPoints.length > 0 ? (
+              <div style={{ marginBottom: '20px', background: '#F8FAFC', padding: '14px 16px', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {parsedDesc.bulletPoints.map((bullet, idx) => (
+                    <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.88rem', color: '#334155', lineHeight: 1.45 }}>
+                      <span>{bullet}</span>
+                    </div>
+                  ))}
+                </div>
+                <a 
+                  href="#detailed-specs-section"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('detailed-specs-section')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '12px', fontSize: '0.82rem', fontWeight: 800, color: '#2563EB', textDecoration: 'none' }}
+                >
+                  <span>📜 View Complete Specifications &amp; FAQs</span>
+                  <span>↓</span>
+                </a>
+              </div>
+            ) : (
+              <div style={{ marginBottom: '20px' }}>
+                <p style={{ fontSize: '0.92rem', color: '#475569', lineHeight: 1.55, margin: 0 }}>
+                  {parsedDesc.shortSummary || product.desc}
+                </p>
+                <a 
+                  href="#detailed-specs-section"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('detailed-specs-section')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '8px', fontSize: '0.82rem', fontWeight: 800, color: '#2563EB', textDecoration: 'none' }}
+                >
+                  <span>📜 View Complete Specifications &amp; FAQs</span>
+                  <span>↓</span>
+                </a>
+              </div>
+            )}
 
             {/* 1. SIZE SELECTION (Completely Independent from Pack Selection) */}
             {variantList.length > 0 && (
