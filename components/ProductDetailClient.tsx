@@ -199,6 +199,24 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   const gst = subtotal * (gstRate / 100);
   const grandTotal = subtotal + gst;
 
+  // Dynamic MRP based on pack size and base ratio (matches Gurez India screenshot calculations)
+  const baseRatio = useMemo(() => {
+    const baseSelling = Number(product.selling_price || product.price) || 1;
+    const baseMrp = Number((product as any).mrp) || Math.round(baseSelling * 1.6);
+    return baseMrp / baseSelling;
+  }, [product]);
+
+  const currentMrp = useMemo(() => {
+    return Math.round(singlePackPrice * baseRatio);
+  }, [singlePackPrice, baseRatio]);
+
+  const discountPercent = useMemo(() => {
+    if (currentMrp > singlePackPrice && currentMrp > 0) {
+      return Math.round(((currentMrp - singlePackPrice) / currentMrp) * 100);
+    }
+    return 0;
+  }, [currentMrp, singlePackPrice]);
+
   const handleAddToCart = () => {
     addToCart({
       id: `${product.id}-${selectedVariant ? `${selectedVariant.size}-${selectedVariant.price}` : 'std'}-${selectedPackQty}`,
@@ -404,6 +422,30 @@ Please confirm order and delivery timeline.`
               </div>
               <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#334155' }}>{product.rating ? product.rating.toFixed(1) : '4.9'}</span>
               <span style={{ fontSize: '0.82rem', color: '#64748B' }}>({product.reviews || 120} verified orders)</span>
+            </div>
+
+            {/* Big Prominent Price Header (Matches Gurez India & E-Commerce Standards) */}
+            <div style={{ margin: '14px 0 14px 0', display: 'flex', alignItems: 'baseline', gap: '12px', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
+                <span style={{ fontSize: '2.2rem', fontWeight: 900, color: '#0F172A', letterSpacing: '-0.5px' }}>
+                  ₹{singlePackPrice.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </span>
+                {currentMrp > singlePackPrice && (
+                  <span style={{ fontSize: '1.25rem', color: '#94A3B8', textDecoration: 'line-through', fontWeight: 500 }}>
+                    ₹{currentMrp.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                )}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                {discountPercent > 0 && (
+                  <span style={{ background: '#DCFCE7', color: '#15803D', fontSize: '0.8rem', fontWeight: 800, padding: '3px 8px', borderRadius: '6px' }}>
+                    {discountPercent}% OFF
+                  </span>
+                )}
+                <span style={{ fontSize: '0.85rem', color: '#64748B', fontWeight: 600 }}>
+                  (₹{(singlePackPrice / selectedPackQty).toFixed(2)} / pc)
+                </span>
+              </div>
             </div>
 
             {/* Live Stock Availability Badge */}
@@ -758,12 +800,30 @@ Please confirm order and delivery timeline.`
                 Technical Specifications:
               </h3>
               <ul style={{ margin: 0, paddingLeft: '20px', color: '#475569', fontSize: '0.88rem', lineHeight: 1.8 }}>
-                {product.specs.map((spec, idx) => (
-                  <li key={idx}>{spec}</li>
-                ))}
+                <li>
+                  <strong>Selling Price:</strong> ₹{singlePackPrice.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ color: '#16A34A', fontWeight: 700 }}>(Pack of {selectedPackQty})</span>
+                </li>
+                <li>
+                  <strong>Per Piece Rate:</strong> ₹{(singlePackPrice / selectedPackQty).toFixed(2)} / pc
+                </li>
+                <li>
+                  <strong>MRP:</strong> ₹{currentMrp.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </li>
+                <li>
+                  <strong>GST:</strong> {gstRate}% (100% ITC Eligible B2B Invoice)
+                </li>
+                <li>
+                  <strong>Stock Available:</strong> {(product as any).stock_quantity ?? 1000} pcs in factory
+                </li>
+                <li>
+                  <strong>Customization:</strong> Logo &amp; Brand Printing Available
+                </li>
                 {product.dimensions && (
                   <li><strong>Standard Dimensions:</strong> {product.dimensions}</li>
                 )}
+                {product.specs && product.specs.filter(s => !/^(MRP|Selling Price|GST|Stock Available|Customization)/i.test(s)).map((spec, idx) => (
+                  <li key={idx}>{spec}</li>
+                ))}
               </ul>
             </div>
 
