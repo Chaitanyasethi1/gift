@@ -314,7 +314,12 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
                         ? (typeof gstVal === 'number' ? gstVal : (parseFloat(String(gstVal).replace(/[^0-9.]/g, '')) || 18))
                         : 18;
                       addToCart({
-                        id: quickViewProduct.id,
+                        id: String(quickViewProduct.id),
+                        productId: String(quickViewProduct.id),
+                        slug: (quickViewProduct as any).slug,
+                        category: (quickViewProduct as any).category || (quickViewProduct as any).category_id,
+                        categoryId: (quickViewProduct as any).category_id || (quickViewProduct as any).category,
+                        categoryLabel: (quickViewProduct as any).categoryLabel,
                         title: quickViewProduct.name,
                         price: quickViewProduct.selling_price,
                         image: quickViewProduct.images?.[0] || '',

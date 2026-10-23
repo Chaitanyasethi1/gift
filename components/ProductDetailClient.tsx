@@ -220,7 +220,11 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   const handleAddToCart = () => {
     addToCart({
       id: `${product.id}-${selectedVariant ? `${selectedVariant.size}-${selectedVariant.price}` : 'std'}-${selectedPackQty}`,
-      productId: product.id,
+      productId: String(product.id),
+      slug: product.slug,
+      category: (product as any).category || (product as any).category_id,
+      categoryId: (product as any).category_id || (product as any).categoryId || (product as any).category,
+      categoryLabel: (product as any).categoryLabel,
       piecesPerPack: selectedPackQty,
       title: `${product.title} (Pack of ${selectedPackQty}${selectedVariant ? ` - ${selectedVariant.size}` : ''})`,
       price: singlePackPrice,

@@ -8,6 +8,7 @@ export interface CartItem {
   slug?: string;
   category?: string;
   categoryId?: string;
+  categoryLabel?: string;
   title: string;
   price: number;
   qty: number;
@@ -149,7 +150,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           gstRate: parsedItemGst,
           category: item.category || c.category,
           categoryId: item.categoryId || c.categoryId,
-          slug: item.slug || c.slug
+          categoryLabel: item.categoryLabel || c.categoryLabel,
+          slug: item.slug || c.slug,
+          productId: item.productId || c.productId
         } : c);
       }
       return [...prev, { ...item, qty: quantity, gstRate: parsedItemGst }];

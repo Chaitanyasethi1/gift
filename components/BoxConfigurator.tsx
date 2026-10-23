@@ -152,7 +152,11 @@ export const BoxConfigurator: React.FC = () => {
         `Dimensions: ${validL}" × ${validW}" × ${validH}"`
       ],
       dimensions: `${validL}" × ${validW}" × ${validH}"`,
-      isCustomBox: true
+      isCustomBox: true,
+      productId: 'custom-corrugated-box',
+      category: 'corrugated-boxes',
+      categoryId: '22222222-2222-2222-2222-222222222222',
+      categoryLabel: 'Packaging Material'
     }, selectedQty);
   };
 

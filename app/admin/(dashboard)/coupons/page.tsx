@@ -31,6 +31,12 @@ export default function AdminCouponsPage() {
   const [editingCoupon, setEditingCoupon] = useState<CouponRule | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  const [successToast, setSuccessToast] = useState<string | null>(null);
+
+  const showSuccess = (msg: string) => {
+    setSuccessToast(msg);
+    setTimeout(() => setSuccessToast(null), 4000);
+  };
 
   // Form Fields
   const [code, setCode] = useState('');
@@ -151,18 +157,19 @@ export default function AdminCouponsPage() {
 
   const handleToggleActive = async (coupon: CouponRule) => {
     try {
+      const nextStatus = !coupon.is_active;
       const res = await fetch('/api/admin/coupons', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: coupon.id,
-          code: coupon.code,
-          is_active: !coupon.is_active
+          ...coupon,
+          is_active: nextStatus
         })
       });
       const data = await res.json();
       if (data.success) {
-        setCoupons(prev => prev.map(c => c.id === coupon.id ? { ...c, is_active: !c.is_active } : c));
+        setCoupons(prev => prev.map(c => c.id === coupon.id ? { ...c, is_active: nextStatus } : c));
+        showSuccess(`Coupon ${coupon.code} is now ${nextStatus ? 'Active' : 'Inactive'}`);
       } else {
         alert(data.error || 'Failed to update status');
       }
@@ -177,12 +184,13 @@ export default function AdminCouponsPage() {
       return;
     }
     try {
-      const res = await fetch(`/api/admin/coupons?id=${encodeURIComponent(coupon.id)}`, {
+      const res = await fetch(`/api/admin/coupons?id=${encodeURIComponent(coupon.id)}&code=${encodeURIComponent(coupon.code)}`, {
         method: 'DELETE'
       });
       const data = await res.json();
       if (data.success) {
-        setCoupons(prev => prev.filter(c => c.id !== coupon.id));
+        setCoupons(prev => prev.filter(c => c.id !== coupon.id && c.code !== coupon.code));
+        showSuccess(`Coupon "${coupon.code}" deleted successfully.`);
       } else {
         alert(data.error || 'Failed to delete coupon');
       }
@@ -256,7 +264,8 @@ export default function AdminCouponsPage() {
       if (data.success) {
         setIsModalOpen(false);
         resetForm();
-        loadCoupons();
+        await loadCoupons();
+        showSuccess(`Coupon "${cleanCode}" ${editingCoupon ? 'updated' : 'created'} successfully!`);
       } else {
         setFormError(data.error || 'Failed to save coupon.');
       }
@@ -324,6 +333,26 @@ export default function AdminCouponsPage() {
           <span>+</span> Create Coupon
         </button>
       </div>
+
+      {/* Success Notification Banner */}
+      {successToast && (
+        <div style={{
+          marginBottom: '20px',
+          background: '#ECFDF5',
+          border: '1px solid #10B981',
+          color: '#065F46',
+          padding: '12px 18px',
+          borderRadius: '8px',
+          fontWeight: 700,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          boxShadow: '0 2px 6px rgba(16,185,129,0.15)'
+        }}>
+          <span>✅</span>
+          <span>{successToast}</span>
+        </div>
+      )}
 
       {/* Metrics Row */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '24px' }}>
@@ -506,8 +535,17 @@ export default function AdminCouponsPage() {
                             📁 {coupon.applied_category_ids?.length || 0} Categories
                           </span>
                           {coupon.applied_category_ids && coupon.applied_category_ids.length > 0 && (
-                            <div style={{ fontSize: '0.74rem', color: '#64748B', marginTop: '3px', maxWidth: '160px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                              {coupon.applied_category_ids.slice(0, 2).join(', ')}
+                            <div 
+                              style={{ fontSize: '0.74rem', color: '#64748B', marginTop: '3px', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                              title={coupon.applied_category_ids.map(id => {
+                                const found = categories.find(c => c.id === id || c.slug === id);
+                                return found ? found.name : id;
+                              }).join(', ')}
+                            >
+                              {coupon.applied_category_ids.slice(0, 2).map(id => {
+                                const found = categories.find(c => c.id === id || c.slug === id);
+                                return found ? found.name : id;
+                              }).join(', ')}
                               {coupon.applied_category_ids.length > 2 ? '...' : ''}
                             </div>
                           )}
@@ -685,9 +723,9 @@ export default function AdminCouponsPage() {
               </button>
             </div>
 
-            {/* Modal Form Scrollable Body */}
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1, overflowY: 'auto' }}>
-              <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {/* Modal Form */}
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, overflow: 'hidden' }}>
+              <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', overflowY: 'auto', flex: 1 }}>
                 
                 {formError && (
                   <div style={{ background: '#FEF2F2', border: '1px solid #F87171', color: '#B91C1C', padding: '10px 14px', borderRadius: '8px', fontSize: '0.88rem', fontWeight: 600 }}>
@@ -855,39 +893,59 @@ export default function AdminCouponsPage() {
                       <div style={{ maxHeight: '200px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '6px', paddingRight: '6px' }}>
                         {mainCats.map(parent => {
                           const subcats = getSubcats(parent.id);
-                          const isParentChecked = appliedCategoryIds.includes(parent.id) || appliedCategoryIds.includes(parent.slug);
+                          const allTokens = [parent.id, parent.slug, ...subcats.flatMap(s => [s.id, s.slug])];
+                          const hasParentToken = appliedCategoryIds.includes(parent.id) || appliedCategoryIds.includes(parent.slug);
+                          const checkedSubCount = subcats.filter(s => appliedCategoryIds.includes(s.id) || appliedCategoryIds.includes(s.slug)).length;
+                          const isParentChecked = hasParentToken || (subcats.length > 0 && checkedSubCount === subcats.length);
 
-                          const toggleCategory = (cat: CategoryItem) => {
-                            const has = appliedCategoryIds.includes(cat.id) || appliedCategoryIds.includes(cat.slug);
-                            if (has) {
-                              setAppliedCategoryIds(prev => prev.filter(x => x !== cat.id && x !== cat.slug));
+                          const toggleParent = () => {
+                            if (isParentChecked) {
+                              const toRemove = new Set(allTokens);
+                              setAppliedCategoryIds(prev => prev.filter(x => !toRemove.has(x)));
                             } else {
-                              setAppliedCategoryIds(prev => [...prev, cat.id, cat.slug]);
+                              setAppliedCategoryIds(prev => Array.from(new Set([...prev, ...allTokens])));
+                            }
+                          };
+
+                          const toggleSub = (sub: CategoryItem) => {
+                            const subTokens = [sub.id, sub.slug];
+                            const hasSub = appliedCategoryIds.includes(sub.id) || appliedCategoryIds.includes(sub.slug);
+                            if (hasSub) {
+                              setAppliedCategoryIds(prev => prev.filter(x => !subTokens.includes(x)));
+                            } else {
+                              setAppliedCategoryIds(prev => Array.from(new Set([...prev, ...subTokens])));
                             }
                           };
 
                           return (
-                            <div key={parent.id} style={{ background: '#FFF', padding: '8px 12px', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
-                              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}>
-                                <input
-                                  type="checkbox"
-                                  checked={isParentChecked}
-                                  onChange={() => toggleCategory(parent)}
-                                />
-                                <span>{parent.name}</span>
-                                <span style={{ fontSize: '0.72rem', color: '#94A3B8' }}>({parent.slug})</span>
-                              </label>
+                            <div key={parent.id} style={{ background: '#FFF', padding: '10px 14px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, fontSize: '0.88rem', cursor: 'pointer', color: '#0F172A' }}>
+                                  <input
+                                    type="checkbox"
+                                    checked={isParentChecked}
+                                    onChange={toggleParent}
+                                  />
+                                  <span>{parent.name}</span>
+                                  <span style={{ fontSize: '0.72rem', color: '#94A3B8', fontWeight: 500 }}>({parent.slug})</span>
+                                </label>
+                                {subcats.length > 0 && (
+                                  <span style={{ fontSize: '0.72rem', color: checkedSubCount > 0 ? '#2563EB' : '#94A3B8', fontWeight: 600 }}>
+                                    {checkedSubCount}/{subcats.length} subcategories
+                                  </span>
+                                )}
+                              </div>
 
                               {subcats.length > 0 && (
-                                <div style={{ marginLeft: '24px', marginTop: '6px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '4px' }}>
+                                <div style={{ marginLeft: '24px', marginTop: '8px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '6px' }}>
                                   {subcats.map(sub => {
                                     const isSubChecked = appliedCategoryIds.includes(sub.id) || appliedCategoryIds.includes(sub.slug);
                                     return (
-                                      <label key={sub.id} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: '#475569', cursor: 'pointer' }}>
+                                      <label key={sub.id} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: isSubChecked ? '#1E293B' : '#64748B', fontWeight: isSubChecked ? 600 : 400, cursor: 'pointer' }}>
                                         <input
                                           type="checkbox"
                                           checked={isSubChecked}
-                                          onChange={() => toggleCategory(sub)}
+                                          onChange={() => toggleSub(sub)}
                                         />
                                         <span>{sub.name}</span>
                                       </label>
@@ -1124,7 +1182,7 @@ export default function AdminCouponsPage() {
               </div>
 
               {/* Modal Footer */}
-              <div style={{ padding: '16px 24px', background: '#F8FAFC', borderTop: '1px solid #E2E8F0', display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+              <div style={{ padding: '16px 24px', background: '#F8FAFC', borderTop: '1px solid #E2E8F0', display: 'flex', justifyContent: 'flex-end', gap: '12px', flexShrink: 0 }}>
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}

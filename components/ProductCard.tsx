@@ -67,7 +67,11 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({ product }) => {
     const packPrice = sellingPrice * minPack;
     addToCart({
       id: `${product.id}-pack-${minPack}`,
-      productId: product.id,
+      productId: String(product.id),
+      slug: targetSlug,
+      category: (product as any).category || (product as any).category_id,
+      categoryId: (product as any).category_id || (product as any).categoryId || (product as any).category,
+      categoryLabel: (product as any).categoryLabel,
       piecesPerPack: minPack,
       title: `${product.name || product.title || 'Product'} (Pack of ${minPack})`,
       price: packPrice,

@@ -117,6 +117,11 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
   const handleAddSuggested = (item: any) => {
     addToCart({
       id: `${item.id}-suggested-${item.packQty || 50}`,
+      productId: String(item.productId || item.id),
+      slug: item.slug,
+      category: item.category || item.category_id,
+      categoryId: item.categoryId || item.category_id,
+      categoryLabel: item.categoryLabel,
       title: `${item.title} (Pack of ${item.packQty || 50})`,
       price: item.price,
       image: item.image,
