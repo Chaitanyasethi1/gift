@@ -14,6 +14,7 @@ export const siteConfig = {
   url: "https://www.asprintgallery.com",
   googleAnalyticsId: "G-RNM182BSEZ",
   googleAnalyticsStreamId: "16012660107",
+  googleSearchConsoleVerification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "",
   gstin: "09AWKPN5910E1ZG",
   hsnCodes: "4819 (Cartons/Boxes), 4821 (Labels/Tags)",
 

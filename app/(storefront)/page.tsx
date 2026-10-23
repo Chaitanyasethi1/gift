@@ -4,9 +4,9 @@ import { ProductGrid } from '@/components/ProductGrid';
 import { ComboSlider } from '@/components/ComboSlider';
 import { CountdownTimer } from '@/components/CountdownTimer';
 import { createClient } from '@/utils/supabase/server';
-
 import { PRODUCTS } from '@/data/products';
 import { HomeCategories } from '@/components/HomeCategories';
+import { siteConfig } from '@/data/siteConfig';
 
 export const dynamic = 'force-dynamic';
 
@@ -58,6 +58,38 @@ export default async function HomePage() {
     <>
       {/* 3. Hero Combo Banner (Dynamic Admin Managed) */}
       <ComboSlider initialBanners={serverBanners} slideInterval={serverSlideInterval} />
+
+      {/* SEO Authority & Factory Identity H1 Section */}
+      <section style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0', padding: '24px 0 20px 0' }}>
+        <div className="container">
+          <div style={{ maxWidth: '980px', margin: '0 auto', textAlign: 'center' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#EFF6FF', border: '1px solid #BFDBFE', color: '#1E40AF', padding: '4px 14px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '10px' }}>
+              <span>🏭 Direct Packaging Factory • Loni, Ghaziabad (Delhi NCR)</span>
+            </div>
+            <h1 style={{ fontSize: 'clamp(1.35rem, 2.8vw, 2rem)', fontWeight: 900, color: '#0F172A', lineHeight: 1.28, margin: '0 0 10px 0', letterSpacing: '-0.5px' }}>
+              AS Print Gallery — Corrugated Box Manufacturer &amp; Custom Packaging Factory in Ghaziabad, Delhi NCR
+            </h1>
+            <p style={{ fontSize: '0.92rem', color: '#475569', lineHeight: 1.6, margin: '0 auto 16px auto', maxWidth: '850px' }}>
+              Welcome to <strong>AS Print Gallery (asprintgallery.com)</strong>. We are a direct manufacturing unit based in <strong>Loni, Ghaziabad</strong>, delivering high-bursting strength 3-ply &amp; 5-ply corrugated shipping boxes, waterproof vinyl stickers, garment woven labels, kraft paper bags, and pizza cartons across <strong>Ghaziabad, Delhi NCR, Noida, Gurgaon</strong>, and Pan-India with direct wholesale factory prices.
+            </p>
+            {/* Quick Geo-Action Pills */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <Link href="/corrugated-boxes-ghaziabad" style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', color: '#1E293B', padding: '6px 14px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
+                📍 Boxes in Ghaziabad &rarr;
+              </Link>
+              <Link href="/corrugated-boxes-delhi" style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', color: '#1E293B', padding: '6px 14px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
+                🚚 Boxes in Delhi NCR &rarr;
+              </Link>
+              <Link href="/corrugated-boxes-noida" style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', color: '#1E293B', padding: '6px 14px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
+                📦 Boxes in Noida &rarr;
+              </Link>
+              <Link href="/3d-box-builder" style={{ background: '#EFF6FF', border: '1px solid #93C5FD', color: '#1D4ED8', padding: '6px 14px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
+                📐 Custom 3D Box Builder &rarr;
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 5. Popular Categories (Dynamic Admin Managed) */}
       <HomeCategories />
@@ -198,6 +230,176 @@ export default async function HomePage() {
            </div>
          </div>
       </section>
+
+      {/* Local Industrial Hubs & Delivery Network Section */}
+      <section style={{ padding: '60px 0', background: '#F8FAFC', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+            <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#1D4ED8', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              📍 Local Factory Dispatch Network
+            </span>
+            <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', fontWeight: 800, color: '#0F172A', margin: '8px 0' }}>
+              Direct Corrugated Box Delivery Across Your Area in Delhi NCR
+            </h2>
+            <p style={{ fontSize: '0.92rem', color: '#64748B', maxWidth: '750px', margin: '0 auto', lineHeight: 1.55 }}>
+              From our manufacturing plant on the Loni border, AS Print Gallery delivers daily to factories, eCommerce sellers, apparel exporters, and cloud kitchens with zero middleman freight.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px' }}>
+            <div style={{ background: '#FFFFFF', padding: '24px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }}>
+              <div style={{ fontSize: '1.4rem', marginBottom: '8px' }}>🏭</div>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0F172A', marginBottom: '6px' }}>
+                Ghaziabad &amp; Loni (Home Plant)
+              </h3>
+              <p style={{ fontSize: '0.85rem', color: '#64748B', lineHeight: 1.5, marginBottom: '12px' }}>
+                Supplying Loni Industrial Area, Tronica City, Sahibabad Sites 1-4, Kavi Nagar &amp; Raj Nagar. Same-day factory gate pickup &amp; local fleet delivery.
+              </p>
+              <Link href="/corrugated-boxes-ghaziabad" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.84rem', textDecoration: 'none' }}>
+                View Ghaziabad Factory Hub &rarr;
+              </Link>
+            </div>
+
+            <div style={{ background: '#FFFFFF', padding: '24px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }}>
+              <div style={{ fontSize: '1.4rem', marginBottom: '8px' }}>🚚</div>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0F172A', marginBottom: '6px' }}>
+                Delhi (Okhla, Naraina &amp; Gandhi Nagar)
+              </h3>
+              <p style={{ fontSize: '0.85rem', color: '#64748B', lineHeight: 1.5, marginBottom: '12px' }}>
+                Daily dispatch to Okhla Industrial Area, Naraina, Kirti Nagar, Gandhi Nagar garment exporters, and Chandni Chowk wholesale markets.
+              </p>
+              <Link href="/corrugated-boxes-delhi" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.84rem', textDecoration: 'none' }}>
+                View Delhi Delivery Hub &rarr;
+              </Link>
+            </div>
+
+            <div style={{ background: '#FFFFFF', padding: '24px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }}>
+              <div style={{ fontSize: '1.4rem', marginBottom: '8px' }}>📦</div>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0F172A', marginBottom: '6px' }}>
+                Noida &amp; Greater Noida (D2C Hubs)
+              </h3>
+              <p style={{ fontSize: '0.85rem', color: '#64748B', lineHeight: 1.5, marginBottom: '12px' }}>
+                Priority 24-hr fulfillment for D2C brands and warehousing across Noida Sector 57, 59, 62, 63, 65, 80 and Greater Noida Ecotech.
+              </p>
+              <Link href="/corrugated-boxes-noida" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.84rem', textDecoration: 'none' }}>
+                View Noida Delivery Hub &rarr;
+              </Link>
+            </div>
+
+            <div style={{ background: '#FFFFFF', padding: '24px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }}>
+              <div style={{ fontSize: '1.4rem', marginBottom: '8px' }}>⚡</div>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0F172A', marginBottom: '6px' }}>
+                Gurgaon &amp; Pan-India Dispatch
+              </h3>
+              <p style={{ fontSize: '0.85rem', color: '#64748B', lineHeight: 1.5, marginBottom: '12px' }}>
+                Supplying Udyog Vihar, Manesar IMT, Faridabad, and pan-India business consignments via express surface cargo partners.
+              </p>
+              <Link href="/corrugated-boxes-gurgaon" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.84rem', textDecoration: 'none' }}>
+                View Gurgaon Delivery Hub &rarr;
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Frequently Asked Questions (FAQ Section with Structured Data) */}
+      <section style={{ padding: '60px 0', background: '#FFFFFF' }}>
+        <div className="container">
+          <div style={{ maxWidth: '820px', margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+              <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.85rem)', fontWeight: 800, color: '#0F172A', margin: '0 0 8px 0' }}>
+                Frequently Asked Questions About AS Print Gallery
+              </h2>
+              <p style={{ fontSize: '0.9rem', color: '#64748B', margin: 0 }}>
+                Got questions about our manufacturing plant, box sizes, or delivery near your area? Here are quick answers.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              <details style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '16px 20px', cursor: 'pointer' }} open>
+                <summary style={{ fontWeight: 700, fontSize: '0.98rem', color: '#0F172A' }}>
+                  Where is AS Print Gallery located?
+                </summary>
+                <p style={{ fontSize: '0.9rem', color: '#475569', marginTop: '10px', lineHeight: 1.6, margin: '10px 0 0 0' }}>
+                  AS Print Gallery manufacturing unit is located at <strong>Kh No. 2326/2, Shankar Garden, Ashok Vihar, Loni, Ghaziabad, Uttar Pradesh - 201102</strong>, right on the Delhi-UP border near Tronica City Industrial Area. Clients are welcome to visit our plant for direct sample inspection and factory gate pickups.
+                </p>
+              </details>
+
+              <details style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '16px 20px', cursor: 'pointer' }}>
+                <summary style={{ fontWeight: 700, fontSize: '0.98rem', color: '#0F172A' }}>
+                  Can I get corrugated boxes delivered near me in Ghaziabad or Delhi NCR?
+                </summary>
+                <p style={{ fontSize: '0.9rem', color: '#475569', marginTop: '10px', lineHeight: 1.6, margin: '10px 0 0 0' }}>
+                  Yes, we provide direct factory doorstep delivery across Ghaziabad, Loni, Tronica City, Sahibabad, Delhi, Noida, Greater Noida, and Gurgaon with same-day and 24-48 hours delivery schedules.
+                </p>
+              </details>
+
+              <details style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '16px 20px', cursor: 'pointer' }}>
+                <summary style={{ fontWeight: 700, fontSize: '0.98rem', color: '#0F172A' }}>
+                  What is the minimum order quantity (MOQ) for corrugated boxes?
+                </summary>
+                <p style={{ fontSize: '0.9rem', color: '#475569', marginTop: '10px', lineHeight: 1.6, margin: '10px 0 0 0' }}>
+                  For plain standard corrugated shipping boxes in stock, the MOQ is just <strong>50 pieces</strong>. For custom branded logo-printed boxes, MOQ is 500 to 1,000 pieces at direct factory wholesale rates.
+                </p>
+              </details>
+
+              <details style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '16px 20px', cursor: 'pointer' }}>
+                <summary style={{ fontWeight: 700, fontSize: '0.98rem', color: '#0F172A' }}>
+                  Do you provide custom logo printing on shipping boxes and stickers?
+                </summary>
+                <p style={{ fontSize: '0.9rem', color: '#475569', marginTop: '10px', lineHeight: 1.6, margin: '10px 0 0 0' }}>
+                  Yes, 100%! We provide single-color, two-color, and full-color multi-color custom printing on corrugated boxes, die-cut pizza boxes, waterproof vinyl stickers, and woven clothing labels. You can upload your artwork directly on the product page or use our 3D Box Builder.
+                </p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQPage JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              {
+                '@type': 'Question',
+                name: 'Where is AS Print Gallery located?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'AS Print Gallery manufacturing unit is located at Kh No. 2326/2, Shankar Garden, Ashok Vihar, Loni, Ghaziabad, Uttar Pradesh - 201102, right on the Delhi-UP border near Tronica City Industrial Area.'
+                }
+              },
+              {
+                '@type': 'Question',
+                name: 'Can I get corrugated boxes delivered near me in Ghaziabad or Delhi NCR?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Yes, we provide direct factory doorstep delivery across Ghaziabad, Loni, Tronica City, Sahibabad, Delhi, Noida, Greater Noida, and Gurgaon with same-day and 24-48 hours delivery schedules.'
+                }
+              },
+              {
+                '@type': 'Question',
+                name: 'What is the minimum order quantity (MOQ) for corrugated boxes?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'For plain standard corrugated shipping boxes in stock, the MOQ is just 50 pieces. For custom branded logo-printed boxes, MOQ is 500 to 1,000 pieces at direct factory wholesale rates.'
+                }
+              },
+              {
+                '@type': 'Question',
+                name: 'Do you provide custom logo printing on shipping boxes and stickers?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Yes, 100%! We provide single-color, two-color, and full-color multi-color custom printing on corrugated boxes, die-cut pizza boxes, waterproof vinyl stickers, and woven clothing labels.'
+                }
+              }
+            ]
+          })
+        }}
+      />
       
       <style>{`
         /* Global & Home Mobile Optimizations */

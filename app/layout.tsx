@@ -24,44 +24,44 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'AS Print Gallery | Corrugated Box Manufacturer, Stickers & Packaging Solutions',
+    default: 'AS Print Gallery | Corrugated Box Manufacturer & Packaging Factory Ghaziabad, Delhi NCR',
     template: '%s | AS Print Gallery'
   },
   description:
-    'Direct factory manufacturer for custom corrugated boxes (3-ply & 5-ply), waterproof vinyl stickers, woven garment labels, hang tags, pizza boxes & kraft paper bags. Best wholesale factory prices with Pan-India dispatch from Ghaziabad / Delhi NCR.',
+    'AS Print Gallery (asprintgallery.com) is a direct manufacturer of 3-ply & 5-ply corrugated shipping boxes, custom vinyl stickers, garment woven labels, kraft paper bags & pizza boxes. Wholesale factory prices with same-day dispatch across Ghaziabad, Loni, Delhi NCR, Noida & Pan-India.',
   keywords: [
-    'stickers',
-    'custom stickers',
-    'waterproof vinyl stickers',
-    'packaging stickers',
-    'packaging boxes',
-    'corrugated boxes',
-    'corrugated box manufacturer',
-    'corrugated box manufacturer ghaziabad',
-    'corrugated box manufacturer delhi',
-    '3 ply corrugated boxes',
-    '5 ply master cartons',
-    'custom printed pizza boxes',
-    'food packaging boxes',
-    'garment boxes',
-    'woven labels',
-    'woven garment labels',
-    'satin wash care labels',
-    'hang tags',
-    'clothing brand tags',
-    'kraft paper bags',
-    'paper courier mailers',
-    'custom tape',
-    'bubble wrap wholesale',
-    'custom box builder',
+    'asprintgallery',
     'as print gallery',
-    'packaging manufacturer delhi ncr',
-    'printing and packaging solutions india'
+    'asprintgallery.com',
+    'as print gallery ghaziabad',
+    'as print gallery loni',
+    'corrugated box manufacturer near me',
+    'packaging boxes near me',
+    'corrugated box manufacturer ghaziabad',
+    'corrugated box manufacturer loni',
+    'packaging factory tronica city',
+    'corrugated box manufacturer delhi',
+    'corrugated box manufacturer noida',
+    'corrugated box manufacturer gurgaon',
+    'custom packaging manufacturer delhi ncr',
+    '3 ply corrugated boxes wholesale',
+    '5 ply master cartons factory',
+    'custom printed pizza boxes',
+    'waterproof vinyl stickers manufacturer',
+    'woven garment labels manufacturer',
+    'hang tags clothing tags',
+    'kraft paper carry bags',
+    'paper courier mailers',
+    'custom box builder',
+    'wholesale packaging factory loni'
   ],
   authors: [{ name: 'AS Print Gallery', url: siteConfig.url }],
   creator: 'AS Print Gallery',
   publisher: 'AS Print Gallery',
   category: 'Packaging & Printing Services',
+  verification: siteConfig.googleSearchConsoleVerification ? {
+    google: siteConfig.googleSearchConsoleVerification
+  } : undefined,
   robots: {
     index: true,
     follow: true,
@@ -80,10 +80,10 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_IN',
     url: siteConfig.url,
-    title: 'AS Print Gallery | Direct Factory Packaging Boxes & Custom Stickers',
+    title: 'AS Print Gallery | Corrugated Box Manufacturer & Packaging Factory Ghaziabad, Delhi NCR',
     description:
-      'Direct factory manufacturer for custom corrugated boxes, waterproof vinyl stickers, woven labels & packaging solutions. Wholesale prices with fast Pan-India dispatch.',
-    siteName: siteConfig.name,
+      'Direct factory manufacturer for custom corrugated boxes (3-ply & 5-ply), waterproof vinyl stickers, woven labels & packaging solutions in Loni, Ghaziabad & Delhi NCR. Wholesale prices with fast Pan-India dispatch.',
+    siteName: 'AS Print Gallery',
     images: [
       {
         url: `${siteConfig.url}/assets/combo_banner_new.jpg`,
@@ -95,9 +95,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AS Print Gallery | Direct Factory Packaging Boxes & Custom Stickers',
+    title: 'AS Print Gallery | Corrugated Box Manufacturer & Packaging Factory Ghaziabad, Delhi NCR',
     description:
-      'Direct factory manufacturer for custom corrugated boxes, waterproof vinyl stickers, woven labels & packaging solutions. Wholesale prices with fast Pan-India dispatch.',
+      'Direct factory manufacturer for custom corrugated boxes (3-ply & 5-ply), waterproof vinyl stickers, woven labels & packaging solutions in Loni, Ghaziabad & Delhi NCR. Wholesale prices with fast Pan-India dispatch.',
     images: [`${siteConfig.url}/assets/combo_banner_new.jpg`]
   },
   icons: {
@@ -123,7 +123,7 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'AS Print Gallery',
-    alternateName: ['AS Print', 'asprintgallery.com'],
+    alternateName: ['AS Print', 'asprintgallery', 'asprintgallery.com', 'AS Print Gallery Ghaziabad'],
     url: siteConfig.url,
     potentialAction: {
       '@type': 'SearchAction',
@@ -223,15 +223,28 @@ export default function RootLayout({
 
   const localBusinessSchema = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: siteConfig.name,
+    '@type': ['LocalBusiness', 'Manufacturer'],
+    name: 'AS Print Gallery',
     legalName: siteConfig.legalName,
+    alternateName: [
+      'asprintgallery',
+      'asprintgallery.com',
+      'AS Print',
+      'AS Print Gallery Ghaziabad',
+      'AS Print Gallery Loni',
+      'AS Print Gallery Packaging & Printing Unit'
+    ],
+    description: 'Direct manufacturing plant for 3-ply and 5-ply corrugated boxes, waterproof vinyl stickers, garment woven labels, kraft paper bags, and custom packaging in Loni, Ghaziabad, Delhi NCR with Pan-India dispatch.',
     url: siteConfig.url,
     logo: `${siteConfig.url}/logo.png`,
-    image: `${siteConfig.url}/logo.png`,
+    image: `${siteConfig.url}/assets/combo_banner_new.jpg`,
     telephone: siteConfig.phones.salesDisplay,
+    email: siteConfig.contact.email,
     priceRange: '₹₹',
     taxID: siteConfig.gstin,
+    currenciesAccepted: 'INR',
+    paymentAccepted: 'Cash, UPI, Credit Card, Debit Card, Net Banking',
+    hasMap: siteConfig.contact.googleMapsUrl,
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '4.9',
@@ -242,8 +255,8 @@ export default function RootLayout({
     address: {
       '@type': 'PostalAddress',
       streetAddress: siteConfig.contact.address.street,
-      addressLocality: siteConfig.address.city,
-      addressRegion: siteConfig.address.state,
+      addressLocality: 'Loni',
+      addressRegion: 'Ghaziabad, Uttar Pradesh',
       postalCode: siteConfig.address.pincode,
       addressCountry: 'IN'
     },
@@ -252,6 +265,18 @@ export default function RootLayout({
       latitude: 28.7515,
       longitude: 77.2885
     },
+    areaServed: [
+      { '@type': 'City', name: 'Ghaziabad' },
+      { '@type': 'City', name: 'Loni' },
+      { '@type': 'City', name: 'Delhi' },
+      { '@type': 'City', name: 'Noida' },
+      { '@type': 'City', name: 'Greater Noida' },
+      { '@type': 'City', name: 'Gurgaon' },
+      { '@type': 'City', name: 'Faridabad' },
+      { '@type': 'AdministrativeArea', name: 'Delhi NCR' },
+      { '@type': 'AdministrativeArea', name: 'Uttar Pradesh' },
+      { '@type': 'Country', name: 'India' }
+    ],
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',

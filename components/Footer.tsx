@@ -17,8 +17,20 @@ export function Footer() {
             <li><Link href="/returns-refunds" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Cancellation/Refund Policy</Link></li>
             <li><Link href="/about" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>About Us</Link></li>
             <li><Link href="/contact" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Contact Us</Link></li>
-            <li><Link href="#" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Blogs</Link></li>
-            <li><Link href="#" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Sitemap</Link></li>
+            <li><Link href="/sitemap.xml" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Sitemap (XML)</Link></li>
+          </ul>
+        </div>
+
+        {/* Areas We Serve (Local SEO City Links) */}
+        <div>
+          <h4 style={{ color: '#9CA3AF', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px' }}>Areas We Serve</h4>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <li><Link href="/corrugated-boxes-ghaziabad" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Boxes in Ghaziabad</Link></li>
+            <li><Link href="/corrugated-boxes-delhi" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Boxes in Delhi NCR</Link></li>
+            <li><Link href="/corrugated-boxes-noida" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Boxes in Noida</Link></li>
+            <li><Link href="/corrugated-boxes-gurgaon" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Boxes in Gurgaon</Link></li>
+            <li><Link href="/3d-box-builder" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Custom 3D Box Builder</Link></li>
+            <li><Link href="/track-order" style={{ color: '#D1D5DB', textDecoration: 'none', fontSize: '0.9rem' }}>Track Order Status</Link></li>
           </ul>
         </div>
 
@@ -163,6 +175,22 @@ export function Footer() {
                <svg width="28" height="28" viewBox="0 0 24 24" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
              </a>
           </div>
+        </div>
+      </div>
+
+      {/* Local Authority & SEO Keyword Strip */}
+      <div style={{
+        borderTop: '1px solid #2B2B2B',
+        padding: '24px 0 16px 0',
+        background: '#141414',
+        fontSize: '0.8rem',
+        color: '#6B7280',
+        lineHeight: 1.6
+      }}>
+        <div className="container">
+          <p style={{ margin: 0, textAlign: 'center' }}>
+            <strong style={{ color: '#9CA3AF' }}>AS Print Gallery (asprintgallery.com):</strong> Direct factory manufacturer of 3-ply and 5-ply corrugated packaging boxes, die-cut pizza boxes, waterproof vinyl stickers, clothing woven labels, garment hang tags, and kraft paper carry bags. Supplying wholesale packaging across <strong>Loni, Tronica City, Sahibabad, Ghaziabad, Delhi NCR, Noida, Greater Noida, Gurgaon, Faridabad, Uttar Pradesh</strong>, and Pan-India.
+          </p>
         </div>
       </div>
 
