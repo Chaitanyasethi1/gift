@@ -120,38 +120,6 @@ export default async function HomePage() {
       {/* 3. Hero Combo Banner (Dynamic Admin Managed) */}
       <ComboSlider initialBanners={serverBanners} slideInterval={serverSlideInterval} />
 
-      {/* SEO Authority & Factory Identity H1 Section */}
-      <section style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0', padding: '24px 0 20px 0' }}>
-        <div className="container">
-          <div style={{ maxWidth: '980px', margin: '0 auto', textAlign: 'center' }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#EFF6FF', border: '1px solid #BFDBFE', color: '#1E40AF', padding: '4px 14px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 700, marginBottom: '10px' }}>
-              <span>🏭 Direct Packaging Factory • Loni, Ghaziabad (Delhi NCR)</span>
-            </div>
-            <h1 style={{ fontSize: 'clamp(1.35rem, 2.8vw, 2rem)', fontWeight: 900, color: '#0F172A', lineHeight: 1.28, margin: '0 0 10px 0', letterSpacing: '-0.5px' }}>
-              AS Print Gallery — Corrugated Box Manufacturer &amp; Custom Packaging Factory in Ghaziabad, Delhi NCR
-            </h1>
-            <p style={{ fontSize: '0.92rem', color: '#475569', lineHeight: 1.6, margin: '0 auto 16px auto', maxWidth: '850px' }}>
-              Welcome to <strong>AS Print Gallery (asprintgallery.com)</strong>. We are a direct manufacturing unit based in <strong>Loni, Ghaziabad</strong>, delivering high-bursting strength 3-ply &amp; 5-ply corrugated shipping boxes, waterproof vinyl stickers, garment woven labels, kraft paper bags, and pizza cartons across <strong>Ghaziabad, Delhi NCR, Noida, Gurgaon</strong>, and Pan-India with direct wholesale factory prices.
-            </p>
-            {/* Quick Geo-Action Pills */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
-              <Link href="/corrugated-boxes-ghaziabad" style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', color: '#1E293B', padding: '6px 14px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
-                📍 Boxes in Ghaziabad &rarr;
-              </Link>
-              <Link href="/corrugated-boxes-delhi" style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', color: '#1E293B', padding: '6px 14px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
-                🚚 Boxes in Delhi NCR &rarr;
-              </Link>
-              <Link href="/corrugated-boxes-noida" style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', color: '#1E293B', padding: '6px 14px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
-                📦 Boxes in Noida &rarr;
-              </Link>
-              <Link href="/3d-box-builder" style={{ background: '#EFF6FF', border: '1px solid #93C5FD', color: '#1D4ED8', padding: '6px 14px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none' }}>
-                📐 Custom 3D Box Builder &rarr;
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* 5. Popular Categories (Dynamic Admin Managed) */}
       <HomeCategories />
 
