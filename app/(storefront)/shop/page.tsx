@@ -6,8 +6,28 @@ import { getAllProducts, getAllCategories, resolveCategory, getProductsForCatego
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Shop All Packaging Products - Factory Direct Catalog | AS Print Gallery',
-  description: 'Explore our complete catalog of corrugated shipping cartons, kraft paper bags, woven labels, food boxes, and custom stickers at factory-direct wholesale prices.'
+  title: 'All Packaging & Printing Products — Factory Direct Catalog | AS Print Gallery',
+  description:
+    'Explore our complete catalog of corrugated shipping cartons, kraft paper bags, woven garment labels, food packaging, and custom stickers at direct factory wholesale rates from Ghaziabad.',
+  keywords: [
+    'packaging products',
+    'corrugated boxes wholesale',
+    'kraft paper carry bags',
+    'woven labels manufacturer',
+    'custom packaging catalog',
+    'as print gallery',
+    'asprintgallery'
+  ],
+  alternates: {
+    canonical: '/shop'
+  },
+  openGraph: {
+    title: 'All Packaging Products — Factory Direct Catalog | AS Print Gallery',
+    description:
+      'Direct factory catalog for corrugated shipping cartons, kraft bags, woven labels, food packaging & stickers in Loni, Ghaziabad & Delhi NCR.',
+    url: 'https://asprintgallery.com/shop',
+    images: ['https://asprintgallery.com/assets/combo_banner_new.jpg']
+  }
 };
 
 export default async function ShopPage({

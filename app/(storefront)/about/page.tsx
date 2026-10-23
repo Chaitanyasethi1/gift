@@ -11,8 +11,22 @@ export const metadata: Metadata = {
   title: 'About Our Manufacturing Facility in Ghaziabad | AS Print Gallery',
   description:
     'Inside our 15,000+ sq.ft in-house corrugated box, food packaging, and garment label manufacturing plant in Loni, Ghaziabad. Direct factory supply without middlemen.',
+  keywords: [
+    'as print gallery factory',
+    'corrugated box manufacturer loni',
+    'packaging factory ghaziabad',
+    'asprintgallery',
+    'nafees ahmed as print gallery'
+  ],
   alternates: {
     canonical: '/about'
+  },
+  openGraph: {
+    title: 'Inside Our Ghaziabad Packaging Manufacturing Facility | AS Print Gallery',
+    description:
+      'Operating automated corrugation lines, precision offset presses, and ultrasonic woven label looms under one roof in Loni, Ghaziabad.',
+    url: 'https://asprintgallery.com/about',
+    images: ['https://asprintgallery.com/assets/factory-rolls.jpg']
   }
 };
 

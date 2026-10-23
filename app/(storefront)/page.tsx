@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ProductGrid } from '@/components/ProductGrid';
 import { ComboSlider } from '@/components/ComboSlider';
@@ -9,6 +10,65 @@ import { HomeCategories } from '@/components/HomeCategories';
 import { siteConfig } from '@/data/siteConfig';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'AS Print Gallery — Corrugated Boxes & Packaging Factory in Ghaziabad, Delhi NCR',
+  description:
+    'AS Print Gallery (asprintgallery.com) is North India’s leading manufacturer of 3-ply & 5-ply corrugated boxes, die-cut shipping cartons, garment labels, stickers & kraft paper bags. Direct factory prices in Loni, Ghaziabad & Delhi NCR.',
+  keywords: [
+    'asprintgallery',
+    'as print gallery',
+    'asprintgallery.com',
+    'as print gallery ghaziabad',
+    'as print gallery loni',
+    'corrugated box manufacturer near me',
+    'packaging boxes near me',
+    'corrugated box manufacturer ghaziabad',
+    'corrugated box manufacturer loni',
+    'packaging factory tronica city',
+    'corrugated box manufacturer delhi',
+    'corrugated box manufacturer noida',
+    'corrugated box manufacturer gurgaon',
+    'custom packaging manufacturer delhi ncr',
+    '3 ply corrugated boxes wholesale',
+    '5 ply master cartons factory',
+    'custom printed pizza boxes',
+    'waterproof vinyl stickers manufacturer',
+    'woven garment labels manufacturer',
+    'hang tags clothing tags',
+    'kraft paper carry bags',
+    'paper courier mailers',
+    'custom box builder',
+    'wholesale packaging factory loni'
+  ],
+  alternates: {
+    canonical: 'https://asprintgallery.com'
+  },
+  openGraph: {
+    title: 'AS Print Gallery — Corrugated Boxes & Packaging Factory in Ghaziabad, Delhi NCR',
+    description:
+      'Direct factory manufacturer for custom corrugated boxes (3-ply & 5-ply), stickers, garment labels & packaging solutions in Loni, Ghaziabad & Delhi NCR. Wholesale prices with fast Pan-India dispatch.',
+    url: 'https://asprintgallery.com',
+    siteName: 'AS Print Gallery',
+    images: [
+      {
+        url: 'https://asprintgallery.com/assets/combo_banner_new.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'AS Print Gallery Corrugated Box & Packaging Factory'
+      }
+    ],
+    locale: 'en_IN',
+    type: 'website'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AS Print Gallery — Corrugated Boxes & Packaging Factory in Ghaziabad, Delhi NCR',
+    description:
+      'Direct factory manufacturer for custom corrugated boxes (3-ply & 5-ply), stickers, garment labels & packaging solutions in Loni, Ghaziabad & Delhi NCR.',
+    images: ['https://asprintgallery.com/assets/combo_banner_new.jpg']
+  }
+};
 
 export default async function HomePage() {
   let productsList = PRODUCTS;
@@ -29,6 +89,7 @@ export default async function HomePage() {
       .maybeSingle();
 
     if (siteSettings?.homepage_config) {
+
       const cfg = typeof siteSettings.homepage_config === 'string'
         ? JSON.parse(siteSettings.homepage_config)
         : siteSettings.homepage_config;
@@ -93,7 +154,7 @@ export default async function HomePage() {
 
       {/* 5. Popular Categories (Dynamic Admin Managed) */}
       <HomeCategories />
-      
+
       <style>{`
         .circular-cat-item:hover .cat-img-wrapper {
           transform: translateY(-3px);
@@ -115,7 +176,7 @@ export default async function HomePage() {
       {/* Hot Deals */}
       <section style={{ padding: '20px 0', background: '#FAFAFC' }}>
         <div className="container">
-           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
               <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🔥 Hot Deals</h2>
               <CountdownTimer days={3} />
@@ -129,7 +190,7 @@ export default async function HomePage() {
       {/* Sale */}
       <section style={{ padding: '20px 0', background: '#FFFFFF' }}>
         <div className="container">
-           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
               <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🏷️ Mega Sale</h2>
               <CountdownTimer days={12} />
@@ -143,7 +204,7 @@ export default async function HomePage() {
       {/* New Arrivals */}
       <section style={{ padding: '20px 0', background: '#FAFAFC' }}>
         <div className="container">
-           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>🌟 New Arrivals</h2>
             <Link href="/category/new-arrivals" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
@@ -154,7 +215,7 @@ export default async function HomePage() {
       {/* 6. Best Sellers */}
       <section style={{ padding: '20px 0 40px 0', background: '#FFFFFF' }}>
         <div className="container">
-           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0 }}>🏆 Best Sellers</h2>
             <Link href="/category/best-sellers" style={{ color: '#1D4ED8', fontWeight: 700, fontSize: '0.9rem', whiteSpace: 'nowrap', flexShrink: 0 }}>View All &rarr;</Link>
           </div>
@@ -165,70 +226,70 @@ export default async function HomePage() {
       {/* 7. Premium Brand Banner */}
       <section className="premium-brand-banner" style={{ padding: '80px 20px', background: '#0F172A', color: '#fff', textAlign: 'center', backgroundImage: 'radial-gradient(circle at center, #1E293B 0%, #0F172A 100%)' }}>
         <div className="container">
-           <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '16px', color: '#FFFFFF', letterSpacing: '-0.5px' }}>Elevate Your Brand Identity With Premium Printing</h2>
-           <p style={{ fontSize: '1.1rem', color: '#94A3B8', maxWidth: '700px', margin: '0 auto 35px auto', lineHeight: 1.6 }}>Discover an extensive range of paper bags, custom boxes, premium labels, and branded packaging solutions tailored to make your products stand out.</p>
-           <Link href="/shop" style={{ display: 'inline-block', background: '#1D4ED8', color: '#fff', padding: '14px 36px', borderRadius: '8px', fontWeight: 700, fontSize: '1rem', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(29, 78, 216, 0.3)' }}>Explore Products &rarr;</Link>
+          <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '16px', color: '#FFFFFF', letterSpacing: '-0.5px' }}>Elevate Your Brand Identity With Premium Printing</h2>
+          <p style={{ fontSize: '1.1rem', color: '#94A3B8', maxWidth: '700px', margin: '0 auto 35px auto', lineHeight: 1.6 }}>Discover an extensive range of paper bags, custom boxes, premium labels, and branded packaging solutions tailored to make your products stand out.</p>
+          <Link href="/shop" style={{ display: 'inline-block', background: '#1D4ED8', color: '#fff', padding: '14px 36px', borderRadius: '8px', fontWeight: 700, fontSize: '1rem', transition: 'all 0.2s', boxShadow: '0 4px 14px rgba(29, 78, 216, 0.3)' }}>Explore Products &rarr;</Link>
         </div>
       </section>
-      
+
       {/* 8. Why Choose Us */}
       <section className="partner-section" style={{ padding: '80px 0', background: '#FFFFFF', overflow: 'hidden' }}>
-         <div className="container" style={{ textAlign: 'center' }}>
-            <h2 className="section-title partner-section-title" style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '50px', letterSpacing: '-0.5px', color: '#0F172A' }}>
-              Why Partner With Us?
-            </h2>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <h2 className="section-title partner-section-title" style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '50px', letterSpacing: '-0.5px', color: '#0F172A' }}>
+            Why Partner With Us?
+          </h2>
 
-            {/* Desktop: 4-Column Grid (Untouched on Desktop) */}
-            <div className="feature-grid desktop-feature-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '30px' }}>
-                {[
-                  { title: 'Premium Quality', desc: 'Finest materials and inks', icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg> },
-                  { title: 'Custom Designs', desc: 'Tailored to your brand', icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> },
-                  { title: 'Competitive Pricing', desc: 'Direct from factory rates', icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M12 12h.01"/><path d="M16 9h.01"/><path d="M8 15h.01"/><path d="M22 10v4"/><path d="M2 10v4"/></svg> },
-                  { title: 'On-Time Delivery', desc: 'Fast turnaround times', icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> }
-                ].map(w => (
-                  <div key={w.title} style={{ padding: '30px 20px', background: '#F8FAFC', borderRadius: '16px', border: '1px solid #E2E8F0', transition: 'transform 0.2s', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }} className="feature-card">
-                     <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>{w.icon}</div>
-                     <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0F172A', marginBottom: '8px' }}>{w.title}</h3>
-                     <p style={{ color: '#64748B', fontSize: '0.9rem', margin: 0 }}>{w.desc}</p>
-                  </div>
-                ))}
+          {/* Desktop: 4-Column Grid (Untouched on Desktop) */}
+          <div className="feature-grid desktop-feature-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '30px' }}>
+            {[
+              { title: 'Premium Quality', desc: 'Finest materials and inks', icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg> },
+              { title: 'Custom Designs', desc: 'Tailored to your brand', icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5" /><circle cx="17.5" cy="10.5" r=".5" /><circle cx="8.5" cy="7.5" r=".5" /><circle cx="6.5" cy="12.5" r=".5" /><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" /></svg> },
+              { title: 'Competitive Pricing', desc: 'Direct from factory rates', icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M12 12h.01" /><path d="M16 9h.01" /><path d="M8 15h.01" /><path d="M22 10v4" /><path d="M2 10v4" /></svg> },
+              { title: 'On-Time Delivery', desc: 'Fast turnaround times', icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> }
+            ].map(w => (
+              <div key={w.title} style={{ padding: '30px 20px', background: '#F8FAFC', borderRadius: '16px', border: '1px solid #E2E8F0', transition: 'transform 0.2s', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }} className="feature-card">
+                <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>{w.icon}</div>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0F172A', marginBottom: '8px' }}>{w.title}</h3>
+                <p style={{ color: '#64748B', fontSize: '0.9rem', margin: 0 }}>{w.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile: 1 Line Infinite Rotating Loop (Gol Gol Chalu) */}
+        <div className="mobile-partner-marquee-wrapper">
+          <div className="mobile-partner-track">
+            <div className="mobile-partner-group">
+              {[
+                { title: 'Premium Quality', desc: 'Finest materials and inks', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg> },
+                { title: 'Custom Designs', desc: 'Tailored to your brand', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5" /><circle cx="17.5" cy="10.5" r=".5" /><circle cx="8.5" cy="7.5" r=".5" /><circle cx="6.5" cy="12.5" r=".5" /><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" /></svg> },
+                { title: 'Competitive Pricing', desc: 'Direct from factory rates', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M12 12h.01" /><path d="M16 9h.01" /><path d="M8 15h.01" /><path d="M22 10v4" /><path d="M2 10v4" /></svg> },
+                { title: 'On-Time Delivery', desc: 'Fast turnaround times', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> }
+              ].map((w, idx) => (
+                <div key={`m1-${idx}`} className="mobile-partner-card">
+                  <div className="mobile-partner-icon">{w.icon}</div>
+                  <h3 className="mobile-partner-title">{w.title}</h3>
+                  <p className="mobile-partner-desc">{w.desc}</p>
+                </div>
+              ))}
             </div>
-         </div>
-
-         {/* Mobile: 1 Line Infinite Rotating Loop (Gol Gol Chalu) */}
-         <div className="mobile-partner-marquee-wrapper">
-           <div className="mobile-partner-track">
-             <div className="mobile-partner-group">
-               {[
-                 { title: 'Premium Quality', desc: 'Finest materials and inks', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg> },
-                 { title: 'Custom Designs', desc: 'Tailored to your brand', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> },
-                 { title: 'Competitive Pricing', desc: 'Direct from factory rates', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M12 12h.01"/><path d="M16 9h.01"/><path d="M8 15h.01"/><path d="M22 10v4"/><path d="M2 10v4"/></svg> },
-                 { title: 'On-Time Delivery', desc: 'Fast turnaround times', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> }
-               ].map((w, idx) => (
-                 <div key={`m1-${idx}`} className="mobile-partner-card">
-                   <div className="mobile-partner-icon">{w.icon}</div>
-                   <h3 className="mobile-partner-title">{w.title}</h3>
-                   <p className="mobile-partner-desc">{w.desc}</p>
-                 </div>
-               ))}
-             </div>
-             {/* Duplicate group for continuous seamless infinite loop */}
-             <div className="mobile-partner-group" aria-hidden="true">
-               {[
-                 { title: 'Premium Quality', desc: 'Finest materials and inks', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg> },
-                 { title: 'Custom Designs', desc: 'Tailored to your brand', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> },
-                 { title: 'Competitive Pricing', desc: 'Direct from factory rates', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M12 12h.01"/><path d="M16 9h.01"/><path d="M8 15h.01"/><path d="M22 10v4"/><path d="M2 10v4"/></svg> },
-                 { title: 'On-Time Delivery', desc: 'Fast turnaround times', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> }
-               ].map((w, idx) => (
-                 <div key={`m2-${idx}`} className="mobile-partner-card">
-                   <div className="mobile-partner-icon">{w.icon}</div>
-                   <h3 className="mobile-partner-title">{w.title}</h3>
-                   <p className="mobile-partner-desc">{w.desc}</p>
-                 </div>
-               ))}
-             </div>
-           </div>
-         </div>
+            {/* Duplicate group for continuous seamless infinite loop */}
+            <div className="mobile-partner-group" aria-hidden="true">
+              {[
+                { title: 'Premium Quality', desc: 'Finest materials and inks', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg> },
+                { title: 'Custom Designs', desc: 'Tailored to your brand', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5" /><circle cx="17.5" cy="10.5" r=".5" /><circle cx="8.5" cy="7.5" r=".5" /><circle cx="6.5" cy="12.5" r=".5" /><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" /></svg> },
+                { title: 'Competitive Pricing', desc: 'Direct from factory rates', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M12 12h.01" /><path d="M16 9h.01" /><path d="M8 15h.01" /><path d="M22 10v4" /><path d="M2 10v4" /></svg> },
+                { title: 'On-Time Delivery', desc: 'Fast turnaround times', icon: <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> }
+              ].map((w, idx) => (
+                <div key={`m2-${idx}`} className="mobile-partner-card">
+                  <div className="mobile-partner-icon">{w.icon}</div>
+                  <h3 className="mobile-partner-title">{w.title}</h3>
+                  <p className="mobile-partner-desc">{w.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Local Industrial Hubs & Delivery Network Section */}
@@ -400,7 +461,7 @@ export default async function HomePage() {
           })
         }}
       />
-      
+
       <style>{`
         /* Global & Home Mobile Optimizations */
         .mobile-partner-marquee-wrapper {

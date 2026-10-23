@@ -98,8 +98,8 @@ export async function generateMetadata({ params }: { params: { slug: string } | 
 
     const titleText = product.name || product.title || 'Product';
     const descText = product.description || product.desc || titleText;
-    const title = `${titleText} Manufacturer | AS Print Gallery`;
-    const description = `${descText.slice(0, 155)}... Factory direct rates, certified bursting strength, fast Pan-India dispatch from Ghaziabad.`;
+    const title = `${titleText} — Wholesale Factory Price | AS Print Gallery`;
+    const description = `Buy ${titleText} direct from manufacturer at wholesale factory rates. ${descText.slice(0, 120)}... Certified 18-24 BF kraft paper, custom printing available, fast Pan-India dispatch from Ghaziabad.`;
 
     let firstImage = '';
     if (Array.isArray(product.images) && product.images.length > 0) {
@@ -115,11 +115,21 @@ export async function generateMetadata({ params }: { params: { slug: string } | 
       firstImage = product.image;
     }
 
-    const imageUrl = firstImage ? (firstImage.startsWith('http') ? firstImage : `${siteConfig.url}${firstImage}`) : '';
+    const imageUrl = firstImage ? (firstImage.startsWith('http') ? firstImage : `${siteConfig.url}${firstImage}`) : `${siteConfig.url}/assets/combo_banner_new.jpg`;
 
     return {
       title,
       description,
+      keywords: [
+        titleText,
+        `${titleText} wholesale price`,
+        `${titleText} manufacturer`,
+        `${titleText} supplier`,
+        'corrugated box manufacturer ghaziabad',
+        'as print gallery',
+        'asprintgallery',
+        'asprintgallery.com'
+      ],
       alternates: {
         canonical: `/products/${product.slug || slug}`
       },
@@ -127,18 +137,18 @@ export async function generateMetadata({ params }: { params: { slug: string } | 
         title,
         description,
         url: `${siteConfig.url}/products/${product.slug || slug}`,
-        images: imageUrl ? [{ url: imageUrl, alt: titleText }] : []
+        images: [{ url: imageUrl, alt: titleText }]
       },
       twitter: {
         card: 'summary_large_image',
         title,
         description,
-        images: imageUrl ? [imageUrl] : []
+        images: [imageUrl]
       }
     };
   } catch (e) {
     return {
-      title: 'Product | AS Print Gallery'
+      title: 'Packaging Product | AS Print Gallery'
     };
   }
 }
@@ -281,6 +291,31 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
     }
   };
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: siteConfig.url
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Products',
+        item: `${siteConfig.url}/products`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: mappedProduct.title,
+        item: `${siteConfig.url}/products/${product.slug || slug}`
+      }
+    ]
+  };
+
   const similarProducts = await getSimilarProducts(product.id || slug, product.category_id);
 
   return (
@@ -288,6 +323,10 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <ProductDetailClient product={mappedProduct} similarProducts={similarProducts} />
     </>

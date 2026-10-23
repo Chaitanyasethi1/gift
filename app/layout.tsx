@@ -24,7 +24,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'AS Print Gallery | Corrugated Box Manufacturer & Packaging Factory Ghaziabad, Delhi NCR',
+    default: 'AS Print Gallery — Corrugated Boxes & Packaging Factory in Ghaziabad',
     template: '%s | AS Print Gallery'
   },
   description:
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_IN',
     url: siteConfig.url,
-    title: 'AS Print Gallery | Corrugated Box Manufacturer & Packaging Factory Ghaziabad, Delhi NCR',
+    title: 'AS Print Gallery — Corrugated Boxes & Packaging Factory in Ghaziabad',
     description:
       'Direct factory manufacturer for custom corrugated boxes (3-ply & 5-ply), waterproof vinyl stickers, woven labels & packaging solutions in Loni, Ghaziabad & Delhi NCR. Wholesale prices with fast Pan-India dispatch.',
     siteName: 'AS Print Gallery',
@@ -95,21 +95,21 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AS Print Gallery | Corrugated Box Manufacturer & Packaging Factory Ghaziabad, Delhi NCR',
+    title: 'AS Print Gallery — Corrugated Boxes & Packaging Factory in Ghaziabad',
     description:
       'Direct factory manufacturer for custom corrugated boxes (3-ply & 5-ply), waterproof vinyl stickers, woven labels & packaging solutions in Loni, Ghaziabad & Delhi NCR. Wholesale prices with fast Pan-India dispatch.',
     images: [`${siteConfig.url}/assets/combo_banner_new.jpg`]
   },
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/icon.png', sizes: '192x192', type: 'image/png' },
-      { url: '/favicon.svg', type: 'image/svg+xml' }
+      { url: '/favicon.ico?v=2' },
+      { url: '/icon.png?v=2', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon.svg?v=2', type: 'image/svg+xml' }
     ],
     apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+      { url: '/apple-touch-icon.png?v=2', sizes: '180x180', type: 'image/png' }
     ],
-    shortcut: '/favicon.ico'
+    shortcut: '/favicon.ico?v=2'
   },
   manifest: '/manifest.json'
 };

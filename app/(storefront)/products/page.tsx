@@ -6,11 +6,26 @@ import { getAllProducts, getAllCategories } from '@/lib/catalog';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'All Packaging & Printing Products - Complete Catalog | AS Print Gallery',
+  title: 'All Packaging & Printing Products — Complete Factory Catalog | AS Print Gallery',
   description:
-    'Browse our complete direct factory packaging catalogue: 3-ply & 5-ply corrugated shipping boxes, food packaging, woven garment labels, hang tags, and waterproof stickers.',
+    'Browse our complete direct factory packaging catalogue: 3-ply & 5-ply corrugated shipping boxes, food packaging, woven garment labels, hang tags, and waterproof stickers from Ghaziabad.',
+  keywords: [
+    'packaging products ghaziabad',
+    'corrugated box factory',
+    'garment labels manufacturer',
+    'custom packaging solutions',
+    'as print gallery',
+    'asprintgallery'
+  ],
   alternates: {
     canonical: '/products'
+  },
+  openGraph: {
+    title: 'All Packaging Products — Complete Factory Catalog | AS Print Gallery',
+    description:
+      'Direct factory catalog for 3-ply & 5-ply corrugated boxes, woven labels & packaging from our Ghaziabad plant.',
+    url: 'https://asprintgallery.com/products',
+    images: ['https://asprintgallery.com/assets/combo_banner_new.jpg']
   }
 };
 
