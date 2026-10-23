@@ -440,16 +440,13 @@ Please confirm order and delivery timeline.`
                   </span>
                 )}
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                {discountPercent > 0 && (
+              {discountPercent > 0 && (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
                   <span style={{ background: '#DCFCE7', color: '#15803D', fontSize: '0.8rem', fontWeight: 800, padding: '3px 8px', borderRadius: '6px' }}>
                     {discountPercent}% OFF
                   </span>
-                )}
-                <span style={{ fontSize: '0.85rem', color: '#64748B', fontWeight: 600 }}>
-                  (₹{(singlePackPrice / selectedPackQty).toFixed(2)} / pc)
-                </span>
-              </div>
+                </div>
+              )}
             </div>
 
             {/* Live Stock Availability Badge */}
@@ -511,11 +508,6 @@ Please confirm order and delivery timeline.`
               <div style={{ marginBottom: '20px', background: '#F8FAFC', padding: '14px', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
                 <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.88rem', fontWeight: 800, color: '#0F172A', marginBottom: '10px' }}>
                   <span>📏 1. Choose Size:</span>
-                  {selectedVariant && (
-                    <span style={{ color: '#16A34A', fontWeight: 700, fontSize: '0.82rem' }}>
-                      Base: ₹{selectedVariant.price} {selectedVariant.mrp ? `(MRP: ₹${selectedVariant.mrp})` : ''}
-                    </span>
-                  )}
                 </label>
                 <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                   {variantList.map((v, idx) => {
@@ -549,11 +541,6 @@ Please confirm order and delivery timeline.`
                         }}
                       >
                         <span>{v.size}</span>
-                        {v.price > 0 && (
-                          <span style={{ fontSize: '0.75rem', color: isSelected ? '#1D4ED8' : '#64748B', fontWeight: 600 }}>
-                            ₹{v.price}
-                          </span>
-                        )}
                       </button>
                     );
                   })}
@@ -806,9 +793,6 @@ Please confirm order and delivery timeline.`
               <ul style={{ margin: 0, paddingLeft: '20px', color: '#475569', fontSize: '0.88rem', lineHeight: 1.8 }}>
                 <li>
                   <strong>Selling Price:</strong> ₹{singlePackPrice.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ color: '#16A34A', fontWeight: 700 }}>(Pack of {selectedPackQty})</span>
-                </li>
-                <li>
-                  <strong>Per Piece Rate:</strong> ₹{(singlePackPrice / selectedPackQty).toFixed(2)} / pc
                 </li>
                 <li>
                   <strong>MRP:</strong> ₹{currentMrp.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
