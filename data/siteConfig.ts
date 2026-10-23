@@ -43,7 +43,7 @@ export const siteConfig = {
       country: "India",
       landmark: ""
     },
-    googleMapsUrl: "https://maps.app.goo.gl/sQC85oM7zJemKo9k8"
+    googleMapsUrl: "https://share.google/zLto0QkMszE051BNk"
   },
 
   emails: {

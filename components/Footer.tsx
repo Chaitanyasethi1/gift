@@ -41,7 +41,7 @@ export function Footer() {
             <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', color: '#D1D5DB', fontSize: '0.9rem', lineHeight: 1.5 }}>
               <MapPinIcon size={18} color="#4ADE80" />
               <a 
-                href="https://maps.app.goo.gl/sQC85oM7zJemKo9k8" 
+                href={siteConfig.contact.googleMapsUrl} 
                 target="_blank" 
                 rel="noreferrer"
                 style={{ color: '#D1D5DB', textDecoration: 'none', transition: 'color 0.2s' }}
@@ -69,7 +69,7 @@ export function Footer() {
           </h4>
           
           <a
-            href="https://maps.app.goo.gl/sQC85oM7zJemKo9k8"
+            href={siteConfig.contact.googleMapsUrl}
             target="_blank"
             rel="noreferrer"
             style={{

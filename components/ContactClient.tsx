@@ -105,9 +105,26 @@ export const ContactClient: React.FC = () => {
                   <p style={{ margin: '4px 0 6px 0', fontSize: '0.85rem', color: 'var(--text-body)', lineHeight: 1.4 }}>
                     {siteConfig.address.full}
                   </p>
-                  <span style={{ fontSize: '0.8rem', color: '#64748B', display: 'block' }}>
+                  <span style={{ fontSize: '0.8rem', color: '#64748B', display: 'block', marginBottom: '8px' }}>
                     <strong>GSTIN:</strong> {siteConfig.gstin} (Uttar Pradesh)
                   </span>
+                  <a
+                    href={siteConfig.contact.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                      color: '#1D4ED8',
+                      fontWeight: 700,
+                      fontSize: '0.82rem',
+                      textDecoration: 'none'
+                    }}
+                  >
+                    <span>📍 View on Google Maps</span>
+                    <span>↗</span>
+                  </a>
                 </div>
               </div>
             </div>
