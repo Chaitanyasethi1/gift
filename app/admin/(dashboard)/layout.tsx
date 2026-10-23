@@ -42,6 +42,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/admin/stock" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
             📦 Products & Stock
           </Link>
+          <Link href="/admin/sql-editor" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(56, 189, 248, 0.1)', borderLeft: '3px solid #38bdf8' }}>
+            ⚡ SQL Editor &amp; DB
+          </Link>
           <Link href="/admin/sales" style={{ padding: '12px 20px', color: '#cbd5e1', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px' }}>
             💰 Sales
           </Link>

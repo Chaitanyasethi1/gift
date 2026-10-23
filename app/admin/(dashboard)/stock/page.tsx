@@ -31,6 +31,7 @@ export default function StockProductsPage() {
   // Dual-description state (Top Buy-Box Highlights & Bottom Detailed Description)
   const [shortDesc, setShortDesc] = useState('');
   const [detailedDesc, setDetailedDesc] = useState('');
+  const [isSyncing, setIsSyncing] = useState(false);
   
   const defaultItem = { 
     name: '', slug: '', category_id: '', description: '', mrp: 0, selling_price: 0, stock_quantity: 1000, is_active: true, images: [] as string[],
@@ -45,6 +46,23 @@ export default function StockProductsPage() {
   const [newImageUrl, setNewImageUrl] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
+
+  // Sync / Auto-fill detailed descriptions for all products
+  async function handleSyncCatalogDescriptions() {
+    if (!confirm('Kya aap sabhi catalog products ke detailed descriptions, dimensions, flute specs, aur FAQs auto-populate / sync karna chahte hain? Jo products Supabase DB me missing hain wo bhi add ho jayenge.')) return;
+    setIsSyncing(true);
+    try {
+      const res = await fetch('/api/admin/products/sync', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Sync failed');
+      alert(`✅ Products & Detailed Descriptions Synced Successfully!\n\nAdded New Products to DB: ${data.inserted}\nUpdated Detailed Descriptions: ${data.updated}\nTotal Catalog Products: ${data.total}`);
+      fetchData();
+    } catch (err: any) {
+      alert('Sync failed: ' + (err.message || 'Unknown error'));
+    } finally {
+      setIsSyncing(false);
+    }
+  }
 
   // Quick Stock Adjustments (+100, +500, -100)
   async function handleQuickStockAdjust(productId: string, delta: number) {
@@ -418,13 +436,38 @@ export default function StockProductsPage() {
             Catalogue products, live available stock in pieces, prices, and pack quantity tiers. Orders aane par stock automatically kam hota hai.
           </p>
         </div>
-        <button 
-          onClick={handleAddNew}
-          style={{ background: '#10b981', color: '#fff', padding: '12px 24px', borderRadius: '10px', border: 'none', fontWeight: 800, cursor: 'pointer', fontSize: '0.95rem', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.25)', display: 'flex', alignItems: 'center', gap: '8px' }}
-        >
-          <span>➕</span>
-          <span>Add New Product</span>
-        </button>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <button 
+            type="button"
+            onClick={handleSyncCatalogDescriptions}
+            disabled={isSyncing}
+            style={{ 
+              background: '#0284c7', 
+              color: '#fff', 
+              padding: '12px 20px', 
+              borderRadius: '10px', 
+              border: 'none', 
+              fontWeight: 800, 
+              cursor: isSyncing ? 'not-allowed' : 'pointer', 
+              fontSize: '0.92rem', 
+              boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px',
+              opacity: isSyncing ? 0.7 : 1
+            }}
+          >
+            <span>{isSyncing ? '⏳' : '⚡'}</span>
+            <span>{isSyncing ? 'Syncing Catalog...' : 'Auto-Fill Detailed Descriptions (All)'}</span>
+          </button>
+          <button 
+            onClick={handleAddNew}
+            style={{ background: '#10b981', color: '#fff', padding: '12px 24px', borderRadius: '10px', border: 'none', fontWeight: 800, cursor: 'pointer', fontSize: '0.95rem', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.25)', display: 'flex', alignItems: 'center', gap: '8px' }}
+          >
+            <span>➕</span>
+            <span>Add New Product</span>
+          </button>
+        </div>
       </div>
 
       {/* KPI Cards Strip */}
@@ -586,8 +629,34 @@ export default function StockProductsPage() {
                   <span style={{ fontSize: '0.78rem', color: '#64748B', display: 'block', marginBottom: '8px' }}>
                     Yahan product ki deep information, key features, packaging uses, aur FAQs daalein. Yeh page ke neeche table aur full breakdown ke sath aayega.
                   </span>
+                  
+                  {/* Quick Template Inserters */}
+                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '8px' }}>
+                    <button
+                      type="button"
+                      onClick={() => setDetailedDesc(prev => (prev ? prev + '\n\n' : '') + '### 📦 Specifications & Quality:\n• Material: High-GSM Virgin Kraft Paper\n• Flute Type: C-Flute (Heavy Duty)\n• Bursting Strength: 14 - 16 BF\n• Stacking Load: Up to 15-20 kg\n• Recyclable: 100% Eco-Friendly & Biodegradable')}
+                      style={{ background: '#F1F5F9', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, color: '#334155', cursor: 'pointer' }}
+                    >
+                      + Insert Specs Table
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDetailedDesc(prev => (prev ? prev + '\n\n' : '') + '### 🚚 Common Applications & Uses:\n• E-commerce and Courier Dispatches (Amazon, Flipkart, Meesho)\n• Retail Box Packaging & Fragile Shipments\n• Electronics, Gadgets, and Home Accessories\n• FMCG, Cosmetics, and Gifting Supplies')}
+                      style={{ background: '#F1F5F9', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, color: '#334155', cursor: 'pointer' }}
+                    >
+                      + Insert Uses &amp; Applications
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDetailedDesc(prev => (prev ? prev + '\n\n' : '') + '### ❓ Frequently Asked Questions:\nQ: Can I print my company logo on this box?\nA: Yes! Custom printing is available for bulk quantities. Contact our team.\n\nQ: Does this price include GST?\nA: GST is extra as per applicable packaging rates.')}
+                      style={{ background: '#F1F5F9', border: '1px solid #CBD5E1', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, color: '#334155', cursor: 'pointer' }}
+                    >
+                      + Insert FAQs Template
+                    </button>
+                  </div>
+
                   <textarea
-                    rows={6}
+                    rows={7}
                     placeholder={'Key Features & Benefits:\n• Superior stackability and drop resistance\n• Eco-friendly and 100% recyclable\n\nFrequently Asked Questions:\nQ: What is this box best used for?\nA: Perfect for e-commerce, courier shipping, cosmetics, and jewelry.'}
                     value={detailedDesc}
                     onChange={e => setDetailedDesc(e.target.value)}
@@ -943,6 +1012,7 @@ export default function StockProductsPage() {
               <th style={{ padding: '15px 20px' }}>Product Name</th>
               <th style={{ padding: '15px 20px' }}>Category</th>
               <th style={{ padding: '15px 20px' }}>📦 Live Stock (Pcs)</th>
+              <th style={{ padding: '15px 20px' }}>Detailed Description</th>
               <th style={{ padding: '15px 20px' }}>Sizes Configured</th>
               <th style={{ padding: '15px 20px' }}>Base Price</th>
               <th style={{ padding: '15px 20px' }}>Pack Tiers</th>
@@ -952,9 +1022,9 @@ export default function StockProductsPage() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={9} style={{ padding: '30px', textAlign: 'center', color: '#64748b' }}>Loading products...</td></tr>
+              <tr><td colSpan={10} style={{ padding: '30px', textAlign: 'center', color: '#64748b' }}>Loading products...</td></tr>
             ) : filteredProducts.length === 0 ? (
-              <tr><td colSpan={9} style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>
+              <tr><td colSpan={10} style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>
                 <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🔍</div>
                 <strong style={{ color: '#0F172A', display: 'block', marginBottom: '4px' }}>Koi Product Nahi Mila</strong>
                 <span style={{ fontSize: '0.88rem' }}>Search query clear karein ya dusra filter select karein.</span>
@@ -1037,6 +1107,31 @@ export default function StockProductsPage() {
                           ✏️ Set
                         </button>
                       </div>
+                    </td>
+
+                    {/* Detailed Description Status */}
+                    <td style={{ padding: '15px 20px' }}>
+                      {(() => {
+                        const parsed = parseProductDescription(item.description || '');
+                        const hasFullDesc = Boolean(parsed.detailedText && parsed.detailedText.trim().length > 30);
+                        return hasFullDesc ? (
+                          <span 
+                            onClick={() => handleEdit(item)}
+                            title="Click to view or edit detailed specs"
+                            style={{ background: '#DCFCE7', color: '#166534', padding: '3px 8px', borderRadius: '12px', fontSize: '0.76rem', fontWeight: 800, border: '1px solid #BBF7D0', display: 'inline-flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}
+                          >
+                            <span>✅</span> Detailed Specs
+                          </span>
+                        ) : (
+                          <span 
+                            onClick={() => handleEdit(item)}
+                            title="Click to add detailed specs"
+                            style={{ background: '#FEF3C7', color: '#B45309', padding: '3px 8px', borderRadius: '12px', fontSize: '0.76rem', fontWeight: 800, border: '1px solid #FDE68A', display: 'inline-flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}
+                          >
+                            <span>⚠️</span> Summary Only
+                          </span>
+                        );
+                      })()}
                     </td>
 
                     <td style={{ padding: '15px 20px' }}>
