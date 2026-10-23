@@ -335,48 +335,80 @@ export default function StockProductsPage() {
   async function handleSaveItem(e: React.FormEvent) {
     e.preventDefault();
     setIsSaving(true);
-    const slug = newItem.slug || newItem.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
+    let baseSlug = (newItem.slug || newItem.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')).trim();
+    if (!baseSlug) baseSlug = `product-${Date.now().toString(36)}`;
     
     // Also build a simple size string for backward compatibility
     const sizeNames = newItem.variants.map(v => v.size).filter(Boolean);
     const sizesString = sizeNames.join(', ');
 
-    const fullCombinedDesc = combineProductDescription(shortDesc, detailedDesc);
+    // Auto-generate professional descriptions if left blank by user
+    let finalShortDesc = shortDesc.trim();
+    if (!finalShortDesc) {
+      finalShortDesc = `📦 ${newItem.name}\n💪 Heavy-Duty Industrial Build – High strength tested kraft paper\n🚚 PAN-India Factory Doorstep Fast Delivery\n💰 Direct Factory Wholesale Rates – Bulk pack savings`;
+    }
+
+    let finalDetailedDesc = detailedDesc.trim();
+    if (!finalDetailedDesc) {
+      finalDetailedDesc = `### 📋 Technical Specifications:\n• Product Name: ${newItem.name}\n• Material: High-GSM Virgin Kraft Paper\n• Stacking Strength: Heavy Duty Load Tested\n• Eco-Friendly: 100% Recyclable & Biodegradable\n• Pan-India Dispatch: Fast Doorstep Delivery\n\n### ⚡ Key Features & Benefits:\n✔ High-strength structural integrity for safe transit.\n✔ Perfect for e-commerce, courier dispatches, and warehouse storage.\n✔ Moisture-resistant exterior liner to prevent carton sagging.\n\n### ❓ Frequently Asked Questions:\nQ: Can I print my company logo on this item?\nA: Yes, custom branding and bulk logo printing are available.\n\nQ: Does the price include GST?\nA: Standard GST invoice with 100% ITC input credit is provided.`;
+    }
+
+    const fullCombinedDesc = combineProductDescription(finalShortDesc, finalDetailedDesc);
+
+    // Ensure at least 1 image is always present to prevent UI breaks
+    const safeImages = newItem.images && newItem.images.length > 0 
+      ? newItem.images 
+      : ['/assets/corrugated_box.jpg'];
 
     const payload = { 
-      name: newItem.name,
-      slug,
+      name: newItem.name.trim(),
+      slug: baseSlug,
       category_id: newItem.category_id ? newItem.category_id : null,
       description: fullCombinedDesc || newItem.description,
-      mrp: newItem.mrp,
-      selling_price: newItem.selling_price,
+      mrp: Number(newItem.mrp) > 0 ? Number(newItem.mrp) : Math.round(Number(newItem.selling_price || 10) * 1.4),
+      selling_price: Number(newItem.selling_price || 10),
       gst_rate: Number(newItem.gst_rate ?? 18),
       gst_percentage: Number(newItem.gst_rate ?? 18),
-      stock_quantity: newItem.stock_quantity,
+      stock_quantity: Math.max(0, parseInt(String(newItem.stock_quantity || 1000), 10)),
       is_active: newItem.is_active,
-      images: newItem.images,
+      images: safeImages,
       flag_hot_deal: newItem.flag_hot_deal,
       flag_mega_sale: newItem.flag_mega_sale,
       flag_new_arrival: newItem.flag_new_arrival,
       flag_best_seller: newItem.flag_best_seller,
-      moq: newItem.moq,
+      moq: Math.max(1, parseInt(String(newItem.moq || 50), 10)),
       allow_logo_upload: newItem.allow_logo_upload,
       sizes: sizesString,
       variants: newItem.variants,
-      bulk_pricing: newItem.bulk_pricing
+      bulk_pricing: newItem.bulk_pricing && newItem.bulk_pricing.length > 0 ? newItem.bulk_pricing : [
+        { qty: 50, rate: Number(newItem.selling_price || 10), label: '50 pcs Pack' },
+        { qty: 100, rate: Number(newItem.selling_price || 10), label: '100 pcs Pack' },
+        { qty: 200, rate: Math.round(Number(newItem.selling_price || 10) * 0.95), label: '200 pcs Pack' },
+        { qty: 500, rate: Math.round(Number(newItem.selling_price || 10) * 0.90), label: '500 pcs Pack' }
+      ]
     };
-
 
     let res = editingId 
       ? await supabase.from('products').update(payload).eq('id', editingId)
       : await supabase.from('products').insert([payload]);
 
+    // Handle column compatibility fallback
     if (res.error && (res.error.message?.toLowerCase().includes('column') || res.error.message?.toLowerCase().includes('schema'))) {
       const altPayload = { ...payload };
       delete (altPayload as any).gst_percentage;
       res = editingId 
         ? await supabase.from('products').update(altPayload).eq('id', editingId)
         : await supabase.from('products').insert([altPayload]);
+    }
+
+    // Handle slug uniqueness retry if duplicate slug exists
+    if (res.error && (res.error.message?.toLowerCase().includes('unique') || res.error.message?.toLowerCase().includes('duplicate') || res.error.message?.toLowerCase().includes('slug'))) {
+      const uniqueSlug = `${baseSlug}-${Math.random().toString(36).substring(2, 6)}`;
+      const retryPayload = { ...payload, slug: uniqueSlug };
+      res = editingId 
+        ? await supabase.from('products').update(retryPayload).eq('id', editingId)
+        : await supabase.from('products').insert([retryPayload]);
     }
     
     setIsSaving(false);

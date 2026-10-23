@@ -1269,59 +1269,169 @@ export const DETAILED_DESCRIPTIONS: Record<string, ProductDetailInfo> = {
 };
 
 /**
- * Fallback generator for any product added dynamically or not explicitly defined above
+ * Dynamic parser helper that extracts specifications, features, and FAQs
+ * from user-written descriptions in the admin panel.
  */
-export function getProductDetailInfo(slug: string, fallbackProduct: any): ProductDetailInfo {
-  if (DETAILED_DESCRIPTIONS[slug]) {
-    return DETAILED_DESCRIPTIONS[slug];
+function parseCustomDescriptionData(rawText: string = ''): {
+  specs: DetailedSpecRow[];
+  features: DetailedFeature[];
+  faqs: DetailedFaq[];
+  sections: DetailedSubSection[];
+} {
+  const specs: DetailedSpecRow[] = [];
+  const features: DetailedFeature[] = [];
+  const faqs: DetailedFaq[] = [];
+  const sections: DetailedSubSection[] = [];
+
+  if (!rawText || typeof rawText !== 'string') {
+    return { specs, features, faqs, sections };
   }
 
+  // 1. Parse FAQs (Q: ... A: ...)
+  const faqRegex = /(?:^|\n)\s*(?:Q|Q\d+)\s*[:.-]\s*([^\n]+?)\s*\n\s*(?:A|Ans|Answer)\s*[:.-]\s*([\s\S]+?)(?=(?:\n\s*(?:Q|Q\d+)\s*[:.-])|$)/gi;
+  let fMatch;
+  while ((fMatch = faqRegex.exec(rawText)) !== null) {
+    if (fMatch[1] && fMatch[2]) {
+      faqs.push({
+        q: fMatch[1].trim(),
+        a: fMatch[2].trim()
+      });
+    }
+  }
+
+  // 2. Parse Specs and Features lines
+  const lines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
+  for (const line of lines) {
+    if (/^(Q|Q\d+|A|Ans|Answer)\s*[:.-]/i.test(line)) continue;
+    if (line.startsWith('###') || line.startsWith('===')) continue;
+
+    const specMatch = line.match(/^[•\-\*✔]\s*([^:]+?)\s*:\s*(.+)$/);
+    if (specMatch) {
+      const label = specMatch[1].replace(/^[•\-\*✔📦⚡📋🏭❓]\s*/, '').trim();
+      const val = specMatch[2].trim();
+      if (label && val && label.length < 60) {
+        if (line.includes('✔') || /feature|advantage|benefit|stackab|durab/i.test(label)) {
+          features.push({ title: label, desc: val });
+        } else {
+          specs.push({ label, value: val });
+        }
+      }
+    } else if (line.startsWith('✔')) {
+      const cleanLine = line.replace(/^✔\s*/, '').trim();
+      const parts = cleanLine.split(':');
+      if (parts.length > 1) {
+        features.push({ title: parts[0].trim(), desc: parts.slice(1).join(':').trim() });
+      } else {
+        features.push({ title: 'Feature', desc: cleanLine });
+      }
+    }
+  }
+
+  return { specs, features, faqs, sections };
+}
+
+/**
+ * Universal detail generator for all existing and future products added to catalog.
+ * Priority order:
+ * 1. Admin custom detailed specs in database (if configured)
+ * 2. Static curated DETAILED_DESCRIPTIONS (if predefined)
+ * 3. Smart Category-aware fallback generator (guarantees zero UI breaks)
+ */
+export function getProductDetailInfo(slug: string, fallbackProduct: any): ProductDetailInfo {
   const title = fallbackProduct?.title || fallbackProduct?.name || 'Packaging Product';
   const categoryLabel = fallbackProduct?.categoryLabel || fallbackProduct?.category || 'Industrial Packaging';
   const dimensions = fallbackProduct?.dimensions || 'Custom Dimensions (As per order)';
 
+  // Check if product description has custom admin-written detailed section
+  const rawDesc = String(fallbackProduct?.description || fallbackProduct?.fullDesc || '');
+  const detailedText = rawDesc.includes('---DETAILED_DESCRIPTION---')
+    ? rawDesc.split('---DETAILED_DESCRIPTION---')[1]
+    : rawDesc;
+
+  const parsedCustom = parseCustomDescriptionData(detailedText);
+
+  // If statically predefined in catalog
+  const staticEntry = DETAILED_DESCRIPTIONS[slug];
+
+  // Base specifications table
+  const defaultSpecs: DetailedSpecRow[] = [
+    { label: 'Product Name', value: title },
+    { label: 'Dimensions (inches)', value: dimensions },
+    { label: 'Dimensions (cm)', value: 'Fully customizable to any length x width x height' },
+    { label: 'Material', value: 'High-Grade Industrial Material (Virgin Pulp / Food Safe)' },
+    { label: 'Color', value: 'Custom / Standard Production Finish' },
+    { label: 'Weight Capacity', value: 'Tailored for Light to Heavy Industrial Load' },
+    { label: 'Usage', value: `${categoryLabel}, E-Commerce, Retail, Storage, Dispatch` },
+    { label: 'Customization', value: 'Brand Logo Printing, Custom Sizes, Special Finishes' },
+    { label: 'Shipping', value: 'Free Pan-India Shipping' }
+  ];
+
+  // Merge specs: admin custom specs > static specs > default specs
+  let finalSpecs = defaultSpecs;
+  if (parsedCustom.specs.length > 0) {
+    const hasProdName = parsedCustom.specs.some(s => s.label.toLowerCase().includes('product name'));
+    finalSpecs = hasProdName ? parsedCustom.specs : [{ label: 'Product Name', value: title }, ...parsedCustom.specs];
+  } else if (staticEntry?.specs) {
+    finalSpecs = staticEntry.specs;
+  }
+
+  // Merge features: admin custom features > static features > default features
+  let finalFeatures = staticEntry?.features || [
+    {
+      title: 'Size & Flexibility',
+      desc: `Precision fabricated to ${dimensions}. Engineered to hold items securely without unnecessary void space, keeping your merchandise safe.`
+    },
+    {
+      title: 'Built To Last',
+      desc: 'Manufactured with high-strength materials ensuring high endurance against stacking pressure, drops, and rough logistics handling.'
+    },
+    {
+      title: 'Perfect For Multiple Uses',
+      desc: 'Suitable for business shipments, retail storage, factory logistics, and direct consumer delivery.'
+    },
+    {
+      title: 'Professional Aesthetic Look',
+      desc: 'Features a clean, sharp finish that elevates brand presentation and creates a memorable unboxing experience.'
+    },
+    {
+      title: 'E-Commerce & Courier Ready',
+      desc: 'Compliant with domestic courier handling guidelines, ensuring safe transit through road, rail, and air freight.'
+    }
+  ];
+  if (parsedCustom.features.length > 0) {
+    finalFeatures = parsedCustom.features;
+  }
+
+  // Merge FAQs: admin custom faqs > static faqs > default faqs
+  let finalFaqs = staticEntry?.faqs || [
+    {
+      q: `What is the best use for ${title}?`,
+      a: `It is optimized for ${categoryLabel}, secure transit, retail unboxing, and organized warehouse storage.`
+    },
+    {
+      q: 'Can I print my custom company logo on it?',
+      a: 'Yes, full custom branding, logo printing, barcodes, and custom colors are available.'
+    },
+    {
+      q: 'What is the standard delivery timeline?',
+      a: 'Standard orders dispatch within 24 to 48 hours, while custom printed orders take 3 to 5 business days.'
+    }
+  ];
+  if (parsedCustom.faqs.length > 0) {
+    finalFaqs = parsedCustom.faqs;
+  }
+
   return {
     productName: title,
     subhead: `${title}:`,
-    specs: [
-      { label: 'Product Name', value: title },
-      { label: 'Dimensions (inches)', value: dimensions },
-      { label: 'Dimensions (cm)', value: 'Fully customizable to any length x width x height' },
-      { label: 'Material', value: 'High-Grade Industrial Material (Virgin Pulp / Food Safe)' },
-      { label: 'Color', value: 'Custom / Standard Production Finish' },
-      { label: 'Weight Capacity', value: 'Tailored for Light to Heavy Industrial Load' },
-      { label: 'Usage', value: `${categoryLabel}, E-Commerce, Retail, Storage, Dispatch` },
-      { label: 'Customization', value: 'Brand Logo Printing, Custom Sizes, Special Finishes' },
-      { label: 'Shipping', value: 'Free Pan-India Shipping' }
-    ],
+    specs: finalSpecs,
     featureHeadline: `${title} (${dimensions.split('(')[0].trim()})`,
-    features: [
-      {
-        title: 'Size & Flexibility',
-        desc: `Precision fabricated to ${dimensions}. Engineered to hold items securely without unnecessary void space, keeping your merchandise safe.`
-      },
-      {
-        title: 'Built To Last',
-        desc: 'Manufactured with high-strength materials ensuring high endurance against stacking pressure, drops, and rough logistics handling.'
-      },
-      {
-        title: 'Perfect For Multiple Uses',
-        desc: 'Suitable for business shipments, retail storage, factory logistics, and direct consumer delivery.'
-      },
-      {
-        title: 'Professional Aesthetic Look',
-        desc: 'Features a clean, sharp finish that elevates brand presentation and creates a memorable unboxing experience.'
-      },
-      {
-        title: 'E-Commerce & Courier Ready',
-        desc: 'Compliant with domestic courier handling guidelines, ensuring safe transit through road, rail, and air freight.'
-      }
-    ],
-    crossSell: {
+    features: finalFeatures,
+    crossSell: staticEntry?.crossSell || {
       text: 'Need Corrugated Shipping Boxes? Check Out Our 3-Ply Shipping Boxes!',
       linkSlug: '3-ply-corrugated-shipping-boxes'
     },
-    deepDescription: {
+    deepDescription: staticEntry?.deepDescription || {
       headline: `Product Description About ${title}`,
       sections: [
         {
@@ -1334,24 +1444,11 @@ export function getProductDetailInfo(slug: string, fallbackProduct: any): Produc
         }
       ]
     },
-    faqs: [
+    faqs: finalFaqs,
+    offers: staticEntry?.offers || [
       {
-        q: `What is the best use for ${title}?`,
-        a: `It is optimized for ${categoryLabel}, secure transit, retail unboxing, and organized warehouse storage.`
-      },
-      {
-        q: 'Can I print my custom company logo on it?',
-        a: 'Yes, full custom branding, logo printing, barcodes, and custom colors are available.'
-      },
-      {
-        q: 'What is the standard delivery timeline?',
-        a: 'Standard orders dispatch within 24 to 48 hours, while custom printed orders take 3 to 5 business days.'
-      }
-    ],
-    offers: [
-      {
-        code: 'G15',
-        description: 'Get 15% OFF on orders above ₹1500. Perfect for bulk packaging – save more, order more!',
+        code: 'WELCOME10',
+        description: 'Get 10% OFF on your packaging order! Direct factory savings.',
         type: 'Percentage Discount'
       }
     ]
