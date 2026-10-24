@@ -457,18 +457,18 @@ export default function StockProductsPage() {
   }, [products, searchQuery, stockFilter]);
 
   return (
-    <div style={{ maxWidth: '1240px', margin: '0 auto', paddingBottom: '50px' }}>
+    <div style={{ maxWidth: '1480px', margin: '0 auto', paddingBottom: '30px' }}>
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '22px', flexWrap: 'wrap', gap: '15px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 900, color: '#0F172A', margin: 0 }}>
-            📦 Factory Products &amp; Live Stock Inventory
+          <h1 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0F172A', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span>📦</span> Factory Products &amp; Live Stock Inventory
           </h1>
-          <p style={{ color: '#64748B', margin: '4px 0 0 0', fontSize: '0.92rem' }}>
+          <p style={{ color: '#64748B', margin: '3px 0 0 0', fontSize: '0.82rem' }}>
             Catalogue products, live available stock in pieces, prices, and pack quantity tiers. Orders aane par stock automatically kam hota hai.
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
           <button 
             type="button"
             onClick={handleSyncCatalogDescriptions}
@@ -476,16 +476,16 @@ export default function StockProductsPage() {
             style={{ 
               background: '#0284c7', 
               color: '#fff', 
-              padding: '12px 20px', 
-              borderRadius: '10px', 
+              padding: '8px 14px', 
+              borderRadius: '8px', 
               border: 'none', 
-              fontWeight: 800, 
+              fontWeight: 700, 
               cursor: isSyncing ? 'not-allowed' : 'pointer', 
-              fontSize: '0.92rem', 
-              boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)', 
+              fontSize: '0.82rem', 
+              boxShadow: '0 2px 6px rgba(2, 132, 199, 0.2)', 
               display: 'flex', 
               alignItems: 'center', 
-              gap: '8px',
+              gap: '6px',
               opacity: isSyncing ? 0.7 : 1
             }}
           >
@@ -494,7 +494,7 @@ export default function StockProductsPage() {
           </button>
           <button 
             onClick={handleAddNew}
-            style={{ background: '#10b981', color: '#fff', padding: '12px 24px', borderRadius: '10px', border: 'none', fontWeight: 800, cursor: 'pointer', fontSize: '0.95rem', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.25)', display: 'flex', alignItems: 'center', gap: '8px' }}
+            style={{ background: '#10b981', color: '#fff', padding: '8px 16px', borderRadius: '8px', border: 'none', fontWeight: 700, cursor: 'pointer', fontSize: '0.82rem', boxShadow: '0 2px 6px rgba(16, 185, 129, 0.2)', display: 'flex', alignItems: 'center', gap: '6px' }}
           >
             <span>➕</span>
             <span>Add New Product</span>
@@ -503,76 +503,76 @@ export default function StockProductsPage() {
       </div>
 
       {/* KPI Cards Strip */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '22px' }}>
-        <div style={{ background: '#fff', padding: '18px 20px', borderRadius: '14px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.03)' }}>
-          <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase' }}>Total Products</span>
-          <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#0f172a', marginTop: '4px' }}>{totalProducts} SKUs</div>
-          <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Active in catalogue</span>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px', marginBottom: '14px' }}>
+        <div style={{ background: '#fff', padding: '10px 14px', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
+          <span style={{ color: '#64748b', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.03em' }}>Total Products</span>
+          <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', margin: '2px 0' }}>{totalProducts} SKUs</div>
+          <span style={{ fontSize: '0.7rem', color: '#64748b' }}>Active in catalogue</span>
         </div>
 
-        <div style={{ background: '#F0FDF4', padding: '18px 20px', borderRadius: '14px', border: '1px solid #BBF7D0', boxShadow: '0 2px 4px rgba(22,163,74,0.04)' }}>
-          <span style={{ color: '#166534', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase' }}>Total Stock in Factory</span>
-          <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#15803D', marginTop: '4px' }}>{totalStockPcs.toLocaleString('en-IN')} pcs</div>
-          <span style={{ fontSize: '0.75rem', color: '#166534' }}>{inStockCount} products in healthy stock</span>
+        <div style={{ background: '#F0FDF4', padding: '10px 14px', borderRadius: '10px', border: '1px solid #BBF7D0', boxShadow: '0 1px 3px rgba(22,163,74,0.04)' }}>
+          <span style={{ color: '#166534', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.03em' }}>Total Stock in Factory</span>
+          <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#15803D', margin: '2px 0' }}>{totalStockPcs.toLocaleString('en-IN')} pcs</div>
+          <span style={{ fontSize: '0.7rem', color: '#166534' }}>{inStockCount} products in healthy stock</span>
         </div>
 
         <div 
           onClick={() => setStockFilter(stockFilter === 'LOW_STOCK' ? 'ALL' : 'LOW_STOCK')}
-          style={{ background: '#FEF3C7', padding: '18px 20px', borderRadius: '14px', border: stockFilter === 'LOW_STOCK' ? '2px solid #D97706' : '1px solid #FDE68A', cursor: 'pointer', transition: 'all 0.15s ease' }}
+          style={{ background: '#FEF3C7', padding: '10px 14px', borderRadius: '10px', border: stockFilter === 'LOW_STOCK' ? '2px solid #D97706' : '1px solid #FDE68A', cursor: 'pointer', transition: 'all 0.15s ease' }}
         >
-          <span style={{ color: '#92400E', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase' }}>⚠️ Low Stock Alert (&le; 200 pcs)</span>
-          <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#B45309', marginTop: '4px' }}>{lowStockCount} Products</div>
-          <span style={{ fontSize: '0.75rem', color: '#92400E' }}>Click to filter low inventory</span>
+          <span style={{ color: '#92400E', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.03em' }}>⚠️ Low Stock Alert (&le; 200 pcs)</span>
+          <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#B45309', margin: '2px 0' }}>{lowStockCount} Products</div>
+          <span style={{ fontSize: '0.7rem', color: '#92400E' }}>Click to filter low inventory</span>
         </div>
 
         <div 
           onClick={() => setStockFilter(stockFilter === 'OUT_OF_STOCK' ? 'ALL' : 'OUT_OF_STOCK')}
-          style={{ background: '#FEE2E2', padding: '18px 20px', borderRadius: '14px', border: stockFilter === 'OUT_OF_STOCK' ? '2px solid #DC2626' : '1px solid #FECDD3', cursor: 'pointer', transition: 'all 0.15s ease' }}
+          style={{ background: '#FEE2E2', padding: '10px 14px', borderRadius: '10px', border: stockFilter === 'OUT_OF_STOCK' ? '2px solid #DC2626' : '1px solid #FECDD3', cursor: 'pointer', transition: 'all 0.15s ease' }}
         >
-          <span style={{ color: '#991B1B', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase' }}>🔴 Out of Stock (0 pcs)</span>
-          <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#DC2626', marginTop: '4px' }}>{outOfStockCount} Products</div>
-          <span style={{ fontSize: '0.75rem', color: '#991B1B' }}>Click to view out-of-stock</span>
+          <span style={{ color: '#991B1B', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.03em' }}>🔴 Out of Stock (0 pcs)</span>
+          <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#DC2626', margin: '2px 0' }}>{outOfStockCount} Products</div>
+          <span style={{ fontSize: '0.7rem', color: '#991B1B' }}>Click to view out-of-stock</span>
         </div>
       </div>
 
       {/* Filter & Search Bar */}
-      <div style={{ background: '#fff', padding: '14px 18px', borderRadius: '14px', border: '1px solid #e2e8f0', display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <div style={{ flex: 1, minWidth: '260px', display: 'flex', alignItems: 'center', background: '#f8fafc', border: '1.5px solid #cbd5e1', borderRadius: '8px', padding: '7px 12px' }}>
-          <span style={{ marginRight: '8px' }}>🔍</span>
+      <div style={{ background: '#fff', padding: '8px 12px', borderRadius: '10px', border: '1px solid #e2e8f0', display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+        <div style={{ flex: 1, minWidth: '240px', display: 'flex', alignItems: 'center', background: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: '6px', padding: '5px 10px' }}>
+          <span style={{ marginRight: '6px', fontSize: '0.85rem' }}>🔍</span>
           <input
             type="text"
             placeholder="Search product by name or category..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{ width: '100%', border: 'none', background: 'transparent', outline: 'none', fontSize: '0.88rem', fontWeight: 500 }}
+            style={{ width: '100%', border: 'none', background: 'transparent', outline: 'none', fontSize: '0.82rem', fontWeight: 500 }}
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery('')} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontWeight: 800 }}>✕</button>
+            <button onClick={() => setSearchQuery('')} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontWeight: 800, fontSize: '0.8rem' }}>✕</button>
           )}
         </div>
 
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
           <button
             onClick={() => setStockFilter('ALL')}
-            style={{ padding: '6px 12px', borderRadius: '6px', border: stockFilter === 'ALL' ? '2px solid #0f172a' : '1px solid #cbd5e1', background: stockFilter === 'ALL' ? '#0f172a' : '#fff', color: stockFilter === 'ALL' ? '#fff' : '#334155', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer' }}
+            style={{ padding: '5px 10px', borderRadius: '6px', border: stockFilter === 'ALL' ? '1.5px solid #0f172a' : '1px solid #cbd5e1', background: stockFilter === 'ALL' ? '#0f172a' : '#fff', color: stockFilter === 'ALL' ? '#fff' : '#334155', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
           >
             All ({totalProducts})
           </button>
           <button
             onClick={() => setStockFilter('IN_STOCK')}
-            style={{ padding: '6px 12px', borderRadius: '6px', border: stockFilter === 'IN_STOCK' ? '2px solid #16a34a' : '1px solid #cbd5e1', background: stockFilter === 'IN_STOCK' ? '#16a34a' : '#fff', color: stockFilter === 'IN_STOCK' ? '#fff' : '#16a34a', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' }}
+            style={{ padding: '5px 10px', borderRadius: '6px', border: stockFilter === 'IN_STOCK' ? '1.5px solid #16a34a' : '1px solid #cbd5e1', background: stockFilter === 'IN_STOCK' ? '#16a34a' : '#fff', color: stockFilter === 'IN_STOCK' ? '#fff' : '#16a34a', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
           >
             🟢 In Stock ({inStockCount})
           </button>
           <button
             onClick={() => setStockFilter('LOW_STOCK')}
-            style={{ padding: '6px 12px', borderRadius: '6px', border: stockFilter === 'LOW_STOCK' ? '2px solid #d97706' : '1px solid #cbd5e1', background: stockFilter === 'LOW_STOCK' ? '#d97706' : '#fff', color: stockFilter === 'LOW_STOCK' ? '#fff' : '#d97706', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' }}
+            style={{ padding: '5px 10px', borderRadius: '6px', border: stockFilter === 'LOW_STOCK' ? '1.5px solid #d97706' : '1px solid #cbd5e1', background: stockFilter === 'LOW_STOCK' ? '#d97706' : '#fff', color: stockFilter === 'LOW_STOCK' ? '#fff' : '#d97706', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
           >
             ⚠️ Low Stock ({lowStockCount})
           </button>
           <button
             onClick={() => setStockFilter('OUT_OF_STOCK')}
-            style={{ padding: '6px 12px', borderRadius: '6px', border: stockFilter === 'OUT_OF_STOCK' ? '2px solid #dc2626' : '1px solid #cbd5e1', background: stockFilter === 'OUT_OF_STOCK' ? '#dc2626' : '#fff', color: stockFilter === 'OUT_OF_STOCK' ? '#fff' : '#dc2626', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' }}
+            style={{ padding: '5px 10px', borderRadius: '6px', border: stockFilter === 'OUT_OF_STOCK' ? '1.5px solid #dc2626' : '1px solid #cbd5e1', background: stockFilter === 'OUT_OF_STOCK' ? '#dc2626' : '#fff', color: stockFilter === 'OUT_OF_STOCK' ? '#fff' : '#dc2626', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
           >
             🔴 Out of Stock ({outOfStockCount})
           </button>
@@ -1036,30 +1036,30 @@ export default function StockProductsPage() {
       )}
 
       {/* Products Table */}
-      <div style={{ background: '#fff', borderRadius: '12px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0', overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+      <div style={{ background: '#fff', borderRadius: '10px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', border: '1px solid #e2e8f0', overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '1050px' }}>
           <thead>
-            <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#64748b', fontSize: '0.85rem', textTransform: 'uppercase' }}>
-              <th style={{ padding: '15px 20px' }}>Image</th>
-              <th style={{ padding: '15px 20px' }}>Product Name</th>
-              <th style={{ padding: '15px 20px' }}>Category</th>
-              <th style={{ padding: '15px 20px' }}>📦 Live Stock (Pcs)</th>
-              <th style={{ padding: '15px 20px' }}>Detailed Description</th>
-              <th style={{ padding: '15px 20px' }}>Sizes Configured</th>
-              <th style={{ padding: '15px 20px' }}>Base Price</th>
-              <th style={{ padding: '15px 20px' }}>Pack Tiers</th>
-              <th style={{ padding: '15px 20px' }}>Status</th>
-              <th style={{ padding: '15px 20px' }}>Action</th>
+            <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#64748b', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <th style={{ padding: '8px 10px', width: '48px' }}>Image</th>
+              <th style={{ padding: '8px 10px', minWidth: '220px' }}>Product Name</th>
+              <th style={{ padding: '8px 10px' }}>Category</th>
+              <th style={{ padding: '8px 10px' }}>📦 Live Stock (Pcs)</th>
+              <th style={{ padding: '8px 10px' }}>Detailed Description</th>
+              <th style={{ padding: '8px 10px' }}>Sizes Configured</th>
+              <th style={{ padding: '8px 10px' }}>Base Price</th>
+              <th style={{ padding: '8px 10px' }}>Pack Tiers</th>
+              <th style={{ padding: '8px 10px' }}>Status</th>
+              <th style={{ padding: '8px 10px', textAlign: 'right' }}>Action</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={10} style={{ padding: '30px', textAlign: 'center', color: '#64748b' }}>Loading products...</td></tr>
+              <tr><td colSpan={10} style={{ padding: '24px', textAlign: 'center', color: '#64748b', fontSize: '0.85rem' }}>Loading products...</td></tr>
             ) : filteredProducts.length === 0 ? (
-              <tr><td colSpan={10} style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>
-                <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🔍</div>
-                <strong style={{ color: '#0F172A', display: 'block', marginBottom: '4px' }}>Koi Product Nahi Mila</strong>
-                <span style={{ fontSize: '0.88rem' }}>Search query clear karein ya dusra filter select karein.</span>
+              <tr><td colSpan={10} style={{ padding: '30px', textAlign: 'center', color: '#64748b' }}>
+                <div style={{ fontSize: '1.6rem', marginBottom: '6px' }}>🔍</div>
+                <strong style={{ color: '#0F172A', display: 'block', marginBottom: '3px', fontSize: '0.9rem' }}>Koi Product Nahi Mila</strong>
+                <span style={{ fontSize: '0.8rem' }}>Search query clear karein ya dusra filter select karein.</span>
               </td></tr>
             ) : (
               filteredProducts.map((item) => {
@@ -1068,46 +1068,48 @@ export default function StockProductsPage() {
                 const stockQty = Number(item.stock_quantity ?? 0);
 
                 return (
-                  <tr key={item.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                    <td style={{ padding: '15px 20px' }}>
+                  <tr key={item.id} style={{ borderBottom: '1px solid #f1f5f9', fontSize: '0.82rem' }}>
+                    <td style={{ padding: '8px 10px', verticalAlign: 'middle' }}>
                       {item.images?.[0] ? (
-                        <img src={item.images[0]} alt={item.name} style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '6px' }} />
+                        <img src={item.images[0]} alt={item.name} style={{ width: '36px', height: '36px', objectFit: 'cover', borderRadius: '5px' }} />
                       ) : (
-                        <div style={{ width: '45px', height: '45px', background: '#f1f5f9', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px' }}>No Img</div>
+                        <div style={{ width: '36px', height: '36px', background: '#f1f5f9', borderRadius: '5px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', color: '#94a3b8' }}>No Img</div>
                       )}
                     </td>
-                    <td style={{ padding: '15px 20px' }}>
-                      <strong style={{ color: '#0F172A', display: 'block' }}>{item.name}</strong>
-                      <span style={{ fontSize: '0.78rem', color: '#64748B' }}>MOQ: {item.moq || 50} pcs</span>
+                    <td style={{ padding: '8px 10px', verticalAlign: 'middle', minWidth: '220px', maxWidth: '320px' }}>
+                      <strong style={{ color: '#0F172A', display: 'block', fontSize: '0.82rem', lineHeight: '1.25' }}>{item.name}</strong>
+                      <span style={{ fontSize: '0.7rem', color: '#64748B' }}>MOQ: {item.moq || 50} pcs</span>
                     </td>
-                    <td style={{ padding: '15px 20px', color: '#64748b', fontSize: '0.9rem' }}>{item.categories?.name || '-'}</td>
+                    <td style={{ padding: '8px 10px', verticalAlign: 'middle', color: '#64748b', fontSize: '0.78rem', whiteSpace: 'nowrap' }}>
+                      {item.categories?.name || '-'}
+                    </td>
                     
                     {/* Live Stock Quantity Column with Quick Adjust */}
-                    <td style={{ padding: '15px 20px', whiteSpace: 'nowrap' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                    <td style={{ padding: '8px 10px', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
                         {stockQty <= 0 ? (
-                          <span style={{ background: '#FEE2E2', color: '#DC2626', padding: '3px 8px', borderRadius: '6px', fontSize: '0.78rem', fontWeight: 800, border: '1px solid #FECDD3' }}>
+                          <span style={{ background: '#FEE2E2', color: '#DC2626', padding: '2px 6px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 800, border: '1px solid #FECDD3' }}>
                             🔴 Out of Stock (0)
                           </span>
                         ) : stockQty <= 200 ? (
-                          <span style={{ background: '#FEF3C7', color: '#D97706', padding: '3px 8px', borderRadius: '6px', fontSize: '0.78rem', fontWeight: 800, border: '1px solid #FDE68A' }}>
+                          <span style={{ background: '#FEF3C7', color: '#D97706', padding: '2px 6px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 800, border: '1px solid #FDE68A' }}>
                             ⚠️ {stockQty.toLocaleString('en-IN')} pcs
                           </span>
                         ) : (
-                          <span style={{ background: '#DCFCE7', color: '#15803D', padding: '3px 8px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: 900, border: '1px solid #BBF7D0' }}>
+                          <span style={{ background: '#DCFCE7', color: '#15803D', padding: '2px 6px', borderRadius: '4px', fontSize: '0.74rem', fontWeight: 800, border: '1px solid #BBF7D0' }}>
                             🟢 {stockQty.toLocaleString('en-IN')} pcs
                           </span>
                         )}
                       </div>
 
                       {/* Quick Adjust Buttons */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                         <button
                           type="button"
                           disabled={stockAdjustingId === item.id}
                           onClick={() => handleQuickStockAdjust(item.id, -100)}
                           title="Deduct 100 pcs from stock"
-                          style={{ padding: '2px 6px', background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 800, color: '#dc2626', cursor: 'pointer' }}
+                          style={{ padding: '1px 5px', background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '3px', fontSize: '0.68rem', fontWeight: 800, color: '#dc2626', cursor: 'pointer' }}
                         >
                           -100
                         </button>
@@ -1116,7 +1118,7 @@ export default function StockProductsPage() {
                           disabled={stockAdjustingId === item.id}
                           onClick={() => handleQuickStockAdjust(item.id, +100)}
                           title="Add 100 pcs to stock"
-                          style={{ padding: '2px 6px', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 800, color: '#16a34a', cursor: 'pointer' }}
+                          style={{ padding: '1px 5px', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '3px', fontSize: '0.68rem', fontWeight: 800, color: '#16a34a', cursor: 'pointer' }}
                         >
                           +100
                         </button>
@@ -1125,7 +1127,7 @@ export default function StockProductsPage() {
                           disabled={stockAdjustingId === item.id}
                           onClick={() => handleQuickStockAdjust(item.id, +500)}
                           title="Add 500 pcs to stock"
-                          style={{ padding: '2px 6px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 800, color: '#2563eb', cursor: 'pointer' }}
+                          style={{ padding: '1px 5px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '3px', fontSize: '0.68rem', fontWeight: 800, color: '#2563eb', cursor: 'pointer' }}
                         >
                           +500
                         </button>
@@ -1134,7 +1136,7 @@ export default function StockProductsPage() {
                           disabled={stockAdjustingId === item.id}
                           onClick={() => handleSetExactStock(item.id, stockQty)}
                           title="Type exact stock number"
-                          style={{ padding: '2px 6px', background: '#faf5ff', border: '1px solid #e9d5ff', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700, color: '#7c3aed', cursor: 'pointer' }}
+                          style={{ padding: '1px 5px', background: '#faf5ff', border: '1px solid #e9d5ff', borderRadius: '3px', fontSize: '0.68rem', fontWeight: 700, color: '#7c3aed', cursor: 'pointer' }}
                         >
                           ✏️ Set
                         </button>
@@ -1142,7 +1144,7 @@ export default function StockProductsPage() {
                     </td>
 
                     {/* Detailed Description Status */}
-                    <td style={{ padding: '15px 20px' }}>
+                    <td style={{ padding: '8px 10px', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
                       {(() => {
                         const parsed = parseProductDescription(item.description || '');
                         const hasFullDesc = Boolean(parsed.detailedText && parsed.detailedText.trim().length > 30);
@@ -1150,7 +1152,7 @@ export default function StockProductsPage() {
                           <span 
                             onClick={() => handleEdit(item)}
                             title="Click to view or edit detailed specs"
-                            style={{ background: '#DCFCE7', color: '#166534', padding: '3px 8px', borderRadius: '12px', fontSize: '0.76rem', fontWeight: 800, border: '1px solid #BBF7D0', display: 'inline-flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}
+                            style={{ background: '#DCFCE7', color: '#166534', padding: '2px 7px', borderRadius: '10px', fontSize: '0.72rem', fontWeight: 700, border: '1px solid #BBF7D0', display: 'inline-flex', alignItems: 'center', gap: '3px', cursor: 'pointer' }}
                           >
                             <span>✅</span> Detailed Specs
                           </span>
@@ -1158,7 +1160,7 @@ export default function StockProductsPage() {
                           <span 
                             onClick={() => handleEdit(item)}
                             title="Click to add detailed specs"
-                            style={{ background: '#FEF3C7', color: '#B45309', padding: '3px 8px', borderRadius: '12px', fontSize: '0.76rem', fontWeight: 800, border: '1px solid #FDE68A', display: 'inline-flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}
+                            style={{ background: '#FEF3C7', color: '#B45309', padding: '2px 7px', borderRadius: '10px', fontSize: '0.72rem', fontWeight: 700, border: '1px solid #FDE68A', display: 'inline-flex', alignItems: 'center', gap: '3px', cursor: 'pointer' }}
                           >
                             <span>⚠️</span> Summary Only
                           </span>
@@ -1166,32 +1168,34 @@ export default function StockProductsPage() {
                       })()}
                     </td>
 
-                    <td style={{ padding: '15px 20px' }}>
-                      <span style={{ background: '#DCFCE7', color: '#166534', padding: '3px 8px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 700 }}>
+                    <td style={{ padding: '8px 10px', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+                      <span style={{ background: '#DCFCE7', color: '#166534', padding: '2px 7px', borderRadius: '10px', fontSize: '0.72rem', fontWeight: 700 }}>
                         {variantsCount > 0 ? `${variantsCount} Sizes` : 'Default Size'}
                       </span>
                     </td>
-                    <td style={{ padding: '15px 20px' }}>
-                      <strong style={{ color: '#0F172A', fontSize: '0.95rem' }}>₹{item.selling_price || 0}</strong>
-                      <div style={{ fontSize: '0.72rem', color: '#64748B' }}>MRP: ₹{item.mrp || 0}</div>
-                      <span style={{ background: '#E0F2FE', color: '#0369A1', padding: '2px 6px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 800, display: 'inline-block', marginTop: '2px' }}>
+                    <td style={{ padding: '8px 10px', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+                      <strong style={{ color: '#0F172A', fontSize: '0.84rem' }}>₹{item.selling_price || 0}</strong>
+                      <div style={{ fontSize: '0.68rem', color: '#64748B' }}>MRP: ₹{item.mrp || 0}</div>
+                      <span style={{ background: '#E0F2FE', color: '#0369A1', padding: '1px 5px', borderRadius: '3px', fontSize: '0.65rem', fontWeight: 800, display: 'inline-block', marginTop: '1px' }}>
                         {item.gst_rate ?? item.gst_percentage ?? 18}% GST
                       </span>
                     </td>
 
-                    <td style={{ padding: '15px 20px' }}>
-                      <span style={{ background: '#DBEAFE', color: '#1E40AF', padding: '3px 8px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 700 }}>
+                    <td style={{ padding: '8px 10px', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+                      <span style={{ background: '#DBEAFE', color: '#1E40AF', padding: '2px 7px', borderRadius: '10px', fontSize: '0.72rem', fontWeight: 700 }}>
                         {tiersCount > 0 ? `${tiersCount} Packs` : 'Standard'}
                       </span>
                     </td>
-                    <td style={{ padding: '15px 20px' }}>
-                      <span style={{ background: item.is_active ? '#dcfce7' : '#fee2e2', color: item.is_active ? '#166534' : '#991b1b', padding: '4px 10px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 700 }}>
+                    <td style={{ padding: '8px 10px', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+                      <span style={{ background: item.is_active ? '#dcfce7' : '#fee2e2', color: item.is_active ? '#166534' : '#991b1b', padding: '2px 8px', borderRadius: '12px', fontSize: '0.72rem', fontWeight: 700 }}>
                         {item.is_active ? 'Active' : 'Draft'}
                       </span>
                     </td>
-                    <td style={{ padding: '15px 20px', display: 'flex', gap: '8px' }}>
-                      <button onClick={() => handleEdit(item)} style={{ padding: '6px 14px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 700, fontSize: '0.85rem' }}>Edit</button>
-                      <button onClick={() => handleDelete(item.id)} style={{ padding: '6px 12px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 700, fontSize: '0.85rem' }}>Delete</button>
+                    <td style={{ padding: '8px 10px', verticalAlign: 'middle', whiteSpace: 'nowrap', textAlign: 'right' }}>
+                      <div style={{ display: 'inline-flex', gap: '5px' }}>
+                        <button onClick={() => handleEdit(item)} style={{ padding: '4px 9px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 700, fontSize: '0.74rem' }}>Edit</button>
+                        <button onClick={() => handleDelete(item.id)} style={{ padding: '4px 8px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 700, fontSize: '0.74rem' }}>Delete</button>
+                      </div>
                     </td>
                   </tr>
                 );
