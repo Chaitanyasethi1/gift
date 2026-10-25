@@ -10,6 +10,7 @@ export const metadata = {
 
 import { redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
+import { AdminPasswordModal } from '@/components/admin/AdminPasswordModal';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient();
@@ -86,13 +87,19 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
       {/* Main Content */}
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <header style={{ background: '#fff', padding: '15px 30px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '20px' }}>
-          <div style={{ fontWeight: 600, color: '#475569' }}>Admin User</div>
-          <form action={logout}>
-            <button type="submit" style={{ padding: '8px 16px', background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', borderRadius: '6px', fontWeight: 600, cursor: 'pointer' }}>
-              Logout
-            </button>
-          </form>
+        <header style={{ background: '#fff', padding: '12px 28px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '15px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span style={{ fontSize: '0.85rem', color: '#64748B' }}>Admin Account:</span>
+            <span style={{ fontWeight: 700, color: '#0F172A', fontSize: '0.9rem' }}>{user.email || 'Admin User'}</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <AdminPasswordModal userEmail={user.email} />
+            <form action={logout}>
+              <button type="submit" style={{ padding: '6px 14px', background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', borderRadius: '6px', fontWeight: 600, fontSize: '0.82rem', cursor: 'pointer' }}>
+                Logout
+              </button>
+            </form>
+          </div>
         </header>
         <div style={{ padding: '30px', overflowY: 'auto', flex: 1 }}>
           {children}
