@@ -39,20 +39,20 @@ export interface ProductDetailInfo {
     text: string;
     linkSlug: string;
   };
-  deepDescription: {
+  deepDescription?: {
     headline: string;
     sections: DetailedSubSection[];
   };
-  faqs: DetailedFaq[];
-  offers: DetailedOffer[];
+  faqs?: DetailedFaq[];
+  offers?: DetailedOffer[];
 }
 
 export const DETAILED_DESCRIPTIONS: Record<string, ProductDetailInfo> = {
   '3-ply-corrugated-shipping-boxes': {
-    productName: 'Box Brother 3 Ply Brown Moving Corrugated Box',
-    subhead: 'Box Brother 3 ply Brown Corrugated Moving Box:',
+    productName: 'AS Print 3 Ply Brown Moving Corrugated Box',
+    subhead: 'AS Print 3 ply Brown Corrugated Moving Box:',
     specs: [
-      { label: 'Product Name', value: 'Box Brother 3 Ply Brown Moving Corrugated Box' },
+      { label: 'Product Name', value: 'AS Print 3 Ply Brown Moving Corrugated Box' },
       { label: 'Dimensions (inches)', value: '6 x 4 x 4 inches' },
       { label: 'Dimensions (cm)', value: '15.24 x 10.16 x 10.16 cm' },
       { label: 'Material', value: '3-Ply Corrugated Cardboard' },
@@ -62,7 +62,7 @@ export const DETAILED_DESCRIPTIONS: Record<string, ProductDetailInfo> = {
       { label: 'Customization', value: 'Logo Printing, Custom Sizes' },
       { label: 'Shipping', value: 'Free Pan-India Shipping' }
     ],
-    featureHeadline: 'Box Brother 3-Ply Brown Corrugated Moving Box (6x4x4 inches)',
+    featureHeadline: 'AS Print 3-Ply Brown Corrugated Moving Box (6x4x4 inches)',
     features: [
       {
         title: 'Size & Flexibility',
@@ -150,10 +150,10 @@ export const DETAILED_DESCRIPTIONS: Record<string, ProductDetailInfo> = {
   },
 
   '5-ply-heavy-duty-master-cartons': {
-    productName: 'Box Brother 5-Ply Heavy-Duty Master Shipping Carton',
-    subhead: 'Box Brother 5-Ply Heavy-Duty Master Shipping Carton:',
+    productName: 'AS Print 5-Ply Heavy-Duty Master Shipping Carton',
+    subhead: 'AS Print 5-Ply Heavy-Duty Master Shipping Carton:',
     specs: [
-      { label: 'Product Name', value: 'Box Brother 5-Ply Heavy-Duty Master Shipping Carton' },
+      { label: 'Product Name', value: 'AS Print 5-Ply Heavy-Duty Master Shipping Carton' },
       { label: 'Dimensions (inches)', value: '18 x 14 x 12 inches (Custom sizes available)' },
       { label: 'Dimensions (cm)', value: '45.72 x 35.56 x 30.48 cm' },
       { label: 'Material', value: 'Double-Wall 5-Ply Corrugated Kraft Board' },
@@ -163,7 +163,7 @@ export const DETAILED_DESCRIPTIONS: Record<string, ProductDetailInfo> = {
       { label: 'Customization', value: 'Flexo/Screen Logo Printing, Barcode Stamp, Custom Sizes' },
       { label: 'Shipping', value: 'Free Pan-India Shipping' }
     ],
-    featureHeadline: 'Box Brother 5-Ply Heavy-Duty Master Carton (18x14x12 inches)',
+    featureHeadline: 'AS Print 5-Ply Heavy-Duty Master Carton (18x14x12 inches)',
     features: [
       {
         title: 'Double-Wall Heavy Fluting',
@@ -1265,13 +1265,3378 @@ export const DETAILED_DESCRIPTIONS: Record<string, ProductDetailInfo> = {
         type: 'Percentage Discount'
       }
     ]
+  },
+  '3-ply-corrugated-box-3-5x3-5x3-5-inch': {
+    productName: "3-Ply Brown Corrugated Box (3.5\" × 3.5\" × 3.5\")",
+    subhead: "3-Ply Brown Corrugated Box (3.5\" × 3.5\" × 3.5\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (3.5\" × 3.5\" × 3.5\")" },
+      { label: 'Dimensions (inches)', value: "3.5\" × 3.5\" × 3.5\"" },
+      { label: 'Dimensions (cm)', value: "8.9 × 8.9 × 8.9 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-4x4x4-inch': {
+    productName: "3-Ply Brown Corrugated Box (4\" × 4\" × 4\")",
+    subhead: "3-Ply Brown Corrugated Box (4\" × 4\" × 4\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (4\" × 4\" × 4\")" },
+      { label: 'Dimensions (inches)', value: "4\" × 4\" × 4\"" },
+      { label: 'Dimensions (cm)', value: "10.2 × 10.2 × 10.2 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-4-5x4-5x2-inch': {
+    productName: "3-Ply Brown Corrugated Box (4.5\" × 4.5\" × 2\")",
+    subhead: "3-Ply Brown Corrugated Box (4.5\" × 4.5\" × 2\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (4.5\" × 4.5\" × 2\")" },
+      { label: 'Dimensions (inches)', value: "4.5\" × 4.5\" × 2\"" },
+      { label: 'Dimensions (cm)', value: "11.4 × 11.4 × 5.1 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-5x4x2-5-inch': {
+    productName: "3-Ply Brown Corrugated Box (5\" × 4\" × 2.5\")",
+    subhead: "3-Ply Brown Corrugated Box (5\" × 4\" × 2.5\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (5\" × 4\" × 2.5\")" },
+      { label: 'Dimensions (inches)', value: "5\" × 4\" × 2.5\"" },
+      { label: 'Dimensions (cm)', value: "12.7 × 10.2 × 6.3 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-5x4x3-5-inch': {
+    productName: "3-Ply Brown Corrugated Box (5\" × 4\" × 3.5\")",
+    subhead: "3-Ply Brown Corrugated Box (5\" × 4\" × 3.5\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (5\" × 4\" × 3.5\")" },
+      { label: 'Dimensions (inches)', value: "5\" × 4\" × 3.5\"" },
+      { label: 'Dimensions (cm)', value: "12.7 × 10.2 × 8.9 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-5x5x5-inch': {
+    productName: "3-Ply Brown Corrugated Box (5\" × 5\" × 5\")",
+    subhead: "3-Ply Brown Corrugated Box (5\" × 5\" × 5\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (5\" × 5\" × 5\")" },
+      { label: 'Dimensions (inches)', value: "5\" × 5\" × 5\"" },
+      { label: 'Dimensions (cm)', value: "12.7 × 12.7 × 12.7 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-6x6x6-inch': {
+    productName: "3-Ply Brown Corrugated Box (6\" × 6\" × 6\")",
+    subhead: "3-Ply Brown Corrugated Box (6\" × 6\" × 6\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (6\" × 6\" × 6\")" },
+      { label: 'Dimensions (inches)', value: "6\" × 6\" × 6\"" },
+      { label: 'Dimensions (cm)', value: "15.2 × 15.2 × 15.2 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-6x6x3-inch': {
+    productName: "3-Ply Brown Corrugated Box (6\" × 6\" × 3\")",
+    subhead: "3-Ply Brown Corrugated Box (6\" × 6\" × 3\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (6\" × 6\" × 3\")" },
+      { label: 'Dimensions (inches)', value: "6\" × 6\" × 3\"" },
+      { label: 'Dimensions (cm)', value: "15.2 × 15.2 × 7.6 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-6x3x3-inch': {
+    productName: "3-Ply Brown Corrugated Box (6\" × 3\" × 3\")",
+    subhead: "3-Ply Brown Corrugated Box (6\" × 3\" × 3\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (6\" × 3\" × 3\")" },
+      { label: 'Dimensions (inches)', value: "6\" × 3\" × 3\"" },
+      { label: 'Dimensions (cm)', value: "15.2 × 7.6 × 7.6 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-6x5x2-inch': {
+    productName: "3-Ply Brown Corrugated Box (6\" × 5\" × 2\")",
+    subhead: "3-Ply Brown Corrugated Box (6\" × 5\" × 2\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (6\" × 5\" × 2\")" },
+      { label: 'Dimensions (inches)', value: "6\" × 5\" × 2\"" },
+      { label: 'Dimensions (cm)', value: "15.2 × 12.7 × 5.1 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-6x4x4-inch': {
+    productName: "3-Ply Brown Corrugated Box (6\" × 4\" × 4\")",
+    subhead: "3-Ply Brown Corrugated Box (6\" × 4\" × 4\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (6\" × 4\" × 4\")" },
+      { label: 'Dimensions (inches)', value: "6\" × 4\" × 4\"" },
+      { label: 'Dimensions (cm)', value: "15.2 × 10.2 × 10.2 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-7x7x7-inch': {
+    productName: "3-Ply Brown Corrugated Box (7\" × 7\" × 7\")",
+    subhead: "3-Ply Brown Corrugated Box (7\" × 7\" × 7\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (7\" × 7\" × 7\")" },
+      { label: 'Dimensions (inches)', value: "7\" × 7\" × 7\"" },
+      { label: 'Dimensions (cm)', value: "17.8 × 17.8 × 17.8 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-7x4x2-inch': {
+    productName: "3-Ply Brown Corrugated Box (7\" × 4\" × 2\")",
+    subhead: "3-Ply Brown Corrugated Box (7\" × 4\" × 2\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (7\" × 4\" × 2\")" },
+      { label: 'Dimensions (inches)', value: "7\" × 4\" × 2\"" },
+      { label: 'Dimensions (cm)', value: "17.8 × 10.2 × 5.1 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-7x4x3-5-inch': {
+    productName: "3-Ply Brown Corrugated Box (7\" × 4\" × 3.5\")",
+    subhead: "3-Ply Brown Corrugated Box (7\" × 4\" × 3.5\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (7\" × 4\" × 3.5\")" },
+      { label: 'Dimensions (inches)', value: "7\" × 4\" × 3.5\"" },
+      { label: 'Dimensions (cm)', value: "17.8 × 10.2 × 8.9 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-7x5-25x4-25-inch': {
+    productName: "3-Ply Brown Corrugated Box (7\" × 5.25\" × 4.25\")",
+    subhead: "3-Ply Brown Corrugated Box (7\" × 5.25\" × 4.25\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (7\" × 5.25\" × 4.25\")" },
+      { label: 'Dimensions (inches)', value: "7\" × 5.25\" × 4.25\"" },
+      { label: 'Dimensions (cm)', value: "17.8 × 13.3 × 10.8 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-7-5x4-5x3-5-inch': {
+    productName: "3-Ply Brown Corrugated Box (7.5\" × 4.5\" × 3.5\")",
+    subhead: "3-Ply Brown Corrugated Box (7.5\" × 4.5\" × 3.5\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (7.5\" × 4.5\" × 3.5\")" },
+      { label: 'Dimensions (inches)', value: "7.5\" × 4.5\" × 3.5\"" },
+      { label: 'Dimensions (cm)', value: "19.1 × 11.4 × 8.9 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-8x8x3-inch': {
+    productName: "3-Ply Brown Corrugated Box (8\" × 8\" × 3\")",
+    subhead: "3-Ply Brown Corrugated Box (8\" × 8\" × 3\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (8\" × 8\" × 3\")" },
+      { label: 'Dimensions (inches)', value: "8\" × 8\" × 3\"" },
+      { label: 'Dimensions (cm)', value: "20.3 × 20.3 × 7.6 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-8x5x3-5-inch': {
+    productName: "3-Ply Brown Corrugated Box (8\" × 5\" × 3.5\")",
+    subhead: "3-Ply Brown Corrugated Box (8\" × 5\" × 3.5\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (8\" × 5\" × 3.5\")" },
+      { label: 'Dimensions (inches)', value: "8\" × 5\" × 3.5\"" },
+      { label: 'Dimensions (cm)', value: "20.3 × 12.7 × 8.9 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-8x5x2-inch': {
+    productName: "3-Ply Brown Corrugated Box (8\" × 5\" × 2\")",
+    subhead: "3-Ply Brown Corrugated Box (8\" × 5\" × 2\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (8\" × 5\" × 2\")" },
+      { label: 'Dimensions (inches)', value: "8\" × 5\" × 2\"" },
+      { label: 'Dimensions (cm)', value: "20.3 × 12.7 × 5.1 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-8x4x4-inch': {
+    productName: "3-Ply Brown Corrugated Box (8\" × 4\" × 4\")",
+    subhead: "3-Ply Brown Corrugated Box (8\" × 4\" × 4\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (8\" × 4\" × 4\")" },
+      { label: 'Dimensions (inches)', value: "8\" × 4\" × 4\"" },
+      { label: 'Dimensions (cm)', value: "20.3 × 10.2 × 10.2 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-8x4x8-inch': {
+    productName: "3-Ply Brown Corrugated Box (8\" × 4\" × 8\")",
+    subhead: "3-Ply Brown Corrugated Box (8\" × 4\" × 8\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (8\" × 4\" × 8\")" },
+      { label: 'Dimensions (inches)', value: "8\" × 4\" × 8\"" },
+      { label: 'Dimensions (cm)', value: "20.3 × 10.2 × 20.3 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-9x7-5x4-5-inch': {
+    productName: "3-Ply Brown Corrugated Box (9\" × 7.5\" × 4.5\")",
+    subhead: "3-Ply Brown Corrugated Box (9\" × 7.5\" × 4.5\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (9\" × 7.5\" × 4.5\")" },
+      { label: 'Dimensions (inches)', value: "9\" × 7.5\" × 4.5\"" },
+      { label: 'Dimensions (cm)', value: "22.9 × 19.1 × 11.4 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-9x6x6-inch': {
+    productName: "3-Ply Brown Corrugated Box (9\" × 6\" × 6\")",
+    subhead: "3-Ply Brown Corrugated Box (9\" × 6\" × 6\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (9\" × 6\" × 6\")" },
+      { label: 'Dimensions (inches)', value: "9\" × 6\" × 6\"" },
+      { label: 'Dimensions (cm)', value: "22.9 × 15.2 × 15.2 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-9x3x3-inch': {
+    productName: "3-Ply Brown Corrugated Box (9\" × 3\" × 3\")",
+    subhead: "3-Ply Brown Corrugated Box (9\" × 3\" × 3\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (9\" × 3\" × 3\")" },
+      { label: 'Dimensions (inches)', value: "9\" × 3\" × 3\"" },
+      { label: 'Dimensions (cm)', value: "22.9 × 7.6 × 7.6 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-9x6x3-inch': {
+    productName: "3-Ply Brown Corrugated Box (9\" × 6\" × 3\")",
+    subhead: "3-Ply Brown Corrugated Box (9\" × 6\" × 3\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (9\" × 6\" × 3\")" },
+      { label: 'Dimensions (inches)', value: "9\" × 6\" × 3\"" },
+      { label: 'Dimensions (cm)', value: "22.9 × 15.2 × 7.6 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-9x4x2-inch': {
+    productName: "3-Ply Brown Corrugated Box (9\" × 4\" × 2\")",
+    subhead: "3-Ply Brown Corrugated Box (9\" × 4\" × 2\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (9\" × 4\" × 2\")" },
+      { label: 'Dimensions (inches)', value: "9\" × 4\" × 2\"" },
+      { label: 'Dimensions (cm)', value: "22.9 × 10.2 × 5.1 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-9x6x4-5-inch': {
+    productName: "3-Ply Brown Corrugated Box (9\" × 6\" × 4.5\")",
+    subhead: "3-Ply Brown Corrugated Box (9\" × 6\" × 4.5\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (9\" × 6\" × 4.5\")" },
+      { label: 'Dimensions (inches)', value: "9\" × 6\" × 4.5\"" },
+      { label: 'Dimensions (cm)', value: "22.9 × 15.2 × 11.4 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-10x4-5x3-5-inch': {
+    productName: "3-Ply Brown Corrugated Box (10\" × 4.5\" × 3.5\")",
+    subhead: "3-Ply Brown Corrugated Box (10\" × 4.5\" × 3.5\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (10\" × 4.5\" × 3.5\")" },
+      { label: 'Dimensions (inches)', value: "10\" × 4.5\" × 3.5\"" },
+      { label: 'Dimensions (cm)', value: "25.4 × 11.4 × 8.9 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-11x6x5-inch': {
+    productName: "3-Ply Brown Corrugated Box (11\" × 6\" × 5\")",
+    subhead: "3-Ply Brown Corrugated Box (11\" × 6\" × 5\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (11\" × 6\" × 5\")" },
+      { label: 'Dimensions (inches)', value: "11\" × 6\" × 5\"" },
+      { label: 'Dimensions (cm)', value: "27.9 × 15.2 × 12.7 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-12x4x3-inch': {
+    productName: "3-Ply Brown Corrugated Box (12\" × 4\" × 3\")",
+    subhead: "3-Ply Brown Corrugated Box (12\" × 4\" × 3\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (12\" × 4\" × 3\")" },
+      { label: 'Dimensions (inches)', value: "12\" × 4\" × 3\"" },
+      { label: 'Dimensions (cm)', value: "30.5 × 10.2 × 7.6 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 25 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-12x10x8-inch': {
+    productName: "3-Ply Brown Corrugated Box (12\" × 10\" × 8\")",
+    subhead: "3-Ply Brown Corrugated Box (12\" × 10\" × 8\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (12\" × 10\" × 8\")" },
+      { label: 'Dimensions (inches)', value: "12\" × 10\" × 8\"" },
+      { label: 'Dimensions (cm)', value: "30.5 × 25.4 × 20.3 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 10 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-12x8x8-inch': {
+    productName: "3-Ply Brown Corrugated Box (12\" × 8\" × 8\")",
+    subhead: "3-Ply Brown Corrugated Box (12\" × 8\" × 8\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (12\" × 8\" × 8\")" },
+      { label: 'Dimensions (inches)', value: "12\" × 8\" × 8\"" },
+      { label: 'Dimensions (cm)', value: "30.5 × 20.3 × 20.3 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 10 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-12x2x12-inch': {
+    productName: "3-Ply Brown Corrugated Box (12\" × 2\" × 12\")",
+    subhead: "3-Ply Brown Corrugated Box (12\" × 2\" × 12\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (12\" × 2\" × 12\")" },
+      { label: 'Dimensions (inches)', value: "12\" × 2\" × 12\"" },
+      { label: 'Dimensions (cm)', value: "30.5 × 5.1 × 30.5 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 20 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-12x11x6-inch': {
+    productName: "3-Ply Brown Corrugated Box (12\" × 11\" × 6\")",
+    subhead: "3-Ply Brown Corrugated Box (12\" × 11\" × 6\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (12\" × 11\" × 6\")" },
+      { label: 'Dimensions (inches)', value: "12\" × 11\" × 6\"" },
+      { label: 'Dimensions (cm)', value: "30.5 × 27.9 × 15.2 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 10 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-15x11x9-inch': {
+    productName: "3-Ply Brown Corrugated Box (15\" × 11\" × 9\")",
+    subhead: "3-Ply Brown Corrugated Box (15\" × 11\" × 9\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (15\" × 11\" × 9\")" },
+      { label: 'Dimensions (inches)', value: "15\" × 11\" × 9\"" },
+      { label: 'Dimensions (cm)', value: "38.1 × 27.9 × 22.9 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 10 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-12x8x4-inch': {
+    productName: "3-Ply Brown Corrugated Box (12\" × 8\" × 4\")",
+    subhead: "3-Ply Brown Corrugated Box (12\" × 8\" × 4\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (12\" × 8\" × 4\")" },
+      { label: 'Dimensions (inches)', value: "12\" × 8\" × 4\"" },
+      { label: 'Dimensions (cm)', value: "30.5 × 20.3 × 10.2 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 20 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+  '3-ply-corrugated-box-4x4x3-inch': {
+    productName: "3-Ply Brown Corrugated Box (4\" × 4\" × 3\")",
+    subhead: "3-Ply Brown Corrugated Box (4\" × 4\" × 3\") - Direct Manufacturer Rates",
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Corrugated Box (4\" × 4\" × 3\")" },
+      { label: 'Dimensions (inches)', value: "4\" × 4\" × 3\"" },
+      { label: 'Dimensions (cm)', value: "10.2 × 10.2 × 7.6 cm" },
+      { label: 'Material', value: '3-Ply Corrugated Cardboard' },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Kraft Liner' },
+      { label: 'Flute Type', value: 'B/C Flute Structure' },
+      { label: 'Color', value: 'Classic Kraft Brown' },
+      { label: 'Weight Capacity', value: 'Up to 6-10 kg Payload' },
+      { label: 'Usage', value: 'Amazon, Flipkart, Meesho, E-Commerce, Courier Parcels & Warehousing' },
+      { label: 'Shipping', value: 'Fast Pan-India Doorstep Dispatch' }
+    ],
+    featureHeadline: 'Heavy-Duty 3-Ply Protection for Courier & Logistics Transit',
+    features: [
+      { title: 'High Bursting & Edge Crush Strength', desc: 'Crafted with premium virgin kraft paper and resilient fluting to absorb shocks and resist multi-tier transit drops.' },
+      { title: '100% Eco-Friendly & Recyclable', desc: 'Biodegradable, eco-compliant single-wall corrugated board.' },
+      { title: 'Standard Flap & Die-Cut Creasing', desc: 'Accurate machine pre-creased folds for effortless tape application and packaging speed.' },
+      { title: 'Direct Factory Wholesale Pricing', desc: 'Direct from manufacturer prices with volume-tiered savings.' }
+    ],
+    deepDescription: {
+      headline: 'Material Architecture & Quality Standards',
+      sections: [
+        { title: 'Corrugated Construction', content: 'Manufactured with high-speed automated corrugation lines ensuring uniform flute height, superior starch adhesion, and zero de-lamination under transit vibrations.' },
+        { title: 'Packaging Recommendations', content: 'Ideal for small-to-medium retail goods, books, apparel, gadgets, cosmetics, and fragile items paired with bubble wrap or kraft honeycomb wrap.' }
+      ]
+    },
+    faqs: [
+      { q: 'What is the MOQ for this box?', a: 'Minimum order quantity starts from 50 pieces with tiered volume discounts.' },
+      { q: 'Do you offer custom company logo printing?', a: 'Yes! Custom logo printing in single or multi-color is available for bulk consignments.' }
+    ],
+    offers: [
+      { code: 'FACTORYSAVE', description: 'Instant bulk discounts applied on packs of 100, 500, and 1,000 pcs.', type: 'discount' }
+    ]
+  },
+
+  '3-ply-white-corrugated-packing-box-7x4x2-inch-small-shipping-carton-box-eas': {
+    productName: "3 Ply White Corrugated Packing Box 7x4x2 Inch | Small Shipping Carton Box| Easy to Buy Packaging Box",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Corrugated Packing Box 7x4x2 Inch | Small Shipping Carton Box| Easy to Buy Packaging Box" },
+      { label: 'Category', value: "3 Ply White Corrugated Boxes" },
+      { label: 'Dimensions', value: "7\" × 4\" × 2\" (17.8 × 10.2 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-white-corrugated-packing-box-7x4x3-5-inch-durable-shipping-carton-sma': {
+    productName: "3 Ply White Corrugated Packing Box 7x4x3.5 Inch | Durable Shipping Carton | Small Packaging Box for Ecommerce",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Corrugated Packing Box 7x4x3.5 Inch | Durable Shipping Carton | Small Packaging Box for Ecommerce" },
+      { label: 'Category', value: "3 Ply White Corrugated Boxes" },
+      { label: 'Dimensions', value: "7\" × 4\" × 3.5\" (17.8 × 10.2 × 8.9 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-white-cardboard-box-size-9-5x6x3-5-length-9-5-inch-width-6-inch-heigh': {
+    productName: "3 Ply White Cardboard Box Size: 9.5x6x3.5 Length 9.5 inch Width 6 inch Height 3.5 inch 3Ply custom cardboard packing boxes",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Cardboard Box Size: 9.5x6x3.5 Length 9.5 inch Width 6 inch Height 3.5 inch 3Ply custom cardboard packing boxes" },
+      { label: 'Category', value: "3 Ply White Corrugated Boxes" },
+      { label: 'Dimensions', value: "9.5\" × 6\" × 3.5\" (24.1 × 15.2 × 8.9 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-white-corrugated-packing-box-5x4x2-5-inch-carton-box-shipping-box': {
+    productName: "3 Ply White Corrugated Packing Box 5x4x2.5 Inch, Carton Box. Shipping Box",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Corrugated Packing Box 5x4x2.5 Inch, Carton Box. Shipping Box" },
+      { label: 'Category', value: "3 Ply White Corrugated Boxes" },
+      { label: 'Dimensions', value: "5\" × 4\" × 2.5\" (12.7 × 10.2 × 6.3 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-white-cardboard-box-size-8x5x2-length-8-inch-width-5-inch-height-2-in': {
+    productName: "3 Ply White Cardboard Box Size: 8x5x2 Length 8 inch Width 5 inch Height 2 inch 3Ply custom cardboard packing boxes",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Cardboard Box Size: 8x5x2 Length 8 inch Width 5 inch Height 2 inch 3Ply custom cardboard packing boxes" },
+      { label: 'Category', value: "3 Ply White Corrugated Boxes" },
+      { label: 'Dimensions', value: "8\" × 5\" × 2\" (20.3 × 12.7 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-brown-corrugated-flap-box-size-4-5x3x1-inch-jewellery-and-gift-packag': {
+    productName: "3 Ply Brown Corrugated Flap Box Size 4.5x3x1 Inch | Jewellery And Gift Packaging box",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply Brown Corrugated Flap Box Size 4.5x3x1 Inch | Jewellery And Gift Packaging box" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "4.5\" × 3\" × 1\" (11.4 × 7.6 × 2.5 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '100 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 100 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-brown-flap-box-4x4x2-inch-ultimate-packaging-solution-for-small-busin': {
+    productName: "3-Ply Brown Flap Box 4x4x2 Inch-Ultimate Packaging Solution for Small Businesses",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3-Ply Brown Flap Box 4x4x2 Inch-Ultimate Packaging Solution for Small Businesses" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "4\" × 4\" × 2\" (10.2 × 10.2 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'brown-flap-box-3-ply-brown-flap-corrugated-box-size-4x4x1-5-inch-perfect-mi': {
+    productName: "3 Ply Brown Flap Corrugated Box – Size 4x4x1.5 Inch | Perfect Mini Packaging Box for Secure & Stylish Shipping",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply Brown Flap Corrugated Box – Size 4x4x1.5 Inch | Perfect Mini Packaging Box for Secure & Stylish Shipping" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "4\" × 4\" × 1.5\" (10.2 × 10.2 × 3.8 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'packaging-box-5x5x2-inch-brown-flap-box-mini-corrugated-packaging-for-jewel': {
+    productName: "AS Print Packaging Box 5x5x2 Inch Brown Flap Box – Mini Corrugated Packaging for Jewelry, Gifts & E-commerce Orders",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "AS Print Packaging Box 5x5x2 Inch Brown Flap Box – Mini Corrugated Packaging for Jewelry, Gifts & E-commerce Orders" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "5\" × 5\" × 2\" (12.7 × 12.7 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'brown-flap-box-3-ply-brown-flap-corrugated-box-6x4x2-inch-for-small-items': {
+    productName: "3 Ply Brown Flap Corrugated Box 6x4x2 Inch for Small Items",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply Brown Flap Corrugated Box 6x4x2 Inch for Small Items" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "6\" × 4\" × 2\" (15.2 × 10.2 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'brown-flap-box-3-ply-brown-flap-corrugated-box-size-6x5x1-5-inch-multipurpo': {
+    productName: "3 Ply Brown Flap Corrugated Box – Size 6x5x1.5 Inch | Multipurpose Brown Corrugated Box for Small Item Packaging",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply Brown Flap Corrugated Box – Size 6x5x1.5 Inch | Multipurpose Brown Corrugated Box for Small Item Packaging" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "6\" × 5\" × 1.5\" (15.2 × 12.7 × 3.8 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'brown-flap-box-3-ply-brown-flap-corrugated-box-size-7x5-5x2-inch-i-premium': {
+    productName: "3 Ply Brown Flap Corrugated Box – Size 7x5.5x2 Inch I Premium Corrugated Box for Shipping Gifts, Cosmetics & More",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply Brown Flap Corrugated Box – Size 7x5.5x2 Inch I Premium Corrugated Box for Shipping Gifts, Cosmetics & More" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "7\" × 5.5\" × 2\" (17.8 × 14.0 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'brown-flap-box-3-ply-brown-flap-corrugated-box-size-7x7x2-inch-i-premium-co': {
+    productName: "3 Ply Brown Flap Corrugated Box – Size 7x7x2 Inch I Premium Corrugated Kraft Box for Gift Sets, Hampers & Fragile Items",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply Brown Flap Corrugated Box – Size 7x7x2 Inch I Premium Corrugated Kraft Box for Gift Sets, Hampers & Fragile Items" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "7\" × 7\" × 2\" (17.8 × 17.8 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'brown-flap-box-3-ply-brown-flap-corrugated-box-size-9x6x3-inch-i-premium-co': {
+    productName: "3 Ply Brown Flap Corrugated Box – Size 9x6x3 Inch I Premium Corrugated Packaging for Gifts, Soaps, Ecommerce & Bulk Orders",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply Brown Flap Corrugated Box – Size 9x6x3 Inch I Premium Corrugated Packaging for Gifts, Soaps, Ecommerce & Bulk Orders" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "9\" × 6\" × 3\" (22.9 × 15.2 × 7.6 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '20 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 20 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-brown-corrugated-flap-box-size-14x13x2-5-inch-i-large-kraft-box-for-c': {
+    productName: "3 Ply Brown Corrugated Flap Box Size 14x13x2.5 Inch I Large Kraft Box for Clothing, Calendars, and Flat Product Shipping",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply Brown Corrugated Flap Box Size 14x13x2.5 Inch I Large Kraft Box for Clothing, Calendars, and Flat Product Shipping" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "14\" × 13\" × 2.5\" (35.6 × 33.0 × 6.3 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '10 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 10 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-brown-flap-box-size-13x9x2-inches-shipping-box-courier-box': {
+    productName: "3 ply Brown Flap Box Size 13X9X2 inches, Shipping Box Courier Box",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 ply Brown Flap Box Size 13X9X2 inches, Shipping Box Courier Box" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "13\" × 9\" × 2\" (33.0 × 22.9 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '20 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 20 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'brown-flap-box-3-ply-brown-corrugated-packing-box-flap-type-size-10x7x3-5-l': {
+    productName: "3 Ply Brown Corrugated Packing Box Flap Type Size: 10X7X3.5 Length 10 inch Width 7 inch Height 3.5 inch Shipping box Courier Box",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply Brown Corrugated Packing Box Flap Type Size: 10X7X3.5 Length 10 inch Width 7 inch Height 3.5 inch Shipping box Courier Box" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "10\" × 7\" × 3.5\" (25.4 × 17.8 × 8.9 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '10 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 10 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-brown-corrugated-carton-flap-box-size-8x4x2-inches-length-8-inch-widt': {
+    productName: "3 ply Brown Corrugated Carton Flap Box Size 8X4X2 inches Length 8 inch Width 4 inch Height 2 inch Shipping Box Courier Box",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 ply Brown Corrugated Carton Flap Box Size 8X4X2 inches Length 8 inch Width 4 inch Height 2 inch Shipping Box Courier Box" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "8\" × 4\" × 2\" (20.3 × 10.2 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'brown-flap-box-3-ply-brown-flap-corrugated-box-size-14x9x3-inch-ideal-packa': {
+    productName: "3 Ply Brown Flap Corrugated Box – Size 14x9x3 Inch | Ideal Packaging Box for E-commerce & Shipping",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply Brown Flap Corrugated Box – Size 14x9x3 Inch | Ideal Packaging Box for E-commerce & Shipping" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "14\" × 9\" × 3\" (35.6 × 22.9 × 7.6 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '10 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 10 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'brown-flap-box-4x2-5x1-5-inch-brown-flap-corrugated-box-3-ply-mini-packagin': {
+    productName: "4x2.5x1.5 Inch Brown Flap Corrugated Box | 3 Ply Mini Packaging Box for Jewelry, Gifts & E-commerce Shipping",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "4x2.5x1.5 Inch Brown Flap Corrugated Box | 3 Ply Mini Packaging Box for Jewelry, Gifts & E-commerce Shipping" },
+      { label: 'Category', value: "Brown Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "4\" × 2.5\" × 1.5\" (10.2 × 6.3 × 3.8 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-white-corrugated-flap-box-10x7x3-5-inch-for-gifts': {
+    productName: "3 Ply White Corrugated Flap Box 10x7x3.5 Inch for Gifts",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Corrugated Flap Box 10x7x3.5 Inch for Gifts" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "10\" × 7\" × 3.5\" (25.4 × 17.8 × 8.9 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '10 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 10 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-white-corrugated-flap-box-size-8x4x2-inch-stylish-corrugated-box-for': {
+    productName: "3 Ply White Corrugated Flap Box Size 8x4x2 Inch | Stylish Corrugated Box for Cosmetics, Electronics & Gifts",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Corrugated Flap Box Size 8x4x2 Inch | Stylish Corrugated Box for Cosmetics, Electronics & Gifts" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "8\" × 4\" × 2\" (20.3 × 10.2 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'white-flap-box-3-ply-white-flap-corrugated-box-size-9x6x3-inch-i-premium-co': {
+    productName: "3 Ply White Flap Corrugated Box – Size 9x6x3 Inch I Premium Corrugated Packaging for Gifts, Soaps, Ecommerce & Bulk Orders",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Flap Corrugated Box – Size 9x6x3 Inch I Premium Corrugated Packaging for Gifts, Soaps, Ecommerce & Bulk Orders" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "9\" × 6\" × 3\" (22.9 × 15.2 × 7.6 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '20 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 20 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'white-flap-box-3-ply-white-flap-corrugated-box-size-4x4x1-5-inch-perfect-mi': {
+    productName: "3 Ply White Flap Corrugated Box – Size 4x4x1.5 Inch | Perfect Mini Packaging Box for Secure & Stylish Shipping",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Flap Corrugated Box – Size 4x4x1.5 Inch | Perfect Mini Packaging Box for Secure & Stylish Shipping" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "4\" × 4\" × 1.5\" (10.2 × 10.2 × 3.8 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'packaging-box-5x5x2-inch-white-flap-box-mini-corrugated-packaging-for-jewel': {
+    productName: "AS Print Packaging Box 5x5x2 Inch White Flap Box – Mini Corrugated Packaging for Jewelry, Gifts & E-commerce Orders",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "AS Print Packaging Box 5x5x2 Inch White Flap Box – Mini Corrugated Packaging for Jewelry, Gifts & E-commerce Orders" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "5\" × 5\" × 2\" (12.7 × 12.7 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'white-flap-box-3-ply-white-flap-corrugated-box-6x4x2-inch-for-small-items': {
+    productName: "3 Ply White Flap Corrugated Box 6x4x2 Inch for Small Items",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Flap Corrugated Box 6x4x2 Inch for Small Items" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "6\" × 4\" × 2\" (15.2 × 10.2 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'white-flap-box-3-ply-white-flap-corrugated-box-size-7x7x2-inch-i-premium-co': {
+    productName: "3 Ply White Flap Corrugated Box – Size 7x7x2 Inch I Premium Corrugated Kraft Box for Gift Sets, Hampers & Fragile Items",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Flap Corrugated Box – Size 7x7x2 Inch I Premium Corrugated Kraft Box for Gift Sets, Hampers & Fragile Items" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "7\" × 7\" × 2\" (17.8 × 17.8 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-white-flap-box-size-13x9x2-inches-shipping-box-courier-box': {
+    productName: "3 ply White Flap Box Size 13X9X2 inches, Shipping Box Courier Box",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 ply White Flap Box Size 13X9X2 inches, Shipping Box Courier Box" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "13\" × 9\" × 2\" (33.0 × 22.9 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '20 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 20 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-white-corrugated-flap-box-size-14x13x2-5-inch-i-large-kraft-box-for-c': {
+    productName: "3 Ply White Corrugated Flap Box Size 14x13x2.5 Inch I Large Kraft Box for Clothing, Calendars, and Flat Product Shipping",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Corrugated Flap Box Size 14x13x2.5 Inch I Large Kraft Box for Clothing, Calendars, and Flat Product Shipping" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "14\" × 13\" × 2.5\" (35.6 × 33.0 × 6.3 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '10 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 10 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3ply-white-flap-box-4x4x2-inch-ultimate-packaging-solution-for-small-busine': {
+    productName: "3Ply White Flap Box 4x4x2 Inch-Ultimate Packaging Solution for Small Businesses",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3Ply White Flap Box 4x4x2 Inch-Ultimate Packaging Solution for Small Businesses" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "4\" × 4\" × 2\" (10.2 × 10.2 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '3-ply-white-corrugated-flap-box-size-4-5x3x1-inch-jewellery-and-gift-packag': {
+    productName: "3 Ply White Corrugated Flap Box Size 4.5x3x1 Inch | Jewellery And Gift Packaging box",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Corrugated Flap Box Size 4.5x3x1 Inch | Jewellery And Gift Packaging box" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "4.5\" × 3\" × 1\" (11.4 × 7.6 × 2.5 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '100 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 100 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'white-flap-box-3-ply-white-flap-corrugated-box-size-6x5x1-5-inch-multipurpo': {
+    productName: "3 Ply White Flap Corrugated Box – Size 6x5x1.5 Inch | Multipurpose White Corrugated Box for Small Item Packaging",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Flap Corrugated Box – Size 6x5x1.5 Inch | Multipurpose White Corrugated Box for Small Item Packaging" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "6\" × 5\" × 1.5\" (15.2 × 12.7 × 3.8 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'white-flap-box-3-ply-white-flap-corrugated-box-size-7x5-5x2-inch-i-premium': {
+    productName: "3 Ply White Flap Corrugated Box – Size 7x5.5x2 Inch I Premium Corrugated Box for Shipping Gifts, Cosmetics & More",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Flap Corrugated Box – Size 7x5.5x2 Inch I Premium Corrugated Box for Shipping Gifts, Cosmetics & More" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "7\" × 5.5\" × 2\" (17.8 × 14.0 × 5.1 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'white-mug-packaging-box-5-3-5-4-inch-3-ply-corrugated-cardboard-flap-box-fo': {
+    productName: "White Mug Packaging Box 5×3.5×4 Inch | 3 Ply Corrugated Cardboard Flap Box for Safe Mug Shipping",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "White Mug Packaging Box 5×3.5×4 Inch | 3 Ply Corrugated Cardboard Flap Box for Safe Mug Shipping" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "5\" × 3.5\" × 4\" (12.7 × 8.9 × 10.2 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'white-flap-box-3-ply-white-flap-corrugated-box-14x9x3-inch-for-ecommerce': {
+    productName: "3 Ply White Flap Corrugated Box 14x9x3 Inch for Ecommerce",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "3 Ply White Flap Corrugated Box 14x9x3 Inch for Ecommerce" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "14\" × 9\" × 3\" (35.6 × 22.9 × 7.6 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '10 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 10 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'white-flap-box-4x2-5x1-5-inch-white-flap-corrugated-box-3-ply-mini-hamper-p': {
+    productName: "4x2.5x1.5 Inch White Flap Corrugated Box | 3 Ply Mini hamper Packaging Box for Jewelry, Gifts & E-commerce Shipping",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "4x2.5x1.5 Inch White Flap Corrugated Box | 3 Ply Mini hamper Packaging Box for Jewelry, Gifts & E-commerce Shipping" },
+      { label: 'Category', value: "White Flap Corrugated Boxes" },
+      { label: 'Dimensions', value: "4\" × 2.5\" × 1.5\" (10.2 × 6.3 × 3.8 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'premium-red-foldable-gift-box-with-ribbon-luxury-rigid-box-for-gift-hampers': {
+    productName: "AS Print Gallery Premium Red Foldable Gift Box with Ribbon | Luxury Rigid Box for Gift Hampers, Weddings & Corporate Gifting (23 × 16 × 10 cm)",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "AS Print Gallery Premium Red Foldable Gift Box with Ribbon | Luxury Rigid Box for Gift Hampers, Weddings & Corporate Gifting (23 × 16 × 10 cm)" },
+      { label: 'Category', value: "Rigid Luxury Boxes" },
+      { label: 'Dimensions', value: "9.1\" × 6.3\" × 3.9\" (23 × 16 × 10 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '1 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 1 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'premium-yellow-rakhi-gift-box-with-golden-ribbon-18-13-7-cm-luxury-rigid-bo': {
+    productName: "Premium Yellow Rakhi Gift Box with Golden Ribbon (18 × 13 × 7 cm) | Luxury Rigid Box for Raksha Bandhan Gifts, Chocolates, Dry Fruits & Gift Hampers",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "Premium Yellow Rakhi Gift Box with Golden Ribbon (18 × 13 × 7 cm) | Luxury Rigid Box for Raksha Bandhan Gifts, Chocolates, Dry Fruits & Gift Hampers" },
+      { label: 'Category', value: "Rigid Luxury Boxes" },
+      { label: 'Dimensions', value: "7.1\" × 5.1\" × 2.8\" (18 × 13 × 7 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '1 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 1 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'premium-purple-rakhi-gift-box-with-black-ribbon-18-13-7-cm-luxury-rigid-box': {
+    productName: "AS Print Gallery Premium Purple Rakhi Gift Box with Black Ribbon (18 × 13 × 7 cm) | Luxury Rigid Box for Raksha Bandhan Gifts, Chocolates, Dry Fruits & Gift Hamp",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "AS Print Gallery Premium Purple Rakhi Gift Box with Black Ribbon (18 × 13 × 7 cm) | Luxury Rigid Box for Raksha Bandhan Gifts, Chocolates, Dry Fruits & Gift Hamp" },
+      { label: 'Category', value: "Rigid Luxury Boxes" },
+      { label: 'Dimensions', value: "7.1\" × 5.1\" × 2.8\" (18 × 13 × 7 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '1 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 1 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '4-cavity-red-diwali-rigid-gift-box-size-18x16-5x-4-cm-pack-of-1': {
+    productName: "4 Cavity Red Diwali Rigid Gift Box Size 18X16.5X 4 cm– Pack of 1 | AS Print Gallery",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "4 Cavity Red Diwali Rigid Gift Box Size 18X16.5X 4 cm– Pack of 1 | AS Print Gallery" },
+      { label: 'Category', value: "Rigid Luxury Boxes" },
+      { label: 'Dimensions', value: "7.1\" × 6.5\" × 1.6\" (18 × 16.5 × 4 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '1 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 1 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'yellow-4-cavity-diwali-gift-box-pack-of-1': {
+    productName: "AS Print Gallery Yellow 4 Cavity Diwali Gift Box – Pack of 1",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "AS Print Gallery Yellow 4 Cavity Diwali Gift Box – Pack of 1" },
+      { label: 'Category', value: "Rigid Luxury Boxes" },
+      { label: 'Dimensions', value: "7.1\" × 6.5\" × 1.6\" (18 × 16.5 × 4 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '1 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 1 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'purple-4-cavity-diwali-rigid-gift-box-size-18-16-5-4-cm-pack-of-1': {
+    productName: "AS Print Gallery Purple 4 Cavity Diwali Rigid Gift Box Size 18 × 16.5 × 4 cm – Pack of 1",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "AS Print Gallery Purple 4 Cavity Diwali Rigid Gift Box Size 18 × 16.5 × 4 cm – Pack of 1" },
+      { label: 'Category', value: "Rigid Luxury Boxes" },
+      { label: 'Dimensions', value: "7.1\" × 6.5\" × 1.6\" (18 × 16.5 × 4 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '1 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 1 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'purple-shubh-deepawali-4-cavity-rigid-gift-box-with-golden-ribbon-18-16-5-4': {
+    productName: "Purple Shubh Deepawali 4 Cavity Rigid Gift Box with Golden Ribbon, 18 × 16.5 × 4 cm",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "Purple Shubh Deepawali 4 Cavity Rigid Gift Box with Golden Ribbon, 18 × 16.5 × 4 cm" },
+      { label: 'Category', value: "Rigid Luxury Boxes" },
+      { label: 'Dimensions', value: "7.1\" × 6.5\" × 1.6\" (18 × 16.5 × 4 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '1 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 1 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'burger-packaging-box-4-4-2-75-inch-sbs-paper-food-packaging-box-for-takeawa': {
+    productName: "Burger Packaging Box (4 × 4 × 2.75 Inch)—SBS Paper Food Packaging Box for Takeaway & Delivery",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "Burger Packaging Box (4 × 4 × 2.75 Inch)—SBS Paper Food Packaging Box for Takeaway & Delivery" },
+      { label: 'Category', value: "Food Packaging Boxes & Containers" },
+      { label: 'Dimensions', value: "4\" × 4\" × 2.75\" (10.2 × 10.2 × 7.0 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'sandwich-packaging-box-22-16-7-cm-premium-sbs-paper-food-packaging-box': {
+    productName: "Sandwich Packaging Box (22 × 16 × 7 cm) – Premium SBS Paper Food Packaging Box",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "Sandwich Packaging Box (22 × 16 × 7 cm) – Premium SBS Paper Food Packaging Box" },
+      { label: 'Category', value: "Food Packaging Boxes & Containers" },
+      { label: 'Dimensions', value: "8.7\" × 6.3\" × 2.8\" (22 × 16 × 7 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '25 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 25 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'multicolour-printed-corrugated-pizza-box-for-7x7x1-5-inch-pizza-pack-of-50': {
+    productName: "Multicolour Printed Corrugated Pizza Box for 7x7x1.5-Inch Pizza – Pack of 50",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "Multicolour Printed Corrugated Pizza Box for 7x7x1.5-Inch Pizza – Pack of 50" },
+      { label: 'Category', value: "Food Packaging Boxes & Containers" },
+      { label: 'Dimensions', value: "7\" × 7\" × 1.5\" (17.8 × 17.8 × 3.8 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  'multicolour-printed-corrugated-pizza-box-for-9x9x1-5-inch-pizza-pack-of-50': {
+    productName: "Multicolour Printed Corrugated Pizza Box for 9x9x1.5-Inch Pizza – Pack of 50",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "Multicolour Printed Corrugated Pizza Box for 9x9x1.5-Inch Pizza – Pack of 50" },
+      { label: 'Category', value: "Food Packaging Boxes & Containers" },
+      { label: 'Dimensions', value: "9\" × 9\" × 1.5\" (22.9 × 22.9 × 3.8 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '4-4-4-inch-printed-pastry-box-for-2-pastries-cupcakes-donuts-desserts-multi': {
+    productName: "4 × 4 × 4 Inch Printed Pastry Box for 2 Pastries, Cupcakes, Donuts & Desserts - Multicolour Maroon, Pack of 50",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "4 × 4 × 4 Inch Printed Pastry Box for 2 Pastries, Cupcakes, Donuts & Desserts - Multicolour Maroon, Pack of 50" },
+      { label: 'Category', value: "Food Packaging Boxes & Containers" },
+      { label: 'Dimensions', value: "4\" × 4\" × 4\" (10.2 × 10.2 × 10.2 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '7-5-4-inch-printed-pastry-box-for-6-pastries-cupcakes-donuts-desserts-3-ass': {
+    productName: "7 × 5 × 4 Inch Printed Pastry Box for 6 Pastries, Cupcakes, Donuts & Desserts – 3 Assorted Designs, Pack of 50",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "7 × 5 × 4 Inch Printed Pastry Box for 6 Pastries, Cupcakes, Donuts & Desserts – 3 Assorted Designs, Pack of 50" },
+      { label: 'Category', value: "Food Packaging Boxes & Containers" },
+      { label: 'Dimensions', value: "7\" × 5\" × 4\" (17.8 × 12.7 × 10.2 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
+  },
+
+  '5-5-4-inch-printed-pastry-box-for-4-pastries-cupcakes-donuts-desserts-3-ass': {
+    productName: "5×5×4 Inch Printed Pastry Box for 4 Pastries, Cupcakes, Donuts & Desserts – 3 Assorted Designs, Pack of 50",
+    subhead: 'Technical Specifications & Quality Certifications:',
+    specs: [
+      { label: 'Product Name', value: "5×5×4 Inch Printed Pastry Box for 4 Pastries, Cupcakes, Donuts & Desserts – 3 Assorted Designs, Pack of 50" },
+      { label: 'Category', value: "Food Packaging Boxes & Containers" },
+      { label: 'Dimensions', value: "5\" × 5\" × 4\" (12.7 × 12.7 × 10.2 cm)" },
+      { label: 'Paper Grade', value: '18-24 BF Virgin Quality Paper' },
+      { label: 'Flute / Construction', value: 'Heavy Duty Structural Durability' },
+      { label: 'MOQ', value: '50 Pieces' },
+      { label: 'Dispatch Timeline', value: 'Immediate 24-48h dispatch from Ghaziabad Plant' },
+      { label: 'Custom Branding', value: 'Custom logo printing available upon request' }
+    ],
+    featureHeadline: 'Engineered for Maximum Strength & Protection',
+    features: [
+      {
+        title: 'Factory Direct High Bursting Strength',
+        desc: 'Engineered with premium virgin kraft paper and high-rigidity fluting to protect shipments against drops, vibrations, and stacking loads.'
+      },
+      {
+        title: 'Precision Die-Cut Fit',
+        desc: 'Manufactured with automated rotary die-cut machines ensuring clean folds, square edges, and seamless locking assembly.'
+      },
+      {
+        title: '100% Recyclable & Sustainable',
+        desc: 'Eco-friendly biodegradable construction conforming with Indian plastic ban regulations.'
+      }
+    ],
+    faqs: [
+      {
+        q: 'What is the minimum order quantity (MOQ)?',
+        a: 'The minimum order quantity for this item is 50 pieces with wholesale tiered rates for higher quantities.'
+      },
+      {
+        q: 'Can I print my custom logo and branding?',
+        a: 'Yes, custom multi-color branding and custom sizes are manufactured at our Ghaziabad plant.'
+      }
+    ]
   }
 };
 
-/**
- * Dynamic parser helper that extracts specifications, features, and FAQs
- * from user-written descriptions in the admin panel.
- */
 function parseCustomDescriptionData(rawText: string = ''): {
   specs: DetailedSpecRow[];
   features: DetailedFeature[];

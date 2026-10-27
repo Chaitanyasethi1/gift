@@ -25,7 +25,6 @@ export default function BannersAndHomepageAdmin() {
   const [uploadingCategoryImg, setUploadingCategoryImg] = useState(false);
   const [uploadingBubbleId, setUploadingBubbleId] = useState<string | null>(null);
 
-  // Active Tab
   const [activeTab, setActiveTab] = useState<'banners' | 'ticker' | 'categories'>('banners');
 
   useEffect(() => {

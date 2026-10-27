@@ -21,7 +21,7 @@ export default function StockProductsPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [stockFilter, setStockFilter] = useState<'ALL' | 'IN_STOCK' | 'LOW_STOCK' | 'OUT_OF_STOCK'>('ALL');
+  const [stockFilter, setStockFilter] = useState<'ALL' | 'IN_STOCK' | 'LOW_STOCK' | 'OUT_OF_STOCK' | 'HOT_DEAL' | 'MEGA_SALE' | 'NEW_ARRIVAL' | 'BEST_SELLER'>('ALL');
   const [stockAdjustingId, setStockAdjustingId] = useState<string | null>(null);
   
   // Modal State
@@ -32,6 +32,7 @@ export default function StockProductsPage() {
   const [shortDesc, setShortDesc] = useState('');
   const [detailedDesc, setDetailedDesc] = useState('');
   const [isSyncing, setIsSyncing] = useState(false);
+  const [isImporting3Ply, setIsImporting3Ply] = useState(false);
   
   const defaultItem = { 
     name: '', slug: '', category_id: '', description: '', mrp: 0, selling_price: 0, stock_quantity: 1000, is_active: true, images: [] as string[],
@@ -61,6 +62,23 @@ export default function StockProductsPage() {
       alert('Sync failed: ' + (err.message || 'Unknown error'));
     } finally {
       setIsSyncing(false);
+    }
+  }
+
+  // Auto-Sync 3-Ply Boxes from Scraped Gurez Catalog
+  async function handleSync3PlyBoxes() {
+    if (!confirm('Kya aap 3-Ply Boxes catalog ko auto-sync / refresh karna chahte hain? Sabhi 37 boxes images, dimensions, combo rates aur descriptions ke sath update ho jayenge.')) return;
+    setIsImporting3Ply(true);
+    try {
+      const res = await fetch('/api/admin/products/import-3ply', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Sync failed');
+      alert(`✅ 3-Ply Boxes Synchronized Successfully!\n\nAdded New Boxes: ${data.inserted}\nUpdated Existing Boxes: ${data.updated}\nTotal 3-Ply Catalog: ${data.total}`);
+      fetchData();
+    } catch (err: any) {
+      alert('Sync failed: ' + (err.message || 'Unknown error'));
+    } finally {
+      setIsImporting3Ply(false);
     }
   }
 
@@ -436,6 +454,10 @@ export default function StockProductsPage() {
   const lowStockCount = products.filter(p => Number(p.stock_quantity || 0) > 0 && Number(p.stock_quantity || 0) <= 200).length;
   const outOfStockCount = products.filter(p => Number(p.stock_quantity || 0) <= 0).length;
   const inStockCount = products.filter(p => Number(p.stock_quantity || 0) > 200).length;
+  const hotDealsCount = products.filter(p => !!p.flag_hot_deal).length;
+  const megaSaleCount = products.filter(p => !!p.flag_mega_sale).length;
+  const newArrivalsCount = products.filter(p => !!p.flag_new_arrival).length;
+  const bestSellersCount = products.filter(p => !!p.flag_best_seller).length;
 
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
@@ -450,6 +472,14 @@ export default function StockProductsPage() {
         matchesFilter = stock > 0 && stock <= 200;
       } else if (stockFilter === 'OUT_OF_STOCK') {
         matchesFilter = stock <= 0;
+      } else if (stockFilter === 'HOT_DEAL') {
+        matchesFilter = !!p.flag_hot_deal;
+      } else if (stockFilter === 'MEGA_SALE') {
+        matchesFilter = !!p.flag_mega_sale;
+      } else if (stockFilter === 'NEW_ARRIVAL') {
+        matchesFilter = !!p.flag_new_arrival;
+      } else if (stockFilter === 'BEST_SELLER') {
+        matchesFilter = !!p.flag_best_seller;
       }
 
       return matchesSearch && matchesFilter;
@@ -491,6 +521,29 @@ export default function StockProductsPage() {
           >
             <span>{isSyncing ? '⏳' : '⚡'}</span>
             <span>{isSyncing ? 'Syncing Catalog...' : 'Auto-Fill Detailed Descriptions (All)'}</span>
+          </button>
+          <button 
+            type="button"
+            onClick={handleSync3PlyBoxes}
+            disabled={isImporting3Ply}
+            style={{ 
+              background: '#8b5cf6', 
+              color: '#fff', 
+              padding: '8px 14px', 
+              borderRadius: '8px', 
+              border: 'none', 
+              fontWeight: 700, 
+              cursor: isImporting3Ply ? 'not-allowed' : 'pointer', 
+              fontSize: '0.82rem', 
+              boxShadow: '0 2px 6px rgba(139, 92, 246, 0.2)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '6px',
+              opacity: isImporting3Ply ? 0.7 : 1
+            }}
+          >
+            <span>{isImporting3Ply ? '⏳' : '📦'}</span>
+            <span>{isImporting3Ply ? 'Syncing 3-Ply...' : 'Auto-Sync 3-Ply Boxes (Gurez)'}</span>
           </button>
           <button 
             onClick={handleAddNew}
@@ -571,10 +624,28 @@ export default function StockProductsPage() {
             ⚠️ Low Stock ({lowStockCount})
           </button>
           <button
-            onClick={() => setStockFilter('OUT_OF_STOCK')}
-            style={{ padding: '5px 10px', borderRadius: '6px', border: stockFilter === 'OUT_OF_STOCK' ? '1.5px solid #dc2626' : '1px solid #cbd5e1', background: stockFilter === 'OUT_OF_STOCK' ? '#dc2626' : '#fff', color: stockFilter === 'OUT_OF_STOCK' ? '#fff' : '#dc2626', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
+            onClick={() => setStockFilter('HOT_DEAL')}
+            style={{ padding: '5px 10px', borderRadius: '6px', border: stockFilter === 'HOT_DEAL' ? '1.5px solid #dc2626' : '1px solid #cbd5e1', background: stockFilter === 'HOT_DEAL' ? '#dc2626' : '#fff', color: stockFilter === 'HOT_DEAL' ? '#fff' : '#dc2626', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
           >
-            🔴 Out of Stock ({outOfStockCount})
+            🔥 Hot Deals ({hotDealsCount})
+          </button>
+          <button
+            onClick={() => setStockFilter('MEGA_SALE')}
+            style={{ padding: '5px 10px', borderRadius: '6px', border: stockFilter === 'MEGA_SALE' ? '1.5px solid #7c3aed' : '1px solid #cbd5e1', background: stockFilter === 'MEGA_SALE' ? '#7c3aed' : '#fff', color: stockFilter === 'MEGA_SALE' ? '#fff' : '#7c3aed', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
+          >
+            🏷️ Mega Sale ({megaSaleCount})
+          </button>
+          <button
+            onClick={() => setStockFilter('NEW_ARRIVAL')}
+            style={{ padding: '5px 10px', borderRadius: '6px', border: stockFilter === 'NEW_ARRIVAL' ? '1.5px solid #059669' : '1px solid #cbd5e1', background: stockFilter === 'NEW_ARRIVAL' ? '#059669' : '#fff', color: stockFilter === 'NEW_ARRIVAL' ? '#fff' : '#059669', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
+          >
+            🌟 New Arrivals ({newArrivalsCount})
+          </button>
+          <button
+            onClick={() => setStockFilter('BEST_SELLER')}
+            style={{ padding: '5px 10px', borderRadius: '6px', border: stockFilter === 'BEST_SELLER' ? '1.5px solid #d97706' : '1px solid #cbd5e1', background: stockFilter === 'BEST_SELLER' ? '#d97706' : '#fff', color: stockFilter === 'BEST_SELLER' ? '#fff' : '#d97706', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
+          >
+            🏆 Best Sellers ({bestSellersCount})
           </button>
         </div>
       </div>
@@ -1078,10 +1149,18 @@ export default function StockProductsPage() {
                     </td>
                     <td style={{ padding: '8px 10px', verticalAlign: 'middle', minWidth: '220px', maxWidth: '320px' }}>
                       <strong style={{ color: '#0F172A', display: 'block', fontSize: '0.82rem', lineHeight: '1.25' }}>{item.name}</strong>
-                      <span style={{ fontSize: '0.7rem', color: '#64748B' }}>MOQ: {item.moq || 50} pcs</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '2px' }}>
+                        <span style={{ fontSize: '0.7rem', color: '#64748B' }}>MOQ: {item.moq || 50} pcs</span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', marginTop: '4px' }}>
+                        {item.flag_hot_deal && <span style={{ background: '#FEE2E2', color: '#DC2626', fontSize: '0.65rem', fontWeight: 700, padding: '1px 5px', borderRadius: '4px' }}>🔥 Hot Deal</span>}
+                        {item.flag_mega_sale && <span style={{ background: '#F3E8FF', color: '#7E22CE', fontSize: '0.65rem', fontWeight: 700, padding: '1px 5px', borderRadius: '4px' }}>🏷️ Mega Sale</span>}
+                        {item.flag_new_arrival && <span style={{ background: '#DCFCE7', color: '#15803D', fontSize: '0.65rem', fontWeight: 700, padding: '1px 5px', borderRadius: '4px' }}>🌟 New Arrival</span>}
+                        {item.flag_best_seller && <span style={{ background: '#FEF3C7', color: '#B45309', fontSize: '0.65rem', fontWeight: 700, padding: '1px 5px', borderRadius: '4px' }}>🏆 Best Seller</span>}
+                      </div>
                     </td>
                     <td style={{ padding: '8px 10px', verticalAlign: 'middle', color: '#64748b', fontSize: '0.78rem', whiteSpace: 'nowrap' }}>
-                      {item.categories?.name || '-'}
+                      {categories.find(c => c.id === item.category_id)?.name || item.categories?.name || '-'}
                     </td>
                     
                     {/* Live Stock Quantity Column with Quick Adjust */}

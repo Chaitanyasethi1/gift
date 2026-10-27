@@ -32,6 +32,16 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.asprintgallery.com',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gurezz-s3-new.s3.ap-south-1.amazonaws.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.amazonaws.com',
+        pathname: '/**',
       }
     ],
   },

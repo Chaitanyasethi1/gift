@@ -123,6 +123,14 @@ export async function resolveCategory(slug: string): Promise<CategoryMeta | null
     const aliasMap: Record<string, string> = {
       'packaging-boxes': 'packaging-material',
       'packaging-material': 'packaging-boxes',
+      '3-ply-box': 'craft-3-ply-box',
+      '3-ply-boxes': 'craft-3-ply-box',
+      'corrugated-boxes': 'craft-3-ply-box',
+      '3-ply-white-box': '3-ply-white-corrugated-boxes',
+      'flap-box': 'brown-flap-box',
+      'white-flap-box': 'white-flap-box',
+      'rigid-boxes': 'rigid-boxes',
+      'food-packaging': 'food-packaging',
       'disposable': 'disposable-products',
       'paper-courier-mailers': 'paper-bags-mailers',
       'pizza-packaging': 'pizza-boxes'
@@ -228,6 +236,14 @@ export async function getProductsForCategory(categorySlug: string): Promise<any[
     const aliasMap: Record<string, string> = {
       'packaging-boxes': 'packaging-material',
       'packaging-material': 'packaging-boxes',
+      '3-ply-box': 'craft-3-ply-box',
+      '3-ply-boxes': 'craft-3-ply-box',
+      'corrugated-boxes': 'craft-3-ply-box',
+      '3-ply-white-box': '3-ply-white-corrugated-boxes',
+      'flap-box': 'brown-flap-box',
+      'white-flap-box': 'white-flap-box',
+      'rigid-boxes': 'rigid-boxes',
+      'food-packaging': 'food-packaging',
       'disposable': 'disposable-products',
       'paper-courier-mailers': 'paper-bags-mailers',
       'pizza-packaging': 'pizza-boxes'
@@ -274,8 +290,8 @@ export async function getProductsForCategory(categorySlug: string): Promise<any[
     // C. Static fallback if no category_id is present
     const staticMap: Record<string, string[]> = {
       'corrugated': ['corrugated-boxes', 'packaging-material', 'packaging-boxes', 'craft-3-ply-box', '3-ply-white-corrugated-boxes', 'brown-flap-box', 'white-flap-box'],
-      'food': ['food-pizza', 'pizza-boxes', 'sweet-boxes', 'packaging-material', 'packaging-boxes'],
-      'packaging': ['packaging-material', 'packaging-boxes', 'garment-boxes', 'gift-boxes'],
+      'food': ['food-pizza', 'pizza-boxes', 'sweet-boxes', 'packaging-material', 'packaging-boxes', 'food-packaging'],
+      'packaging': ['packaging-material', 'packaging-boxes', 'garment-boxes', 'gift-boxes', 'rigid-boxes'],
       'label': ['labels-tags', 'woven-labels', 'satin-labels', 'printed-labels', 'hang-tags'],
       'sticker': ['stickers', 'product-stickers', 'round-stickers', 'custom-stickers', 'packaging-labels'],
       'bags': ['carry-bags', 'kraft-carry-bags', 'printed-carry-bags', 'handle-carry-bags', 'paper-bags-mailers', 'multi-colour-paper-bag']

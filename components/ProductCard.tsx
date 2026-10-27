@@ -157,6 +157,49 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({ product }) => {
           {discountPercent}% OFF
         </div>
 
+        {/* Dynamic Display Badge (Hot Deal, Best Seller, Mega Sale, New Arrival) */}
+        {(() => {
+          let badgeText = '';
+          let badgeBg = '';
+
+          if (product?.flag_hot_deal) {
+            badgeText = '🔥 Hot Deal';
+            badgeBg = '#DC2626';
+          } else if (product?.flag_best_seller) {
+            badgeText = '🏆 Best Seller';
+            badgeBg = '#D97706';
+          } else if (product?.flag_mega_sale) {
+            badgeText = '🏷️ Mega Sale';
+            badgeBg = '#7C3AED';
+          } else if (product?.flag_new_arrival) {
+            badgeText = '🌟 New Arrival';
+            badgeBg = '#059669';
+          }
+
+          if (!badgeText) return null;
+
+          return (
+            <div
+              style={{
+                position: 'absolute',
+                top: '40px',
+                left: '12px',
+                background: badgeBg,
+                color: '#FFFFFF',
+                padding: '2px 8px',
+                borderRadius: '6px',
+                fontSize: '0.67rem',
+                fontWeight: 800,
+                letterSpacing: '0.3px',
+                boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
+                zIndex: 3
+              }}
+            >
+              {badgeText}
+            </div>
+          );
+        })()}
+
         {/* Top-Right: Circular Wishlist Heart Button (Exact Reference Style) */}
         <button
           type="button"

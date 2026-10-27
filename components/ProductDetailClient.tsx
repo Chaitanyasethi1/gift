@@ -40,21 +40,28 @@ interface ProductDetailClientProps {
 export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ product, similarProducts }) => {
   const { addToCart, setIsCartOpen, setIsQuoteModalOpen, setSelectedQuoteProduct } = useCart();
   
-  // Extract and memoize variants
+  // Extract and memoize variants (Excludes pack options so "Choose Size" is never shown for single-size corrugated boxes)
   const variantList: SizeVariantItem[] = useMemo(() => {
+    let raw: SizeVariantItem[] = [];
     if (Array.isArray(product.variants) && product.variants.length > 0) {
-      return product.variants;
+      raw = product.variants;
+    } else {
+      const sizes = ((product as any).sizes || []) as string[];
+      if (sizes.length > 0) {
+        const baseP = Number(product.selling_price || product.price || 10);
+        raw = sizes.map((s: string) => ({
+          size: s,
+          price: baseP,
+          mrp: (product as any).mrp || Math.round(baseP * 1.5)
+        }));
+      }
     }
-    const sizes = ((product as any).sizes || []) as string[];
-    if (sizes.length > 0) {
-      const baseP = Number(product.selling_price || product.price || 10);
-      return sizes.map((s: string) => ({
-        size: s,
-        price: baseP,
-        mrp: (product as any).mrp || Math.round(baseP * 1.5)
-      }));
-    }
-    return [];
+    // Filter out pack counts - those belong exclusively in "Pack Of" selector
+    return raw.filter(v => {
+      if (!v || !v.size) return false;
+      const lower = v.size.toLowerCase();
+      return !lower.includes('pack') && !lower.includes('pcs') && !lower.includes('pieces');
+    });
   }, [product]);
 
   const [selectedVariantIndex, setSelectedVariantIndex] = useState<number>(0);
@@ -121,14 +128,8 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
     setZoomCoords({ x: xPct, y: yPct, lensX: offsetX, lensY: offsetY });
   };
 
-  // Show only as many images as the product actually has packs or uploaded images
-  const visibleThumbnails = useMemo(() => {
-    const maxCount = Math.min(
-      parsedImageList.length,
-      Math.max(tiers.length, variantList.length, 1)
-    );
-    return parsedImageList.slice(0, maxCount);
-  }, [parsedImageList, tiers.length, variantList.length]);
+  // Show all available gallery images in thumbnails
+  const visibleThumbnails = parsedImageList;
 
   const initialQty = useMemo(() => {
     return tiers.length > 0 ? tiers[0].qty : (product.moq || 50);
@@ -503,8 +504,8 @@ Please confirm order and delivery timeline.`
               </div>
             )}
 
-            {/* 1. SIZE SELECTION (Completely Independent from Pack Selection) */}
-            {variantList.length > 0 && (
+            {/* 1. SIZE SELECTION (Only shown when there are 2 or more actual sizes to choose from) */}
+            {variantList.length > 1 && (
               <div style={{ marginBottom: '20px', background: '#F8FAFC', padding: '14px', borderRadius: '10px', border: '1px solid #E2E8F0' }}>
                 <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.88rem', fontWeight: 800, color: '#0F172A', marginBottom: '10px' }}>
                   <span>📏 1. Choose Size:</span>
