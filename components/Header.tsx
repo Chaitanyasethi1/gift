@@ -57,7 +57,9 @@ const NAV_CATEGORIES: NavCategory[] = [
       { label: 'Garments Boxes', link: '/category/garment-boxes', icon: '👔' },
       { label: 'Hamper Boxes', link: '/category/gift-boxes', icon: '🎁' },
       { label: 'Sweet Boxes', link: '/category/sweet-boxes', icon: '🍰' },
-      { label: 'Pizza Boxes', link: '/category/pizza-boxes', icon: '🍕' }
+      { label: 'Pizza Boxes', link: '/category/pizza-boxes', icon: '🍕' },
+      { label: 'Rigid Luxury Boxes', link: '/category/rigid-boxes', icon: '🎁' },
+      { label: 'Food Packaging Boxes & Containers', link: '/category/food-packaging', icon: '🍔' }
     ]
   },
   {
@@ -380,7 +382,23 @@ export function Header() {
           {matchingProducts.map((prod) => {
             let firstImg = prod.image || '/assets/corrugated_box.jpg';
             if (Array.isArray(prod.images) && prod.images.length > 0 && prod.images[0]) firstImg = prod.images[0];
-            const price = Number(prod.selling_price || prod.price || 10);
+            let displayPrice = Number(prod.selling_price || prod.price || 10);
+            let packLabel = '';
+            if (prod.price_tiers && Array.isArray(prod.price_tiers) && prod.price_tiers.length > 0) {
+              const firstTier = prod.price_tiers[0];
+              displayPrice = Number(firstTier.packPrice || firstTier.price || displayPrice);
+              if (firstTier.pack) packLabel = `Pack of ${firstTier.pack}`;
+            } else if (prod.bulk_pricing && Array.isArray(prod.bulk_pricing) && prod.bulk_pricing.length > 0) {
+              const first = prod.bulk_pricing[0];
+              if (first.price) displayPrice = Number(first.price);
+              if (first.label) {
+                const m = first.label.match(/₹([\d,]+)/);
+                if (m) displayPrice = Number(m[1].replace(/,/g, ''));
+                packLabel = first.label.split('(')[0].trim();
+              }
+            } else if (prod.pack_qty) {
+              packLabel = `Pack of ${prod.pack_qty}`;
+            }
             const title = prod.title || prod.name || 'Product';
 
             return (
@@ -413,7 +431,8 @@ export function Header() {
                   <div style={{ fontSize: '0.72rem', color: '#64748B', display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <span>{prod.categoryLabel || 'Packaging'}</span>
                     <span>•</span>
-                    <span style={{ color: '#16A34A', fontWeight: 800 }}>₹{price.toFixed(2)}/pc</span>
+                    <span style={{ color: '#16A34A', fontWeight: 800 }}>₹{Math.round(displayPrice)}</span>
+                    {packLabel ? <span style={{ color: '#64748B', fontSize: '0.68rem', fontWeight: 600 }}>({packLabel})</span> : null}
                   </div>
                 </div>
                 <button
@@ -529,6 +548,15 @@ export function Header() {
         }
         .header-marquee-box:hover .header-marquee {
           animation-play-state: paused;
+        }
+
+        .dark-nav-wrapper {
+          overflow-x: auto;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .dark-nav-wrapper::-webkit-scrollbar {
+          display: none;
         }
 
         /* Desktop Navigation Item & Dropdown Bridge */
@@ -940,7 +968,7 @@ export function Header() {
 
       {/* 4. Desktop Dark Navigation Bar with Smooth Dropdowns (Hidden on Mobile) */}
       <nav ref={navWrapperRef} className="dark-nav-wrapper" style={{ background: '#1E293B', color: '#fff', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '32px', padding: '0' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 'clamp(14px, 2vw, 28px)', padding: '0 15px', flexWrap: 'nowrap' }}>
           
           {navCategories.map((category) => {
             const isOpen = activeDropdown === category.title;

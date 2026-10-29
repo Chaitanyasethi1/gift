@@ -10,8 +10,7 @@ export async function GET() {
       .from('products')
       .select('*')
       .eq('is_active', true)
-      .order('created_at', { ascending: false })
-      .limit(12);
+      .order('created_at', { ascending: false });
 
     if (!error && dbProducts && dbProducts.length > 0) {
       return NextResponse.json(dbProducts, {
@@ -21,7 +20,7 @@ export async function GET() {
       });
     }
 
-    return NextResponse.json(PRODUCTS.slice(0, 10));
+    return NextResponse.json(PRODUCTS);
   } catch (err: any) {
     return NextResponse.json(PRODUCTS.slice(0, 10));
   }

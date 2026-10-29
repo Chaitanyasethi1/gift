@@ -173,18 +173,31 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   }, [tiers, selectedPackQty]);
 
   // 💰 ROBUST ACCURATE PRICE CALCULATION ENGINE
-  const unitPrice = useMemo(() => {
-    if (selectedVariant && Number(selectedVariant.price) > 0) {
-      return Number(selectedVariant.price);
+  // singlePackPrice matches the exact price displayed on the selected "Pack Of" button
+  const singlePackPrice = useMemo(() => {
+    // 1. Direct regex match on activeTier.label (e.g. "Pack of 500 (₹8,200)" -> 8200)
+    if (activeTier?.label) {
+      const m = String(activeTier.label).match(/₹([\d,]+)/);
+      if (m) {
+        return Number(m[1].replace(/,/g, ''));
+      }
     }
+    // 2. Direct rate on activeTier
     if (activeTier && Number(activeTier.rate) > 0) {
       const r = Number(activeTier.rate);
-      return (r > 40 && selectedPackQty >= 20) ? (r / selectedPackQty) : r;
+      if (r >= 35 || selectedPackQty <= 1) {
+        return r;
+      }
+      return Math.round(r * selectedPackQty);
     }
+    // 3. Fallback to product.selling_price or product.price
     return Number(product.selling_price || product.price) || 10;
-  }, [selectedVariant, activeTier, selectedPackQty, product]);
+  }, [activeTier, selectedPackQty, product]);
 
-  const singlePackPrice = unitPrice * selectedPackQty;
+  const unitPrice = useMemo(() => {
+    return selectedPackQty > 0 ? (singlePackPrice / selectedPackQty) : singlePackPrice;
+  }, [singlePackPrice, selectedPackQty]);
+
   const totalPieces = selectedPackQty * packCount;
   const subtotal = singlePackPrice * packCount;
 
@@ -200,23 +213,29 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
   const gst = subtotal * (gstRate / 100);
   const grandTotal = subtotal + gst;
 
-  // Dynamic MRP based on pack size and base ratio (matches Gurez India screenshot calculations)
-  const baseRatio = useMemo(() => {
+  // Exact Pack-Specific MRP and Discount from Active Tier
+  const currentMrp = useMemo(() => {
+    if (activeTier && (activeTier as any).mrp) {
+      return Number((activeTier as any).mrp);
+    }
+    if (activeTier && (activeTier as any).packMrp) {
+      return Number((activeTier as any).packMrp);
+    }
     const baseSelling = Number(product.selling_price || product.price) || 1;
     const baseMrp = Number((product as any).mrp) || Math.round(baseSelling * 1.6);
-    return baseMrp / baseSelling;
-  }, [product]);
-
-  const currentMrp = useMemo(() => {
-    return Math.round(singlePackPrice * baseRatio);
-  }, [singlePackPrice, baseRatio]);
+    const ratio = baseMrp / baseSelling;
+    return Math.round(singlePackPrice * ratio);
+  }, [activeTier, singlePackPrice, product]);
 
   const discountPercent = useMemo(() => {
+    if (activeTier && (activeTier as any).discount) {
+      return Number((activeTier as any).discount);
+    }
     if (currentMrp > singlePackPrice && currentMrp > 0) {
       return Math.round(((currentMrp - singlePackPrice) / currentMrp) * 100);
     }
     return 0;
-  }, [currentMrp, singlePackPrice]);
+  }, [activeTier, currentMrp, singlePackPrice]);
 
   const handleAddToCart = () => {
     addToCart({
@@ -435,6 +454,11 @@ Please confirm order and delivery timeline.`
                 <span style={{ fontSize: '2.2rem', fontWeight: 900, color: '#0F172A', letterSpacing: '-0.5px' }}>
                   ₹{singlePackPrice.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
+                {selectedPackQty > 1 && (
+                  <span style={{ fontSize: '0.95rem', color: '#64748B', fontWeight: 700, alignSelf: 'center' }}>
+                    (₹{unitPrice.toFixed(2)}/pc)
+                  </span>
+                )}
                 {currentMrp > singlePackPrice && (
                   <span style={{ fontSize: '1.25rem', color: '#94A3B8', textDecoration: 'line-through', fontWeight: 500 }}>
                     ₹{currentMrp.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -677,7 +701,7 @@ Please confirm order and delivery timeline.`
                   transition: 'background 0.2s'
                 }}
               >
-                Add ₹ {grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                Add ₹ {subtotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </button>
             </div>
 

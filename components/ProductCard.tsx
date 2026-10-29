@@ -14,8 +14,8 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart, setIsCartOpen, showToast } = useCart();
   const [isWishlisted, setIsWishlisted] = useState(false);
 
-  // 1. Extract image
-  const primaryImage = useMemo(() => {
+  // 1. Extract image with reactive state & error fallback
+  const resolvedInitialImage = useMemo(() => {
     const raw = product?.images;
     if (Array.isArray(raw) && raw.length > 0 && raw[0]) return raw[0];
     if (typeof raw === 'string') {
@@ -28,14 +28,52 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({ product }) => {
     return product?.image || '/assets/corrugated_box.jpg';
   }, [product]);
 
-  // 2. Pricing and Discount Calculation
-  const sellingPrice = Number(product?.selling_price || product?.price || 0);
-  const mrp = Number(product?.mrp || 0);
-  const displayMrp = mrp > sellingPrice ? mrp : Math.round(sellingPrice * 1.33);
-  const discountPercent = Math.max(
-    15,
-    Math.round(((displayMrp - sellingPrice) / displayMrp) * 100)
-  );
+  const [imgSrc, setImgSrc] = useState<string>(resolvedInitialImage);
+
+  React.useEffect(() => {
+    setImgSrc(resolvedInitialImage);
+  }, [resolvedInitialImage]);
+
+  // 2. Pricing and Discount Calculation (Always uses first pack price matching Gurez wholesale)
+  const { displaySellingPrice, displayMrp, discountPercent } = useMemo(() => {
+    let sp = Number(product?.selling_price || product?.price || 0);
+    let m = Number(product?.mrp || 0);
+
+    // If selling_price is a small per-unit rate (< 35) but product has bulk pack tiers, extract pack price
+    if (sp < 35) {
+      const rawBulk = product?.bulk_pricing || product?.tiers;
+      let tiers: any[] = [];
+      if (Array.isArray(rawBulk)) tiers = rawBulk;
+      else if (typeof rawBulk === 'string') {
+        try { tiers = JSON.parse(rawBulk); } catch {}
+      }
+      if (tiers.length > 0 && tiers[0]) {
+        const first = tiers[0];
+        const match = first.label ? String(first.label).match(/₹([\d,]+)/) : null;
+        if (match) {
+          sp = Number(match[1].replace(/,/g, ''));
+        } else if (first.qty && first.rate) {
+          sp = Math.round(first.qty * first.rate);
+        }
+        const qty = first.qty || product?.moq || 1;
+        if (m > 0 && m < sp) {
+          m = Math.round(qty * m);
+        }
+      }
+    }
+
+    const finalMrp = m > sp ? m : Math.round(sp * 1.5);
+    const disc = Math.max(
+      15,
+      Math.round(((finalMrp - sp) / finalMrp) * 100)
+    );
+
+    return {
+      displaySellingPrice: sp,
+      displayMrp: finalMrp,
+      discountPercent: disc
+    };
+  }, [product]);
 
   // 3. Authentic Ratings & Reviews
   const { ratingScore, reviewCount } = useMemo(() => {
@@ -62,9 +100,14 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({ product }) => {
   const handleAddClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    let minPack = Number(product.moq) > 1 ? Number(product.moq) : 1;
+    if (product.tiers && product.tiers.length > 0 && product.tiers[0].qty) {
+      minPack = Number(product.tiers[0].qty);
+    } else if (product.bulk_pricing && product.bulk_pricing.length > 0 && product.bulk_pricing[0].qty) {
+      minPack = Number(product.bulk_pricing[0].qty);
+    }
     const gstRate = parseGst(product.gst_rate ?? product.gst_percentage);
-    const minPack = Number(product.moq) > 1 ? Number(product.moq) : 100;
-    const packPrice = sellingPrice * minPack;
+    const packPrice = displaySellingPrice;
     addToCart({
       id: `${product.id}-pack-${minPack}`,
       productId: String(product.id),
@@ -75,7 +118,7 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({ product }) => {
       piecesPerPack: minPack,
       title: `${product.name || product.title || 'Product'} (Pack of ${minPack})`,
       price: packPrice,
-      image: primaryImage,
+      image: imgSrc,
       specs: product.specs || [],
       gstRate: gstRate
     }, 1);
@@ -124,11 +167,12 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({ product }) => {
         }}
       >
         <Image
-          src={primaryImage}
+          src={imgSrc}
           alt={product.name || product.title || 'Product'}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           loading="lazy"
+          onError={() => setImgSrc('/assets/corrugated_box.jpg')}
           style={{ 
             objectFit: 'contain', 
             padding: '16px', 
@@ -270,7 +314,7 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({ product }) => {
           {/* Price Line (₹749 ₹999) */}
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '6px' }}>
             <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#111827' }}>
-              ₹{Math.round(sellingPrice)}
+              ₹{Math.round(displaySellingPrice)}
             </span>
             <span style={{ fontSize: '0.86rem', color: '#9CA3AF', textDecoration: 'line-through' }}>
               ₹{Math.round(displayMrp)}
