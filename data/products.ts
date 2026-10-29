@@ -7,6 +7,10 @@
 export interface PriceTier {
   qty: number;
   rate: number;
+  price?: number;
+  mrp?: number;
+  packMrp?: number;
+  discount?: number;
   label?: string;
 }
 
@@ -41,6 +45,8 @@ export interface Product {
   flag_mega_sale?: boolean;
   flag_new_arrival?: boolean;
   flag_best_seller?: boolean;
+  gst_rate?: number;
+  gst_percentage?: number;
 }
 
 export const PRODUCTS: Product[] = [
@@ -76,51 +82,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 141,
+        "price": 141,
+        "mrp": 280,
+        "packMrp": 280,
+        "discount": 50,
         "label": "Pack of 108 (₹141)"
       },
       {
         "qty": 540,
         "rate": 236,
+        "price": 236,
+        "mrp": 1399,
+        "packMrp": 1399,
+        "discount": 83,
         "label": "Pack of 540 (₹236)"
       },
       {
         "qty": 1080,
         "rate": 428,
+        "price": 428,
+        "mrp": 2797,
+        "packMrp": 2797,
+        "discount": 85,
         "label": "Pack of 1080 (₹428)"
       },
       {
         "qty": 2160,
         "rate": 808,
+        "price": 808,
+        "mrp": 5594,
+        "packMrp": 5594,
+        "discount": 86,
         "label": "Pack of 2160 (₹808)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 280,
         "qty": 108,
-        "rate": 1.31,
-        "label": "Pack of 108 (₹141)"
+        "rate": 141,
+        "label": "Pack of 108 (₹141)",
+        "price": 141,
+        "discount": 50
       },
       {
+        "mrp": 1399,
         "qty": 540,
-        "rate": 0.44,
-        "label": "Pack of 540 (₹236)"
+        "rate": 236,
+        "label": "Pack of 540 (₹236)",
+        "price": 236,
+        "discount": 83
       },
       {
+        "mrp": 2797,
         "qty": 1080,
-        "rate": 0.4,
-        "label": "Pack of 1080 (₹428)"
+        "rate": 428,
+        "label": "Pack of 1080 (₹428)",
+        "price": 428,
+        "discount": 85
       },
       {
+        "mrp": 5594,
         "qty": 2160,
-        "rate": 0.37,
-        "label": "Pack of 2160 (₹808)"
+        "rate": 808,
+        "label": "Pack of 2160 (₹808)",
+        "price": 808,
+        "discount": 86
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "ca405f79-6078-4fe7-a39f-dac9062d3211",
@@ -156,51 +192,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 170,
+        "price": 170,
+        "mrp": 300,
+        "packMrp": 300,
+        "discount": 43,
         "label": "Pack of 108 (₹170)"
       },
       {
         "qty": 540,
         "rate": 427,
+        "price": 427,
+        "mrp": 1501,
+        "packMrp": 1501,
+        "discount": 72,
         "label": "Pack of 540 (₹427)"
       },
       {
         "qty": 1080,
         "rate": 808,
+        "price": 808,
+        "mrp": 3002,
+        "packMrp": 3002,
+        "discount": 73,
         "label": "Pack of 1080 (₹808)"
       },
       {
         "qty": 2160,
         "rate": 1524,
+        "price": 1524,
+        "mrp": 6005,
+        "packMrp": 6005,
+        "discount": 75,
         "label": "Pack of 2160 (₹1,524)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 300,
         "qty": 108,
-        "rate": 1.57,
-        "label": "Pack of 108 (₹170)"
+        "rate": 170,
+        "label": "Pack of 108 (₹170)",
+        "price": 170,
+        "discount": 43
       },
       {
+        "mrp": 1501,
         "qty": 540,
-        "rate": 0.79,
-        "label": "Pack of 540 (₹427)"
+        "rate": 427,
+        "label": "Pack of 540 (₹427)",
+        "price": 427,
+        "discount": 72
       },
       {
+        "mrp": 3002,
         "qty": 1080,
-        "rate": 0.75,
-        "label": "Pack of 1080 (₹808)"
+        "rate": 808,
+        "label": "Pack of 1080 (₹808)",
+        "price": 808,
+        "discount": 73
       },
       {
+        "mrp": 6005,
         "qty": 2160,
-        "rate": 0.71,
-        "label": "Pack of 2160 (₹1,524)"
+        "rate": 1524,
+        "label": "Pack of 2160 (₹1,524)",
+        "price": 1524,
+        "discount": 75
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "d6c73449-cd3f-45c1-b65d-3ed610b87b5b",
@@ -236,51 +302,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 170,
+        "price": 170,
+        "mrp": 299,
+        "packMrp": 299,
+        "discount": 43,
         "label": "Pack of 108 (₹170)"
       },
       {
         "qty": 540,
         "rate": 427,
+        "price": 427,
+        "mrp": 1496,
+        "packMrp": 1496,
+        "discount": 71,
         "label": "Pack of 540 (₹427)"
       },
       {
         "qty": 1080,
         "rate": 808,
+        "price": 808,
+        "mrp": 2992,
+        "packMrp": 2992,
+        "discount": 73,
         "label": "Pack of 1080 (₹808)"
       },
       {
         "qty": 2160,
         "rate": 1524,
+        "price": 1524,
+        "mrp": 5983,
+        "packMrp": 5983,
+        "discount": 75,
         "label": "Pack of 2160 (₹1,524)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 299,
         "qty": 108,
-        "rate": 1.57,
-        "label": "Pack of 108 (₹170)"
+        "rate": 170,
+        "label": "Pack of 108 (₹170)",
+        "price": 170,
+        "discount": 43
       },
       {
+        "mrp": 1496,
         "qty": 540,
-        "rate": 0.79,
-        "label": "Pack of 540 (₹427)"
+        "rate": 427,
+        "label": "Pack of 540 (₹427)",
+        "price": 427,
+        "discount": 71
       },
       {
+        "mrp": 2992,
         "qty": 1080,
-        "rate": 0.75,
-        "label": "Pack of 1080 (₹808)"
+        "rate": 808,
+        "label": "Pack of 1080 (₹808)",
+        "price": 808,
+        "discount": 73
       },
       {
+        "mrp": 5983,
         "qty": 2160,
-        "rate": 0.71,
-        "label": "Pack of 2160 (₹1,524)"
+        "rate": 1524,
+        "label": "Pack of 2160 (₹1,524)",
+        "price": 1524,
+        "discount": 75
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "12296840-e23e-400d-b06b-b2830211dc7a",
@@ -314,51 +410,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 170,
+        "price": 170,
+        "mrp": 300,
+        "packMrp": 300,
+        "discount": 43,
         "label": "Pack of 108 (₹170)"
       },
       {
         "qty": 540,
         "rate": 427,
+        "price": 427,
+        "mrp": 1501,
+        "packMrp": 1501,
+        "discount": 72,
         "label": "Pack of 540 (₹427)"
       },
       {
         "qty": 1080,
         "rate": 808,
+        "price": 808,
+        "mrp": 3002,
+        "packMrp": 3002,
+        "discount": 73,
         "label": "Pack of 1080 (₹808)"
       },
       {
         "qty": 2160,
         "rate": 1524,
+        "price": 1524,
+        "mrp": 6005,
+        "packMrp": 6005,
+        "discount": 75,
         "label": "Pack of 2160 (₹1,524)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 300,
         "qty": 108,
-        "rate": 1.57,
-        "label": "Pack of 108 (₹170)"
+        "rate": 170,
+        "label": "Pack of 108 (₹170)",
+        "price": 170,
+        "discount": 43
       },
       {
+        "mrp": 1501,
         "qty": 540,
-        "rate": 0.79,
-        "label": "Pack of 540 (₹427)"
+        "rate": 427,
+        "label": "Pack of 540 (₹427)",
+        "price": 427,
+        "discount": 72
       },
       {
+        "mrp": 3002,
         "qty": 1080,
-        "rate": 0.75,
-        "label": "Pack of 1080 (₹808)"
+        "rate": 808,
+        "label": "Pack of 1080 (₹808)",
+        "price": 808,
+        "discount": 73
       },
       {
+        "mrp": 6005,
         "qty": 2160,
-        "rate": 0.71,
-        "label": "Pack of 2160 (₹1,524)"
+        "rate": 1524,
+        "label": "Pack of 2160 (₹1,524)",
+        "price": 1524,
+        "discount": 75
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "e7597d2b-aded-4322-a2a6-7b872d637254",
@@ -394,51 +520,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 162,
+        "price": 162,
+        "mrp": 320,
+        "packMrp": 320,
+        "discount": 49,
         "label": "Pack of 108 (₹162)"
       },
       {
         "qty": 540,
         "rate": 371,
+        "price": 371,
+        "mrp": 1598,
+        "packMrp": 1598,
+        "discount": 77,
         "label": "Pack of 540 (₹371)"
       },
       {
         "qty": 1080,
         "rate": 712,
+        "price": 712,
+        "mrp": 3197,
+        "packMrp": 3197,
+        "discount": 78,
         "label": "Pack of 1080 (₹712)"
       },
       {
         "qty": 2160,
         "rate": 1379,
+        "price": 1379,
+        "mrp": 6394,
+        "packMrp": 6394,
+        "discount": 78,
         "label": "Pack of 2160 (₹1,379)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 320,
         "qty": 108,
-        "rate": 1.5,
-        "label": "Pack of 108 (₹162)"
+        "rate": 162,
+        "label": "Pack of 108 (₹162)",
+        "price": 162,
+        "discount": 49
       },
       {
+        "mrp": 1598,
         "qty": 540,
-        "rate": 0.69,
-        "label": "Pack of 540 (₹371)"
+        "rate": 371,
+        "label": "Pack of 540 (₹371)",
+        "price": 371,
+        "discount": 77
       },
       {
+        "mrp": 3197,
         "qty": 1080,
-        "rate": 0.66,
-        "label": "Pack of 1080 (₹712)"
+        "rate": 712,
+        "label": "Pack of 1080 (₹712)",
+        "price": 712,
+        "discount": 78
       },
       {
+        "mrp": 6394,
         "qty": 2160,
-        "rate": 0.64,
-        "label": "Pack of 2160 (₹1,379)"
+        "rate": 1379,
+        "label": "Pack of 2160 (₹1,379)",
+        "price": 1379,
+        "discount": 78
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "6a618fb5-7fee-45f7-a3c5-a321213dd229",
@@ -474,51 +630,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 141,
+        "price": 141,
+        "mrp": 280,
+        "packMrp": 280,
+        "discount": 50,
         "label": "Pack of 108 (₹141)"
       },
       {
         "qty": 540,
         "rate": 236,
+        "price": 236,
+        "mrp": 1399,
+        "packMrp": 1399,
+        "discount": 83,
         "label": "Pack of 540 (₹236)"
       },
       {
         "qty": 1080,
         "rate": 428,
+        "price": 428,
+        "mrp": 2797,
+        "packMrp": 2797,
+        "discount": 85,
         "label": "Pack of 1080 (₹428)"
       },
       {
         "qty": 2160,
         "rate": 808,
+        "price": 808,
+        "mrp": 5594,
+        "packMrp": 5594,
+        "discount": 86,
         "label": "Pack of 2160 (₹808)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 280,
         "qty": 108,
-        "rate": 1.31,
-        "label": "Pack of 108 (₹141)"
+        "rate": 141,
+        "label": "Pack of 108 (₹141)",
+        "price": 141,
+        "discount": 50
       },
       {
+        "mrp": 1399,
         "qty": 540,
-        "rate": 0.44,
-        "label": "Pack of 540 (₹236)"
+        "rate": 236,
+        "label": "Pack of 540 (₹236)",
+        "price": 236,
+        "discount": 83
       },
       {
+        "mrp": 2797,
         "qty": 1080,
-        "rate": 0.4,
-        "label": "Pack of 1080 (₹428)"
+        "rate": 428,
+        "label": "Pack of 1080 (₹428)",
+        "price": 428,
+        "discount": 85
       },
       {
+        "mrp": 5594,
         "qty": 2160,
-        "rate": 0.37,
-        "label": "Pack of 2160 (₹808)"
+        "rate": 808,
+        "label": "Pack of 2160 (₹808)",
+        "price": 808,
+        "discount": 86
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "e7985627-a279-4113-b90d-93da3a390435",
@@ -554,51 +740,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 162,
+        "price": 162,
+        "mrp": 320,
+        "packMrp": 320,
+        "discount": 49,
         "label": "Pack of 108 (₹162)"
       },
       {
         "qty": 540,
         "rate": 371,
+        "price": 371,
+        "mrp": 1598,
+        "packMrp": 1598,
+        "discount": 77,
         "label": "Pack of 540 (₹371)"
       },
       {
         "qty": 1080,
         "rate": 712,
+        "price": 712,
+        "mrp": 3197,
+        "packMrp": 3197,
+        "discount": 78,
         "label": "Pack of 1080 (₹712)"
       },
       {
         "qty": 2160,
         "rate": 1379,
+        "price": 1379,
+        "mrp": 6394,
+        "packMrp": 6394,
+        "discount": 78,
         "label": "Pack of 2160 (₹1,379)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 320,
         "qty": 108,
-        "rate": 1.5,
-        "label": "Pack of 108 (₹162)"
+        "rate": 162,
+        "label": "Pack of 108 (₹162)",
+        "price": 162,
+        "discount": 49
       },
       {
+        "mrp": 1598,
         "qty": 540,
-        "rate": 0.69,
-        "label": "Pack of 540 (₹371)"
+        "rate": 371,
+        "label": "Pack of 540 (₹371)",
+        "price": 371,
+        "discount": 77
       },
       {
+        "mrp": 3197,
         "qty": 1080,
-        "rate": 0.66,
-        "label": "Pack of 1080 (₹712)"
+        "rate": 712,
+        "label": "Pack of 1080 (₹712)",
+        "price": 712,
+        "discount": 78
       },
       {
+        "mrp": 6394,
         "qty": 2160,
-        "rate": 0.64,
-        "label": "Pack of 2160 (₹1,379)"
+        "rate": 1379,
+        "label": "Pack of 2160 (₹1,379)",
+        "price": 1379,
+        "discount": 78
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "365538dd-a26e-48c8-9825-1bfb5b825879",
@@ -632,51 +848,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 141,
+        "price": 141,
+        "mrp": 280,
+        "packMrp": 280,
+        "discount": 50,
         "label": "Pack of 108 (₹141)"
       },
       {
         "qty": 540,
         "rate": 236,
+        "price": 236,
+        "mrp": 1399,
+        "packMrp": 1399,
+        "discount": 83,
         "label": "Pack of 540 (₹236)"
       },
       {
         "qty": 1080,
         "rate": 428,
+        "price": 428,
+        "mrp": 2797,
+        "packMrp": 2797,
+        "discount": 85,
         "label": "Pack of 1080 (₹428)"
       },
       {
         "qty": 2160,
         "rate": 808,
+        "price": 808,
+        "mrp": 5594,
+        "packMrp": 5594,
+        "discount": 86,
         "label": "Pack of 2160 (₹808)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 280,
         "qty": 108,
-        "rate": 1.31,
-        "label": "Pack of 108 (₹141)"
+        "rate": 141,
+        "label": "Pack of 108 (₹141)",
+        "price": 141,
+        "discount": 50
       },
       {
+        "mrp": 1399,
         "qty": 540,
-        "rate": 0.44,
-        "label": "Pack of 540 (₹236)"
+        "rate": 236,
+        "label": "Pack of 540 (₹236)",
+        "price": 236,
+        "discount": 83
       },
       {
+        "mrp": 2797,
         "qty": 1080,
-        "rate": 0.4,
-        "label": "Pack of 1080 (₹428)"
+        "rate": 428,
+        "label": "Pack of 1080 (₹428)",
+        "price": 428,
+        "discount": 85
       },
       {
+        "mrp": 5594,
         "qty": 2160,
-        "rate": 0.37,
-        "label": "Pack of 2160 (₹808)"
+        "rate": 808,
+        "label": "Pack of 2160 (₹808)",
+        "price": 808,
+        "discount": 86
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "ad919d02-184e-446d-83ab-732d0ceef1c7",
@@ -711,51 +957,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 162,
+        "price": 162,
+        "mrp": 320,
+        "packMrp": 320,
+        "discount": 49,
         "label": "Pack of 108 (₹162)"
       },
       {
         "qty": 540,
         "rate": 371,
+        "price": 371,
+        "mrp": 1598,
+        "packMrp": 1598,
+        "discount": 77,
         "label": "Pack of 540 (₹371)"
       },
       {
         "qty": 1080,
         "rate": 712,
+        "price": 712,
+        "mrp": 3197,
+        "packMrp": 3197,
+        "discount": 78,
         "label": "Pack of 1080 (₹712)"
       },
       {
         "qty": 2160,
         "rate": 1379,
+        "price": 1379,
+        "mrp": 6394,
+        "packMrp": 6394,
+        "discount": 78,
         "label": "Pack of 2160 (₹1,379)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 320,
         "qty": 108,
-        "rate": 1.5,
-        "label": "Pack of 108 (₹162)"
+        "rate": 162,
+        "label": "Pack of 108 (₹162)",
+        "price": 162,
+        "discount": 49
       },
       {
+        "mrp": 1598,
         "qty": 540,
-        "rate": 0.69,
-        "label": "Pack of 540 (₹371)"
+        "rate": 371,
+        "label": "Pack of 540 (₹371)",
+        "price": 371,
+        "discount": 77
       },
       {
+        "mrp": 3197,
         "qty": 1080,
-        "rate": 0.66,
-        "label": "Pack of 1080 (₹712)"
+        "rate": 712,
+        "label": "Pack of 1080 (₹712)",
+        "price": 712,
+        "discount": 78
       },
       {
+        "mrp": 6394,
         "qty": 2160,
-        "rate": 0.64,
-        "label": "Pack of 2160 (₹1,379)"
+        "rate": 1379,
+        "label": "Pack of 2160 (₹1,379)",
+        "price": 1379,
+        "discount": 78
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "cbce5e01-2a19-4ec9-bb2f-a5318fdb8639",
@@ -789,51 +1065,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 162,
+        "price": 162,
+        "mrp": 320,
+        "packMrp": 320,
+        "discount": 49,
         "label": "Pack of 108 (₹162)"
       },
       {
         "qty": 540,
         "rate": 371,
+        "price": 371,
+        "mrp": 1598,
+        "packMrp": 1598,
+        "discount": 77,
         "label": "Pack of 540 (₹371)"
       },
       {
         "qty": 1080,
         "rate": 712,
+        "price": 712,
+        "mrp": 3197,
+        "packMrp": 3197,
+        "discount": 78,
         "label": "Pack of 1080 (₹712)"
       },
       {
         "qty": 2160,
         "rate": 1379,
+        "price": 1379,
+        "mrp": 6394,
+        "packMrp": 6394,
+        "discount": 78,
         "label": "Pack of 2160 (₹1,379)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 320,
         "qty": 108,
-        "rate": 1.5,
-        "label": "Pack of 108 (₹162)"
+        "rate": 162,
+        "label": "Pack of 108 (₹162)",
+        "price": 162,
+        "discount": 49
       },
       {
+        "mrp": 1598,
         "qty": 540,
-        "rate": 0.69,
-        "label": "Pack of 540 (₹371)"
+        "rate": 371,
+        "label": "Pack of 540 (₹371)",
+        "price": 371,
+        "discount": 77
       },
       {
+        "mrp": 3197,
         "qty": 1080,
-        "rate": 0.66,
-        "label": "Pack of 1080 (₹712)"
+        "rate": 712,
+        "label": "Pack of 1080 (₹712)",
+        "price": 712,
+        "discount": 78
       },
       {
+        "mrp": 6394,
         "qty": 2160,
-        "rate": 0.64,
-        "label": "Pack of 2160 (₹1,379)"
+        "rate": 1379,
+        "label": "Pack of 2160 (₹1,379)",
+        "price": 1379,
+        "discount": 78
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "2fd39bfa-8ce2-4c29-8cbd-83d9ed46be97",
@@ -867,51 +1173,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 141,
+        "price": 141,
+        "mrp": 280,
+        "packMrp": 280,
+        "discount": 50,
         "label": "Pack of 108 (₹141)"
       },
       {
         "qty": 540,
         "rate": 236,
+        "price": 236,
+        "mrp": 1399,
+        "packMrp": 1399,
+        "discount": 83,
         "label": "Pack of 540 (₹236)"
       },
       {
         "qty": 1080,
         "rate": 428,
+        "price": 428,
+        "mrp": 2797,
+        "packMrp": 2797,
+        "discount": 85,
         "label": "Pack of 1080 (₹428)"
       },
       {
         "qty": 2160,
         "rate": 808,
+        "price": 808,
+        "mrp": 5594,
+        "packMrp": 5594,
+        "discount": 86,
         "label": "Pack of 2160 (₹808)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 280,
         "qty": 108,
-        "rate": 1.31,
-        "label": "Pack of 108 (₹141)"
+        "rate": 141,
+        "label": "Pack of 108 (₹141)",
+        "price": 141,
+        "discount": 50
       },
       {
+        "mrp": 1399,
         "qty": 540,
-        "rate": 0.44,
-        "label": "Pack of 540 (₹236)"
+        "rate": 236,
+        "label": "Pack of 540 (₹236)",
+        "price": 236,
+        "discount": 83
       },
       {
+        "mrp": 2797,
         "qty": 1080,
-        "rate": 0.4,
-        "label": "Pack of 1080 (₹428)"
+        "rate": 428,
+        "label": "Pack of 1080 (₹428)",
+        "price": 428,
+        "discount": 85
       },
       {
+        "mrp": 5594,
         "qty": 2160,
-        "rate": 0.37,
-        "label": "Pack of 2160 (₹808)"
+        "rate": 808,
+        "label": "Pack of 2160 (₹808)",
+        "price": 808,
+        "discount": 86
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "0db63c9c-f179-49ca-844b-1b0a951e2e9b",
@@ -946,51 +1282,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 162,
+        "price": 162,
+        "mrp": 261,
+        "packMrp": 261,
+        "discount": 38,
         "label": "Pack of 108 (₹162)"
       },
       {
         "qty": 540,
         "rate": 371,
+        "price": 371,
+        "mrp": 1307,
+        "packMrp": 1307,
+        "discount": 72,
         "label": "Pack of 540 (₹371)"
       },
       {
         "qty": 1080,
         "rate": 712,
+        "price": 712,
+        "mrp": 2614,
+        "packMrp": 2614,
+        "discount": 73,
         "label": "Pack of 1080 (₹712)"
       },
       {
         "qty": 2160,
         "rate": 1379,
+        "price": 1379,
+        "mrp": 5227,
+        "packMrp": 5227,
+        "discount": 74,
         "label": "Pack of 2160 (₹1,379)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 261,
         "qty": 108,
-        "rate": 1.5,
-        "label": "Pack of 108 (₹162)"
+        "rate": 162,
+        "label": "Pack of 108 (₹162)",
+        "price": 162,
+        "discount": 38
       },
       {
+        "mrp": 1307,
         "qty": 540,
-        "rate": 0.69,
-        "label": "Pack of 540 (₹371)"
+        "rate": 371,
+        "label": "Pack of 540 (₹371)",
+        "price": 371,
+        "discount": 72
       },
       {
+        "mrp": 2614,
         "qty": 1080,
-        "rate": 0.66,
-        "label": "Pack of 1080 (₹712)"
+        "rate": 712,
+        "label": "Pack of 1080 (₹712)",
+        "price": 712,
+        "discount": 73
       },
       {
+        "mrp": 5227,
         "qty": 2160,
-        "rate": 0.64,
-        "label": "Pack of 2160 (₹1,379)"
+        "rate": 1379,
+        "label": "Pack of 2160 (₹1,379)",
+        "price": 1379,
+        "discount": 74
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "bdb92b62-7281-4dca-8217-ec87fec749a6",
@@ -1024,51 +1390,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 108,
         "rate": 141,
+        "price": 141,
+        "mrp": 280,
+        "packMrp": 280,
+        "discount": 50,
         "label": "Pack of 108 (₹141)"
       },
       {
         "qty": 540,
         "rate": 236,
+        "price": 236,
+        "mrp": 1399,
+        "packMrp": 1399,
+        "discount": 83,
         "label": "Pack of 540 (₹236)"
       },
       {
         "qty": 1080,
         "rate": 428,
+        "price": 428,
+        "mrp": 2797,
+        "packMrp": 2797,
+        "discount": 85,
         "label": "Pack of 1080 (₹428)"
       },
       {
         "qty": 2160,
         "rate": 808,
+        "price": 808,
+        "mrp": 5594,
+        "packMrp": 5594,
+        "discount": 86,
         "label": "Pack of 2160 (₹808)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 280,
         "qty": 108,
-        "rate": 1.31,
-        "label": "Pack of 108 (₹141)"
+        "rate": 141,
+        "label": "Pack of 108 (₹141)",
+        "price": 141,
+        "discount": 50
       },
       {
+        "mrp": 1399,
         "qty": 540,
-        "rate": 0.44,
-        "label": "Pack of 540 (₹236)"
+        "rate": 236,
+        "label": "Pack of 540 (₹236)",
+        "price": 236,
+        "discount": 83
       },
       {
+        "mrp": 2797,
         "qty": 1080,
-        "rate": 0.4,
-        "label": "Pack of 1080 (₹428)"
+        "rate": 428,
+        "label": "Pack of 1080 (₹428)",
+        "price": 428,
+        "discount": 85
       },
       {
+        "mrp": 5594,
         "qty": 2160,
-        "rate": 0.37,
-        "label": "Pack of 2160 (₹808)"
+        "rate": 808,
+        "label": "Pack of 2160 (₹808)",
+        "price": 808,
+        "discount": 86
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "185c8759-3ea3-4bf0-bc06-eb2304b05ee3",
@@ -1102,51 +1498,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 236,
+        "price": 236,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 61,
         "label": "Pack of 25 (₹236)"
       },
       {
         "qty": 50,
         "rate": 457,
+        "price": 457,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 62,
         "label": "Pack of 50 (₹457)"
       },
       {
         "qty": 500,
         "rate": 4190,
+        "price": 4190,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 65,
         "label": "Pack of 500 (₹4,190)"
       },
       {
         "qty": 1000,
         "rate": 8762,
+        "price": 8762,
+        "mrp": 24000,
+        "packMrp": 24000,
+        "discount": 63,
         "label": "Pack of 1000 (₹8,762)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 25,
-        "rate": 9.45,
-        "label": "Pack of 25 (₹236)"
+        "rate": 236,
+        "label": "Pack of 25 (₹236)",
+        "price": 236,
+        "discount": 61
       },
       {
+        "mrp": 1200,
         "qty": 50,
-        "rate": 9.14,
-        "label": "Pack of 50 (₹457)"
+        "rate": 457,
+        "label": "Pack of 50 (₹457)",
+        "price": 457,
+        "discount": 62
       },
       {
+        "mrp": 12000,
         "qty": 500,
-        "rate": 8.38,
-        "label": "Pack of 500 (₹4,190)"
+        "rate": 4190,
+        "label": "Pack of 500 (₹4,190)",
+        "price": 4190,
+        "discount": 65
       },
       {
+        "mrp": 24000,
         "qty": 1000,
-        "rate": 8.76,
-        "label": "Pack of 1000 (₹8,762)"
+        "rate": 8762,
+        "label": "Pack of 1000 (₹8,762)",
+        "price": 8762,
+        "discount": 63
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "9788b1da-2d88-4de9-a15b-cdf7028093c1",
@@ -1179,51 +1605,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 236,
+        "price": 236,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 61,
         "label": "Pack of 25 (₹236)"
       },
       {
         "qty": 50,
         "rate": 457,
+        "price": 457,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 62,
         "label": "Pack of 50 (₹457)"
       },
       {
         "qty": 500,
         "rate": 4190,
+        "price": 4190,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 65,
         "label": "Pack of 500 (₹4,190)"
       },
       {
         "qty": 1000,
         "rate": 8762,
+        "price": 8762,
+        "mrp": 24000,
+        "packMrp": 24000,
+        "discount": 63,
         "label": "Pack of 1000 (₹8,762)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 25,
-        "rate": 9.45,
-        "label": "Pack of 25 (₹236)"
+        "rate": 236,
+        "label": "Pack of 25 (₹236)",
+        "price": 236,
+        "discount": 61
       },
       {
+        "mrp": 1200,
         "qty": 50,
-        "rate": 9.14,
-        "label": "Pack of 50 (₹457)"
+        "rate": 457,
+        "label": "Pack of 50 (₹457)",
+        "price": 457,
+        "discount": 62
       },
       {
+        "mrp": 12000,
         "qty": 500,
-        "rate": 8.38,
-        "label": "Pack of 500 (₹4,190)"
+        "rate": 4190,
+        "label": "Pack of 500 (₹4,190)",
+        "price": 4190,
+        "discount": 65
       },
       {
+        "mrp": 24000,
         "qty": 1000,
-        "rate": 8.76,
-        "label": "Pack of 1000 (₹8,762)"
+        "rate": 8762,
+        "label": "Pack of 1000 (₹8,762)",
+        "price": 8762,
+        "discount": 63
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "5a969647-e7ff-49c1-b9ea-b242c8fb718c",
@@ -1258,61 +1714,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 284,
+        "price": 284,
+        "mrp": 560,
+        "packMrp": 560,
+        "discount": 49,
         "label": "Pack of 25 (₹284)"
       },
       {
         "qty": 50,
         "rate": 503,
+        "price": 503,
+        "mrp": 1120,
+        "packMrp": 1120,
+        "discount": 55,
         "label": "Pack of 50 (₹503)"
       },
       {
         "qty": 100,
         "rate": 950,
+        "price": 950,
+        "mrp": 2240,
+        "packMrp": 2240,
+        "discount": 58,
         "label": "Pack of 100 (₹950)"
       },
       {
         "qty": 500,
         "rate": 4571,
+        "price": 4571,
+        "mrp": 11200,
+        "packMrp": 11200,
+        "discount": 59,
         "label": "Pack of 500 (₹4,571)"
       },
       {
         "qty": 1000,
         "rate": 8999,
+        "price": 8999,
+        "mrp": 22400,
+        "packMrp": 22400,
+        "discount": 60,
         "label": "Pack of 1000 (₹8,999)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 560,
         "qty": 25,
-        "rate": 11.35,
-        "label": "Pack of 25 (₹284)"
+        "rate": 284,
+        "label": "Pack of 25 (₹284)",
+        "price": 284,
+        "discount": 49
       },
       {
+        "mrp": 1120,
         "qty": 50,
-        "rate": 10.06,
-        "label": "Pack of 50 (₹503)"
+        "rate": 503,
+        "label": "Pack of 50 (₹503)",
+        "price": 503,
+        "discount": 55
       },
       {
+        "mrp": 2240,
         "qty": 100,
-        "rate": 9.5,
-        "label": "Pack of 100 (₹950)"
+        "rate": 950,
+        "label": "Pack of 100 (₹950)",
+        "price": 950,
+        "discount": 58
       },
       {
+        "mrp": 11200,
         "qty": 500,
-        "rate": 9.14,
-        "label": "Pack of 500 (₹4,571)"
+        "rate": 4571,
+        "label": "Pack of 500 (₹4,571)",
+        "price": 4571,
+        "discount": 59
       },
       {
+        "mrp": 22400,
         "qty": 1000,
-        "rate": 9,
-        "label": "Pack of 1000 (₹8,999)"
+        "rate": 8999,
+        "label": "Pack of 1000 (₹8,999)",
+        "price": 8999,
+        "discount": 60
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "9d944d13-ddc9-4feb-80cd-d4a835345b7f",
@@ -1345,51 +1838,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 12,
         "rate": 267,
+        "price": 267,
+        "mrp": 550,
+        "packMrp": 550,
+        "discount": 51,
         "label": "Pack of 12 (₹267)"
       },
       {
         "qty": 24,
         "rate": 427,
+        "price": 427,
+        "mrp": 1100,
+        "packMrp": 1100,
+        "discount": 61,
         "label": "Pack of 24 (₹427)"
       },
       {
         "qty": 48,
         "rate": 824,
+        "price": 824,
+        "mrp": 2200,
+        "packMrp": 2200,
+        "discount": 63,
         "label": "Pack of 48 (₹824)"
       },
       {
         "qty": 96,
         "rate": 1550,
+        "price": 1550,
+        "mrp": 4400,
+        "packMrp": 4400,
+        "discount": 65,
         "label": "Pack of 96 (₹1,550)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 550,
         "qty": 12,
-        "rate": 22.22,
-        "label": "Pack of 12 (₹267)"
+        "rate": 267,
+        "label": "Pack of 12 (₹267)",
+        "price": 267,
+        "discount": 51
       },
       {
+        "mrp": 1100,
         "qty": 24,
-        "rate": 17.78,
-        "label": "Pack of 24 (₹427)"
+        "rate": 427,
+        "label": "Pack of 24 (₹427)",
+        "price": 427,
+        "discount": 61
       },
       {
+        "mrp": 2200,
         "qty": 48,
-        "rate": 17.17,
-        "label": "Pack of 48 (₹824)"
+        "rate": 824,
+        "label": "Pack of 48 (₹824)",
+        "price": 824,
+        "discount": 63
       },
       {
+        "mrp": 4400,
         "qty": 96,
-        "rate": 16.15,
-        "label": "Pack of 96 (₹1,550)"
+        "rate": 1550,
+        "label": "Pack of 96 (₹1,550)",
+        "price": 1550,
+        "discount": 65
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "fb19bd1e-69ca-4974-a407-14e781568e5c",
@@ -1423,51 +1946,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 12,
         "rate": 267,
+        "price": 267,
+        "mrp": 500,
+        "packMrp": 500,
+        "discount": 47,
         "label": "Pack of 12 (₹267)"
       },
       {
         "qty": 24,
         "rate": 427,
+        "price": 427,
+        "mrp": 1000,
+        "packMrp": 1000,
+        "discount": 57,
         "label": "Pack of 24 (₹427)"
       },
       {
         "qty": 48,
         "rate": 824,
+        "price": 824,
+        "mrp": 2000,
+        "packMrp": 2000,
+        "discount": 59,
         "label": "Pack of 48 (₹824)"
       },
       {
         "qty": 96,
         "rate": 1550,
+        "price": 1550,
+        "mrp": 4000,
+        "packMrp": 4000,
+        "discount": 61,
         "label": "Pack of 96 (₹1,550)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 500,
         "qty": 12,
-        "rate": 22.22,
-        "label": "Pack of 12 (₹267)"
+        "rate": 267,
+        "label": "Pack of 12 (₹267)",
+        "price": 267,
+        "discount": 47
       },
       {
+        "mrp": 1000,
         "qty": 24,
-        "rate": 17.78,
-        "label": "Pack of 24 (₹427)"
+        "rate": 427,
+        "label": "Pack of 24 (₹427)",
+        "price": 427,
+        "discount": 57
       },
       {
+        "mrp": 2000,
         "qty": 48,
-        "rate": 17.17,
-        "label": "Pack of 48 (₹824)"
+        "rate": 824,
+        "label": "Pack of 48 (₹824)",
+        "price": 824,
+        "discount": 59
       },
       {
+        "mrp": 4000,
         "qty": 96,
-        "rate": 16.15,
-        "label": "Pack of 96 (₹1,550)"
+        "rate": 1550,
+        "label": "Pack of 96 (₹1,550)",
+        "price": 1550,
+        "discount": 61
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "af56c6fd-0b46-4ab2-842a-33eceab6031e",
@@ -1501,51 +2054,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 12,
         "rate": 267,
+        "price": 267,
+        "mrp": 550,
+        "packMrp": 550,
+        "discount": 51,
         "label": "Pack of 12 (₹267)"
       },
       {
         "qty": 24,
         "rate": 427,
+        "price": 427,
+        "mrp": 1100,
+        "packMrp": 1100,
+        "discount": 61,
         "label": "Pack of 24 (₹427)"
       },
       {
         "qty": 48,
         "rate": 824,
+        "price": 824,
+        "mrp": 2200,
+        "packMrp": 2200,
+        "discount": 63,
         "label": "Pack of 48 (₹824)"
       },
       {
         "qty": 96,
         "rate": 1550,
+        "price": 1550,
+        "mrp": 4400,
+        "packMrp": 4400,
+        "discount": 65,
         "label": "Pack of 96 (₹1,550)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 550,
         "qty": 12,
-        "rate": 22.22,
-        "label": "Pack of 12 (₹267)"
+        "rate": 267,
+        "label": "Pack of 12 (₹267)",
+        "price": 267,
+        "discount": 51
       },
       {
+        "mrp": 1100,
         "qty": 24,
-        "rate": 17.78,
-        "label": "Pack of 24 (₹427)"
+        "rate": 427,
+        "label": "Pack of 24 (₹427)",
+        "price": 427,
+        "discount": 61
       },
       {
+        "mrp": 2200,
         "qty": 48,
-        "rate": 17.17,
-        "label": "Pack of 48 (₹824)"
+        "rate": 824,
+        "label": "Pack of 48 (₹824)",
+        "price": 824,
+        "discount": 63
       },
       {
+        "mrp": 4400,
         "qty": 96,
-        "rate": 16.15,
-        "label": "Pack of 96 (₹1,550)"
+        "rate": 1550,
+        "label": "Pack of 96 (₹1,550)",
+        "price": 1550,
+        "discount": 65
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "744f7907-cbaa-4fdb-b31c-103f07c9e89a",
@@ -1578,51 +2161,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 12,
         "rate": 267,
+        "price": 267,
+        "mrp": 550,
+        "packMrp": 550,
+        "discount": 51,
         "label": "Pack of 12 (₹267)"
       },
       {
         "qty": 24,
         "rate": 427,
+        "price": 427,
+        "mrp": 1100,
+        "packMrp": 1100,
+        "discount": 61,
         "label": "Pack of 24 (₹427)"
       },
       {
         "qty": 48,
         "rate": 824,
+        "price": 824,
+        "mrp": 2200,
+        "packMrp": 2200,
+        "discount": 63,
         "label": "Pack of 48 (₹824)"
       },
       {
         "qty": 96,
         "rate": 1550,
+        "price": 1550,
+        "mrp": 4400,
+        "packMrp": 4400,
+        "discount": 65,
         "label": "Pack of 96 (₹1,550)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 550,
         "qty": 12,
-        "rate": 22.22,
-        "label": "Pack of 12 (₹267)"
+        "rate": 267,
+        "label": "Pack of 12 (₹267)",
+        "price": 267,
+        "discount": 51
       },
       {
+        "mrp": 1100,
         "qty": 24,
-        "rate": 17.78,
-        "label": "Pack of 24 (₹427)"
+        "rate": 427,
+        "label": "Pack of 24 (₹427)",
+        "price": 427,
+        "discount": 61
       },
       {
+        "mrp": 2200,
         "qty": 48,
-        "rate": 17.17,
-        "label": "Pack of 48 (₹824)"
+        "rate": 824,
+        "label": "Pack of 48 (₹824)",
+        "price": 824,
+        "discount": 63
       },
       {
+        "mrp": 4400,
         "qty": 96,
-        "rate": 16.15,
-        "label": "Pack of 96 (₹1,550)"
+        "rate": 1550,
+        "label": "Pack of 96 (₹1,550)",
+        "price": 1550,
+        "discount": 65
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "d9907cbc-d146-415d-876b-52256b8c091a",
@@ -1655,51 +2268,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 12,
         "rate": 267,
+        "price": 267,
+        "mrp": 550,
+        "packMrp": 550,
+        "discount": 51,
         "label": "Pack of 12 (₹267)"
       },
       {
         "qty": 24,
         "rate": 427,
+        "price": 427,
+        "mrp": 1100,
+        "packMrp": 1100,
+        "discount": 61,
         "label": "Pack of 24 (₹427)"
       },
       {
         "qty": 48,
         "rate": 824,
+        "price": 824,
+        "mrp": 2200,
+        "packMrp": 2200,
+        "discount": 63,
         "label": "Pack of 48 (₹824)"
       },
       {
         "qty": 96,
         "rate": 1550,
+        "price": 1550,
+        "mrp": 4400,
+        "packMrp": 4400,
+        "discount": 65,
         "label": "Pack of 96 (₹1,550)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 550,
         "qty": 12,
-        "rate": 22.22,
-        "label": "Pack of 12 (₹267)"
+        "rate": 267,
+        "label": "Pack of 12 (₹267)",
+        "price": 267,
+        "discount": 51
       },
       {
+        "mrp": 1100,
         "qty": 24,
-        "rate": 17.78,
-        "label": "Pack of 24 (₹427)"
+        "rate": 427,
+        "label": "Pack of 24 (₹427)",
+        "price": 427,
+        "discount": 61
       },
       {
+        "mrp": 2200,
         "qty": 48,
-        "rate": 17.17,
-        "label": "Pack of 48 (₹824)"
+        "rate": 824,
+        "label": "Pack of 48 (₹824)",
+        "price": 824,
+        "discount": 63
       },
       {
+        "mrp": 4400,
         "qty": 96,
-        "rate": 16.15,
-        "label": "Pack of 96 (₹1,550)"
+        "rate": 1550,
+        "label": "Pack of 96 (₹1,550)",
+        "price": 1550,
+        "discount": 65
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "65897a8d-233c-4aab-b4bd-48918093f786",
@@ -1733,51 +2376,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 12,
         "rate": 267,
+        "price": 267,
+        "mrp": 550,
+        "packMrp": 550,
+        "discount": 51,
         "label": "Pack of 12 (₹267)"
       },
       {
         "qty": 24,
         "rate": 427,
+        "price": 427,
+        "mrp": 1100,
+        "packMrp": 1100,
+        "discount": 61,
         "label": "Pack of 24 (₹427)"
       },
       {
         "qty": 48,
         "rate": 824,
+        "price": 824,
+        "mrp": 2200,
+        "packMrp": 2200,
+        "discount": 63,
         "label": "Pack of 48 (₹824)"
       },
       {
         "qty": 96,
         "rate": 1550,
+        "price": 1550,
+        "mrp": 4400,
+        "packMrp": 4400,
+        "discount": 65,
         "label": "Pack of 96 (₹1,550)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 550,
         "qty": 12,
-        "rate": 22.22,
-        "label": "Pack of 12 (₹267)"
+        "rate": 267,
+        "label": "Pack of 12 (₹267)",
+        "price": 267,
+        "discount": 51
       },
       {
+        "mrp": 1100,
         "qty": 24,
-        "rate": 17.78,
-        "label": "Pack of 24 (₹427)"
+        "rate": 427,
+        "label": "Pack of 24 (₹427)",
+        "price": 427,
+        "discount": 61
       },
       {
+        "mrp": 2200,
         "qty": 48,
-        "rate": 17.17,
-        "label": "Pack of 48 (₹824)"
+        "rate": 824,
+        "label": "Pack of 48 (₹824)",
+        "price": 824,
+        "discount": 63
       },
       {
+        "mrp": 4400,
         "qty": 96,
-        "rate": 16.15,
-        "label": "Pack of 96 (₹1,550)"
+        "rate": 1550,
+        "label": "Pack of 96 (₹1,550)",
+        "price": 1550,
+        "discount": 65
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "c700e442-a519-45b5-8d57-561a0470fb66",
@@ -1812,51 +2485,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 12,
         "rate": 267,
+        "price": 267,
+        "mrp": 550,
+        "packMrp": 550,
+        "discount": 51,
         "label": "Pack of 12 (₹267)"
       },
       {
         "qty": 24,
         "rate": 427,
+        "price": 427,
+        "mrp": 1100,
+        "packMrp": 1100,
+        "discount": 61,
         "label": "Pack of 24 (₹427)"
       },
       {
         "qty": 48,
         "rate": 824,
+        "price": 824,
+        "mrp": 2200,
+        "packMrp": 2200,
+        "discount": 63,
         "label": "Pack of 48 (₹824)"
       },
       {
         "qty": 96,
         "rate": 1550,
+        "price": 1550,
+        "mrp": 4400,
+        "packMrp": 4400,
+        "discount": 65,
         "label": "Pack of 96 (₹1,550)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 550,
         "qty": 12,
-        "rate": 22.22,
-        "label": "Pack of 12 (₹267)"
+        "rate": 267,
+        "label": "Pack of 12 (₹267)",
+        "price": 267,
+        "discount": 51
       },
       {
+        "mrp": 1100,
         "qty": 24,
-        "rate": 17.78,
-        "label": "Pack of 24 (₹427)"
+        "rate": 427,
+        "label": "Pack of 24 (₹427)",
+        "price": 427,
+        "discount": 61
       },
       {
+        "mrp": 2200,
         "qty": 48,
-        "rate": 17.17,
-        "label": "Pack of 48 (₹824)"
+        "rate": 824,
+        "label": "Pack of 48 (₹824)",
+        "price": 824,
+        "discount": 63
       },
       {
+        "mrp": 4400,
         "qty": 96,
-        "rate": 16.15,
-        "label": "Pack of 96 (₹1,550)"
+        "rate": 1550,
+        "label": "Pack of 96 (₹1,550)",
+        "price": 1550,
+        "discount": 65
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "cffe750f-a3ac-4e89-ae5e-8bc0d60c748f",
@@ -1891,51 +2594,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 10,
         "rate": 414,
+        "price": 414,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 48,
         "label": "Pack of 10 (₹414)"
       },
       {
         "qty": 25,
         "rate": 1030,
+        "price": 1030,
+        "mrp": 2000,
+        "packMrp": 2000,
+        "discount": 49,
         "label": "Pack of 25 (₹1,030)"
       },
       {
         "qty": 50,
         "rate": 1999,
+        "price": 1999,
+        "mrp": 4000,
+        "packMrp": 4000,
+        "discount": 50,
         "label": "Pack of 50 (₹1,999)"
       },
       {
         "qty": 100,
         "rate": 3950,
+        "price": 3950,
+        "mrp": 8000,
+        "packMrp": 8000,
+        "discount": 51,
         "label": "Pack of 100 (₹3,950)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 10,
-        "rate": 41.43,
-        "label": "Pack of 10 (₹414)"
+        "rate": 414,
+        "label": "Pack of 10 (₹414)",
+        "price": 414,
+        "discount": 48
       },
       {
+        "mrp": 2000,
         "qty": 25,
-        "rate": 41.2,
-        "label": "Pack of 25 (₹1,030)"
+        "rate": 1030,
+        "label": "Pack of 25 (₹1,030)",
+        "price": 1030,
+        "discount": 49
       },
       {
+        "mrp": 4000,
         "qty": 50,
-        "rate": 39.98,
-        "label": "Pack of 50 (₹1,999)"
+        "rate": 1999,
+        "label": "Pack of 50 (₹1,999)",
+        "price": 1999,
+        "discount": 50
       },
       {
+        "mrp": 8000,
         "qty": 100,
-        "rate": 39.5,
-        "label": "Pack of 100 (₹3,950)"
+        "rate": 3950,
+        "label": "Pack of 100 (₹3,950)",
+        "price": 3950,
+        "discount": 51
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "c09a5cc1-6f96-4f08-9cc6-62ca021631ff",
@@ -1970,51 +2703,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 380,
+        "price": 380,
+        "mrp": 760,
+        "packMrp": 760,
+        "discount": 50,
         "label": "Pack of 25 (₹380)"
       },
       {
         "qty": 50,
         "rate": 750,
+        "price": 750,
+        "mrp": 1520,
+        "packMrp": 1520,
+        "discount": 51,
         "label": "Pack of 50 (₹750)"
       },
       {
         "qty": 500,
         "rate": 7400,
+        "price": 7400,
+        "mrp": 15200,
+        "packMrp": 15200,
+        "discount": 51,
         "label": "Pack of 500 (₹7,400)"
       },
       {
         "qty": 1000,
         "rate": 14600,
+        "price": 14600,
+        "mrp": 30400,
+        "packMrp": 30400,
+        "discount": 52,
         "label": "Pack of 1000 (₹14,600)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 760,
         "qty": 25,
-        "rate": 15.2,
-        "label": "Pack of 25 (₹380)"
+        "rate": 380,
+        "label": "Pack of 25 (₹380)",
+        "price": 380,
+        "discount": 50
       },
       {
+        "mrp": 1520,
         "qty": 50,
-        "rate": 15,
-        "label": "Pack of 50 (₹750)"
+        "rate": 750,
+        "label": "Pack of 50 (₹750)",
+        "price": 750,
+        "discount": 51
       },
       {
+        "mrp": 15200,
         "qty": 500,
-        "rate": 14.8,
-        "label": "Pack of 500 (₹7,400)"
+        "rate": 7400,
+        "label": "Pack of 500 (₹7,400)",
+        "price": 7400,
+        "discount": 51
       },
       {
+        "mrp": 30400,
         "qty": 1000,
-        "rate": 14.6,
-        "label": "Pack of 1000 (₹14,600)"
+        "rate": 14600,
+        "label": "Pack of 1000 (₹14,600)",
+        "price": 14600,
+        "discount": 52
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "0aa159ba-2269-4c26-a687-58de5e3b951f",
@@ -2048,51 +2811,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 380,
+        "price": 380,
+        "mrp": 760,
+        "packMrp": 760,
+        "discount": 50,
         "label": "Pack of 25 (₹380)"
       },
       {
         "qty": 50,
         "rate": 750,
+        "price": 750,
+        "mrp": 1520,
+        "packMrp": 1520,
+        "discount": 51,
         "label": "Pack of 50 (₹750)"
       },
       {
         "qty": 500,
         "rate": 7400,
+        "price": 7400,
+        "mrp": 15200,
+        "packMrp": 15200,
+        "discount": 51,
         "label": "Pack of 500 (₹7,400)"
       },
       {
         "qty": 1000,
         "rate": 14600,
+        "price": 14600,
+        "mrp": 30400,
+        "packMrp": 30400,
+        "discount": 52,
         "label": "Pack of 1000 (₹14,600)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 760,
         "qty": 25,
-        "rate": 15.2,
-        "label": "Pack of 25 (₹380)"
+        "rate": 380,
+        "label": "Pack of 25 (₹380)",
+        "price": 380,
+        "discount": 50
       },
       {
+        "mrp": 1520,
         "qty": 50,
-        "rate": 15,
-        "label": "Pack of 50 (₹750)"
+        "rate": 750,
+        "label": "Pack of 50 (₹750)",
+        "price": 750,
+        "discount": 51
       },
       {
+        "mrp": 15200,
         "qty": 500,
-        "rate": 14.8,
-        "label": "Pack of 500 (₹7,400)"
+        "rate": 7400,
+        "label": "Pack of 500 (₹7,400)",
+        "price": 7400,
+        "discount": 51
       },
       {
+        "mrp": 30400,
         "qty": 1000,
-        "rate": 14.6,
-        "label": "Pack of 1000 (₹14,600)"
+        "rate": 14600,
+        "label": "Pack of 1000 (₹14,600)",
+        "price": 14600,
+        "discount": 52
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "1fcba229-f7ca-434f-9530-fb962639069d",
@@ -2127,51 +2920,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 1,
         "rate": 329,
+        "price": 329,
+        "mrp": 488,
+        "packMrp": 488,
+        "discount": 33,
         "label": "1 Piece (₹329)"
       },
       {
         "qty": 3,
         "rate": 889,
+        "price": 889,
+        "mrp": 1464,
+        "packMrp": 1464,
+        "discount": 39,
         "label": "3 Pieces (₹889)"
       },
       {
         "qty": 15,
         "rate": 4068,
+        "price": 4068,
+        "mrp": 7320,
+        "packMrp": 7320,
+        "discount": 44,
         "label": "15 Pieces (₹4,068)"
       },
       {
         "qty": 30,
         "rate": 7627,
+        "price": 7627,
+        "mrp": 14640,
+        "packMrp": 14640,
+        "discount": 48,
         "label": "30 Pieces (₹7,627)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 488,
         "qty": 1,
-        "rate": 328.81,
-        "label": "1 Piece (₹329)"
+        "rate": 329,
+        "label": "1 Piece (₹329)",
+        "price": 329,
+        "discount": 33
       },
       {
+        "mrp": 1464,
         "qty": 3,
-        "rate": 296.33,
-        "label": "3 Pieces (₹889)"
+        "rate": 889,
+        "label": "3 Pieces (₹889)",
+        "price": 889,
+        "discount": 39
       },
       {
+        "mrp": 7320,
         "qty": 15,
-        "rate": 271.19,
-        "label": "15 Pieces (₹4,068)"
+        "rate": 4068,
+        "label": "15 Pieces (₹4,068)",
+        "price": 4068,
+        "discount": 44
       },
       {
+        "mrp": 14640,
         "qty": 30,
-        "rate": 254.24,
-        "label": "30 Pieces (₹7,627)"
+        "rate": 7627,
+        "label": "30 Pieces (₹7,627)",
+        "price": 7627,
+        "discount": 48
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "951ebcdf-56da-46c5-937a-4d0f8721ce47",
@@ -2207,51 +3030,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 2000,
         "rate": 237,
+        "price": 237,
+        "mrp": 500,
+        "packMrp": 500,
+        "discount": 53,
         "label": "2000 Labels (₹237)"
       },
       {
         "qty": 10000,
         "rate": 1017,
+        "price": 1017,
+        "mrp": 2500,
+        "packMrp": 2500,
+        "discount": 59,
         "label": "10000 Labels (₹1,017)"
       },
       {
         "qty": 20000,
         "rate": 1952,
+        "price": 1952,
+        "mrp": 5000,
+        "packMrp": 5000,
+        "discount": 61,
         "label": "20000 Labels (₹1,952)"
       },
       {
         "qty": 50000,
         "rate": 4571,
+        "price": 4571,
+        "mrp": 12500,
+        "packMrp": 12500,
+        "discount": 63,
         "label": "50000 Labels (₹4,571)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 500,
         "qty": 2000,
-        "rate": 0.12,
-        "label": "2000 Labels (₹237)"
+        "rate": 237,
+        "label": "2000 Labels (₹237)",
+        "price": 237,
+        "discount": 53
       },
       {
+        "mrp": 2500,
         "qty": 10000,
-        "rate": 0.1,
-        "label": "10000 Labels (₹1,017)"
+        "rate": 1017,
+        "label": "10000 Labels (₹1,017)",
+        "price": 1017,
+        "discount": 59
       },
       {
+        "mrp": 5000,
         "qty": 20000,
-        "rate": 0.1,
-        "label": "20000 Labels (₹1,952)"
+        "rate": 1952,
+        "label": "20000 Labels (₹1,952)",
+        "price": 1952,
+        "discount": 61
       },
       {
+        "mrp": 12500,
         "qty": 50000,
-        "rate": 0.09,
-        "label": "50000 Labels (₹4,571)"
+        "rate": 4571,
+        "label": "50000 Labels (₹4,571)",
+        "price": 4571,
+        "discount": 63
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "f832c840-8877-4096-ae76-a518f07ba4ad",
@@ -2285,51 +3138,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 2000,
         "rate": 237,
+        "price": 237,
+        "mrp": 380,
+        "packMrp": 380,
+        "discount": 38,
         "label": "2000 Labels (₹237)"
       },
       {
         "qty": 10000,
         "rate": 1017,
+        "price": 1017,
+        "mrp": 1900,
+        "packMrp": 1900,
+        "discount": 46,
         "label": "10000 Labels (₹1,017)"
       },
       {
         "qty": 20000,
         "rate": 1905,
+        "price": 1905,
+        "mrp": 3800,
+        "packMrp": 3800,
+        "discount": 50,
         "label": "20000 Labels (₹1,905)"
       },
       {
         "qty": 50000,
         "rate": 4571,
+        "price": 4571,
+        "mrp": 9500,
+        "packMrp": 9500,
+        "discount": 52,
         "label": "50000 Labels (₹4,571)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 380,
         "qty": 2000,
-        "rate": 0.12,
-        "label": "2000 Labels (₹237)"
+        "rate": 237,
+        "label": "2000 Labels (₹237)",
+        "price": 237,
+        "discount": 38
       },
       {
+        "mrp": 1900,
         "qty": 10000,
-        "rate": 0.1,
-        "label": "10000 Labels (₹1,017)"
+        "rate": 1017,
+        "label": "10000 Labels (₹1,017)",
+        "price": 1017,
+        "discount": 46
       },
       {
+        "mrp": 3800,
         "qty": 20000,
-        "rate": 0.1,
-        "label": "20000 Labels (₹1,905)"
+        "rate": 1905,
+        "label": "20000 Labels (₹1,905)",
+        "price": 1905,
+        "discount": 50
       },
       {
+        "mrp": 9500,
         "qty": 50000,
-        "rate": 0.09,
-        "label": "50000 Labels (₹4,571)"
+        "rate": 4571,
+        "label": "50000 Labels (₹4,571)",
+        "price": 4571,
+        "discount": 52
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "0b663598-12da-44a3-89bc-d9d94187d207",
@@ -2364,51 +3247,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 1,
         "rate": 329,
+        "price": 329,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 45,
         "label": "1 Piece (₹329)"
       },
       {
         "qty": 3,
         "rate": 889,
+        "price": 889,
+        "mrp": 1800,
+        "packMrp": 1800,
+        "discount": 51,
         "label": "3 Pieces (₹889)"
       },
       {
         "qty": 15,
         "rate": 4068,
+        "price": 4068,
+        "mrp": 9000,
+        "packMrp": 9000,
+        "discount": 55,
         "label": "15 Pieces (₹4,068)"
       },
       {
         "qty": 30,
         "rate": 7810,
+        "price": 7810,
+        "mrp": 18000,
+        "packMrp": 18000,
+        "discount": 57,
         "label": "30 Pieces (₹7,810)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 1,
-        "rate": 328.81,
-        "label": "1 Piece (₹329)"
+        "rate": 329,
+        "label": "1 Piece (₹329)",
+        "price": 329,
+        "discount": 45
       },
       {
+        "mrp": 1800,
         "qty": 3,
-        "rate": 296.33,
-        "label": "3 Pieces (₹889)"
+        "rate": 889,
+        "label": "3 Pieces (₹889)",
+        "price": 889,
+        "discount": 51
       },
       {
+        "mrp": 9000,
         "qty": 15,
-        "rate": 271.19,
-        "label": "15 Pieces (₹4,068)"
+        "rate": 4068,
+        "label": "15 Pieces (₹4,068)",
+        "price": 4068,
+        "discount": 55
       },
       {
+        "mrp": 18000,
         "qty": 30,
-        "rate": 260.32,
-        "label": "30 Pieces (₹7,810)"
+        "rate": 7810,
+        "label": "30 Pieces (₹7,810)",
+        "price": 7810,
+        "discount": 57
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "1ce52914-a3ce-469f-a9bc-d72be31b3345",
@@ -2444,51 +3357,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 6,
         "rate": 284,
+        "price": 284,
+        "mrp": 435,
+        "packMrp": 435,
+        "discount": 35,
         "label": "6  Pieces (₹284)"
       },
       {
         "qty": 12,
         "rate": 549,
+        "price": 549,
+        "mrp": 870,
+        "packMrp": 870,
+        "discount": 37,
         "label": "12  Pieces (₹549)"
       },
       {
         "qty": 36,
         "rate": 1429,
+        "price": 1429,
+        "mrp": 2610,
+        "packMrp": 2610,
+        "discount": 45,
         "label": "36  Pieces (₹1,429)"
       },
       {
         "qty": 72,
         "rate": 2667,
+        "price": 2667,
+        "mrp": 5220,
+        "packMrp": 5220,
+        "discount": 49,
         "label": "72  Pieces (₹2,667)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 435,
         "qty": 6,
-        "rate": 47.32,
-        "label": "6  Pieces (₹284)"
+        "rate": 284,
+        "label": "6  Pieces (₹284)",
+        "price": 284,
+        "discount": 35
       },
       {
+        "mrp": 870,
         "qty": 12,
-        "rate": 45.76,
-        "label": "12  Pieces (₹549)"
+        "rate": 549,
+        "label": "12  Pieces (₹549)",
+        "price": 549,
+        "discount": 37
       },
       {
+        "mrp": 2610,
         "qty": 36,
-        "rate": 39.68,
-        "label": "36  Pieces (₹1,429)"
+        "rate": 1429,
+        "label": "36  Pieces (₹1,429)",
+        "price": 1429,
+        "discount": 45
       },
       {
+        "mrp": 5220,
         "qty": 72,
-        "rate": 37.04,
-        "label": "72  Pieces (₹2,667)"
+        "rate": 2667,
+        "label": "72  Pieces (₹2,667)",
+        "price": 2667,
+        "discount": 49
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "857824c1-5e20-4555-8688-27423dfc9d99",
@@ -2522,51 +3465,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 6,
         "rate": 284,
+        "price": 284,
+        "mrp": 735,
+        "packMrp": 735,
+        "discount": 61,
         "label": "6  Pieces (₹284)"
       },
       {
         "qty": 12,
         "rate": 549,
+        "price": 549,
+        "mrp": 1470,
+        "packMrp": 1470,
+        "discount": 63,
         "label": "12  Pieces (₹549)"
       },
       {
         "qty": 36,
         "rate": 1429,
+        "price": 1429,
+        "mrp": 4410,
+        "packMrp": 4410,
+        "discount": 68,
         "label": "36  Pieces (₹1,429)"
       },
       {
         "qty": 72,
         "rate": 2667,
+        "price": 2667,
+        "mrp": 8820,
+        "packMrp": 8820,
+        "discount": 70,
         "label": "72  Pieces (₹2,667)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 735,
         "qty": 6,
-        "rate": 47.32,
-        "label": "6  Pieces (₹284)"
+        "rate": 284,
+        "label": "6  Pieces (₹284)",
+        "price": 284,
+        "discount": 61
       },
       {
+        "mrp": 1470,
         "qty": 12,
-        "rate": 45.76,
-        "label": "12  Pieces (₹549)"
+        "rate": 549,
+        "label": "12  Pieces (₹549)",
+        "price": 549,
+        "discount": 63
       },
       {
+        "mrp": 4410,
         "qty": 36,
-        "rate": 39.68,
-        "label": "36  Pieces (₹1,429)"
+        "rate": 1429,
+        "label": "36  Pieces (₹1,429)",
+        "price": 1429,
+        "discount": 68
       },
       {
+        "mrp": 8820,
         "qty": 72,
-        "rate": 37.04,
-        "label": "72  Pieces (₹2,667)"
+        "rate": 2667,
+        "label": "72  Pieces (₹2,667)",
+        "price": 2667,
+        "discount": 70
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "fa41b757-f088-4079-9199-6a7901d673cf",
@@ -2600,51 +3573,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 1,
         "rate": 189,
+        "price": 189,
+        "mrp": 400,
+        "packMrp": 400,
+        "discount": 53,
         "label": "1 Piece (₹189)"
       },
       {
         "qty": 6,
         "rate": 855,
+        "price": 855,
+        "mrp": 2400,
+        "packMrp": 2400,
+        "discount": 64,
         "label": "6  Pieces (₹855)"
       },
       {
         "qty": 18,
         "rate": 2476,
+        "price": 2476,
+        "mrp": 7200,
+        "packMrp": 7200,
+        "discount": 66,
         "label": "18 Pieces (₹2,476)"
       },
       {
         "qty": 36,
         "rate": 4857,
+        "price": 4857,
+        "mrp": 14400,
+        "packMrp": 14400,
+        "discount": 66,
         "label": "36  Pieces (₹4,857)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 400,
         "qty": 1,
-        "rate": 188.57,
-        "label": "1 Piece (₹189)"
+        "rate": 189,
+        "label": "1 Piece (₹189)",
+        "price": 189,
+        "discount": 53
       },
       {
+        "mrp": 2400,
         "qty": 6,
-        "rate": 142.54,
-        "label": "6  Pieces (₹855)"
+        "rate": 855,
+        "label": "6  Pieces (₹855)",
+        "price": 855,
+        "discount": 64
       },
       {
+        "mrp": 7200,
         "qty": 18,
-        "rate": 137.57,
-        "label": "18 Pieces (₹2,476)"
+        "rate": 2476,
+        "label": "18 Pieces (₹2,476)",
+        "price": 2476,
+        "discount": 66
       },
       {
+        "mrp": 14400,
         "qty": 36,
-        "rate": 134.92,
-        "label": "36  Pieces (₹4,857)"
+        "rate": 4857,
+        "label": "36  Pieces (₹4,857)",
+        "price": 4857,
+        "discount": 66
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "166dce81-3599-4733-a051-1864482115ac",
@@ -2680,51 +3683,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 6,
         "rate": 284,
+        "price": 284,
+        "mrp": 435,
+        "packMrp": 435,
+        "discount": 35,
         "label": "6  Pieces (₹284)"
       },
       {
         "qty": 12,
         "rate": 549,
+        "price": 549,
+        "mrp": 870,
+        "packMrp": 870,
+        "discount": 37,
         "label": "12  Pieces (₹549)"
       },
       {
         "qty": 36,
         "rate": 1429,
+        "price": 1429,
+        "mrp": 2610,
+        "packMrp": 2610,
+        "discount": 45,
         "label": "36  Pieces (₹1,429)"
       },
       {
         "qty": 72,
         "rate": 2667,
+        "price": 2667,
+        "mrp": 5220,
+        "packMrp": 5220,
+        "discount": 49,
         "label": "72  Pieces (₹2,667)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 435,
         "qty": 6,
-        "rate": 47.32,
-        "label": "6  Pieces (₹284)"
+        "rate": 284,
+        "label": "6  Pieces (₹284)",
+        "price": 284,
+        "discount": 35
       },
       {
+        "mrp": 870,
         "qty": 12,
-        "rate": 45.76,
-        "label": "12  Pieces (₹549)"
+        "rate": 549,
+        "label": "12  Pieces (₹549)",
+        "price": 549,
+        "discount": 37
       },
       {
+        "mrp": 2610,
         "qty": 36,
-        "rate": 39.68,
-        "label": "36  Pieces (₹1,429)"
+        "rate": 1429,
+        "label": "36  Pieces (₹1,429)",
+        "price": 1429,
+        "discount": 45
       },
       {
+        "mrp": 5220,
         "qty": 72,
-        "rate": 37.04,
-        "label": "72  Pieces (₹2,667)"
+        "rate": 2667,
+        "label": "72  Pieces (₹2,667)",
+        "price": 2667,
+        "discount": 49
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "eec6ceba-a409-4f1f-a791-4be7531895f0",
@@ -2760,51 +3793,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 6,
         "rate": 284,
+        "price": 284,
+        "mrp": 435,
+        "packMrp": 435,
+        "discount": 35,
         "label": "6  Pieces (₹284)"
       },
       {
         "qty": 12,
         "rate": 549,
+        "price": 549,
+        "mrp": 870,
+        "packMrp": 870,
+        "discount": 37,
         "label": "12  Pieces (₹549)"
       },
       {
         "qty": 36,
         "rate": 1429,
+        "price": 1429,
+        "mrp": 2610,
+        "packMrp": 2610,
+        "discount": 45,
         "label": "36  Pieces (₹1,429)"
       },
       {
         "qty": 72,
         "rate": 2667,
+        "price": 2667,
+        "mrp": 5220,
+        "packMrp": 5220,
+        "discount": 49,
         "label": "72  Pieces (₹2,667)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 435,
         "qty": 6,
-        "rate": 47.32,
-        "label": "6  Pieces (₹284)"
+        "rate": 284,
+        "label": "6  Pieces (₹284)",
+        "price": 284,
+        "discount": 35
       },
       {
+        "mrp": 870,
         "qty": 12,
-        "rate": 45.76,
-        "label": "12  Pieces (₹549)"
+        "rate": 549,
+        "label": "12  Pieces (₹549)",
+        "price": 549,
+        "discount": 37
       },
       {
+        "mrp": 2610,
         "qty": 36,
-        "rate": 39.68,
-        "label": "36  Pieces (₹1,429)"
+        "rate": 1429,
+        "label": "36  Pieces (₹1,429)",
+        "price": 1429,
+        "discount": 45
       },
       {
+        "mrp": 5220,
         "qty": 72,
-        "rate": 37.04,
-        "label": "72  Pieces (₹2,667)"
+        "rate": 2667,
+        "label": "72  Pieces (₹2,667)",
+        "price": 2667,
+        "discount": 49
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "ec4ad7ed-abc3-4082-a656-ec8af1e6669a",
@@ -2838,51 +3901,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 4,
         "rate": 295,
+        "price": 295,
+        "mrp": 448,
+        "packMrp": 448,
+        "discount": 34,
         "label": "4 Pieces (₹295)"
       },
       {
         "qty": 12,
         "rate": 847,
+        "price": 847,
+        "mrp": 1344,
+        "packMrp": 1344,
+        "discount": 37,
         "label": "12  Pieces (₹847)"
       },
       {
         "qty": 24,
         "rate": 1619,
+        "price": 1619,
+        "mrp": 2688,
+        "packMrp": 2688,
+        "discount": 40,
         "label": "24 Pieces (₹1,619)"
       },
       {
         "qty": 48,
         "rate": 2857,
+        "price": 2857,
+        "mrp": 5376,
+        "packMrp": 5376,
+        "discount": 47,
         "label": "48 Pieces (₹2,857)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 448,
         "qty": 4,
-        "rate": 73.73,
-        "label": "4 Pieces (₹295)"
+        "rate": 295,
+        "label": "4 Pieces (₹295)",
+        "price": 295,
+        "discount": 34
       },
       {
+        "mrp": 1344,
         "qty": 12,
-        "rate": 70.55,
-        "label": "12  Pieces (₹847)"
+        "rate": 847,
+        "label": "12  Pieces (₹847)",
+        "price": 847,
+        "discount": 37
       },
       {
+        "mrp": 2688,
         "qty": 24,
-        "rate": 67.46,
-        "label": "24 Pieces (₹1,619)"
+        "rate": 1619,
+        "label": "24 Pieces (₹1,619)",
+        "price": 1619,
+        "discount": 40
       },
       {
+        "mrp": 5376,
         "qty": 48,
-        "rate": 59.52,
-        "label": "48 Pieces (₹2,857)"
+        "rate": 2857,
+        "label": "48 Pieces (₹2,857)",
+        "price": 2857,
+        "discount": 47
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "007eb942-8181-4ec4-b6ab-e69c19e90308",
@@ -2918,51 +4011,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 100,
         "rate": 190,
+        "price": 190,
+        "mrp": 399,
+        "packMrp": 399,
+        "discount": 52,
         "label": "Pack of 100 (₹190)"
       },
       {
         "qty": 500,
         "rate": 846,
+        "price": 846,
+        "mrp": 1995,
+        "packMrp": 1995,
+        "discount": 58,
         "label": "Pack of  500 (₹846)"
       },
       {
         "qty": 1000,
         "rate": 1610,
+        "price": 1610,
+        "mrp": 3990,
+        "packMrp": 3990,
+        "discount": 60,
         "label": "Pack of  1000 (₹1,610)"
       },
       {
         "qty": 2000,
         "rate": 3136,
+        "price": 3136,
+        "mrp": 7980,
+        "packMrp": 7980,
+        "discount": 61,
         "label": "Pack of  2000 (₹3,136)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 399,
         "qty": 100,
-        "rate": 1.9,
-        "label": "Pack of 100 (₹190)"
+        "rate": 190,
+        "label": "Pack of 100 (₹190)",
+        "price": 190,
+        "discount": 52
       },
       {
+        "mrp": 1995,
         "qty": 500,
-        "rate": 1.69,
-        "label": "Pack of  500 (₹846)"
+        "rate": 846,
+        "label": "Pack of  500 (₹846)",
+        "price": 846,
+        "discount": 58
       },
       {
+        "mrp": 3990,
         "qty": 1000,
-        "rate": 1.61,
-        "label": "Pack of  1000 (₹1,610)"
+        "rate": 1610,
+        "label": "Pack of  1000 (₹1,610)",
+        "price": 1610,
+        "discount": 60
       },
       {
+        "mrp": 7980,
         "qty": 2000,
-        "rate": 1.57,
-        "label": "Pack of  2000 (₹3,136)"
+        "rate": 3136,
+        "label": "Pack of  2000 (₹3,136)",
+        "price": 3136,
+        "discount": 61
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "b8809f95-4bdb-41ac-8551-eec425b1c0e6",
@@ -2996,41 +4119,64 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 200,
         "rate": 253,
+        "price": 253,
+        "mrp": 500,
+        "packMrp": 500,
+        "discount": 49,
         "label": "Pack of 200 (₹253)"
       },
       {
         "qty": 500,
         "rate": 627,
+        "price": 627,
+        "mrp": 1250,
+        "packMrp": 1250,
+        "discount": 50,
         "label": "Pack of  500 (₹627)"
       },
       {
         "qty": 2000,
         "rate": 2458,
+        "price": 2458,
+        "mrp": 5000,
+        "packMrp": 5000,
+        "discount": 51,
         "label": "Pack of  2000 (₹2,458)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 500,
         "qty": 200,
-        "rate": 1.26,
-        "label": "Pack of 200 (₹253)"
+        "rate": 253,
+        "label": "Pack of 200 (₹253)",
+        "price": 253,
+        "discount": 49
       },
       {
+        "mrp": 1250,
         "qty": 500,
-        "rate": 1.25,
-        "label": "Pack of  500 (₹627)"
+        "rate": 627,
+        "label": "Pack of  500 (₹627)",
+        "price": 627,
+        "discount": 50
       },
       {
+        "mrp": 5000,
         "qty": 2000,
-        "rate": 1.23,
-        "label": "Pack of  2000 (₹2,458)"
+        "rate": 2458,
+        "label": "Pack of  2000 (₹2,458)",
+        "price": 2458,
+        "discount": 51
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "19af3f5b-b6c5-42d6-a371-4a28e8525b86",
@@ -3065,51 +4211,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 200,
         "rate": 210,
+        "price": 210,
+        "mrp": 400,
+        "packMrp": 400,
+        "discount": 48,
         "label": "Pack of 200 (₹210)"
       },
       {
         "qty": 500,
         "rate": 458,
+        "price": 458,
+        "mrp": 1000,
+        "packMrp": 1000,
+        "discount": 54,
         "label": "Pack of  500 (₹458)"
       },
       {
         "qty": 2000,
         "rate": 1822,
+        "price": 1822,
+        "mrp": 4000,
+        "packMrp": 4000,
+        "discount": 54,
         "label": "Pack of  2000 (₹1,822)"
       },
       {
         "qty": 5000,
         "rate": 3644,
+        "price": 3644,
+        "mrp": 10000,
+        "packMrp": 10000,
+        "discount": 64,
         "label": "Pack of 5000 (₹3,644)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 400,
         "qty": 200,
-        "rate": 1.05,
-        "label": "Pack of 200 (₹210)"
+        "rate": 210,
+        "label": "Pack of 200 (₹210)",
+        "price": 210,
+        "discount": 48
       },
       {
+        "mrp": 1000,
         "qty": 500,
-        "rate": 0.92,
-        "label": "Pack of  500 (₹458)"
+        "rate": 458,
+        "label": "Pack of  500 (₹458)",
+        "price": 458,
+        "discount": 54
       },
       {
+        "mrp": 4000,
         "qty": 2000,
-        "rate": 0.91,
-        "label": "Pack of  2000 (₹1,822)"
+        "rate": 1822,
+        "label": "Pack of  2000 (₹1,822)",
+        "price": 1822,
+        "discount": 54
       },
       {
+        "mrp": 10000,
         "qty": 5000,
-        "rate": 0.73,
-        "label": "Pack of 5000 (₹3,644)"
+        "rate": 3644,
+        "label": "Pack of 5000 (₹3,644)",
+        "price": 3644,
+        "discount": 64
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "8f9e89da-b82f-4a98-ac66-3086b8606198",
@@ -3143,51 +4319,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 200,
         "rate": 161,
+        "price": 161,
+        "mrp": 300,
+        "packMrp": 300,
+        "discount": 46,
         "label": "Pack of 200 (₹161)"
       },
       {
         "qty": 500,
         "rate": 314,
+        "price": 314,
+        "mrp": 750,
+        "packMrp": 750,
+        "discount": 58,
         "label": "Pack of  500 (₹314)"
       },
       {
         "qty": 2000,
         "rate": 1142,
+        "price": 1142,
+        "mrp": 3000,
+        "packMrp": 3000,
+        "discount": 62,
         "label": "Pack of  2000 (₹1,142)"
       },
       {
         "qty": 5000,
         "rate": 2246,
+        "price": 2246,
+        "mrp": 7500,
+        "packMrp": 7500,
+        "discount": 70,
         "label": "Pack of 5000 (₹2,246)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 300,
         "qty": 200,
-        "rate": 0.81,
-        "label": "Pack of 200 (₹161)"
+        "rate": 161,
+        "label": "Pack of 200 (₹161)",
+        "price": 161,
+        "discount": 46
       },
       {
+        "mrp": 750,
         "qty": 500,
-        "rate": 0.63,
-        "label": "Pack of  500 (₹314)"
+        "rate": 314,
+        "label": "Pack of  500 (₹314)",
+        "price": 314,
+        "discount": 58
       },
       {
+        "mrp": 3000,
         "qty": 2000,
-        "rate": 0.57,
-        "label": "Pack of  2000 (₹1,142)"
+        "rate": 1142,
+        "label": "Pack of  2000 (₹1,142)",
+        "price": 1142,
+        "discount": 62
       },
       {
+        "mrp": 7500,
         "qty": 5000,
-        "rate": 0.45,
-        "label": "Pack of 5000 (₹2,246)"
+        "rate": 2246,
+        "label": "Pack of 5000 (₹2,246)",
+        "price": 2246,
+        "discount": 70
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "e912727e-c9eb-422d-97fb-ec7a79ff68f8",
@@ -3223,51 +4429,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 200,
         "rate": 119,
+        "price": 119,
+        "mrp": 230,
+        "packMrp": 230,
+        "discount": 48,
         "label": "Pack of 200 (₹119)"
       },
       {
         "qty": 500,
         "rate": 237,
+        "price": 237,
+        "mrp": 575,
+        "packMrp": 575,
+        "discount": 59,
         "label": "Pack of  500 (₹237)"
       },
       {
         "qty": 2000,
         "rate": 719,
+        "price": 719,
+        "mrp": 2300,
+        "packMrp": 2300,
+        "discount": 69,
         "label": "Pack of  2000 (₹719)"
       },
       {
         "qty": 5000,
         "rate": 1441,
+        "price": 1441,
+        "mrp": 5750,
+        "packMrp": 5750,
+        "discount": 75,
         "label": "Pack of 5000 (₹1,441)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 230,
         "qty": 200,
-        "rate": 0.59,
-        "label": "Pack of 200 (₹119)"
+        "rate": 119,
+        "label": "Pack of 200 (₹119)",
+        "price": 119,
+        "discount": 48
       },
       {
+        "mrp": 575,
         "qty": 500,
-        "rate": 0.47,
-        "label": "Pack of  500 (₹237)"
+        "rate": 237,
+        "label": "Pack of  500 (₹237)",
+        "price": 237,
+        "discount": 59
       },
       {
+        "mrp": 2300,
         "qty": 2000,
-        "rate": 0.36,
-        "label": "Pack of  2000 (₹719)"
+        "rate": 719,
+        "label": "Pack of  2000 (₹719)",
+        "price": 719,
+        "discount": 69
       },
       {
+        "mrp": 5750,
         "qty": 5000,
-        "rate": 0.29,
-        "label": "Pack of 5000 (₹1,441)"
+        "rate": 1441,
+        "label": "Pack of 5000 (₹1,441)",
+        "price": 1441,
+        "discount": 75
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "0c6cd4ba-14ee-449a-911e-cc894e5b2203",
@@ -3303,51 +4539,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 200,
         "rate": 102,
+        "price": 102,
+        "mrp": 200,
+        "packMrp": 200,
+        "discount": 49,
         "label": "Pack of 200 (₹102)"
       },
       {
         "qty": 500,
         "rate": 161,
+        "price": 161,
+        "mrp": 500,
+        "packMrp": 500,
+        "discount": 68,
         "label": "Pack of  500 (₹161)"
       },
       {
         "qty": 2000,
         "rate": 338,
+        "price": 338,
+        "mrp": 2000,
+        "packMrp": 2000,
+        "discount": 83,
         "label": "Pack of  2000 (₹338)"
       },
       {
         "qty": 5000,
         "rate": 761,
+        "price": 761,
+        "mrp": 5000,
+        "packMrp": 5000,
+        "discount": 85,
         "label": "Pack of 5000 (₹761)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 200,
         "qty": 200,
-        "rate": 0.51,
-        "label": "Pack of 200 (₹102)"
+        "rate": 102,
+        "label": "Pack of 200 (₹102)",
+        "price": 102,
+        "discount": 49
       },
       {
+        "mrp": 500,
         "qty": 500,
-        "rate": 0.32,
-        "label": "Pack of  500 (₹161)"
+        "rate": 161,
+        "label": "Pack of  500 (₹161)",
+        "price": 161,
+        "discount": 68
       },
       {
+        "mrp": 2000,
         "qty": 2000,
-        "rate": 0.17,
-        "label": "Pack of  2000 (₹338)"
+        "rate": 338,
+        "label": "Pack of  2000 (₹338)",
+        "price": 338,
+        "discount": 83
       },
       {
+        "mrp": 5000,
         "qty": 5000,
-        "rate": 0.15,
-        "label": "Pack of 5000 (₹761)"
+        "rate": 761,
+        "label": "Pack of 5000 (₹761)",
+        "price": 761,
+        "discount": 85
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "36d8ca75-b500-4aa7-bdb0-81e98a029a82",
@@ -3382,51 +4648,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 331,
+        "price": 331,
+        "mrp": 699,
+        "packMrp": 699,
+        "discount": 53,
         "label": "Pack of 50 (₹331)"
       },
       {
         "qty": 100,
         "rate": 653,
+        "price": 653,
+        "mrp": 1398,
+        "packMrp": 1398,
+        "discount": 53,
         "label": "Pack of 100 (₹653)"
       },
       {
         "qty": 500,
         "rate": 3220,
+        "price": 3220,
+        "mrp": 6990,
+        "packMrp": 6990,
+        "discount": 54,
         "label": "Pack of 500 (₹3,220)"
       },
       {
         "qty": 1000,
         "rate": 6356,
+        "price": 6356,
+        "mrp": 13980,
+        "packMrp": 13980,
+        "discount": 55,
         "label": "Pack of 1000 (₹6,356)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 699,
         "qty": 50,
-        "rate": 6.61,
-        "label": "Pack of 50 (₹331)"
+        "rate": 331,
+        "label": "Pack of 50 (₹331)",
+        "price": 331,
+        "discount": 53
       },
       {
+        "mrp": 1398,
         "qty": 100,
-        "rate": 6.53,
-        "label": "Pack of 100 (₹653)"
+        "rate": 653,
+        "label": "Pack of 100 (₹653)",
+        "price": 653,
+        "discount": 53
       },
       {
+        "mrp": 6990,
         "qty": 500,
-        "rate": 6.44,
-        "label": "Pack of 500 (₹3,220)"
+        "rate": 3220,
+        "label": "Pack of 500 (₹3,220)",
+        "price": 3220,
+        "discount": 54
       },
       {
+        "mrp": 13980,
         "qty": 1000,
-        "rate": 6.36,
-        "label": "Pack of 1000 (₹6,356)"
+        "rate": 6356,
+        "label": "Pack of 1000 (₹6,356)",
+        "price": 6356,
+        "discount": 55
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "63f65485-5a7d-40df-8120-bf2bfcdd345e",
@@ -3460,51 +4756,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 422,
+        "price": 422,
+        "mrp": 899,
+        "packMrp": 899,
+        "discount": 53,
         "label": "Pack of 50 (₹422)"
       },
       {
         "qty": 100,
         "rate": 804,
+        "price": 804,
+        "mrp": 1798,
+        "packMrp": 1798,
+        "discount": 55,
         "label": "Pack of 100 (₹804)"
       },
       {
         "qty": 500,
         "rate": 3941,
+        "price": 3941,
+        "mrp": 8990,
+        "packMrp": 8990,
+        "discount": 56,
         "label": "Pack of 500 (₹3,941)"
       },
       {
         "qty": 1000,
         "rate": 7797,
+        "price": 7797,
+        "mrp": 17980,
+        "packMrp": 17980,
+        "discount": 57,
         "label": "Pack of 1000 (₹7,797)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 899,
         "qty": 50,
-        "rate": 8.44,
-        "label": "Pack of 50 (₹422)"
+        "rate": 422,
+        "label": "Pack of 50 (₹422)",
+        "price": 422,
+        "discount": 53
       },
       {
+        "mrp": 1798,
         "qty": 100,
-        "rate": 8.04,
-        "label": "Pack of 100 (₹804)"
+        "rate": 804,
+        "label": "Pack of 100 (₹804)",
+        "price": 804,
+        "discount": 55
       },
       {
+        "mrp": 8990,
         "qty": 500,
-        "rate": 7.88,
-        "label": "Pack of 500 (₹3,941)"
+        "rate": 3941,
+        "label": "Pack of 500 (₹3,941)",
+        "price": 3941,
+        "discount": 56
       },
       {
+        "mrp": 17980,
         "qty": 1000,
-        "rate": 7.8,
-        "label": "Pack of 1000 (₹7,797)"
+        "rate": 7797,
+        "label": "Pack of 1000 (₹7,797)",
+        "price": 7797,
+        "discount": 57
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "0fd8a4ef-2bdf-4506-b845-495be5814098",
@@ -3540,51 +4866,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 100,
         "rate": 458,
+        "price": 458,
+        "mrp": 999,
+        "packMrp": 999,
+        "discount": 54,
         "label": "Pack of 100 (₹458)"
       },
       {
         "qty": 200,
         "rate": 907,
+        "price": 907,
+        "mrp": 1998,
+        "packMrp": 1998,
+        "discount": 55,
         "label": "Pack of 200 (₹907)"
       },
       {
         "qty": 500,
         "rate": 2203,
+        "price": 2203,
+        "mrp": 4995,
+        "packMrp": 4995,
+        "discount": 56,
         "label": "Pack of 500 (₹2,203)"
       },
       {
         "qty": 1000,
         "rate": 4322,
+        "price": 4322,
+        "mrp": 9990,
+        "packMrp": 9990,
+        "discount": 57,
         "label": "Pack of 1000 (₹4,322)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 999,
         "qty": 100,
-        "rate": 4.58,
-        "label": "Pack of 100 (₹458)"
+        "rate": 458,
+        "label": "Pack of 100 (₹458)",
+        "price": 458,
+        "discount": 54
       },
       {
+        "mrp": 1998,
         "qty": 200,
-        "rate": 4.53,
-        "label": "Pack of 200 (₹907)"
+        "rate": 907,
+        "label": "Pack of 200 (₹907)",
+        "price": 907,
+        "discount": 55
       },
       {
+        "mrp": 4995,
         "qty": 500,
-        "rate": 4.41,
-        "label": "Pack of 500 (₹2,203)"
+        "rate": 2203,
+        "label": "Pack of 500 (₹2,203)",
+        "price": 2203,
+        "discount": 56
       },
       {
+        "mrp": 9990,
         "qty": 1000,
-        "rate": 4.32,
-        "label": "Pack of 1000 (₹4,322)"
+        "rate": 4322,
+        "label": "Pack of 1000 (₹4,322)",
+        "price": 4322,
+        "discount": 57
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "02ef607c-4791-4319-9989-641c8fafb912",
@@ -3620,51 +4976,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 100,
         "rate": 356,
+        "price": 356,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 49,
         "label": "Pack of 100 (₹356)"
       },
       {
         "qty": 200,
         "rate": 1000,
+        "price": 1000,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 29,
         "label": "Pack of 200 (₹1,000)"
       },
       {
         "qty": 500,
         "rate": 1610,
+        "price": 1610,
+        "mrp": 3500,
+        "packMrp": 3500,
+        "discount": 54,
         "label": "Pack of 500 (₹1,610)"
       },
       {
         "qty": 1000,
         "rate": 3008,
+        "price": 3008,
+        "mrp": 7000,
+        "packMrp": 7000,
+        "discount": 57,
         "label": "Pack of 1000 (₹3,008)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 100,
-        "rate": 3.56,
-        "label": "Pack of 100 (₹356)"
+        "rate": 356,
+        "label": "Pack of 100 (₹356)",
+        "price": 356,
+        "discount": 49
       },
       {
+        "mrp": 1400,
         "qty": 200,
-        "rate": 5,
-        "label": "Pack of 200 (₹1,000)"
+        "rate": 1000,
+        "label": "Pack of 200 (₹1,000)",
+        "price": 1000,
+        "discount": 29
       },
       {
+        "mrp": 3500,
         "qty": 500,
-        "rate": 3.22,
-        "label": "Pack of 500 (₹1,610)"
+        "rate": 1610,
+        "label": "Pack of 500 (₹1,610)",
+        "price": 1610,
+        "discount": 54
       },
       {
+        "mrp": 7000,
         "qty": 1000,
-        "rate": 3.01,
-        "label": "Pack of 1000 (₹3,008)"
+        "rate": 3008,
+        "label": "Pack of 1000 (₹3,008)",
+        "price": 3008,
+        "discount": 57
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "e92228b4-45c5-484e-ac2a-85b93ea593b8",
@@ -3698,51 +5084,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 100,
         "rate": 284,
+        "price": 284,
+        "mrp": 399,
+        "packMrp": 399,
+        "discount": 29,
         "label": "Pack of 100 (₹284)"
       },
       {
         "qty": 500,
         "rate": 1314,
+        "price": 1314,
+        "mrp": 1995,
+        "packMrp": 1995,
+        "discount": 34,
         "label": "Pack of 500 (₹1,314)"
       },
       {
         "qty": 1000,
         "rate": 2585,
+        "price": 2585,
+        "mrp": 3990,
+        "packMrp": 3990,
+        "discount": 35,
         "label": "Pack of 1000 (₹2,585)"
       },
       {
         "qty": 2000,
         "rate": 5085,
+        "price": 5085,
+        "mrp": 7980,
+        "packMrp": 7980,
+        "discount": 36,
         "label": "Pack of 2000 (₹5,085)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 399,
         "qty": 100,
-        "rate": 2.84,
-        "label": "Pack of 100 (₹284)"
+        "rate": 284,
+        "label": "Pack of 100 (₹284)",
+        "price": 284,
+        "discount": 29
       },
       {
+        "mrp": 1995,
         "qty": 500,
-        "rate": 2.63,
-        "label": "Pack of 500 (₹1,314)"
+        "rate": 1314,
+        "label": "Pack of 500 (₹1,314)",
+        "price": 1314,
+        "discount": 34
       },
       {
+        "mrp": 3990,
         "qty": 1000,
-        "rate": 2.58,
-        "label": "Pack of 1000 (₹2,585)"
+        "rate": 2585,
+        "label": "Pack of 1000 (₹2,585)",
+        "price": 2585,
+        "discount": 35
       },
       {
+        "mrp": 7980,
         "qty": 2000,
-        "rate": 2.54,
-        "label": "Pack of 2000 (₹5,085)"
+        "rate": 5085,
+        "label": "Pack of 2000 (₹5,085)",
+        "price": 5085,
+        "discount": 36
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "60dab481-df47-43f8-88fe-1957ce57f2e9",
@@ -3776,51 +5192,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 100,
         "rate": 253,
+        "price": 253,
+        "mrp": 399,
+        "packMrp": 399,
+        "discount": 37,
         "label": "Pack of 100 (₹253)"
       },
       {
         "qty": 500,
         "rate": 1229,
+        "price": 1229,
+        "mrp": 1995,
+        "packMrp": 1995,
+        "discount": 38,
         "label": "Pack of 500 (₹1,229)"
       },
       {
         "qty": 1000,
         "rate": 2288,
+        "price": 2288,
+        "mrp": 3990,
+        "packMrp": 3990,
+        "discount": 43,
         "label": "Pack of 1000 (₹2,288)"
       },
       {
         "qty": 2000,
         "rate": 4237,
+        "price": 4237,
+        "mrp": 7980,
+        "packMrp": 7980,
+        "discount": 47,
         "label": "Pack of 2000 (₹4,237)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 399,
         "qty": 100,
-        "rate": 2.53,
-        "label": "Pack of 100 (₹253)"
+        "rate": 253,
+        "label": "Pack of 100 (₹253)",
+        "price": 253,
+        "discount": 37
       },
       {
+        "mrp": 1995,
         "qty": 500,
-        "rate": 2.46,
-        "label": "Pack of 500 (₹1,229)"
+        "rate": 1229,
+        "label": "Pack of 500 (₹1,229)",
+        "price": 1229,
+        "discount": 38
       },
       {
+        "mrp": 3990,
         "qty": 1000,
-        "rate": 2.29,
-        "label": "Pack of 1000 (₹2,288)"
+        "rate": 2288,
+        "label": "Pack of 1000 (₹2,288)",
+        "price": 2288,
+        "discount": 43
       },
       {
+        "mrp": 7980,
         "qty": 2000,
-        "rate": 2.12,
-        "label": "Pack of 2000 (₹4,237)"
+        "rate": 4237,
+        "label": "Pack of 2000 (₹4,237)",
+        "price": 4237,
+        "discount": 47
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "a6dd7d58-a0da-4dcf-ad77-37a5ca38acf6",
@@ -3854,51 +5300,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 100,
         "rate": 191,
+        "price": 191,
+        "mrp": 299,
+        "packMrp": 299,
+        "discount": 36,
         "label": "Pack of 100 (₹191)"
       },
       {
         "qty": 500,
         "rate": 888,
+        "price": 888,
+        "mrp": 1495,
+        "packMrp": 1495,
+        "discount": 41,
         "label": "Pack of 500 (₹888)"
       },
       {
         "qty": 1000,
         "rate": 1737,
+        "price": 1737,
+        "mrp": 2990,
+        "packMrp": 2990,
+        "discount": 42,
         "label": "Pack of 1000 (₹1,737)"
       },
       {
         "qty": 2000,
         "rate": 3390,
+        "price": 3390,
+        "mrp": 5980,
+        "packMrp": 5980,
+        "discount": 43,
         "label": "Pack of 2000 (₹3,390)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 299,
         "qty": 100,
-        "rate": 1.91,
-        "label": "Pack of 100 (₹191)"
+        "rate": 191,
+        "label": "Pack of 100 (₹191)",
+        "price": 191,
+        "discount": 36
       },
       {
+        "mrp": 1495,
         "qty": 500,
-        "rate": 1.78,
-        "label": "Pack of 500 (₹888)"
+        "rate": 888,
+        "label": "Pack of 500 (₹888)",
+        "price": 888,
+        "discount": 41
       },
       {
+        "mrp": 2990,
         "qty": 1000,
-        "rate": 1.74,
-        "label": "Pack of 1000 (₹1,737)"
+        "rate": 1737,
+        "label": "Pack of 1000 (₹1,737)",
+        "price": 1737,
+        "discount": 42
       },
       {
+        "mrp": 5980,
         "qty": 2000,
-        "rate": 1.69,
-        "label": "Pack of 2000 (₹3,390)"
+        "rate": 3390,
+        "label": "Pack of 2000 (₹3,390)",
+        "price": 3390,
+        "discount": 43
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "7118a8c1-51c7-4bdd-8810-ec819f19da33",
@@ -3934,51 +5410,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 100,
         "rate": 369,
+        "price": 369,
+        "mrp": 699,
+        "packMrp": 699,
+        "discount": 47,
         "label": "Pack of 100 (₹369)"
       },
       {
         "qty": 200,
         "rate": 729,
+        "price": 729,
+        "mrp": 1398,
+        "packMrp": 1398,
+        "discount": 48,
         "label": "Pack of 200 (₹729)"
       },
       {
         "qty": 500,
         "rate": 1780,
+        "price": 1780,
+        "mrp": 3495,
+        "packMrp": 3495,
+        "discount": 49,
         "label": "Pack of 500 (₹1,780)"
       },
       {
         "qty": 1000,
         "rate": 3475,
+        "price": 3475,
+        "mrp": 6990,
+        "packMrp": 6990,
+        "discount": 50,
         "label": "Pack of 1000 (₹3,475)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 699,
         "qty": 100,
-        "rate": 3.69,
-        "label": "Pack of 100 (₹369)"
+        "rate": 369,
+        "label": "Pack of 100 (₹369)",
+        "price": 369,
+        "discount": 47
       },
       {
+        "mrp": 1398,
         "qty": 200,
-        "rate": 3.64,
-        "label": "Pack of 200 (₹729)"
+        "rate": 729,
+        "label": "Pack of 200 (₹729)",
+        "price": 729,
+        "discount": 48
       },
       {
+        "mrp": 3495,
         "qty": 500,
-        "rate": 3.56,
-        "label": "Pack of 500 (₹1,780)"
+        "rate": 1780,
+        "label": "Pack of 500 (₹1,780)",
+        "price": 1780,
+        "discount": 49
       },
       {
+        "mrp": 6990,
         "qty": 1000,
-        "rate": 3.47,
-        "label": "Pack of 1000 (₹3,475)"
+        "rate": 3475,
+        "label": "Pack of 1000 (₹3,475)",
+        "price": 3475,
+        "discount": 50
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "c79bb7e4-a30e-4fa9-91e4-b1ab5a0755f2",
@@ -4013,51 +5519,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 389,
+        "price": 389,
+        "mrp": 599,
+        "packMrp": 599,
+        "discount": 35,
         "label": "Pack of 50 (₹389)"
       },
       {
         "qty": 100,
         "rate": 770,
+        "price": 770,
+        "mrp": 1198,
+        "packMrp": 1198,
+        "discount": 36,
         "label": "Pack of 100 (₹770)"
       },
       {
         "qty": 500,
         "rate": 3600,
+        "price": 3600,
+        "mrp": 5990,
+        "packMrp": 5990,
+        "discount": 40,
         "label": "Pack of 500 (₹3,600)"
       },
       {
         "qty": 1000,
         "rate": 6900,
+        "price": 6900,
+        "mrp": 11980,
+        "packMrp": 11980,
+        "discount": 42,
         "label": "Pack of 1000 (₹6,900)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 599,
         "qty": 50,
-        "rate": 7.78,
-        "label": "Pack of 50 (₹389)"
+        "rate": 389,
+        "label": "Pack of 50 (₹389)",
+        "price": 389,
+        "discount": 35
       },
       {
+        "mrp": 1198,
         "qty": 100,
-        "rate": 7.7,
-        "label": "Pack of 100 (₹770)"
+        "rate": 770,
+        "label": "Pack of 100 (₹770)",
+        "price": 770,
+        "discount": 36
       },
       {
+        "mrp": 5990,
         "qty": 500,
-        "rate": 7.2,
-        "label": "Pack of 500 (₹3,600)"
+        "rate": 3600,
+        "label": "Pack of 500 (₹3,600)",
+        "price": 3600,
+        "discount": 40
       },
       {
+        "mrp": 11980,
         "qty": 1000,
-        "rate": 6.9,
-        "label": "Pack of 1000 (₹6,900)"
+        "rate": 6900,
+        "label": "Pack of 1000 (₹6,900)",
+        "price": 6900,
+        "discount": 42
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "6bf8cde7-e9c5-4f01-a49b-9e6235242573",
@@ -4093,51 +5629,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 189,
+        "price": 189,
+        "mrp": 360,
+        "packMrp": 360,
+        "discount": 48,
         "label": "Pack of 50 (₹189)"
       },
       {
         "qty": 100,
         "rate": 360,
+        "price": 360,
+        "mrp": 720,
+        "packMrp": 720,
+        "discount": 50,
         "label": "Pack of 100 (₹360)"
       },
       {
         "qty": 500,
         "rate": 1619,
+        "price": 1619,
+        "mrp": 3600,
+        "packMrp": 3600,
+        "discount": 55,
         "label": "Pack of 500 (₹1,619)"
       },
       {
         "qty": 1000,
         "rate": 3048,
+        "price": 3048,
+        "mrp": 7200,
+        "packMrp": 7200,
+        "discount": 58,
         "label": "Pack of 1000 (₹3,048)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 360,
         "qty": 50,
-        "rate": 3.77,
-        "label": "Pack of 50 (₹189)"
+        "rate": 189,
+        "label": "Pack of 50 (₹189)",
+        "price": 189,
+        "discount": 48
       },
       {
+        "mrp": 720,
         "qty": 100,
-        "rate": 3.6,
-        "label": "Pack of 100 (₹360)"
+        "rate": 360,
+        "label": "Pack of 100 (₹360)",
+        "price": 360,
+        "discount": 50
       },
       {
+        "mrp": 3600,
         "qty": 500,
-        "rate": 3.24,
-        "label": "Pack of 500 (₹1,619)"
+        "rate": 1619,
+        "label": "Pack of 500 (₹1,619)",
+        "price": 1619,
+        "discount": 55
       },
       {
+        "mrp": 7200,
         "qty": 1000,
-        "rate": 3.05,
-        "label": "Pack of 1000 (₹3,048)"
+        "rate": 3048,
+        "label": "Pack of 1000 (₹3,048)",
+        "price": 3048,
+        "discount": 58
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "208e995c-dfd8-4a03-b8ab-982e11160e4c",
@@ -4171,51 +5737,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 100,
         "rate": 202,
+        "price": 202,
+        "mrp": 400,
+        "packMrp": 400,
+        "discount": 50,
         "label": "Pack of 100 (₹202)"
       },
       {
         "qty": 200,
         "rate": 379,
+        "price": 379,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 53,
         "label": "Pack of 200 (₹379)"
       },
       {
         "qty": 1000,
         "rate": 1850,
+        "price": 1850,
+        "mrp": 4000,
+        "packMrp": 4000,
+        "discount": 54,
         "label": "Pack of 1000 (₹1,850)"
       },
       {
         "qty": 2000,
         "rate": 3650,
+        "price": 3650,
+        "mrp": 8000,
+        "packMrp": 8000,
+        "discount": 54,
         "label": "Pack of 2000 (₹3,650)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 400,
         "qty": 100,
-        "rate": 2.02,
-        "label": "Pack of 100 (₹202)"
+        "rate": 202,
+        "label": "Pack of 100 (₹202)",
+        "price": 202,
+        "discount": 50
       },
       {
+        "mrp": 800,
         "qty": 200,
-        "rate": 1.9,
-        "label": "Pack of 200 (₹379)"
+        "rate": 379,
+        "label": "Pack of 200 (₹379)",
+        "price": 379,
+        "discount": 53
       },
       {
+        "mrp": 4000,
         "qty": 1000,
-        "rate": 1.85,
-        "label": "Pack of 1000 (₹1,850)"
+        "rate": 1850,
+        "label": "Pack of 1000 (₹1,850)",
+        "price": 1850,
+        "discount": 54
       },
       {
+        "mrp": 8000,
         "qty": 2000,
-        "rate": 1.82,
-        "label": "Pack of 2000 (₹3,650)"
+        "rate": 3650,
+        "label": "Pack of 2000 (₹3,650)",
+        "price": 3650,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "5c4b5fcb-3a8b-440b-a094-08e6304cd15e",
@@ -4249,51 +5845,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 562,
+        "price": 562,
+        "mrp": 1100,
+        "packMrp": 1100,
+        "discount": 49,
         "label": "Pack of 50 (₹562)"
       },
       {
         "qty": 100,
         "rate": 1095,
+        "price": 1095,
+        "mrp": 2200,
+        "packMrp": 2200,
+        "discount": 50,
         "label": "Pack of 100 (₹1,095)"
       },
       {
         "qty": 500,
         "rate": 5333,
+        "price": 5333,
+        "mrp": 11000,
+        "packMrp": 11000,
+        "discount": 52,
         "label": "Pack of 500 (₹5,333)"
       },
       {
         "qty": 1000,
         "rate": 9429,
+        "price": 9429,
+        "mrp": 22000,
+        "packMrp": 22000,
+        "discount": 57,
         "label": "Pack of 1000 (₹9,429)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 1100,
         "qty": 50,
-        "rate": 11.24,
-        "label": "Pack of 50 (₹562)"
+        "rate": 562,
+        "label": "Pack of 50 (₹562)",
+        "price": 562,
+        "discount": 49
       },
       {
+        "mrp": 2200,
         "qty": 100,
-        "rate": 10.95,
-        "label": "Pack of 100 (₹1,095)"
+        "rate": 1095,
+        "label": "Pack of 100 (₹1,095)",
+        "price": 1095,
+        "discount": 50
       },
       {
+        "mrp": 11000,
         "qty": 500,
-        "rate": 10.67,
-        "label": "Pack of 500 (₹5,333)"
+        "rate": 5333,
+        "label": "Pack of 500 (₹5,333)",
+        "price": 5333,
+        "discount": 52
       },
       {
+        "mrp": 22000,
         "qty": 1000,
-        "rate": 9.43,
-        "label": "Pack of 1000 (₹9,429)"
+        "rate": 9429,
+        "label": "Pack of 1000 (₹9,429)",
+        "price": 9429,
+        "discount": 57
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "2516c5b8-66ab-40b9-81ef-1d9b6cfa5c80",
@@ -4329,51 +5955,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 379,
+        "price": 379,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 46,
         "label": "Pack of 50 (₹379)"
       },
       {
         "qty": 100,
         "rate": 712,
+        "price": 712,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 49,
         "label": "Pack of 100 (₹712)"
       },
       {
         "qty": 500,
         "rate": 3476,
+        "price": 3476,
+        "mrp": 7000,
+        "packMrp": 7000,
+        "discount": 50,
         "label": "Pack of 500 (₹3,476)"
       },
       {
         "qty": 1000,
         "rate": 6476,
+        "price": 6476,
+        "mrp": 14000,
+        "packMrp": 14000,
+        "discount": 54,
         "label": "Pack of 1000 (₹6,476)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 50,
-        "rate": 7.58,
-        "label": "Pack of 50 (₹379)"
+        "rate": 379,
+        "label": "Pack of 50 (₹379)",
+        "price": 379,
+        "discount": 46
       },
       {
+        "mrp": 1400,
         "qty": 100,
-        "rate": 7.12,
-        "label": "Pack of 100 (₹712)"
+        "rate": 712,
+        "label": "Pack of 100 (₹712)",
+        "price": 712,
+        "discount": 49
       },
       {
+        "mrp": 7000,
         "qty": 500,
-        "rate": 6.95,
-        "label": "Pack of 500 (₹3,476)"
+        "rate": 3476,
+        "label": "Pack of 500 (₹3,476)",
+        "price": 3476,
+        "discount": 50
       },
       {
+        "mrp": 14000,
         "qty": 1000,
-        "rate": 6.48,
-        "label": "Pack of 1000 (₹6,476)"
+        "rate": 6476,
+        "label": "Pack of 1000 (₹6,476)",
+        "price": 6476,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "9ef70b3b-931b-4bd0-bffd-b4c5457cb2f4",
@@ -4407,51 +6063,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 284,
+        "price": 284,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 53,
         "label": "Pack of 50 (₹284)"
       },
       {
         "qty": 100,
         "rate": 562,
+        "price": 562,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 53,
         "label": "Pack of 100 (₹562)"
       },
       {
         "qty": 500,
         "rate": 2571,
+        "price": 2571,
+        "mrp": 6000,
+        "packMrp": 6000,
+        "discount": 57,
         "label": "Pack of 500 (₹2,571)"
       },
       {
         "qty": 1000,
         "rate": 4952,
+        "price": 4952,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 59,
         "label": "Pack of 1000 (₹4,952)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 50,
-        "rate": 5.68,
-        "label": "Pack of 50 (₹284)"
+        "rate": 284,
+        "label": "Pack of 50 (₹284)",
+        "price": 284,
+        "discount": 53
       },
       {
+        "mrp": 1200,
         "qty": 100,
-        "rate": 5.62,
-        "label": "Pack of 100 (₹562)"
+        "rate": 562,
+        "label": "Pack of 100 (₹562)",
+        "price": 562,
+        "discount": 53
       },
       {
+        "mrp": 6000,
         "qty": 500,
-        "rate": 5.14,
-        "label": "Pack of 500 (₹2,571)"
+        "rate": 2571,
+        "label": "Pack of 500 (₹2,571)",
+        "price": 2571,
+        "discount": 57
       },
       {
+        "mrp": 12000,
         "qty": 1000,
-        "rate": 4.95,
-        "label": "Pack of 1000 (₹4,952)"
+        "rate": 4952,
+        "label": "Pack of 1000 (₹4,952)",
+        "price": 4952,
+        "discount": 59
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "8c82c99e-ed95-43b6-91ee-f9e0e8e67027",
@@ -4487,51 +6173,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 284,
+        "price": 284,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 53,
         "label": "Pack of 50 (₹284)"
       },
       {
         "qty": 100,
         "rate": 562,
+        "price": 562,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 53,
         "label": "Pack of 100 (₹562)"
       },
       {
         "qty": 500,
         "rate": 2571,
+        "price": 2571,
+        "mrp": 6000,
+        "packMrp": 6000,
+        "discount": 57,
         "label": "Pack of 500 (₹2,571)"
       },
       {
         "qty": 1000,
         "rate": 4952,
+        "price": 4952,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 59,
         "label": "Pack of 1000 (₹4,952)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 50,
-        "rate": 5.68,
-        "label": "Pack of 50 (₹284)"
+        "rate": 284,
+        "label": "Pack of 50 (₹284)",
+        "price": 284,
+        "discount": 53
       },
       {
+        "mrp": 1200,
         "qty": 100,
-        "rate": 5.62,
-        "label": "Pack of 100 (₹562)"
+        "rate": 562,
+        "label": "Pack of 100 (₹562)",
+        "price": 562,
+        "discount": 53
       },
       {
+        "mrp": 6000,
         "qty": 500,
-        "rate": 5.14,
-        "label": "Pack of 500 (₹2,571)"
+        "rate": 2571,
+        "label": "Pack of 500 (₹2,571)",
+        "price": 2571,
+        "discount": 57
       },
       {
+        "mrp": 12000,
         "qty": 1000,
-        "rate": 4.95,
-        "label": "Pack of 1000 (₹4,952)"
+        "rate": 4952,
+        "label": "Pack of 1000 (₹4,952)",
+        "price": 4952,
+        "discount": 59
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "49072ef8-0134-41fe-b8bf-bdec70e73dfd",
@@ -4566,31 +6282,47 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 800,
         "rate": 427,
+        "price": 427,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 47,
         "label": "800 g (₹427)"
       },
       {
         "qty": 2000,
         "rate": 950,
+        "price": 950,
+        "mrp": 2000,
+        "packMrp": 2000,
+        "discount": 53,
         "label": "2000g (₹950)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 800,
-        "rate": 0.53,
-        "label": "800 g (₹427)"
+        "rate": 427,
+        "label": "800 g (₹427)",
+        "price": 427,
+        "discount": 47
       },
       {
+        "mrp": 2000,
         "qty": 2000,
-        "rate": 0.48,
-        "label": "2000g (₹950)"
+        "rate": 950,
+        "label": "2000g (₹950)",
+        "price": 950,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "0dc88605-c511-473f-a961-cf9296f8f549",
@@ -4626,41 +6358,64 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 200,
         "rate": 170,
+        "price": 170,
+        "mrp": 300,
+        "packMrp": 300,
+        "discount": 43,
         "label": "200 g (₹170)"
       },
       {
         "qty": 500,
         "rate": 305,
+        "price": 305,
+        "mrp": 750,
+        "packMrp": 750,
+        "discount": 59,
         "label": "500 g (₹305)"
       },
       {
         "qty": 1000,
         "rate": 552,
+        "price": 552,
+        "mrp": 1500,
+        "packMrp": 1500,
+        "discount": 63,
         "label": "1000 g (₹552)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 300,
         "qty": 200,
-        "rate": 0.85,
-        "label": "200 g (₹170)"
+        "rate": 170,
+        "label": "200 g (₹170)",
+        "price": 170,
+        "discount": 43
       },
       {
+        "mrp": 750,
         "qty": 500,
-        "rate": 0.61,
-        "label": "500 g (₹305)"
+        "rate": 305,
+        "label": "500 g (₹305)",
+        "price": 305,
+        "discount": 59
       },
       {
+        "mrp": 1500,
         "qty": 1000,
-        "rate": 0.55,
-        "label": "1000 g (₹552)"
+        "rate": 552,
+        "label": "1000 g (₹552)",
+        "price": 552,
+        "discount": 63
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "a269a8b8-e156-4e41-9f0a-c6f7b0be5857",
@@ -4696,41 +6451,64 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 200,
         "rate": 150,
+        "price": 150,
+        "mrp": 300,
+        "packMrp": 300,
+        "discount": 50,
         "label": "200 g (₹150)"
       },
       {
         "qty": 500,
         "rate": 276,
+        "price": 276,
+        "mrp": 750,
+        "packMrp": 750,
+        "discount": 63,
         "label": "500 g (₹276)"
       },
       {
         "qty": 1000,
         "rate": 474,
+        "price": 474,
+        "mrp": 1500,
+        "packMrp": 1500,
+        "discount": 68,
         "label": "1000 g (₹474)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 300,
         "qty": 200,
-        "rate": 0.75,
-        "label": "200 g (₹150)"
+        "rate": 150,
+        "label": "200 g (₹150)",
+        "price": 150,
+        "discount": 50
       },
       {
+        "mrp": 750,
         "qty": 500,
-        "rate": 0.55,
-        "label": "500 g (₹276)"
+        "rate": 276,
+        "label": "500 g (₹276)",
+        "price": 276,
+        "discount": 63
       },
       {
+        "mrp": 1500,
         "qty": 1000,
-        "rate": 0.47,
-        "label": "1000 g (₹474)"
+        "rate": 474,
+        "label": "1000 g (₹474)",
+        "price": 474,
+        "discount": 68
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "d221ca6a-a5f5-4b1c-b003-905e80d88ba5",
@@ -4764,41 +6542,64 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 200,
         "rate": 170,
+        "price": 170,
+        "mrp": 300,
+        "packMrp": 300,
+        "discount": 43,
         "label": "200 g (₹170)"
       },
       {
         "qty": 500,
         "rate": 305,
+        "price": 305,
+        "mrp": 750,
+        "packMrp": 750,
+        "discount": 59,
         "label": "500 g (₹305)"
       },
       {
         "qty": 1000,
         "rate": 552,
+        "price": 552,
+        "mrp": 1500,
+        "packMrp": 1500,
+        "discount": 63,
         "label": "1000 g (₹552)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 300,
         "qty": 200,
-        "rate": 0.85,
-        "label": "200 g (₹170)"
+        "rate": 170,
+        "label": "200 g (₹170)",
+        "price": 170,
+        "discount": 43
       },
       {
+        "mrp": 750,
         "qty": 500,
-        "rate": 0.61,
-        "label": "500 g (₹305)"
+        "rate": 305,
+        "label": "500 g (₹305)",
+        "price": 305,
+        "discount": 59
       },
       {
+        "mrp": 1500,
         "qty": 1000,
-        "rate": 0.55,
-        "label": "1000 g (₹552)"
+        "rate": 552,
+        "label": "1000 g (₹552)",
+        "price": 552,
+        "discount": 63
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "176d9e4b-b87f-40cd-8ef7-ed10e44c5871",
@@ -4832,41 +6633,64 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 200,
         "rate": 170,
+        "price": 170,
+        "mrp": 300,
+        "packMrp": 300,
+        "discount": 43,
         "label": "200 g (₹170)"
       },
       {
         "qty": 500,
         "rate": 305,
+        "price": 305,
+        "mrp": 750,
+        "packMrp": 750,
+        "discount": 59,
         "label": "500 g (₹305)"
       },
       {
         "qty": 1000,
         "rate": 552,
+        "price": 552,
+        "mrp": 1500,
+        "packMrp": 1500,
+        "discount": 63,
         "label": "1000 g (₹552)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 300,
         "qty": 200,
-        "rate": 0.85,
-        "label": "200 g (₹170)"
+        "rate": 170,
+        "label": "200 g (₹170)",
+        "price": 170,
+        "discount": 43
       },
       {
+        "mrp": 750,
         "qty": 500,
-        "rate": 0.61,
-        "label": "500 g (₹305)"
+        "rate": 305,
+        "label": "500 g (₹305)",
+        "price": 305,
+        "discount": 59
       },
       {
+        "mrp": 1500,
         "qty": 1000,
-        "rate": 0.55,
-        "label": "1000 g (₹552)"
+        "rate": 552,
+        "label": "1000 g (₹552)",
+        "price": 552,
+        "discount": 63
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "7b3a6069-a594-4572-b6aa-472ef1b04cb1",
@@ -4901,31 +6725,47 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 20,
         "rate": 276,
+        "price": 276,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 54,
         "label": "20 Meters (₹276)"
       },
       {
         "qty": 100,
         "rate": 943,
+        "price": 943,
+        "mrp": 3000,
+        "packMrp": 3000,
+        "discount": 69,
         "label": "100 Meters (₹943)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 20,
-        "rate": 13.81,
-        "label": "20 Meters (₹276)"
+        "rate": 276,
+        "label": "20 Meters (₹276)",
+        "price": 276,
+        "discount": 54
       },
       {
+        "mrp": 3000,
         "qty": 100,
-        "rate": 9.43,
-        "label": "100 Meters (₹943)"
+        "rate": 943,
+        "label": "100 Meters (₹943)",
+        "price": 943,
+        "discount": 69
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "91ef72e3-7648-4e4c-b153-666caa9548c8",
@@ -4960,31 +6800,47 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 20,
         "rate": 276,
+        "price": 276,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 54,
         "label": "20 Meters (₹276)"
       },
       {
         "qty": 100,
         "rate": 943,
+        "price": 943,
+        "mrp": 3000,
+        "packMrp": 3000,
+        "discount": 69,
         "label": "100 Meters (₹943)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 20,
-        "rate": 13.81,
-        "label": "20 Meters (₹276)"
+        "rate": 276,
+        "label": "20 Meters (₹276)",
+        "price": 276,
+        "discount": 54
       },
       {
+        "mrp": 3000,
         "qty": 100,
-        "rate": 9.43,
-        "label": "100 Meters (₹943)"
+        "rate": 943,
+        "label": "100 Meters (₹943)",
+        "price": 943,
+        "discount": 69
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "b8c70da6-0b05-4013-abf2-96274d70201f",
@@ -5018,41 +6874,64 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 20,
         "rate": 248,
+        "price": 248,
+        "mrp": 428,
+        "packMrp": 428,
+        "discount": 42,
         "label": "20 Meters (₹248)"
       },
       {
         "qty": 100,
         "rate": 960,
+        "price": 960,
+        "mrp": 2140,
+        "packMrp": 2140,
+        "discount": 55,
         "label": "100 Meters (₹960)"
       },
       {
         "qty": 250,
         "rate": 1760,
+        "price": 1760,
+        "mrp": 5350,
+        "packMrp": 5350,
+        "discount": 67,
         "label": "250 Meters (₹1,760)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 428,
         "qty": 20,
-        "rate": 12.4,
-        "label": "20 Meters (₹248)"
+        "rate": 248,
+        "label": "20 Meters (₹248)",
+        "price": 248,
+        "discount": 42
       },
       {
+        "mrp": 2140,
         "qty": 100,
-        "rate": 9.6,
-        "label": "100 Meters (₹960)"
+        "rate": 960,
+        "label": "100 Meters (₹960)",
+        "price": 960,
+        "discount": 55
       },
       {
+        "mrp": 5350,
         "qty": 250,
-        "rate": 7.04,
-        "label": "250 Meters (₹1,760)"
+        "rate": 1760,
+        "label": "250 Meters (₹1,760)",
+        "price": 1760,
+        "discount": 67
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "ee6b422b-e889-4cd6-97a2-bd73e3b3dee7",
@@ -5086,51 +6965,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 314,
+        "price": 314,
+        "mrp": 500,
+        "packMrp": 500,
+        "discount": 37,
         "label": "Pack of 50 (₹314)"
       },
       {
         "qty": 100,
         "rate": 590,
+        "price": 590,
+        "mrp": 1000,
+        "packMrp": 1000,
+        "discount": 41,
         "label": "Pack of 100 (₹590)"
       },
       {
         "qty": 500,
         "rate": 2762,
+        "price": 2762,
+        "mrp": 5000,
+        "packMrp": 5000,
+        "discount": 45,
         "label": "Pack of 500 (₹2,762)"
       },
       {
         "qty": 1000,
         "rate": 5333,
+        "price": 5333,
+        "mrp": 10000,
+        "packMrp": 10000,
+        "discount": 47,
         "label": "Pack of 1000 (₹5,333)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 500,
         "qty": 50,
-        "rate": 6.29,
-        "label": "Pack of 50 (₹314)"
+        "rate": 314,
+        "label": "Pack of 50 (₹314)",
+        "price": 314,
+        "discount": 37
       },
       {
+        "mrp": 1000,
         "qty": 100,
-        "rate": 5.9,
-        "label": "Pack of 100 (₹590)"
+        "rate": 590,
+        "label": "Pack of 100 (₹590)",
+        "price": 590,
+        "discount": 41
       },
       {
+        "mrp": 5000,
         "qty": 500,
-        "rate": 5.52,
-        "label": "Pack of 500 (₹2,762)"
+        "rate": 2762,
+        "label": "Pack of 500 (₹2,762)",
+        "price": 2762,
+        "discount": 45
       },
       {
+        "mrp": 10000,
         "qty": 1000,
-        "rate": 5.33,
-        "label": "Pack of 1000 (₹5,333)"
+        "rate": 5333,
+        "label": "Pack of 1000 (₹5,333)",
+        "price": 5333,
+        "discount": 47
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "d1381f94-9127-417b-b87d-f71a2c4f209e",
@@ -5165,51 +7074,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 362,
+        "price": 362,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 48,
         "label": "Pack of 50 (₹362)"
       },
       {
         "qty": 100,
         "rate": 705,
+        "price": 705,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 50,
         "label": "Pack of 100 (₹705)"
       },
       {
         "qty": 500,
         "rate": 3333,
+        "price": 3333,
+        "mrp": 7000,
+        "packMrp": 7000,
+        "discount": 52,
         "label": "Pack of 500 (₹3,333)"
       },
       {
         "qty": 1000,
         "rate": 6381,
+        "price": 6381,
+        "mrp": 14000,
+        "packMrp": 14000,
+        "discount": 54,
         "label": "Pack of 1000 (₹6,381)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 50,
-        "rate": 7.24,
-        "label": "Pack of 50 (₹362)"
+        "rate": 362,
+        "label": "Pack of 50 (₹362)",
+        "price": 362,
+        "discount": 48
       },
       {
+        "mrp": 1400,
         "qty": 100,
-        "rate": 7.05,
-        "label": "Pack of 100 (₹705)"
+        "rate": 705,
+        "label": "Pack of 100 (₹705)",
+        "price": 705,
+        "discount": 50
       },
       {
+        "mrp": 7000,
         "qty": 500,
-        "rate": 6.67,
-        "label": "Pack of 500 (₹3,333)"
+        "rate": 3333,
+        "label": "Pack of 500 (₹3,333)",
+        "price": 3333,
+        "discount": 52
       },
       {
+        "mrp": 14000,
         "qty": 1000,
-        "rate": 6.38,
-        "label": "Pack of 1000 (₹6,381)"
+        "rate": 6381,
+        "label": "Pack of 1000 (₹6,381)",
+        "price": 6381,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "ff58c4a4-641d-4c47-bef2-17abf6cbe41a",
@@ -5245,51 +7184,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 276,
+        "price": 276,
+        "mrp": 500,
+        "packMrp": 500,
+        "discount": 45,
         "label": "Pack of 50 (₹276)"
       },
       {
         "qty": 100,
         "rate": 543,
+        "price": 543,
+        "mrp": 1000,
+        "packMrp": 1000,
+        "discount": 46,
         "label": "Pack of 100 (₹543)"
       },
       {
         "qty": 500,
         "rate": 2619,
+        "price": 2619,
+        "mrp": 5000,
+        "packMrp": 5000,
+        "discount": 48,
         "label": "Pack of 500 (₹2,619)"
       },
       {
         "qty": 1000,
         "rate": 5143,
+        "price": 5143,
+        "mrp": 10000,
+        "packMrp": 10000,
+        "discount": 49,
         "label": "Pack of 1000 (₹5,143)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 500,
         "qty": 50,
-        "rate": 5.52,
-        "label": "Pack of 50 (₹276)"
+        "rate": 276,
+        "label": "Pack of 50 (₹276)",
+        "price": 276,
+        "discount": 45
       },
       {
+        "mrp": 1000,
         "qty": 100,
-        "rate": 5.43,
-        "label": "Pack of 100 (₹543)"
+        "rate": 543,
+        "label": "Pack of 100 (₹543)",
+        "price": 543,
+        "discount": 46
       },
       {
+        "mrp": 5000,
         "qty": 500,
-        "rate": 5.24,
-        "label": "Pack of 500 (₹2,619)"
+        "rate": 2619,
+        "label": "Pack of 500 (₹2,619)",
+        "price": 2619,
+        "discount": 48
       },
       {
+        "mrp": 10000,
         "qty": 1000,
-        "rate": 5.14,
-        "label": "Pack of 1000 (₹5,143)"
+        "rate": 5143,
+        "label": "Pack of 1000 (₹5,143)",
+        "price": 5143,
+        "discount": 49
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "d69457ab-521e-474a-a7dc-65461b809442",
@@ -5323,51 +7292,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 524,
+        "price": 524,
+        "mrp": 999,
+        "packMrp": 999,
+        "discount": 48,
         "label": "Pack of 50 (₹524)"
       },
       {
         "qty": 100,
         "rate": 1000,
+        "price": 1000,
+        "mrp": 1998,
+        "packMrp": 1998,
+        "discount": 50,
         "label": "Pack of 100 (₹1,000)"
       },
       {
         "qty": 500,
         "rate": 4857,
+        "price": 4857,
+        "mrp": 9990,
+        "packMrp": 9990,
+        "discount": 51,
         "label": "Pack of 500 (₹4,857)"
       },
       {
         "qty": 1000,
         "rate": 9333,
+        "price": 9333,
+        "mrp": 19980,
+        "packMrp": 19980,
+        "discount": 53,
         "label": "Pack of 1000 (₹9,333)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 999,
         "qty": 50,
-        "rate": 10.48,
-        "label": "Pack of 50 (₹524)"
+        "rate": 524,
+        "label": "Pack of 50 (₹524)",
+        "price": 524,
+        "discount": 48
       },
       {
+        "mrp": 1998,
         "qty": 100,
-        "rate": 10,
-        "label": "Pack of 100 (₹1,000)"
+        "rate": 1000,
+        "label": "Pack of 100 (₹1,000)",
+        "price": 1000,
+        "discount": 50
       },
       {
+        "mrp": 9990,
         "qty": 500,
-        "rate": 9.71,
-        "label": "Pack of 500 (₹4,857)"
+        "rate": 4857,
+        "label": "Pack of 500 (₹4,857)",
+        "price": 4857,
+        "discount": 51
       },
       {
+        "mrp": 19980,
         "qty": 1000,
-        "rate": 9.33,
-        "label": "Pack of 1000 (₹9,333)"
+        "rate": 9333,
+        "label": "Pack of 1000 (₹9,333)",
+        "price": 9333,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "604c6990-a8b0-4760-948b-74bbf1721995",
@@ -5401,51 +7400,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 410,
+        "price": 410,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 49,
         "label": "Pack of 50 (₹410)"
       },
       {
         "qty": 100,
         "rate": 760,
+        "price": 760,
+        "mrp": 1600,
+        "packMrp": 1600,
+        "discount": 53,
         "label": "Pack of 100 (₹760)"
       },
       {
         "qty": 500,
         "rate": 3714,
+        "price": 3714,
+        "mrp": 8000,
+        "packMrp": 8000,
+        "discount": 54,
         "label": "Pack of 500 (₹3,714)"
       },
       {
         "qty": 1000,
         "rate": 7143,
+        "price": 7143,
+        "mrp": 16000,
+        "packMrp": 16000,
+        "discount": 55,
         "label": "Pack of 1000 (₹7,143)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 50,
-        "rate": 8.19,
-        "label": "Pack of 50 (₹410)"
+        "rate": 410,
+        "label": "Pack of 50 (₹410)",
+        "price": 410,
+        "discount": 49
       },
       {
+        "mrp": 1600,
         "qty": 100,
-        "rate": 7.6,
-        "label": "Pack of 100 (₹760)"
+        "rate": 760,
+        "label": "Pack of 100 (₹760)",
+        "price": 760,
+        "discount": 53
       },
       {
+        "mrp": 8000,
         "qty": 500,
-        "rate": 7.43,
-        "label": "Pack of 500 (₹3,714)"
+        "rate": 3714,
+        "label": "Pack of 500 (₹3,714)",
+        "price": 3714,
+        "discount": 54
       },
       {
+        "mrp": 16000,
         "qty": 1000,
-        "rate": 7.14,
-        "label": "Pack of 1000 (₹7,143)"
+        "rate": 7143,
+        "label": "Pack of 1000 (₹7,143)",
+        "price": 7143,
+        "discount": 55
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "92457967-5a58-4d90-badb-bc426da37c89",
@@ -5481,61 +7510,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 229,
+        "price": 229,
+        "mrp": 499,
+        "packMrp": 499,
+        "discount": 54,
         "label": "Pack of 25 (₹229)"
       },
       {
         "qty": 50,
         "rate": 452,
+        "price": 452,
+        "mrp": 998,
+        "packMrp": 998,
+        "discount": 55,
         "label": "Pack of 50 (₹452)"
       },
       {
         "qty": 100,
         "rate": 857,
+        "price": 857,
+        "mrp": 1996,
+        "packMrp": 1996,
+        "discount": 57,
         "label": "Pack of 100 (₹857)"
       },
       {
         "qty": 500,
         "rate": 4190,
+        "price": 4190,
+        "mrp": 9980,
+        "packMrp": 9980,
+        "discount": 58,
         "label": "Pack of 500 (₹4,190)"
       },
       {
         "qty": 1000,
         "rate": 8286,
+        "price": 8286,
+        "mrp": 19960,
+        "packMrp": 19960,
+        "discount": 58,
         "label": "Pack of 1000 (₹8,286)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 499,
         "qty": 25,
-        "rate": 9.14,
-        "label": "Pack of 25 (₹229)"
+        "rate": 229,
+        "label": "Pack of 25 (₹229)",
+        "price": 229,
+        "discount": 54
       },
       {
+        "mrp": 998,
         "qty": 50,
-        "rate": 9.05,
-        "label": "Pack of 50 (₹452)"
+        "rate": 452,
+        "label": "Pack of 50 (₹452)",
+        "price": 452,
+        "discount": 55
       },
       {
+        "mrp": 1996,
         "qty": 100,
-        "rate": 8.57,
-        "label": "Pack of 100 (₹857)"
+        "rate": 857,
+        "label": "Pack of 100 (₹857)",
+        "price": 857,
+        "discount": 57
       },
       {
+        "mrp": 9980,
         "qty": 500,
-        "rate": 8.38,
-        "label": "Pack of 500 (₹4,190)"
+        "rate": 4190,
+        "label": "Pack of 500 (₹4,190)",
+        "price": 4190,
+        "discount": 58
       },
       {
+        "mrp": 19960,
         "qty": 1000,
-        "rate": 8.29,
-        "label": "Pack of 1000 (₹8,286)"
+        "rate": 8286,
+        "label": "Pack of 1000 (₹8,286)",
+        "price": 8286,
+        "discount": 58
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "34e3eef0-746a-4e84-a1fe-df833150a09f",
@@ -5571,51 +7637,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 276,
+        "price": 276,
+        "mrp": 499,
+        "packMrp": 499,
+        "discount": 45,
         "label": "Pack of 50 (₹276)"
       },
       {
         "qty": 100,
         "rate": 543,
+        "price": 543,
+        "mrp": 998,
+        "packMrp": 998,
+        "discount": 46,
         "label": "Pack of 100 (₹543)"
       },
       {
         "qty": 500,
         "rate": 2619,
+        "price": 2619,
+        "mrp": 4990,
+        "packMrp": 4990,
+        "discount": 48,
         "label": "Pack of 500 (₹2,619)"
       },
       {
         "qty": 1000,
         "rate": 5143,
+        "price": 5143,
+        "mrp": 9980,
+        "packMrp": 9980,
+        "discount": 48,
         "label": "Pack of 1000 (₹5,143)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 499,
         "qty": 50,
-        "rate": 5.52,
-        "label": "Pack of 50 (₹276)"
+        "rate": 276,
+        "label": "Pack of 50 (₹276)",
+        "price": 276,
+        "discount": 45
       },
       {
+        "mrp": 998,
         "qty": 100,
-        "rate": 5.43,
-        "label": "Pack of 100 (₹543)"
+        "rate": 543,
+        "label": "Pack of 100 (₹543)",
+        "price": 543,
+        "discount": 46
       },
       {
+        "mrp": 4990,
         "qty": 500,
-        "rate": 5.24,
-        "label": "Pack of 500 (₹2,619)"
+        "rate": 2619,
+        "label": "Pack of 500 (₹2,619)",
+        "price": 2619,
+        "discount": 48
       },
       {
+        "mrp": 9980,
         "qty": 1000,
-        "rate": 5.14,
-        "label": "Pack of 1000 (₹5,143)"
+        "rate": 5143,
+        "label": "Pack of 1000 (₹5,143)",
+        "price": 5143,
+        "discount": 48
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "25781cba-0536-4c87-b659-87ccf329c049",
@@ -5650,51 +7746,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 1,
         "rate": 167,
+        "price": 167,
+        "mrp": 300,
+        "packMrp": 300,
+        "discount": 44,
         "label": "Pack of 1 (₹167)"
       },
       {
         "qty": 5,
         "rate": 474,
+        "price": 474,
+        "mrp": 1500,
+        "packMrp": 1500,
+        "discount": 68,
         "label": "Pack of 5 (₹474)"
       },
       {
         "qty": 20,
         "rate": 1714,
+        "price": 1714,
+        "mrp": 6000,
+        "packMrp": 6000,
+        "discount": 71,
         "label": "Pack of 20 (₹1,714)"
       },
       {
         "qty": 100,
         "rate": 7619,
+        "price": 7619,
+        "mrp": 30000,
+        "packMrp": 30000,
+        "discount": 75,
         "label": "Pack of 100 (₹7,619)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 300,
         "qty": 1,
-        "rate": 166.67,
-        "label": "Pack of 1 (₹167)"
+        "rate": 167,
+        "label": "Pack of 1 (₹167)",
+        "price": 167,
+        "discount": 44
       },
       {
+        "mrp": 1500,
         "qty": 5,
-        "rate": 94.86,
-        "label": "Pack of 5 (₹474)"
+        "rate": 474,
+        "label": "Pack of 5 (₹474)",
+        "price": 474,
+        "discount": 68
       },
       {
+        "mrp": 6000,
         "qty": 20,
-        "rate": 85.71,
-        "label": "Pack of 20 (₹1,714)"
+        "rate": 1714,
+        "label": "Pack of 20 (₹1,714)",
+        "price": 1714,
+        "discount": 71
       },
       {
+        "mrp": 30000,
         "qty": 100,
-        "rate": 76.19,
-        "label": "Pack of 100 (₹7,619)"
+        "rate": 7619,
+        "label": "Pack of 100 (₹7,619)",
+        "price": 7619,
+        "discount": 75
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "c26685b7-1256-497b-b69d-7c4f89d75a86",
@@ -5728,51 +7854,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 1,
         "rate": 167,
+        "price": 167,
+        "mrp": 300,
+        "packMrp": 300,
+        "discount": 44,
         "label": "Pack of 1 (₹167)"
       },
       {
         "qty": 5,
         "rate": 474,
+        "price": 474,
+        "mrp": 1500,
+        "packMrp": 1500,
+        "discount": 68,
         "label": "Pack of 5 (₹474)"
       },
       {
         "qty": 20,
         "rate": 1714,
+        "price": 1714,
+        "mrp": 6000,
+        "packMrp": 6000,
+        "discount": 71,
         "label": "Pack of 20 (₹1,714)"
       },
       {
         "qty": 100,
         "rate": 7619,
+        "price": 7619,
+        "mrp": 30000,
+        "packMrp": 30000,
+        "discount": 75,
         "label": "Pack of 100 (₹7,619)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 300,
         "qty": 1,
-        "rate": 166.67,
-        "label": "Pack of 1 (₹167)"
+        "rate": 167,
+        "label": "Pack of 1 (₹167)",
+        "price": 167,
+        "discount": 44
       },
       {
+        "mrp": 1500,
         "qty": 5,
-        "rate": 94.86,
-        "label": "Pack of 5 (₹474)"
+        "rate": 474,
+        "label": "Pack of 5 (₹474)",
+        "price": 474,
+        "discount": 68
       },
       {
+        "mrp": 6000,
         "qty": 20,
-        "rate": 85.71,
-        "label": "Pack of 20 (₹1,714)"
+        "rate": 1714,
+        "label": "Pack of 20 (₹1,714)",
+        "price": 1714,
+        "discount": 71
       },
       {
+        "mrp": 30000,
         "qty": 100,
-        "rate": 76.19,
-        "label": "Pack of 100 (₹7,619)"
+        "rate": 7619,
+        "label": "Pack of 100 (₹7,619)",
+        "price": 7619,
+        "discount": 75
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "af599e79-d776-4643-8b5c-be5b18738fea",
@@ -5806,51 +7962,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 1,
         "rate": 167,
+        "price": 167,
+        "mrp": 300,
+        "packMrp": 300,
+        "discount": 44,
         "label": "Pack of 1 (₹167)"
       },
       {
         "qty": 5,
         "rate": 474,
+        "price": 474,
+        "mrp": 1500,
+        "packMrp": 1500,
+        "discount": 68,
         "label": "Pack of 5 (₹474)"
       },
       {
         "qty": 20,
         "rate": 1714,
+        "price": 1714,
+        "mrp": 6000,
+        "packMrp": 6000,
+        "discount": 71,
         "label": "Pack of 20 (₹1,714)"
       },
       {
         "qty": 100,
         "rate": 7619,
+        "price": 7619,
+        "mrp": 30000,
+        "packMrp": 30000,
+        "discount": 75,
         "label": "Pack of 100 (₹7,619)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 300,
         "qty": 1,
-        "rate": 166.67,
-        "label": "Pack of 1 (₹167)"
+        "rate": 167,
+        "label": "Pack of 1 (₹167)",
+        "price": 167,
+        "discount": 44
       },
       {
+        "mrp": 1500,
         "qty": 5,
-        "rate": 94.86,
-        "label": "Pack of 5 (₹474)"
+        "rate": 474,
+        "label": "Pack of 5 (₹474)",
+        "price": 474,
+        "discount": 68
       },
       {
+        "mrp": 6000,
         "qty": 20,
-        "rate": 85.71,
-        "label": "Pack of 20 (₹1,714)"
+        "rate": 1714,
+        "label": "Pack of 20 (₹1,714)",
+        "price": 1714,
+        "discount": 71
       },
       {
+        "mrp": 30000,
         "qty": 100,
-        "rate": 76.19,
-        "label": "Pack of 100 (₹7,619)"
+        "rate": 7619,
+        "label": "Pack of 100 (₹7,619)",
+        "price": 7619,
+        "discount": 75
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "794d9b21-8837-4382-aeb7-8359beea7451",
@@ -5886,51 +8072,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 1,
         "rate": 167,
+        "price": 167,
+        "mrp": 300,
+        "packMrp": 300,
+        "discount": 44,
         "label": "Pack of 1 (₹167)"
       },
       {
         "qty": 5,
         "rate": 474,
+        "price": 474,
+        "mrp": 1500,
+        "packMrp": 1500,
+        "discount": 68,
         "label": "Pack of 5 (₹474)"
       },
       {
         "qty": 20,
         "rate": 1714,
+        "price": 1714,
+        "mrp": 6000,
+        "packMrp": 6000,
+        "discount": 71,
         "label": "Pack of 20 (₹1,714)"
       },
       {
         "qty": 100,
         "rate": 7619,
+        "price": 7619,
+        "mrp": 30000,
+        "packMrp": 30000,
+        "discount": 75,
         "label": "Pack of 100 (₹7,619)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 300,
         "qty": 1,
-        "rate": 166.67,
-        "label": "Pack of 1 (₹167)"
+        "rate": 167,
+        "label": "Pack of 1 (₹167)",
+        "price": 167,
+        "discount": 44
       },
       {
+        "mrp": 1500,
         "qty": 5,
-        "rate": 94.86,
-        "label": "Pack of 5 (₹474)"
+        "rate": 474,
+        "label": "Pack of 5 (₹474)",
+        "price": 474,
+        "discount": 68
       },
       {
+        "mrp": 6000,
         "qty": 20,
-        "rate": 85.71,
-        "label": "Pack of 20 (₹1,714)"
+        "rate": 1714,
+        "label": "Pack of 20 (₹1,714)",
+        "price": 1714,
+        "discount": 71
       },
       {
+        "mrp": 30000,
         "qty": 100,
-        "rate": 76.19,
-        "label": "Pack of 100 (₹7,619)"
+        "rate": 7619,
+        "label": "Pack of 100 (₹7,619)",
+        "price": 7619,
+        "discount": 75
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "3ebaa625-3791-4e12-bb61-24409a29c625",
@@ -5965,51 +8181,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 1,
         "rate": 190,
+        "price": 190,
+        "mrp": 500,
+        "packMrp": 500,
+        "discount": 62,
         "label": "Pack of 1 (₹190)"
       },
       {
         "qty": 5,
         "rate": 762,
+        "price": 762,
+        "mrp": 2500,
+        "packMrp": 2500,
+        "discount": 70,
         "label": "Pack of 5 (₹762)"
       },
       {
         "qty": 20,
         "rate": 2952,
+        "price": 2952,
+        "mrp": 10000,
+        "packMrp": 10000,
+        "discount": 70,
         "label": "Pack of 20 (₹2,952)"
       },
       {
         "qty": 100,
         "rate": 14286,
+        "price": 14286,
+        "mrp": 50000,
+        "packMrp": 50000,
+        "discount": 71,
         "label": "Pack of 100 (₹14,286)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 500,
         "qty": 1,
-        "rate": 189.52,
-        "label": "Pack of 1 (₹190)"
+        "rate": 190,
+        "label": "Pack of 1 (₹190)",
+        "price": 190,
+        "discount": 62
       },
       {
+        "mrp": 2500,
         "qty": 5,
-        "rate": 152.38,
-        "label": "Pack of 5 (₹762)"
+        "rate": 762,
+        "label": "Pack of 5 (₹762)",
+        "price": 762,
+        "discount": 70
       },
       {
+        "mrp": 10000,
         "qty": 20,
-        "rate": 147.62,
-        "label": "Pack of 20 (₹2,952)"
+        "rate": 2952,
+        "label": "Pack of 20 (₹2,952)",
+        "price": 2952,
+        "discount": 70
       },
       {
+        "mrp": 50000,
         "qty": 100,
-        "rate": 142.86,
-        "label": "Pack of 100 (₹14,286)"
+        "rate": 14286,
+        "label": "Pack of 100 (₹14,286)",
+        "price": 14286,
+        "discount": 71
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "26ca57be-9102-4559-89b5-6937460bc72d",
@@ -6045,51 +8291,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 1,
         "rate": 190,
+        "price": 190,
+        "mrp": 500,
+        "packMrp": 500,
+        "discount": 62,
         "label": "Pack of 1 (₹190)"
       },
       {
         "qty": 5,
         "rate": 762,
+        "price": 762,
+        "mrp": 2500,
+        "packMrp": 2500,
+        "discount": 70,
         "label": "Pack of 5 (₹762)"
       },
       {
         "qty": 20,
         "rate": 2952,
+        "price": 2952,
+        "mrp": 10000,
+        "packMrp": 10000,
+        "discount": 70,
         "label": "Pack of 20 (₹2,952)"
       },
       {
         "qty": 100,
         "rate": 14286,
+        "price": 14286,
+        "mrp": 50000,
+        "packMrp": 50000,
+        "discount": 71,
         "label": "Pack of 100 (₹14,286)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 500,
         "qty": 1,
-        "rate": 189.52,
-        "label": "Pack of 1 (₹190)"
+        "rate": 190,
+        "label": "Pack of 1 (₹190)",
+        "price": 190,
+        "discount": 62
       },
       {
+        "mrp": 2500,
         "qty": 5,
-        "rate": 152.38,
-        "label": "Pack of 5 (₹762)"
+        "rate": 762,
+        "label": "Pack of 5 (₹762)",
+        "price": 762,
+        "discount": 70
       },
       {
+        "mrp": 10000,
         "qty": 20,
-        "rate": 147.62,
-        "label": "Pack of 20 (₹2,952)"
+        "rate": 2952,
+        "label": "Pack of 20 (₹2,952)",
+        "price": 2952,
+        "discount": 70
       },
       {
+        "mrp": 50000,
         "qty": 100,
-        "rate": 142.86,
-        "label": "Pack of 100 (₹14,286)"
+        "rate": 14286,
+        "label": "Pack of 100 (₹14,286)",
+        "price": 14286,
+        "discount": 71
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "8cd6055e-a798-417b-9284-aa5b63834425",
@@ -6124,51 +8400,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 1,
         "rate": 236,
+        "price": 236,
+        "mrp": 500,
+        "packMrp": 500,
+        "discount": 53,
         "label": "Pack of 1 (₹236)"
       },
       {
         "qty": 5,
         "rate": 951,
+        "price": 951,
+        "mrp": 2500,
+        "packMrp": 2500,
+        "discount": 62,
         "label": "Pack of 5 (₹951)"
       },
       {
         "qty": 20,
         "rate": 3714,
+        "price": 3714,
+        "mrp": 10000,
+        "packMrp": 10000,
+        "discount": 63,
         "label": "Pack of 20 (₹3,714)"
       },
       {
         "qty": 100,
         "rate": 17619,
+        "price": 17619,
+        "mrp": 50000,
+        "packMrp": 50000,
+        "discount": 65,
         "label": "Pack of 100 (₹17,619)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 500,
         "qty": 1,
-        "rate": 236.19,
-        "label": "Pack of 1 (₹236)"
+        "rate": 236,
+        "label": "Pack of 1 (₹236)",
+        "price": 236,
+        "discount": 53
       },
       {
+        "mrp": 2500,
         "qty": 5,
-        "rate": 190.29,
-        "label": "Pack of 5 (₹951)"
+        "rate": 951,
+        "label": "Pack of 5 (₹951)",
+        "price": 951,
+        "discount": 62
       },
       {
+        "mrp": 10000,
         "qty": 20,
-        "rate": 185.71,
-        "label": "Pack of 20 (₹3,714)"
+        "rate": 3714,
+        "label": "Pack of 20 (₹3,714)",
+        "price": 3714,
+        "discount": 63
       },
       {
+        "mrp": 50000,
         "qty": 100,
-        "rate": 176.19,
-        "label": "Pack of 100 (₹17,619)"
+        "rate": 17619,
+        "label": "Pack of 100 (₹17,619)",
+        "price": 17619,
+        "discount": 65
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "18dbacae-2967-4ba8-8355-71afda46bd71",
@@ -6203,51 +8509,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 284,
+        "price": 284,
+        "mrp": 560,
+        "packMrp": 560,
+        "discount": 49,
         "label": "Pack of 50 (₹284)"
       },
       {
         "qty": 100,
         "rate": 560,
+        "price": 560,
+        "mrp": 1120,
+        "packMrp": 1120,
+        "discount": 50,
         "label": "Pack of 100 (₹560)"
       },
       {
         "qty": 500,
         "rate": 2619,
+        "price": 2619,
+        "mrp": 5600,
+        "packMrp": 5600,
+        "discount": 53,
         "label": "Pack of 500 (₹2,619)"
       },
       {
         "qty": 1000,
         "rate": 4952,
+        "price": 4952,
+        "mrp": 11200,
+        "packMrp": 11200,
+        "discount": 56,
         "label": "Pack of 1000 (₹4,952)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 560,
         "qty": 50,
-        "rate": 5.68,
-        "label": "Pack of 50 (₹284)"
+        "rate": 284,
+        "label": "Pack of 50 (₹284)",
+        "price": 284,
+        "discount": 49
       },
       {
+        "mrp": 1120,
         "qty": 100,
-        "rate": 5.6,
-        "label": "Pack of 100 (₹560)"
+        "rate": 560,
+        "label": "Pack of 100 (₹560)",
+        "price": 560,
+        "discount": 50
       },
       {
+        "mrp": 5600,
         "qty": 500,
-        "rate": 5.24,
-        "label": "Pack of 500 (₹2,619)"
+        "rate": 2619,
+        "label": "Pack of 500 (₹2,619)",
+        "price": 2619,
+        "discount": 53
       },
       {
+        "mrp": 11200,
         "qty": 1000,
-        "rate": 4.95,
-        "label": "Pack of 1000 (₹4,952)"
+        "rate": 4952,
+        "label": "Pack of 1000 (₹4,952)",
+        "price": 4952,
+        "discount": 56
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "f77c43af-effc-42db-8cb6-c9659be1604b",
@@ -6281,61 +8617,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 10,
         "rate": 398,
+        "price": 398,
+        "mrp": 499,
+        "packMrp": 499,
+        "discount": 20,
         "label": "Pack of 10 (₹398)"
       },
       {
         "qty": 20,
         "rate": 790,
+        "price": 790,
+        "mrp": 998,
+        "packMrp": 998,
+        "discount": 21,
         "label": "Pack of 20 (₹790)"
       },
       {
         "qty": 40,
         "rate": 1550,
+        "price": 1550,
+        "mrp": 1996,
+        "packMrp": 1996,
+        "discount": 22,
         "label": "Pack of 40 (₹1,550)"
       },
       {
         "qty": 100,
         "rate": 3850,
+        "price": 3850,
+        "mrp": 4990,
+        "packMrp": 4990,
+        "discount": 23,
         "label": "Pack of 100 (₹3,850)"
       },
       {
         "qty": 500,
         "rate": 18800,
+        "price": 18800,
+        "mrp": 24950,
+        "packMrp": 24950,
+        "discount": 25,
         "label": "Pack of 500 (₹18,800)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 499,
         "qty": 10,
-        "rate": 39.8,
-        "label": "Pack of 10 (₹398)"
+        "rate": 398,
+        "label": "Pack of 10 (₹398)",
+        "price": 398,
+        "discount": 20
       },
       {
+        "mrp": 998,
         "qty": 20,
-        "rate": 39.5,
-        "label": "Pack of 20 (₹790)"
+        "rate": 790,
+        "label": "Pack of 20 (₹790)",
+        "price": 790,
+        "discount": 21
       },
       {
+        "mrp": 1996,
         "qty": 40,
-        "rate": 38.75,
-        "label": "Pack of 40 (₹1,550)"
+        "rate": 1550,
+        "label": "Pack of 40 (₹1,550)",
+        "price": 1550,
+        "discount": 22
       },
       {
+        "mrp": 4990,
         "qty": 100,
-        "rate": 38.5,
-        "label": "Pack of 100 (₹3,850)"
+        "rate": 3850,
+        "label": "Pack of 100 (₹3,850)",
+        "price": 3850,
+        "discount": 23
       },
       {
+        "mrp": 24950,
         "qty": 500,
-        "rate": 37.6,
-        "label": "Pack of 500 (₹18,800)"
+        "rate": 18800,
+        "label": "Pack of 500 (₹18,800)",
+        "price": 18800,
+        "discount": 25
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "74c7e89f-f28a-4d8b-9131-85df21828ce1",
@@ -6368,51 +8741,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 331,
+        "price": 331,
+        "mrp": 448,
+        "packMrp": 448,
+        "discount": 26,
         "label": "Pack of 50 (₹331)"
       },
       {
         "qty": 100,
         "rate": 617,
+        "price": 617,
+        "mrp": 896,
+        "packMrp": 896,
+        "discount": 31,
         "label": "Pack of 100 (₹617)"
       },
       {
         "qty": 500,
         "rate": 2857,
+        "price": 2857,
+        "mrp": 4480,
+        "packMrp": 4480,
+        "discount": 36,
         "label": "Pack of 500 (₹2,857)"
       },
       {
         "qty": 1000,
         "rate": 5333,
+        "price": 5333,
+        "mrp": 8960,
+        "packMrp": 8960,
+        "discount": 40,
         "label": "Pack of 1000 (₹5,333)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 448,
         "qty": 50,
-        "rate": 6.63,
-        "label": "Pack of 50 (₹331)"
+        "rate": 331,
+        "label": "Pack of 50 (₹331)",
+        "price": 331,
+        "discount": 26
       },
       {
+        "mrp": 896,
         "qty": 100,
-        "rate": 6.17,
-        "label": "Pack of 100 (₹617)"
+        "rate": 617,
+        "label": "Pack of 100 (₹617)",
+        "price": 617,
+        "discount": 31
       },
       {
+        "mrp": 4480,
         "qty": 500,
-        "rate": 5.71,
-        "label": "Pack of 500 (₹2,857)"
+        "rate": 2857,
+        "label": "Pack of 500 (₹2,857)",
+        "price": 2857,
+        "discount": 36
       },
       {
+        "mrp": 8960,
         "qty": 1000,
-        "rate": 5.33,
-        "label": "Pack of 1000 (₹5,333)"
+        "rate": 5333,
+        "label": "Pack of 1000 (₹5,333)",
+        "price": 5333,
+        "discount": 40
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "0e03cebe-2ec4-42fa-b7a3-2a3f87b61a7c",
@@ -6446,61 +8849,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 284,
+        "price": 284,
+        "mrp": 566,
+        "packMrp": 566,
+        "discount": 50,
         "label": "Pack of 25 (₹284)"
       },
       {
         "qty": 50,
         "rate": 560,
+        "price": 560,
+        "mrp": 1132,
+        "packMrp": 1132,
+        "discount": 51,
         "label": "Pack of 50 (₹560)"
       },
       {
         "qty": 100,
         "rate": 1098,
+        "price": 1098,
+        "mrp": 2264,
+        "packMrp": 2264,
+        "discount": 52,
         "label": "Pack of 100 (₹1,098)"
       },
       {
         "qty": 500,
         "rate": 5400,
+        "price": 5400,
+        "mrp": 11320,
+        "packMrp": 11320,
+        "discount": 52,
         "label": "Pack of 500 (₹5,400)"
       },
       {
         "qty": 1000,
         "rate": 10600,
+        "price": 10600,
+        "mrp": 22640,
+        "packMrp": 22640,
+        "discount": 53,
         "label": "Pack of 1000 (₹10,600)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 566,
         "qty": 25,
-        "rate": 11.35,
-        "label": "Pack of 25 (₹284)"
+        "rate": 284,
+        "label": "Pack of 25 (₹284)",
+        "price": 284,
+        "discount": 50
       },
       {
+        "mrp": 1132,
         "qty": 50,
-        "rate": 11.2,
-        "label": "Pack of 50 (₹560)"
+        "rate": 560,
+        "label": "Pack of 50 (₹560)",
+        "price": 560,
+        "discount": 51
       },
       {
+        "mrp": 2264,
         "qty": 100,
-        "rate": 10.98,
-        "label": "Pack of 100 (₹1,098)"
+        "rate": 1098,
+        "label": "Pack of 100 (₹1,098)",
+        "price": 1098,
+        "discount": 52
       },
       {
+        "mrp": 11320,
         "qty": 500,
-        "rate": 10.8,
-        "label": "Pack of 500 (₹5,400)"
+        "rate": 5400,
+        "label": "Pack of 500 (₹5,400)",
+        "price": 5400,
+        "discount": 52
       },
       {
+        "mrp": 22640,
         "qty": 1000,
-        "rate": 10.6,
-        "label": "Pack of 1000 (₹10,600)"
+        "rate": 10600,
+        "label": "Pack of 1000 (₹10,600)",
+        "price": 10600,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "55930bfe-03a1-408c-b890-1e8cba36abfb",
@@ -6533,51 +8973,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 522,
+        "price": 522,
+        "mrp": 1040,
+        "packMrp": 1040,
+        "discount": 50,
         "label": "Pack of 50 (₹522)"
       },
       {
         "qty": 100,
         "rate": 980,
+        "price": 980,
+        "mrp": 2080,
+        "packMrp": 2080,
+        "discount": 53,
         "label": "Pack of 100 (₹980)"
       },
       {
         "qty": 500,
         "rate": 4800,
+        "price": 4800,
+        "mrp": 10400,
+        "packMrp": 10400,
+        "discount": 54,
         "label": "Pack of 500 (₹4,800)"
       },
       {
         "qty": 1000,
         "rate": 9500,
+        "price": 9500,
+        "mrp": 20800,
+        "packMrp": 20800,
+        "discount": 54,
         "label": "Pack of 1000 (₹9,500)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 1040,
         "qty": 50,
-        "rate": 10.44,
-        "label": "Pack of 50 (₹522)"
+        "rate": 522,
+        "label": "Pack of 50 (₹522)",
+        "price": 522,
+        "discount": 50
       },
       {
+        "mrp": 2080,
         "qty": 100,
-        "rate": 9.8,
-        "label": "Pack of 100 (₹980)"
+        "rate": 980,
+        "label": "Pack of 100 (₹980)",
+        "price": 980,
+        "discount": 53
       },
       {
+        "mrp": 10400,
         "qty": 500,
-        "rate": 9.6,
-        "label": "Pack of 500 (₹4,800)"
+        "rate": 4800,
+        "label": "Pack of 500 (₹4,800)",
+        "price": 4800,
+        "discount": 54
       },
       {
+        "mrp": 20800,
         "qty": 1000,
-        "rate": 9.5,
-        "label": "Pack of 1000 (₹9,500)"
+        "rate": 9500,
+        "label": "Pack of 1000 (₹9,500)",
+        "price": 9500,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "4b7972fa-cff7-44eb-ad4a-526791f8fec2",
@@ -6610,51 +9080,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 100,
         "rate": 427,
+        "price": 427,
+        "mrp": 850,
+        "packMrp": 850,
+        "discount": 50,
         "label": "Pack of 100 (₹427)"
       },
       {
         "qty": 500,
         "rate": 2048,
+        "price": 2048,
+        "mrp": 4250,
+        "packMrp": 4250,
+        "discount": 52,
         "label": "Pack of 500 (₹2,048)"
       },
       {
         "qty": 1000,
         "rate": 3905,
+        "price": 3905,
+        "mrp": 8500,
+        "packMrp": 8500,
+        "discount": 54,
         "label": "Pack of 1000 (₹3,905)"
       },
       {
         "qty": 2000,
         "rate": 7524,
+        "price": 7524,
+        "mrp": 17000,
+        "packMrp": 17000,
+        "discount": 56,
         "label": "Pack of 2000 (₹7,524)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 850,
         "qty": 100,
-        "rate": 4.27,
-        "label": "Pack of 100 (₹427)"
+        "rate": 427,
+        "label": "Pack of 100 (₹427)",
+        "price": 427,
+        "discount": 50
       },
       {
+        "mrp": 4250,
         "qty": 500,
-        "rate": 4.1,
-        "label": "Pack of 500 (₹2,048)"
+        "rate": 2048,
+        "label": "Pack of 500 (₹2,048)",
+        "price": 2048,
+        "discount": 52
       },
       {
+        "mrp": 8500,
         "qty": 1000,
-        "rate": 3.9,
-        "label": "Pack of 1000 (₹3,905)"
+        "rate": 3905,
+        "label": "Pack of 1000 (₹3,905)",
+        "price": 3905,
+        "discount": 54
       },
       {
+        "mrp": 17000,
         "qty": 2000,
-        "rate": 3.76,
-        "label": "Pack of 2000 (₹7,524)"
+        "rate": 7524,
+        "label": "Pack of 2000 (₹7,524)",
+        "price": 7524,
+        "discount": 56
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "d61be940-977e-4c44-a60d-2cc67a3103da",
@@ -6687,61 +9187,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 202,
+        "price": 202,
+        "mrp": 312,
+        "packMrp": 312,
+        "discount": 35,
         "label": "Pack of 25 (₹202)"
       },
       {
         "qty": 50,
         "rate": 390,
+        "price": 390,
+        "mrp": 624,
+        "packMrp": 624,
+        "discount": 38,
         "label": "Pack of 50 (₹390)"
       },
       {
         "qty": 100,
         "rate": 780,
+        "price": 780,
+        "mrp": 1248,
+        "packMrp": 1248,
+        "discount": 38,
         "label": "Pack of 100 (₹780)"
       },
       {
         "qty": 500,
         "rate": 3850,
+        "price": 3850,
+        "mrp": 6240,
+        "packMrp": 6240,
+        "discount": 38,
         "label": "Pack of 500 (₹3,850)"
       },
       {
         "qty": 1000,
         "rate": 7700,
+        "price": 7700,
+        "mrp": 12480,
+        "packMrp": 12480,
+        "discount": 38,
         "label": "Pack of 1000 (₹7,700)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 312,
         "qty": 25,
-        "rate": 8.08,
-        "label": "Pack of 25 (₹202)"
+        "rate": 202,
+        "label": "Pack of 25 (₹202)",
+        "price": 202,
+        "discount": 35
       },
       {
+        "mrp": 624,
         "qty": 50,
-        "rate": 7.8,
-        "label": "Pack of 50 (₹390)"
+        "rate": 390,
+        "label": "Pack of 50 (₹390)",
+        "price": 390,
+        "discount": 38
       },
       {
+        "mrp": 1248,
         "qty": 100,
-        "rate": 7.8,
-        "label": "Pack of 100 (₹780)"
+        "rate": 780,
+        "label": "Pack of 100 (₹780)",
+        "price": 780,
+        "discount": 38
       },
       {
+        "mrp": 6240,
         "qty": 500,
-        "rate": 7.7,
-        "label": "Pack of 500 (₹3,850)"
+        "rate": 3850,
+        "label": "Pack of 500 (₹3,850)",
+        "price": 3850,
+        "discount": 38
       },
       {
+        "mrp": 12480,
         "qty": 1000,
-        "rate": 7.7,
-        "label": "Pack of 1000 (₹7,700)"
+        "rate": 7700,
+        "label": "Pack of 1000 (₹7,700)",
+        "price": 7700,
+        "discount": 38
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "5f36ebef-cebc-4e2d-815c-40b9b3f84a11",
@@ -6776,61 +9313,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 10,
         "rate": 408,
+        "price": 408,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 49,
         "label": "Pack of 10 (₹408)"
       },
       {
         "qty": 20,
         "rate": 798,
+        "price": 798,
+        "mrp": 1600,
+        "packMrp": 1600,
+        "discount": 50,
         "label": "Pack of 20 (₹798)"
       },
       {
         "qty": 40,
         "rate": 1560,
+        "price": 1560,
+        "mrp": 3200,
+        "packMrp": 3200,
+        "discount": 51,
         "label": "Pack of 40 (₹1,560)"
       },
       {
         "qty": 100,
         "rate": 3850,
+        "price": 3850,
+        "mrp": 8000,
+        "packMrp": 8000,
+        "discount": 52,
         "label": "Pack of 100 (₹3,850)"
       },
       {
         "qty": 500,
         "rate": 19000,
+        "price": 19000,
+        "mrp": 40000,
+        "packMrp": 40000,
+        "discount": 53,
         "label": "Pack of 500 (₹19,000)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 10,
-        "rate": 40.76,
-        "label": "Pack of 10 (₹408)"
+        "rate": 408,
+        "label": "Pack of 10 (₹408)",
+        "price": 408,
+        "discount": 49
       },
       {
+        "mrp": 1600,
         "qty": 20,
-        "rate": 39.9,
-        "label": "Pack of 20 (₹798)"
+        "rate": 798,
+        "label": "Pack of 20 (₹798)",
+        "price": 798,
+        "discount": 50
       },
       {
+        "mrp": 3200,
         "qty": 40,
-        "rate": 39,
-        "label": "Pack of 40 (₹1,560)"
+        "rate": 1560,
+        "label": "Pack of 40 (₹1,560)",
+        "price": 1560,
+        "discount": 51
       },
       {
+        "mrp": 8000,
         "qty": 100,
-        "rate": 38.5,
-        "label": "Pack of 100 (₹3,850)"
+        "rate": 3850,
+        "label": "Pack of 100 (₹3,850)",
+        "price": 3850,
+        "discount": 52
       },
       {
+        "mrp": 40000,
         "qty": 500,
-        "rate": 38,
-        "label": "Pack of 500 (₹19,000)"
+        "rate": 19000,
+        "label": "Pack of 500 (₹19,000)",
+        "price": 19000,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "648d7cb3-b921-4524-9c67-b1377d8cdcdd",
@@ -6865,61 +9439,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 20,
         "rate": 414,
+        "price": 414,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 48,
         "label": "Pack of 20 (₹414)"
       },
       {
         "qty": 40,
         "rate": 826,
+        "price": 826,
+        "mrp": 1600,
+        "packMrp": 1600,
+        "discount": 48,
         "label": "Pack of 40 (₹826)"
       },
       {
         "qty": 60,
         "rate": 1230,
+        "price": 1230,
+        "mrp": 2400,
+        "packMrp": 2400,
+        "discount": 49,
         "label": "Pack of 60 (₹1,230)"
       },
       {
         "qty": 500,
         "rate": 10200,
+        "price": 10200,
+        "mrp": 20000,
+        "packMrp": 20000,
+        "discount": 49,
         "label": "Pack of 500 (₹10,200)"
       },
       {
         "qty": 1000,
         "rate": 19999,
+        "price": 19999,
+        "mrp": 40000,
+        "packMrp": 40000,
+        "discount": 50,
         "label": "Pack of 1000 (₹19,999)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 20,
-        "rate": 20.71,
-        "label": "Pack of 20 (₹414)"
+        "rate": 414,
+        "label": "Pack of 20 (₹414)",
+        "price": 414,
+        "discount": 48
       },
       {
+        "mrp": 1600,
         "qty": 40,
-        "rate": 20.65,
-        "label": "Pack of 40 (₹826)"
+        "rate": 826,
+        "label": "Pack of 40 (₹826)",
+        "price": 826,
+        "discount": 48
       },
       {
+        "mrp": 2400,
         "qty": 60,
-        "rate": 20.5,
-        "label": "Pack of 60 (₹1,230)"
+        "rate": 1230,
+        "label": "Pack of 60 (₹1,230)",
+        "price": 1230,
+        "discount": 49
       },
       {
+        "mrp": 20000,
         "qty": 500,
-        "rate": 20.4,
-        "label": "Pack of 500 (₹10,200)"
+        "rate": 10200,
+        "label": "Pack of 500 (₹10,200)",
+        "price": 10200,
+        "discount": 49
       },
       {
+        "mrp": 40000,
         "qty": 1000,
-        "rate": 20,
-        "label": "Pack of 1000 (₹19,999)"
+        "rate": 19999,
+        "label": "Pack of 1000 (₹19,999)",
+        "price": 19999,
+        "discount": 50
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "a9c4ca20-244a-44ca-bff3-741c078b27fd",
@@ -6952,61 +9563,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 312,
+        "price": 312,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 48,
         "label": "Pack of 25 (₹312)"
       },
       {
         "qty": 50,
         "rate": 598,
+        "price": 598,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 50,
         "label": "Pack of 50 (₹598)"
       },
       {
         "qty": 100,
         "rate": 1148,
+        "price": 1148,
+        "mrp": 2400,
+        "packMrp": 2400,
+        "discount": 52,
         "label": "Pack of 100 (₹1,148)"
       },
       {
         "qty": 500,
         "rate": 5700,
+        "price": 5700,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 53,
         "label": "Pack of 500 (₹5,700)"
       },
       {
         "qty": 1000,
         "rate": 11200,
+        "price": 11200,
+        "mrp": 24000,
+        "packMrp": 24000,
+        "discount": 53,
         "label": "Pack of 1000 (₹11,200)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 25,
-        "rate": 12.5,
-        "label": "Pack of 25 (₹312)"
+        "rate": 312,
+        "label": "Pack of 25 (₹312)",
+        "price": 312,
+        "discount": 48
       },
       {
+        "mrp": 1200,
         "qty": 50,
-        "rate": 11.96,
-        "label": "Pack of 50 (₹598)"
+        "rate": 598,
+        "label": "Pack of 50 (₹598)",
+        "price": 598,
+        "discount": 50
       },
       {
+        "mrp": 2400,
         "qty": 100,
-        "rate": 11.48,
-        "label": "Pack of 100 (₹1,148)"
+        "rate": 1148,
+        "label": "Pack of 100 (₹1,148)",
+        "price": 1148,
+        "discount": 52
       },
       {
+        "mrp": 12000,
         "qty": 500,
-        "rate": 11.4,
-        "label": "Pack of 500 (₹5,700)"
+        "rate": 5700,
+        "label": "Pack of 500 (₹5,700)",
+        "price": 5700,
+        "discount": 53
       },
       {
+        "mrp": 24000,
         "qty": 1000,
-        "rate": 11.2,
-        "label": "Pack of 1000 (₹11,200)"
+        "rate": 11200,
+        "label": "Pack of 1000 (₹11,200)",
+        "price": 11200,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "c1f412bd-360a-4454-97e2-0f3d5ad9c156",
@@ -7039,51 +9687,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 522,
+        "price": 522,
+        "mrp": 1040,
+        "packMrp": 1040,
+        "discount": 50,
         "label": "Pack of 50 (₹522)"
       },
       {
         "qty": 100,
         "rate": 980,
+        "price": 980,
+        "mrp": 2080,
+        "packMrp": 2080,
+        "discount": 53,
         "label": "Pack of 100 (₹980)"
       },
       {
         "qty": 500,
         "rate": 4800,
+        "price": 4800,
+        "mrp": 10400,
+        "packMrp": 10400,
+        "discount": 54,
         "label": "Pack of 500 (₹4,800)"
       },
       {
         "qty": 1000,
         "rate": 9500,
+        "price": 9500,
+        "mrp": 20800,
+        "packMrp": 20800,
+        "discount": 54,
         "label": "Pack of 1000 (₹9,500)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 1040,
         "qty": 50,
-        "rate": 10.44,
-        "label": "Pack of 50 (₹522)"
+        "rate": 522,
+        "label": "Pack of 50 (₹522)",
+        "price": 522,
+        "discount": 50
       },
       {
+        "mrp": 2080,
         "qty": 100,
-        "rate": 9.8,
-        "label": "Pack of 100 (₹980)"
+        "rate": 980,
+        "label": "Pack of 100 (₹980)",
+        "price": 980,
+        "discount": 53
       },
       {
+        "mrp": 10400,
         "qty": 500,
-        "rate": 9.6,
-        "label": "Pack of 500 (₹4,800)"
+        "rate": 4800,
+        "label": "Pack of 500 (₹4,800)",
+        "price": 4800,
+        "discount": 54
       },
       {
+        "mrp": 20800,
         "qty": 1000,
-        "rate": 9.5,
-        "label": "Pack of 1000 (₹9,500)"
+        "rate": 9500,
+        "label": "Pack of 1000 (₹9,500)",
+        "price": 9500,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "c5c00406-52f3-4426-8cbc-1059b6b9012d",
@@ -7117,61 +9795,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 284,
+        "price": 284,
+        "mrp": 560,
+        "packMrp": 560,
+        "discount": 49,
         "label": "Pack of 25 (₹284)"
       },
       {
         "qty": 50,
         "rate": 549,
+        "price": 549,
+        "mrp": 1120,
+        "packMrp": 1120,
+        "discount": 51,
         "label": "Pack of 50 (₹549)"
       },
       {
         "qty": 100,
         "rate": 1048,
+        "price": 1048,
+        "mrp": 2240,
+        "packMrp": 2240,
+        "discount": 53,
         "label": "Pack of 100 (₹1,048)"
       },
       {
         "qty": 500,
         "rate": 4999,
+        "price": 4999,
+        "mrp": 11200,
+        "packMrp": 11200,
+        "discount": 55,
         "label": "Pack of 500 (₹4,999)"
       },
       {
         "qty": 1000,
         "rate": 9800,
+        "price": 9800,
+        "mrp": 22400,
+        "packMrp": 22400,
+        "discount": 56,
         "label": "Pack of 1000 (₹9,800)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 560,
         "qty": 25,
-        "rate": 11.35,
-        "label": "Pack of 25 (₹284)"
+        "rate": 284,
+        "label": "Pack of 25 (₹284)",
+        "price": 284,
+        "discount": 49
       },
       {
+        "mrp": 1120,
         "qty": 50,
-        "rate": 10.98,
-        "label": "Pack of 50 (₹549)"
+        "rate": 549,
+        "label": "Pack of 50 (₹549)",
+        "price": 549,
+        "discount": 51
       },
       {
+        "mrp": 2240,
         "qty": 100,
-        "rate": 10.48,
-        "label": "Pack of 100 (₹1,048)"
+        "rate": 1048,
+        "label": "Pack of 100 (₹1,048)",
+        "price": 1048,
+        "discount": 53
       },
       {
+        "mrp": 11200,
         "qty": 500,
-        "rate": 10,
-        "label": "Pack of 500 (₹4,999)"
+        "rate": 4999,
+        "label": "Pack of 500 (₹4,999)",
+        "price": 4999,
+        "discount": 55
       },
       {
+        "mrp": 22400,
         "qty": 1000,
-        "rate": 9.8,
-        "label": "Pack of 1000 (₹9,800)"
+        "rate": 9800,
+        "label": "Pack of 1000 (₹9,800)",
+        "price": 9800,
+        "discount": 56
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "26517c97-3042-4a1e-8080-a8c917e93577",
@@ -7206,51 +9921,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 379,
+        "price": 379,
+        "mrp": 740,
+        "packMrp": 740,
+        "discount": 49,
         "label": "Pack of 50 (₹379)"
       },
       {
         "qty": 100,
         "rate": 712,
+        "price": 712,
+        "mrp": 1480,
+        "packMrp": 1480,
+        "discount": 52,
         "label": "Pack of 100 (₹712)"
       },
       {
         "qty": 500,
         "rate": 3429,
+        "price": 3429,
+        "mrp": 7400,
+        "packMrp": 7400,
+        "discount": 54,
         "label": "Pack of 500 (₹3,429)"
       },
       {
         "qty": 1000,
         "rate": 6667,
+        "price": 6667,
+        "mrp": 14800,
+        "packMrp": 14800,
+        "discount": 55,
         "label": "Pack of 1000 (₹6,667)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 740,
         "qty": 50,
-        "rate": 7.58,
-        "label": "Pack of 50 (₹379)"
+        "rate": 379,
+        "label": "Pack of 50 (₹379)",
+        "price": 379,
+        "discount": 49
       },
       {
+        "mrp": 1480,
         "qty": 100,
-        "rate": 7.12,
-        "label": "Pack of 100 (₹712)"
+        "rate": 712,
+        "label": "Pack of 100 (₹712)",
+        "price": 712,
+        "discount": 52
       },
       {
+        "mrp": 7400,
         "qty": 500,
-        "rate": 6.86,
-        "label": "Pack of 500 (₹3,429)"
+        "rate": 3429,
+        "label": "Pack of 500 (₹3,429)",
+        "price": 3429,
+        "discount": 54
       },
       {
+        "mrp": 14800,
         "qty": 1000,
-        "rate": 6.67,
-        "label": "Pack of 1000 (₹6,667)"
+        "rate": 6667,
+        "label": "Pack of 1000 (₹6,667)",
+        "price": 6667,
+        "discount": 55
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "c85be0ce-ff66-4252-9698-5a52da2af9b7",
@@ -7284,51 +10029,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 20,
         "rate": 408,
+        "price": 408,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 49,
         "label": "Pack of 20 (₹408)"
       },
       {
         "qty": 100,
         "rate": 1999,
+        "price": 1999,
+        "mrp": 4000,
+        "packMrp": 4000,
+        "discount": 50,
         "label": "Pack of 100 (₹1,999)"
       },
       {
         "qty": 500,
         "rate": 9900,
+        "price": 9900,
+        "mrp": 20000,
+        "packMrp": 20000,
+        "discount": 51,
         "label": "Pack of 500 (₹9,900)"
       },
       {
         "qty": 1000,
         "rate": 18800,
+        "price": 18800,
+        "mrp": 40000,
+        "packMrp": 40000,
+        "discount": 53,
         "label": "Pack of 1000 (₹18,800)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 20,
-        "rate": 20.38,
-        "label": "Pack of 20 (₹408)"
+        "rate": 408,
+        "label": "Pack of 20 (₹408)",
+        "price": 408,
+        "discount": 49
       },
       {
+        "mrp": 4000,
         "qty": 100,
-        "rate": 19.99,
-        "label": "Pack of 100 (₹1,999)"
+        "rate": 1999,
+        "label": "Pack of 100 (₹1,999)",
+        "price": 1999,
+        "discount": 50
       },
       {
+        "mrp": 20000,
         "qty": 500,
-        "rate": 19.8,
-        "label": "Pack of 500 (₹9,900)"
+        "rate": 9900,
+        "label": "Pack of 500 (₹9,900)",
+        "price": 9900,
+        "discount": 51
       },
       {
+        "mrp": 40000,
         "qty": 1000,
-        "rate": 18.8,
-        "label": "Pack of 1000 (₹18,800)"
+        "rate": 18800,
+        "label": "Pack of 1000 (₹18,800)",
+        "price": 18800,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "7cc86995-ba59-4c6c-8b3c-0ceef9546c0c",
@@ -7361,51 +10136,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 284,
+        "price": 284,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 53,
         "label": "Pack of 25 (₹284)"
       },
       {
         "qty": 100,
         "rate": 1046,
+        "price": 1046,
+        "mrp": 2400,
+        "packMrp": 2400,
+        "discount": 56,
         "label": "Pack of 100 (₹1,046)"
       },
       {
         "qty": 500,
         "rate": 5200,
+        "price": 5200,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 57,
         "label": "Pack of 500 (₹5,200)"
       },
       {
         "qty": 1000,
         "rate": 10200,
+        "price": 10200,
+        "mrp": 24000,
+        "packMrp": 24000,
+        "discount": 57,
         "label": "Pack of 1000 (₹10,200)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 25,
-        "rate": 11.35,
-        "label": "Pack of 25 (₹284)"
+        "rate": 284,
+        "label": "Pack of 25 (₹284)",
+        "price": 284,
+        "discount": 53
       },
       {
+        "mrp": 2400,
         "qty": 100,
-        "rate": 10.46,
-        "label": "Pack of 100 (₹1,046)"
+        "rate": 1046,
+        "label": "Pack of 100 (₹1,046)",
+        "price": 1046,
+        "discount": 56
       },
       {
+        "mrp": 12000,
         "qty": 500,
-        "rate": 10.4,
-        "label": "Pack of 500 (₹5,200)"
+        "rate": 5200,
+        "label": "Pack of 500 (₹5,200)",
+        "price": 5200,
+        "discount": 57
       },
       {
+        "mrp": 24000,
         "qty": 1000,
-        "rate": 10.2,
-        "label": "Pack of 1000 (₹10,200)"
+        "rate": 10200,
+        "label": "Pack of 1000 (₹10,200)",
+        "price": 10200,
+        "discount": 57
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "ca01fc2e-5a86-47d4-83b1-8a51688c89a4",
@@ -7440,51 +10245,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 10,
         "rate": 236,
+        "price": 236,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 61,
         "label": "Pack of 10 (₹236)"
       },
       {
         "qty": 50,
         "rate": 1180,
+        "price": 1180,
+        "mrp": 3000,
+        "packMrp": 3000,
+        "discount": 61,
         "label": "Pack of 50 (₹1,180)"
       },
       {
         "qty": 500,
         "rate": 11700,
+        "price": 11700,
+        "mrp": 30000,
+        "packMrp": 30000,
+        "discount": 61,
         "label": "Pack of 500 (₹11,700)"
       },
       {
         "qty": 1000,
         "rate": 21810,
+        "price": 21810,
+        "mrp": 60000,
+        "packMrp": 60000,
+        "discount": 64,
         "label": "Pack of 1000 (₹21,810)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 10,
-        "rate": 23.62,
-        "label": "Pack of 10 (₹236)"
+        "rate": 236,
+        "label": "Pack of 10 (₹236)",
+        "price": 236,
+        "discount": 61
       },
       {
+        "mrp": 3000,
         "qty": 50,
-        "rate": 23.6,
-        "label": "Pack of 50 (₹1,180)"
+        "rate": 1180,
+        "label": "Pack of 50 (₹1,180)",
+        "price": 1180,
+        "discount": 61
       },
       {
+        "mrp": 30000,
         "qty": 500,
-        "rate": 23.4,
-        "label": "Pack of 500 (₹11,700)"
+        "rate": 11700,
+        "label": "Pack of 500 (₹11,700)",
+        "price": 11700,
+        "discount": 61
       },
       {
+        "mrp": 60000,
         "qty": 1000,
-        "rate": 21.81,
-        "label": "Pack of 1000 (₹21,810)"
+        "rate": 21810,
+        "label": "Pack of 1000 (₹21,810)",
+        "price": 21810,
+        "discount": 64
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "2365c0c4-d943-4ede-9dcf-164f2c2d7ef7",
@@ -7518,51 +10353,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 260,
+        "price": 260,
+        "mrp": 560,
+        "packMrp": 560,
+        "discount": 54,
         "label": "Pack of 50 (₹260)"
       },
       {
         "qty": 100,
         "rate": 499,
+        "price": 499,
+        "mrp": 1120,
+        "packMrp": 1120,
+        "discount": 55,
         "label": "Pack of 100 (₹499)"
       },
       {
         "qty": 500,
         "rate": 2381,
+        "price": 2381,
+        "mrp": 5600,
+        "packMrp": 5600,
+        "discount": 57,
         "label": "Pack of 500 (₹2,381)"
       },
       {
         "qty": 1000,
         "rate": 4570,
+        "price": 4570,
+        "mrp": 11200,
+        "packMrp": 11200,
+        "discount": 59,
         "label": "Pack of 1000 (₹4,570)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 560,
         "qty": 50,
-        "rate": 5.2,
-        "label": "Pack of 50 (₹260)"
+        "rate": 260,
+        "label": "Pack of 50 (₹260)",
+        "price": 260,
+        "discount": 54
       },
       {
+        "mrp": 1120,
         "qty": 100,
-        "rate": 4.99,
-        "label": "Pack of 100 (₹499)"
+        "rate": 499,
+        "label": "Pack of 100 (₹499)",
+        "price": 499,
+        "discount": 55
       },
       {
+        "mrp": 5600,
         "qty": 500,
-        "rate": 4.76,
-        "label": "Pack of 500 (₹2,381)"
+        "rate": 2381,
+        "label": "Pack of 500 (₹2,381)",
+        "price": 2381,
+        "discount": 57
       },
       {
+        "mrp": 11200,
         "qty": 1000,
-        "rate": 4.57,
-        "label": "Pack of 1000 (₹4,570)"
+        "rate": 4570,
+        "label": "Pack of 1000 (₹4,570)",
+        "price": 4570,
+        "discount": 59
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "14edc904-631e-4c69-b216-375b71e21b45",
@@ -7597,61 +10462,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 10,
         "rate": 343,
+        "price": 343,
+        "mrp": 599,
+        "packMrp": 599,
+        "discount": 43,
         "label": "Pack of 10 (₹343)"
       },
       {
         "qty": 20,
         "rate": 680,
+        "price": 680,
+        "mrp": 1198,
+        "packMrp": 1198,
+        "discount": 43,
         "label": "Pack of 20 (₹680)"
       },
       {
         "qty": 40,
         "rate": 1348,
+        "price": 1348,
+        "mrp": 2396,
+        "packMrp": 2396,
+        "discount": 44,
         "label": "Pack of 40 (₹1,348)"
       },
       {
         "qty": 100,
         "rate": 3350,
+        "price": 3350,
+        "mrp": 5990,
+        "packMrp": 5990,
+        "discount": 44,
         "label": "Pack of 100 (₹3,350)"
       },
       {
         "qty": 500,
         "rate": 16500,
+        "price": 16500,
+        "mrp": 29950,
+        "packMrp": 29950,
+        "discount": 45,
         "label": "Pack of 500 (₹16,500)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 599,
         "qty": 10,
-        "rate": 34.29,
-        "label": "Pack of 10 (₹343)"
+        "rate": 343,
+        "label": "Pack of 10 (₹343)",
+        "price": 343,
+        "discount": 43
       },
       {
+        "mrp": 1198,
         "qty": 20,
-        "rate": 34,
-        "label": "Pack of 20 (₹680)"
+        "rate": 680,
+        "label": "Pack of 20 (₹680)",
+        "price": 680,
+        "discount": 43
       },
       {
+        "mrp": 2396,
         "qty": 40,
-        "rate": 33.7,
-        "label": "Pack of 40 (₹1,348)"
+        "rate": 1348,
+        "label": "Pack of 40 (₹1,348)",
+        "price": 1348,
+        "discount": 44
       },
       {
+        "mrp": 5990,
         "qty": 100,
-        "rate": 33.5,
-        "label": "Pack of 100 (₹3,350)"
+        "rate": 3350,
+        "label": "Pack of 100 (₹3,350)",
+        "price": 3350,
+        "discount": 44
       },
       {
+        "mrp": 29950,
         "qty": 500,
-        "rate": 33,
-        "label": "Pack of 500 (₹16,500)"
+        "rate": 16500,
+        "label": "Pack of 500 (₹16,500)",
+        "price": 16500,
+        "discount": 45
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "411da344-078c-467a-b5b8-95363f41fb3c",
@@ -7684,51 +10586,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 236,
+        "price": 236,
+        "mrp": 550,
+        "packMrp": 550,
+        "discount": 57,
         "label": "Pack of 25 (₹236)"
       },
       {
         "qty": 100,
         "rate": 898,
+        "price": 898,
+        "mrp": 2200,
+        "packMrp": 2200,
+        "discount": 59,
         "label": "Pack of 100 (₹898)"
       },
       {
         "qty": 500,
         "rate": 4400,
+        "price": 4400,
+        "mrp": 11000,
+        "packMrp": 11000,
+        "discount": 60,
         "label": "Pack of 500 (₹4,400)"
       },
       {
         "qty": 1000,
         "rate": 8700,
+        "price": 8700,
+        "mrp": 22000,
+        "packMrp": 22000,
+        "discount": 60,
         "label": "Pack of 1000 (₹8,700)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 550,
         "qty": 25,
-        "rate": 9.45,
-        "label": "Pack of 25 (₹236)"
+        "rate": 236,
+        "label": "Pack of 25 (₹236)",
+        "price": 236,
+        "discount": 57
       },
       {
+        "mrp": 2200,
         "qty": 100,
-        "rate": 8.98,
-        "label": "Pack of 100 (₹898)"
+        "rate": 898,
+        "label": "Pack of 100 (₹898)",
+        "price": 898,
+        "discount": 59
       },
       {
+        "mrp": 11000,
         "qty": 500,
-        "rate": 8.8,
-        "label": "Pack of 500 (₹4,400)"
+        "rate": 4400,
+        "label": "Pack of 500 (₹4,400)",
+        "price": 4400,
+        "discount": 60
       },
       {
+        "mrp": 22000,
         "qty": 1000,
-        "rate": 8.7,
-        "label": "Pack of 1000 (₹8,700)"
+        "rate": 8700,
+        "label": "Pack of 1000 (₹8,700)",
+        "price": 8700,
+        "discount": 60
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "d08ba9d8-4e39-4fa5-8e01-1087aac14cbf",
@@ -7761,51 +10693,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 10,
         "rate": 224,
+        "price": 224,
+        "mrp": 450,
+        "packMrp": 450,
+        "discount": 50,
         "label": "Pack of 10 (₹224)"
       },
       {
         "qty": 50,
         "rate": 1098,
+        "price": 1098,
+        "mrp": 2250,
+        "packMrp": 2250,
+        "discount": 51,
         "label": "Pack of 50 (₹1,098)"
       },
       {
         "qty": 500,
         "rate": 10952,
+        "price": 10952,
+        "mrp": 22500,
+        "packMrp": 22500,
+        "discount": 51,
         "label": "Pack of 500 (₹10,952)"
       },
       {
         "qty": 1000,
         "rate": 20952,
+        "price": 20952,
+        "mrp": 45000,
+        "packMrp": 45000,
+        "discount": 53,
         "label": "Pack of 1000 (₹20,952)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 450,
         "qty": 10,
-        "rate": 22.38,
-        "label": "Pack of 10 (₹224)"
+        "rate": 224,
+        "label": "Pack of 10 (₹224)",
+        "price": 224,
+        "discount": 50
       },
       {
+        "mrp": 2250,
         "qty": 50,
-        "rate": 21.96,
-        "label": "Pack of 50 (₹1,098)"
+        "rate": 1098,
+        "label": "Pack of 50 (₹1,098)",
+        "price": 1098,
+        "discount": 51
       },
       {
+        "mrp": 22500,
         "qty": 500,
-        "rate": 21.9,
-        "label": "Pack of 500 (₹10,952)"
+        "rate": 10952,
+        "label": "Pack of 500 (₹10,952)",
+        "price": 10952,
+        "discount": 51
       },
       {
+        "mrp": 45000,
         "qty": 1000,
-        "rate": 20.95,
-        "label": "Pack of 1000 (₹20,952)"
+        "rate": 20952,
+        "label": "Pack of 1000 (₹20,952)",
+        "price": 20952,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "5fcc4902-1f8a-40f4-a581-74adf485b9fd",
@@ -7839,61 +10801,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 20,
         "rate": 425,
+        "price": 425,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 39,
         "label": "Pack of 20 (₹425)"
       },
       {
         "qty": 40,
         "rate": 848,
+        "price": 848,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 39,
         "label": "Pack of 40 (₹848)"
       },
       {
         "qty": 60,
         "rate": 1248,
+        "price": 1248,
+        "mrp": 2100,
+        "packMrp": 2100,
+        "discount": 41,
         "label": "Pack of 60 (₹1,248)"
       },
       {
         "qty": 500,
         "rate": 9999,
+        "price": 9999,
+        "mrp": 17500,
+        "packMrp": 17500,
+        "discount": 43,
         "label": "Pack of 500 (₹9,999)"
       },
       {
         "qty": 1000,
         "rate": 19800,
+        "price": 19800,
+        "mrp": 35000,
+        "packMrp": 35000,
+        "discount": 43,
         "label": "Pack of 1000 (₹19,800)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 20,
-        "rate": 21.25,
-        "label": "Pack of 20 (₹425)"
+        "rate": 425,
+        "label": "Pack of 20 (₹425)",
+        "price": 425,
+        "discount": 39
       },
       {
+        "mrp": 1400,
         "qty": 40,
-        "rate": 21.2,
-        "label": "Pack of 40 (₹848)"
+        "rate": 848,
+        "label": "Pack of 40 (₹848)",
+        "price": 848,
+        "discount": 39
       },
       {
+        "mrp": 2100,
         "qty": 60,
-        "rate": 20.8,
-        "label": "Pack of 60 (₹1,248)"
+        "rate": 1248,
+        "label": "Pack of 60 (₹1,248)",
+        "price": 1248,
+        "discount": 41
       },
       {
+        "mrp": 17500,
         "qty": 500,
-        "rate": 20,
-        "label": "Pack of 500 (₹9,999)"
+        "rate": 9999,
+        "label": "Pack of 500 (₹9,999)",
+        "price": 9999,
+        "discount": 43
       },
       {
+        "mrp": 35000,
         "qty": 1000,
-        "rate": 19.8,
-        "label": "Pack of 1000 (₹19,800)"
+        "rate": 19800,
+        "label": "Pack of 1000 (₹19,800)",
+        "price": 19800,
+        "discount": 43
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "5b4d080f-e37a-45a6-a2fa-da21cd0931a0",
@@ -7927,61 +10926,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 10,
         "rate": 379,
+        "price": 379,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 46,
         "label": "Pack of 10 (₹379)"
       },
       {
         "qty": 20,
         "rate": 712,
+        "price": 712,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 49,
         "label": "Pack of 20 (₹712)"
       },
       {
         "qty": 40,
         "rate": 1381,
+        "price": 1381,
+        "mrp": 2800,
+        "packMrp": 2800,
+        "discount": 51,
         "label": "Pack of 40 (₹1,381)"
       },
       {
         "qty": 100,
         "rate": 3476,
+        "price": 3476,
+        "mrp": 7000,
+        "packMrp": 7000,
+        "discount": 50,
         "label": "Pack of 100 (₹3,476)"
       },
       {
         "qty": 500,
         "rate": 16190,
+        "price": 16190,
+        "mrp": 35000,
+        "packMrp": 35000,
+        "discount": 54,
         "label": "Pack of 500 (₹16,190)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 10,
-        "rate": 37.91,
-        "label": "Pack of 10 (₹379)"
+        "rate": 379,
+        "label": "Pack of 10 (₹379)",
+        "price": 379,
+        "discount": 46
       },
       {
+        "mrp": 1400,
         "qty": 20,
-        "rate": 35.62,
-        "label": "Pack of 20 (₹712)"
+        "rate": 712,
+        "label": "Pack of 20 (₹712)",
+        "price": 712,
+        "discount": 49
       },
       {
+        "mrp": 2800,
         "qty": 40,
-        "rate": 34.52,
-        "label": "Pack of 40 (₹1,381)"
+        "rate": 1381,
+        "label": "Pack of 40 (₹1,381)",
+        "price": 1381,
+        "discount": 51
       },
       {
+        "mrp": 7000,
         "qty": 100,
-        "rate": 34.76,
-        "label": "Pack of 100 (₹3,476)"
+        "rate": 3476,
+        "label": "Pack of 100 (₹3,476)",
+        "price": 3476,
+        "discount": 50
       },
       {
+        "mrp": 35000,
         "qty": 500,
-        "rate": 32.38,
-        "label": "Pack of 500 (₹16,190)"
+        "rate": 16190,
+        "label": "Pack of 500 (₹16,190)",
+        "price": 16190,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "90b00b5c-f85a-4174-b31f-109a7227917b",
@@ -8014,51 +11050,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 20,
         "rate": 379,
+        "price": 379,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 53,
         "label": "Pack of 20 (₹379)"
       },
       {
         "qty": 100,
         "rate": 1810,
+        "price": 1810,
+        "mrp": 4000,
+        "packMrp": 4000,
+        "discount": 55,
         "label": "Pack of 100 (₹1,810)"
       },
       {
         "qty": 500,
         "rate": 8800,
+        "price": 8800,
+        "mrp": 20000,
+        "packMrp": 20000,
+        "discount": 56,
         "label": "Pack of 500 (₹8,800)"
       },
       {
         "qty": 1000,
         "rate": 16095,
+        "price": 16095,
+        "mrp": 40000,
+        "packMrp": 40000,
+        "discount": 60,
         "label": "Pack of 1000 (₹16,095)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 20,
-        "rate": 18.95,
-        "label": "Pack of 20 (₹379)"
+        "rate": 379,
+        "label": "Pack of 20 (₹379)",
+        "price": 379,
+        "discount": 53
       },
       {
+        "mrp": 4000,
         "qty": 100,
-        "rate": 18.1,
-        "label": "Pack of 100 (₹1,810)"
+        "rate": 1810,
+        "label": "Pack of 100 (₹1,810)",
+        "price": 1810,
+        "discount": 55
       },
       {
+        "mrp": 20000,
         "qty": 500,
-        "rate": 17.6,
-        "label": "Pack of 500 (₹8,800)"
+        "rate": 8800,
+        "label": "Pack of 500 (₹8,800)",
+        "price": 8800,
+        "discount": 56
       },
       {
+        "mrp": 40000,
         "qty": 1000,
-        "rate": 16.1,
-        "label": "Pack of 1000 (₹16,095)"
+        "rate": 16095,
+        "label": "Pack of 1000 (₹16,095)",
+        "price": 16095,
+        "discount": 60
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "9a560d0c-cb52-47f2-928c-3c71ca9353a1",
@@ -8093,61 +11159,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 284,
+        "price": 284,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 53,
         "label": "Pack of 25 (₹284)"
       },
       {
         "qty": 50,
         "rate": 560,
+        "price": 560,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 53,
         "label": "Pack of 50 (₹560)"
       },
       {
         "qty": 100,
         "rate": 1099,
+        "price": 1099,
+        "mrp": 2400,
+        "packMrp": 2400,
+        "discount": 54,
         "label": "Pack of 100 (₹1,099)"
       },
       {
         "qty": 500,
         "rate": 5400,
+        "price": 5400,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 55,
         "label": "Pack of 500 (₹5,400)"
       },
       {
         "qty": 1000,
         "rate": 10200,
+        "price": 10200,
+        "mrp": 24000,
+        "packMrp": 24000,
+        "discount": 57,
         "label": "Pack of 1000 (₹10,200)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 25,
-        "rate": 11.35,
-        "label": "Pack of 25 (₹284)"
+        "rate": 284,
+        "label": "Pack of 25 (₹284)",
+        "price": 284,
+        "discount": 53
       },
       {
+        "mrp": 1200,
         "qty": 50,
-        "rate": 11.2,
-        "label": "Pack of 50 (₹560)"
+        "rate": 560,
+        "label": "Pack of 50 (₹560)",
+        "price": 560,
+        "discount": 53
       },
       {
+        "mrp": 2400,
         "qty": 100,
-        "rate": 10.99,
-        "label": "Pack of 100 (₹1,099)"
+        "rate": 1099,
+        "label": "Pack of 100 (₹1,099)",
+        "price": 1099,
+        "discount": 54
       },
       {
+        "mrp": 12000,
         "qty": 500,
-        "rate": 10.8,
-        "label": "Pack of 500 (₹5,400)"
+        "rate": 5400,
+        "label": "Pack of 500 (₹5,400)",
+        "price": 5400,
+        "discount": 55
       },
       {
+        "mrp": 24000,
         "qty": 1000,
-        "rate": 10.2,
-        "label": "Pack of 1000 (₹10,200)"
+        "rate": 10200,
+        "label": "Pack of 1000 (₹10,200)",
+        "price": 10200,
+        "discount": 57
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "65c6f343-2717-416e-b943-6d6663127231",
@@ -8182,61 +11285,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 267,
+        "price": 267,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 56,
         "label": "Pack of 25 (₹267)"
       },
       {
         "qty": 50,
         "rate": 522,
+        "price": 522,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 56,
         "label": "Pack of 50 (₹522)"
       },
       {
         "qty": 100,
         "rate": 980,
+        "price": 980,
+        "mrp": 2400,
+        "packMrp": 2400,
+        "discount": 59,
         "label": "Pack of 100 (₹980)"
       },
       {
         "qty": 500,
         "rate": 4800,
+        "price": 4800,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 60,
         "label": "Pack of 500 (₹4,800)"
       },
       {
         "qty": 1000,
         "rate": 9500,
+        "price": 9500,
+        "mrp": 24000,
+        "packMrp": 24000,
+        "discount": 60,
         "label": "Pack of 1000 (₹9,500)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 25,
-        "rate": 10.67,
-        "label": "Pack of 25 (₹267)"
+        "rate": 267,
+        "label": "Pack of 25 (₹267)",
+        "price": 267,
+        "discount": 56
       },
       {
+        "mrp": 1200,
         "qty": 50,
-        "rate": 10.44,
-        "label": "Pack of 50 (₹522)"
+        "rate": 522,
+        "label": "Pack of 50 (₹522)",
+        "price": 522,
+        "discount": 56
       },
       {
+        "mrp": 2400,
         "qty": 100,
-        "rate": 9.8,
-        "label": "Pack of 100 (₹980)"
+        "rate": 980,
+        "label": "Pack of 100 (₹980)",
+        "price": 980,
+        "discount": 59
       },
       {
+        "mrp": 12000,
         "qty": 500,
-        "rate": 9.6,
-        "label": "Pack of 500 (₹4,800)"
+        "rate": 4800,
+        "label": "Pack of 500 (₹4,800)",
+        "price": 4800,
+        "discount": 60
       },
       {
+        "mrp": 24000,
         "qty": 1000,
-        "rate": 9.5,
-        "label": "Pack of 1000 (₹9,500)"
+        "rate": 9500,
+        "label": "Pack of 1000 (₹9,500)",
+        "price": 9500,
+        "discount": 60
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "7e6c686f-f1e1-4794-8d92-6d2f099f5835",
@@ -8271,51 +11411,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 427,
+        "price": 427,
+        "mrp": 850,
+        "packMrp": 850,
+        "discount": 50,
         "label": "Pack of 50 (₹427)"
       },
       {
         "qty": 100,
         "rate": 840,
+        "price": 840,
+        "mrp": 1700,
+        "packMrp": 1700,
+        "discount": 51,
         "label": "Pack of 100 (₹840)"
       },
       {
         "qty": 500,
         "rate": 4190,
+        "price": 4190,
+        "mrp": 8500,
+        "packMrp": 8500,
+        "discount": 51,
         "label": "Pack of 500 (₹4,190)"
       },
       {
         "qty": 1000,
         "rate": 8095,
+        "price": 8095,
+        "mrp": 17000,
+        "packMrp": 17000,
+        "discount": 52,
         "label": "Pack of 1000 (₹8,095)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 850,
         "qty": 50,
-        "rate": 8.53,
-        "label": "Pack of 50 (₹427)"
+        "rate": 427,
+        "label": "Pack of 50 (₹427)",
+        "price": 427,
+        "discount": 50
       },
       {
+        "mrp": 1700,
         "qty": 100,
-        "rate": 8.4,
-        "label": "Pack of 100 (₹840)"
+        "rate": 840,
+        "label": "Pack of 100 (₹840)",
+        "price": 840,
+        "discount": 51
       },
       {
+        "mrp": 8500,
         "qty": 500,
-        "rate": 8.38,
-        "label": "Pack of 500 (₹4,190)"
+        "rate": 4190,
+        "label": "Pack of 500 (₹4,190)",
+        "price": 4190,
+        "discount": 51
       },
       {
+        "mrp": 17000,
         "qty": 1000,
-        "rate": 8.1,
-        "label": "Pack of 1000 (₹8,095)"
+        "rate": 8095,
+        "label": "Pack of 1000 (₹8,095)",
+        "price": 8095,
+        "discount": 52
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "f4e5709e-5caa-44c6-81b4-aef9aa162800",
@@ -8348,51 +11518,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 224,
+        "price": 224,
+        "mrp": 735,
+        "packMrp": 735,
+        "discount": 70,
         "label": "Pack of 25 (₹224)"
       },
       {
         "qty": 50,
         "rate": 427,
+        "price": 427,
+        "mrp": 1470,
+        "packMrp": 1470,
+        "discount": 71,
         "label": "Pack of 50 (₹427)"
       },
       {
         "qty": 500,
         "rate": 4190,
+        "price": 4190,
+        "mrp": 14700,
+        "packMrp": 14700,
+        "discount": 71,
         "label": "Pack of 500 (₹4,190)"
       },
       {
         "qty": 1000,
         "rate": 8095,
+        "price": 8095,
+        "mrp": 29400,
+        "packMrp": 29400,
+        "discount": 72,
         "label": "Pack of 1000 (₹8,095)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 735,
         "qty": 25,
-        "rate": 8.95,
-        "label": "Pack of 25 (₹224)"
+        "rate": 224,
+        "label": "Pack of 25 (₹224)",
+        "price": 224,
+        "discount": 70
       },
       {
+        "mrp": 1470,
         "qty": 50,
-        "rate": 8.53,
-        "label": "Pack of 50 (₹427)"
+        "rate": 427,
+        "label": "Pack of 50 (₹427)",
+        "price": 427,
+        "discount": 71
       },
       {
+        "mrp": 14700,
         "qty": 500,
-        "rate": 8.38,
-        "label": "Pack of 500 (₹4,190)"
+        "rate": 4190,
+        "label": "Pack of 500 (₹4,190)",
+        "price": 4190,
+        "discount": 71
       },
       {
+        "mrp": 29400,
         "qty": 1000,
-        "rate": 8.1,
-        "label": "Pack of 1000 (₹8,095)"
+        "rate": 8095,
+        "label": "Pack of 1000 (₹8,095)",
+        "price": 8095,
+        "discount": 72
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "45974f6e-8223-4ac6-a4c6-162fa63f2e05",
@@ -8426,51 +11626,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 224,
+        "price": 224,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 63,
         "label": "Pack of 25 (₹224)"
       },
       {
         "qty": 50,
         "rate": 438,
+        "price": 438,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 64,
         "label": "Pack of 50 (₹438)"
       },
       {
         "qty": 500,
         "rate": 4286,
+        "price": 4286,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 64,
         "label": "Pack of 500 (₹4,286)"
       },
       {
         "qty": 1000,
         "rate": 8381,
+        "price": 8381,
+        "mrp": 24000,
+        "packMrp": 24000,
+        "discount": 65,
         "label": "Pack of 1000 (₹8,381)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 25,
-        "rate": 8.95,
-        "label": "Pack of 25 (₹224)"
+        "rate": 224,
+        "label": "Pack of 25 (₹224)",
+        "price": 224,
+        "discount": 63
       },
       {
+        "mrp": 1200,
         "qty": 50,
-        "rate": 8.76,
-        "label": "Pack of 50 (₹438)"
+        "rate": 438,
+        "label": "Pack of 50 (₹438)",
+        "price": 438,
+        "discount": 64
       },
       {
+        "mrp": 12000,
         "qty": 500,
-        "rate": 8.57,
-        "label": "Pack of 500 (₹4,286)"
+        "rate": 4286,
+        "label": "Pack of 500 (₹4,286)",
+        "price": 4286,
+        "discount": 64
       },
       {
+        "mrp": 24000,
         "qty": 1000,
-        "rate": 8.38,
-        "label": "Pack of 1000 (₹8,381)"
+        "rate": 8381,
+        "label": "Pack of 1000 (₹8,381)",
+        "price": 8381,
+        "discount": 65
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "e43054aa-d3a8-4744-b4c1-77f9ede95b52",
@@ -8503,51 +11733,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 312,
+        "price": 312,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 48,
         "label": "Pack of 50 (₹312)"
       },
       {
         "qty": 100,
         "rate": 598,
+        "price": 598,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 50,
         "label": "Pack of 100 (₹598)"
       },
       {
         "qty": 500,
         "rate": 2905,
+        "price": 2905,
+        "mrp": 6000,
+        "packMrp": 6000,
+        "discount": 52,
         "label": "Pack of 500 (₹2,905)"
       },
       {
         "qty": 1000,
         "rate": 5619,
+        "price": 5619,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 53,
         "label": "Pack of 1000 (₹5,619)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 50,
-        "rate": 6.25,
-        "label": "Pack of 50 (₹312)"
+        "rate": 312,
+        "label": "Pack of 50 (₹312)",
+        "price": 312,
+        "discount": 48
       },
       {
+        "mrp": 1200,
         "qty": 100,
-        "rate": 5.98,
-        "label": "Pack of 100 (₹598)"
+        "rate": 598,
+        "label": "Pack of 100 (₹598)",
+        "price": 598,
+        "discount": 50
       },
       {
+        "mrp": 6000,
         "qty": 500,
-        "rate": 5.81,
-        "label": "Pack of 500 (₹2,905)"
+        "rate": 2905,
+        "label": "Pack of 500 (₹2,905)",
+        "price": 2905,
+        "discount": 52
       },
       {
+        "mrp": 12000,
         "qty": 1000,
-        "rate": 5.62,
-        "label": "Pack of 1000 (₹5,619)"
+        "rate": 5619,
+        "label": "Pack of 1000 (₹5,619)",
+        "price": 5619,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "578d152c-0ad6-4d1d-9f68-7c57ce039d05",
@@ -8580,61 +11840,98 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 189,
+        "price": 189,
+        "mrp": 400,
+        "packMrp": 400,
+        "discount": 53,
         "label": "Pack of 25 (₹189)"
       },
       {
         "qty": 50,
         "rate": 362,
+        "price": 362,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 55,
         "label": "Pack of 50 (₹362)"
       },
       {
         "qty": 100,
         "rate": 712,
+        "price": 712,
+        "mrp": 1600,
+        "packMrp": 1600,
+        "discount": 56,
         "label": "Pack of 100 (₹712)"
       },
       {
         "qty": 500,
         "rate": 3476,
+        "price": 3476,
+        "mrp": 8000,
+        "packMrp": 8000,
+        "discount": 57,
         "label": "Pack of 500 (₹3,476)"
       },
       {
         "qty": 1000,
         "rate": 6667,
+        "price": 6667,
+        "mrp": 16000,
+        "packMrp": 16000,
+        "discount": 58,
         "label": "Pack of 1000 (₹6,667)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 400,
         "qty": 25,
-        "rate": 7.54,
-        "label": "Pack of 25 (₹189)"
+        "rate": 189,
+        "label": "Pack of 25 (₹189)",
+        "price": 189,
+        "discount": 53
       },
       {
+        "mrp": 800,
         "qty": 50,
-        "rate": 7.24,
-        "label": "Pack of 50 (₹362)"
+        "rate": 362,
+        "label": "Pack of 50 (₹362)",
+        "price": 362,
+        "discount": 55
       },
       {
+        "mrp": 1600,
         "qty": 100,
-        "rate": 7.12,
-        "label": "Pack of 100 (₹712)"
+        "rate": 712,
+        "label": "Pack of 100 (₹712)",
+        "price": 712,
+        "discount": 56
       },
       {
+        "mrp": 8000,
         "qty": 500,
-        "rate": 6.95,
-        "label": "Pack of 500 (₹3,476)"
+        "rate": 3476,
+        "label": "Pack of 500 (₹3,476)",
+        "price": 3476,
+        "discount": 57
       },
       {
+        "mrp": 16000,
         "qty": 1000,
-        "rate": 6.67,
-        "label": "Pack of 1000 (₹6,667)"
+        "rate": 6667,
+        "label": "Pack of 1000 (₹6,667)",
+        "price": 6667,
+        "discount": 58
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "eaf83af6-6a1b-439f-9ce9-c81d8de09961",
@@ -8668,51 +11965,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 100,
         "rate": 371,
+        "price": 371,
+        "mrp": 878,
+        "packMrp": 878,
+        "discount": 58,
         "label": "Pack of 100 (₹371)"
       },
       {
         "qty": 500,
         "rate": 1810,
+        "price": 1810,
+        "mrp": 4390,
+        "packMrp": 4390,
+        "discount": 59,
         "label": "Pack of 500 (₹1,810)"
       },
       {
         "qty": 1000,
         "rate": 3999,
+        "price": 3999,
+        "mrp": 8780,
+        "packMrp": 8780,
+        "discount": 54,
         "label": "Pack of 1000 (₹3,999)"
       },
       {
         "qty": 2000,
         "rate": 7900,
+        "price": 7900,
+        "mrp": 17560,
+        "packMrp": 17560,
+        "discount": 55,
         "label": "Pack of 2000 (₹7,900)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 878,
         "qty": 100,
-        "rate": 3.71,
-        "label": "Pack of 100 (₹371)"
+        "rate": 371,
+        "label": "Pack of 100 (₹371)",
+        "price": 371,
+        "discount": 58
       },
       {
+        "mrp": 4390,
         "qty": 500,
-        "rate": 3.62,
-        "label": "Pack of 500 (₹1,810)"
+        "rate": 1810,
+        "label": "Pack of 500 (₹1,810)",
+        "price": 1810,
+        "discount": 59
       },
       {
+        "mrp": 8780,
         "qty": 1000,
-        "rate": 4,
-        "label": "Pack of 1000 (₹3,999)"
+        "rate": 3999,
+        "label": "Pack of 1000 (₹3,999)",
+        "price": 3999,
+        "discount": 54
       },
       {
+        "mrp": 17560,
         "qty": 2000,
-        "rate": 3.95,
-        "label": "Pack of 2000 (₹7,900)"
+        "rate": 7900,
+        "label": "Pack of 2000 (₹7,900)",
+        "price": 7900,
+        "discount": 55
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "f698e326-785c-4d4e-b14d-b2ebf056f92f",
@@ -8746,51 +12073,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 498,
+        "price": 498,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 38,
         "label": "Pack of 50 (₹498)"
       },
       {
         "qty": 100,
         "rate": 978,
+        "price": 978,
+        "mrp": 1600,
+        "packMrp": 1600,
+        "discount": 39,
         "label": "Pack of 100 (₹978)"
       },
       {
         "qty": 500,
         "rate": 4800,
+        "price": 4800,
+        "mrp": 8000,
+        "packMrp": 8000,
+        "discount": 40,
         "label": "Pack of 500 (₹4,800)"
       },
       {
         "qty": 1000,
         "rate": 9500,
+        "price": 9500,
+        "mrp": 16000,
+        "packMrp": 16000,
+        "discount": 41,
         "label": "Pack of 1000 (₹9,500)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 50,
-        "rate": 9.96,
-        "label": "Pack of 50 (₹498)"
+        "rate": 498,
+        "label": "Pack of 50 (₹498)",
+        "price": 498,
+        "discount": 38
       },
       {
+        "mrp": 1600,
         "qty": 100,
-        "rate": 9.78,
-        "label": "Pack of 100 (₹978)"
+        "rate": 978,
+        "label": "Pack of 100 (₹978)",
+        "price": 978,
+        "discount": 39
       },
       {
+        "mrp": 8000,
         "qty": 500,
-        "rate": 9.6,
-        "label": "Pack of 500 (₹4,800)"
+        "rate": 4800,
+        "label": "Pack of 500 (₹4,800)",
+        "price": 4800,
+        "discount": 40
       },
       {
+        "mrp": 16000,
         "qty": 1000,
-        "rate": 9.5,
-        "label": "Pack of 1000 (₹9,500)"
+        "rate": 9500,
+        "label": "Pack of 1000 (₹9,500)",
+        "price": 9500,
+        "discount": 41
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "71c67557-537b-438b-a137-72033c6ef60c",
@@ -8825,51 +12182,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 348,
+        "price": 348,
+        "mrp": 660,
+        "packMrp": 660,
+        "discount": 47,
         "label": "Pack of 50 (₹348)"
       },
       {
         "qty": 100,
         "rate": 690,
+        "price": 690,
+        "mrp": 1320,
+        "packMrp": 1320,
+        "discount": 48,
         "label": "Pack of 100 (₹690)"
       },
       {
         "qty": 500,
         "rate": 3400,
+        "price": 3400,
+        "mrp": 6600,
+        "packMrp": 6600,
+        "discount": 48,
         "label": "Pack of 500 (₹3,400)"
       },
       {
         "qty": 1000,
         "rate": 6700,
+        "price": 6700,
+        "mrp": 13200,
+        "packMrp": 13200,
+        "discount": 49,
         "label": "Pack of 1000 (₹6,700)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 660,
         "qty": 50,
-        "rate": 6.96,
-        "label": "Pack of 50 (₹348)"
+        "rate": 348,
+        "label": "Pack of 50 (₹348)",
+        "price": 348,
+        "discount": 47
       },
       {
+        "mrp": 1320,
         "qty": 100,
-        "rate": 6.9,
-        "label": "Pack of 100 (₹690)"
+        "rate": 690,
+        "label": "Pack of 100 (₹690)",
+        "price": 690,
+        "discount": 48
       },
       {
+        "mrp": 6600,
         "qty": 500,
-        "rate": 6.8,
-        "label": "Pack of 500 (₹3,400)"
+        "rate": 3400,
+        "label": "Pack of 500 (₹3,400)",
+        "price": 3400,
+        "discount": 48
       },
       {
+        "mrp": 13200,
         "qty": 1000,
-        "rate": 6.7,
-        "label": "Pack of 1000 (₹6,700)"
+        "rate": 6700,
+        "label": "Pack of 1000 (₹6,700)",
+        "price": 6700,
+        "discount": 49
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "d3004ce0-cc01-4fcc-a21c-dbbc172e71e3",
@@ -8904,51 +12291,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 420,
+        "price": 420,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 40,
         "label": "Pack of 25 (₹420)"
       },
       {
         "qty": 50,
         "rate": 835,
+        "price": 835,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 40,
         "label": "Pack of 50 (₹835)"
       },
       {
         "qty": 500,
         "rate": 8200,
+        "price": 8200,
+        "mrp": 14000,
+        "packMrp": 14000,
+        "discount": 41,
         "label": "Pack of 500 (₹8,200)"
       },
       {
         "qty": 1000,
         "rate": 16200,
+        "price": 16200,
+        "mrp": 28000,
+        "packMrp": 28000,
+        "discount": 42,
         "label": "Pack of 1000 (₹16,200)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 25,
-        "rate": 16.8,
-        "label": "Pack of 25 (₹420)"
+        "rate": 420,
+        "label": "Pack of 25 (₹420)",
+        "price": 420,
+        "discount": 40
       },
       {
+        "mrp": 1400,
         "qty": 50,
-        "rate": 16.7,
-        "label": "Pack of 50 (₹835)"
+        "rate": 835,
+        "label": "Pack of 50 (₹835)",
+        "price": 835,
+        "discount": 40
       },
       {
+        "mrp": 14000,
         "qty": 500,
-        "rate": 16.4,
-        "label": "Pack of 500 (₹8,200)"
+        "rate": 8200,
+        "label": "Pack of 500 (₹8,200)",
+        "price": 8200,
+        "discount": 41
       },
       {
+        "mrp": 28000,
         "qty": 1000,
-        "rate": 16.2,
-        "label": "Pack of 1000 (₹16,200)"
+        "rate": 16200,
+        "label": "Pack of 1000 (₹16,200)",
+        "price": 16200,
+        "discount": 42
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "2b3dce0a-705b-4fce-9471-eae7492199fd",
@@ -8981,51 +12398,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 425,
+        "price": 425,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 47,
         "label": "Pack of 50 (₹425)"
       },
       {
         "qty": 100,
         "rate": 848,
+        "price": 848,
+        "mrp": 1600,
+        "packMrp": 1600,
+        "discount": 47,
         "label": "Pack of 100 (₹848)"
       },
       {
         "qty": 500,
         "rate": 4200,
+        "price": 4200,
+        "mrp": 8000,
+        "packMrp": 8000,
+        "discount": 48,
         "label": "Pack of 500 (₹4,200)"
       },
       {
         "qty": 1000,
         "rate": 8300,
+        "price": 8300,
+        "mrp": 16000,
+        "packMrp": 16000,
+        "discount": 48,
         "label": "Pack of 1000 (₹8,300)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 50,
-        "rate": 8.5,
-        "label": "Pack of 50 (₹425)"
+        "rate": 425,
+        "label": "Pack of 50 (₹425)",
+        "price": 425,
+        "discount": 47
       },
       {
+        "mrp": 1600,
         "qty": 100,
-        "rate": 8.48,
-        "label": "Pack of 100 (₹848)"
+        "rate": 848,
+        "label": "Pack of 100 (₹848)",
+        "price": 848,
+        "discount": 47
       },
       {
+        "mrp": 8000,
         "qty": 500,
-        "rate": 8.4,
-        "label": "Pack of 500 (₹4,200)"
+        "rate": 4200,
+        "label": "Pack of 500 (₹4,200)",
+        "price": 4200,
+        "discount": 48
       },
       {
+        "mrp": 16000,
         "qty": 1000,
-        "rate": 8.3,
-        "label": "Pack of 1000 (₹8,300)"
+        "rate": 8300,
+        "label": "Pack of 1000 (₹8,300)",
+        "price": 8300,
+        "discount": 48
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "6c4bfe7c-61e8-45b4-bf61-c0423ddbc5d7",
@@ -9058,51 +12505,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 379,
+        "price": 379,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 46,
         "label": "Pack of 50 (₹379)"
       },
       {
         "qty": 100,
         "rate": 748,
+        "price": 748,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 47,
         "label": "Pack of 100 (₹748)"
       },
       {
         "qty": 500,
         "rate": 3700,
+        "price": 3700,
+        "mrp": 7000,
+        "packMrp": 7000,
+        "discount": 47,
         "label": "Pack of 500 (₹3,700)"
       },
       {
         "qty": 1000,
         "rate": 7200,
+        "price": 7200,
+        "mrp": 14000,
+        "packMrp": 14000,
+        "discount": 49,
         "label": "Pack of 1000 (₹7,200)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 50,
-        "rate": 7.58,
-        "label": "Pack of 50 (₹379)"
+        "rate": 379,
+        "label": "Pack of 50 (₹379)",
+        "price": 379,
+        "discount": 46
       },
       {
+        "mrp": 1400,
         "qty": 100,
-        "rate": 7.48,
-        "label": "Pack of 100 (₹748)"
+        "rate": 748,
+        "label": "Pack of 100 (₹748)",
+        "price": 748,
+        "discount": 47
       },
       {
+        "mrp": 7000,
         "qty": 500,
-        "rate": 7.4,
-        "label": "Pack of 500 (₹3,700)"
+        "rate": 3700,
+        "label": "Pack of 500 (₹3,700)",
+        "price": 3700,
+        "discount": 47
       },
       {
+        "mrp": 14000,
         "qty": 1000,
-        "rate": 7.2,
-        "label": "Pack of 1000 (₹7,200)"
+        "rate": 7200,
+        "label": "Pack of 1000 (₹7,200)",
+        "price": 7200,
+        "discount": 49
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "bc062fae-23b2-42b6-adfe-1fc79e9ced04",
@@ -9137,51 +12614,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 284,
+        "price": 284,
+        "mrp": 566,
+        "packMrp": 566,
+        "discount": 50,
         "label": "Pack of 50 (₹284)"
       },
       {
         "qty": 100,
         "rate": 610,
+        "price": 610,
+        "mrp": 1132,
+        "packMrp": 1132,
+        "discount": 46,
         "label": "Pack of 100 (₹610)"
       },
       {
         "qty": 500,
         "rate": 2761,
+        "price": 2761,
+        "mrp": 5660,
+        "packMrp": 5660,
+        "discount": 51,
         "label": "Pack of 500 (₹2,761)"
       },
       {
         "qty": 1000,
         "rate": 5699,
+        "price": 5699,
+        "mrp": 11320,
+        "packMrp": 11320,
+        "discount": 50,
         "label": "Pack of 1000 (₹5,699)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 566,
         "qty": 50,
-        "rate": 5.68,
-        "label": "Pack of 50 (₹284)"
+        "rate": 284,
+        "label": "Pack of 50 (₹284)",
+        "price": 284,
+        "discount": 50
       },
       {
+        "mrp": 1132,
         "qty": 100,
-        "rate": 6.1,
-        "label": "Pack of 100 (₹610)"
+        "rate": 610,
+        "label": "Pack of 100 (₹610)",
+        "price": 610,
+        "discount": 46
       },
       {
+        "mrp": 5660,
         "qty": 500,
-        "rate": 5.52,
-        "label": "Pack of 500 (₹2,761)"
+        "rate": 2761,
+        "label": "Pack of 500 (₹2,761)",
+        "price": 2761,
+        "discount": 51
       },
       {
+        "mrp": 11320,
         "qty": 1000,
-        "rate": 5.7,
-        "label": "Pack of 1000 (₹5,699)"
+        "rate": 5699,
+        "label": "Pack of 1000 (₹5,699)",
+        "price": 5699,
+        "discount": 50
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "9eee0b25-ff36-4c50-9eb1-43260a71437e",
@@ -9216,51 +12723,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 20,
         "rate": 408,
+        "price": 408,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 49,
         "label": "Pack of 20 (₹408)"
       },
       {
         "qty": 100,
         "rate": 1999,
+        "price": 1999,
+        "mrp": 4000,
+        "packMrp": 4000,
+        "discount": 50,
         "label": "Pack of 100 (₹1,999)"
       },
       {
         "qty": 500,
         "rate": 9429,
+        "price": 9429,
+        "mrp": 20000,
+        "packMrp": 20000,
+        "discount": 53,
         "label": "Pack of 500 (₹9,429)"
       },
       {
         "qty": 1000,
         "rate": 18571,
+        "price": 18571,
+        "mrp": 40000,
+        "packMrp": 40000,
+        "discount": 54,
         "label": "Pack of 1000 (₹18,571)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 20,
-        "rate": 20.38,
-        "label": "Pack of 20 (₹408)"
+        "rate": 408,
+        "label": "Pack of 20 (₹408)",
+        "price": 408,
+        "discount": 49
       },
       {
+        "mrp": 4000,
         "qty": 100,
-        "rate": 19.99,
-        "label": "Pack of 100 (₹1,999)"
+        "rate": 1999,
+        "label": "Pack of 100 (₹1,999)",
+        "price": 1999,
+        "discount": 50
       },
       {
+        "mrp": 20000,
         "qty": 500,
-        "rate": 18.86,
-        "label": "Pack of 500 (₹9,429)"
+        "rate": 9429,
+        "label": "Pack of 500 (₹9,429)",
+        "price": 9429,
+        "discount": 53
       },
       {
+        "mrp": 40000,
         "qty": 1000,
-        "rate": 18.57,
-        "label": "Pack of 1000 (₹18,571)"
+        "rate": 18571,
+        "label": "Pack of 1000 (₹18,571)",
+        "price": 18571,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "0c6dd6d7-710a-4503-92c6-27fe0109eef7",
@@ -9295,51 +12832,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 10,
         "rate": 379,
+        "price": 379,
+        "mrp": 750,
+        "packMrp": 750,
+        "discount": 49,
         "label": "Pack of 10 (₹379)"
       },
       {
         "qty": 20,
         "rate": 752,
+        "price": 752,
+        "mrp": 1500,
+        "packMrp": 1500,
+        "discount": 50,
         "label": "Pack of 20 (₹752)"
       },
       {
         "qty": 100,
         "rate": 3714,
+        "price": 3714,
+        "mrp": 7500,
+        "packMrp": 7500,
+        "discount": 50,
         "label": "Pack of 100 (₹3,714)"
       },
       {
         "qty": 500,
         "rate": 18476,
+        "price": 18476,
+        "mrp": 37500,
+        "packMrp": 37500,
+        "discount": 51,
         "label": "Pack of 500 (₹18,476)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 750,
         "qty": 10,
-        "rate": 37.91,
-        "label": "Pack of 10 (₹379)"
+        "rate": 379,
+        "label": "Pack of 10 (₹379)",
+        "price": 379,
+        "discount": 49
       },
       {
+        "mrp": 1500,
         "qty": 20,
-        "rate": 37.62,
-        "label": "Pack of 20 (₹752)"
+        "rate": 752,
+        "label": "Pack of 20 (₹752)",
+        "price": 752,
+        "discount": 50
       },
       {
+        "mrp": 7500,
         "qty": 100,
-        "rate": 37.14,
-        "label": "Pack of 100 (₹3,714)"
+        "rate": 3714,
+        "label": "Pack of 100 (₹3,714)",
+        "price": 3714,
+        "discount": 50
       },
       {
+        "mrp": 37500,
         "qty": 500,
-        "rate": 36.95,
-        "label": "Pack of 500 (₹18,476)"
+        "rate": 18476,
+        "label": "Pack of 500 (₹18,476)",
+        "price": 18476,
+        "discount": 51
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "083ee63c-c956-490c-a0e8-6b5f4bf92c35",
@@ -9373,51 +12940,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 10,
         "rate": 333,
+        "price": 333,
+        "mrp": 650,
+        "packMrp": 650,
+        "discount": 49,
         "label": "Pack of 10 (₹333)"
       },
       {
         "qty": 20,
         "rate": 662,
+        "price": 662,
+        "mrp": 1300,
+        "packMrp": 1300,
+        "discount": 49,
         "label": "Pack of 20 (₹662)"
       },
       {
         "qty": 100,
         "rate": 3238,
+        "price": 3238,
+        "mrp": 6500,
+        "packMrp": 6500,
+        "discount": 50,
         "label": "Pack of 100 (₹3,238)"
       },
       {
         "qty": 500,
         "rate": 16000,
+        "price": 16000,
+        "mrp": 32500,
+        "packMrp": 32500,
+        "discount": 51,
         "label": "Pack of 500 (₹16,000)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 650,
         "qty": 10,
-        "rate": 33.33,
-        "label": "Pack of 10 (₹333)"
+        "rate": 333,
+        "label": "Pack of 10 (₹333)",
+        "price": 333,
+        "discount": 49
       },
       {
+        "mrp": 1300,
         "qty": 20,
-        "rate": 33.09,
-        "label": "Pack of 20 (₹662)"
+        "rate": 662,
+        "label": "Pack of 20 (₹662)",
+        "price": 662,
+        "discount": 49
       },
       {
+        "mrp": 6500,
         "qty": 100,
-        "rate": 32.38,
-        "label": "Pack of 100 (₹3,238)"
+        "rate": 3238,
+        "label": "Pack of 100 (₹3,238)",
+        "price": 3238,
+        "discount": 50
       },
       {
+        "mrp": 32500,
         "qty": 500,
-        "rate": 32,
-        "label": "Pack of 500 (₹16,000)"
+        "rate": 16000,
+        "label": "Pack of 500 (₹16,000)",
+        "price": 16000,
+        "discount": 51
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "0ecc7ada-bc18-4a53-bab7-19c8570f9d3f",
@@ -9451,51 +13048,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 20,
         "rate": 408,
+        "price": 408,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 49,
         "label": "Pack of 20 (₹408)"
       },
       {
         "qty": 100,
         "rate": 1999,
+        "price": 1999,
+        "mrp": 4000,
+        "packMrp": 4000,
+        "discount": 50,
         "label": "Pack of 100 (₹1,999)"
       },
       {
         "qty": 500,
         "rate": 9429,
+        "price": 9429,
+        "mrp": 20000,
+        "packMrp": 20000,
+        "discount": 53,
         "label": "Pack of 500 (₹9,429)"
       },
       {
         "qty": 1000,
         "rate": 18571,
+        "price": 18571,
+        "mrp": 40000,
+        "packMrp": 40000,
+        "discount": 54,
         "label": "Pack of 1000 (₹18,571)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 20,
-        "rate": 20.38,
-        "label": "Pack of 20 (₹408)"
+        "rate": 408,
+        "label": "Pack of 20 (₹408)",
+        "price": 408,
+        "discount": 49
       },
       {
+        "mrp": 4000,
         "qty": 100,
-        "rate": 19.99,
-        "label": "Pack of 100 (₹1,999)"
+        "rate": 1999,
+        "label": "Pack of 100 (₹1,999)",
+        "price": 1999,
+        "discount": 50
       },
       {
+        "mrp": 20000,
         "qty": 500,
-        "rate": 18.86,
-        "label": "Pack of 500 (₹9,429)"
+        "rate": 9429,
+        "label": "Pack of 500 (₹9,429)",
+        "price": 9429,
+        "discount": 53
       },
       {
+        "mrp": 40000,
         "qty": 1000,
-        "rate": 18.57,
-        "label": "Pack of 1000 (₹18,571)"
+        "rate": 18571,
+        "label": "Pack of 1000 (₹18,571)",
+        "price": 18571,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "942725f2-e110-42fa-a0da-b5d619ec915a",
@@ -9528,51 +13155,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 10,
         "rate": 284,
+        "price": 284,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 53,
         "label": "Pack of 10 (₹284)"
       },
       {
         "qty": 20,
         "rate": 560,
+        "price": 560,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 53,
         "label": "Pack of 20 (₹560)"
       },
       {
         "qty": 100,
         "rate": 2714,
+        "price": 2714,
+        "mrp": 6000,
+        "packMrp": 6000,
+        "discount": 55,
         "label": "Pack of 100 (₹2,714)"
       },
       {
         "qty": 500,
         "rate": 12571,
+        "price": 12571,
+        "mrp": 30000,
+        "packMrp": 30000,
+        "discount": 58,
         "label": "Pack of 500 (₹12,571)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 10,
-        "rate": 28.38,
-        "label": "Pack of 10 (₹284)"
+        "rate": 284,
+        "label": "Pack of 10 (₹284)",
+        "price": 284,
+        "discount": 53
       },
       {
+        "mrp": 1200,
         "qty": 20,
-        "rate": 28,
-        "label": "Pack of 20 (₹560)"
+        "rate": 560,
+        "label": "Pack of 20 (₹560)",
+        "price": 560,
+        "discount": 53
       },
       {
+        "mrp": 6000,
         "qty": 100,
-        "rate": 27.14,
-        "label": "Pack of 100 (₹2,714)"
+        "rate": 2714,
+        "label": "Pack of 100 (₹2,714)",
+        "price": 2714,
+        "discount": 55
       },
       {
+        "mrp": 30000,
         "qty": 500,
-        "rate": 25.14,
-        "label": "Pack of 500 (₹12,571)"
+        "rate": 12571,
+        "label": "Pack of 500 (₹12,571)",
+        "price": 12571,
+        "discount": 58
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "2b5eb337-0c1e-481b-93df-e81dc985e909",
@@ -9605,51 +13262,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 10,
         "rate": 333,
+        "price": 333,
+        "mrp": 650,
+        "packMrp": 650,
+        "discount": 49,
         "label": "Pack of 10 (₹333)"
       },
       {
         "qty": 20,
         "rate": 657,
+        "price": 657,
+        "mrp": 1300,
+        "packMrp": 1300,
+        "discount": 49,
         "label": "Pack of 20 (₹657)"
       },
       {
         "qty": 100,
         "rate": 3190,
+        "price": 3190,
+        "mrp": 6500,
+        "packMrp": 6500,
+        "discount": 51,
         "label": "Pack of 100 (₹3,190)"
       },
       {
         "qty": 500,
         "rate": 15238,
+        "price": 15238,
+        "mrp": 32500,
+        "packMrp": 32500,
+        "discount": 53,
         "label": "Pack of 500 (₹15,238)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 650,
         "qty": 10,
-        "rate": 33.33,
-        "label": "Pack of 10 (₹333)"
+        "rate": 333,
+        "label": "Pack of 10 (₹333)",
+        "price": 333,
+        "discount": 49
       },
       {
+        "mrp": 1300,
         "qty": 20,
-        "rate": 32.86,
-        "label": "Pack of 20 (₹657)"
+        "rate": 657,
+        "label": "Pack of 20 (₹657)",
+        "price": 657,
+        "discount": 49
       },
       {
+        "mrp": 6500,
         "qty": 100,
-        "rate": 31.9,
-        "label": "Pack of 100 (₹3,190)"
+        "rate": 3190,
+        "label": "Pack of 100 (₹3,190)",
+        "price": 3190,
+        "discount": 51
       },
       {
+        "mrp": 32500,
         "qty": 500,
-        "rate": 30.48,
-        "label": "Pack of 500 (₹15,238)"
+        "rate": 15238,
+        "label": "Pack of 500 (₹15,238)",
+        "price": 15238,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "134919a3-004c-431f-a571-dc31aab9d436",
@@ -9683,51 +13370,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 236,
+        "price": 236,
+        "mrp": 500,
+        "packMrp": 500,
+        "discount": 53,
         "label": "Pack of 25 (₹236)"
       },
       {
         "qty": 50,
         "rate": 455,
+        "price": 455,
+        "mrp": 1000,
+        "packMrp": 1000,
+        "discount": 55,
         "label": "Pack of 50 (₹455)"
       },
       {
         "qty": 500,
         "rate": 4429,
+        "price": 4429,
+        "mrp": 10000,
+        "packMrp": 10000,
+        "discount": 56,
         "label": "Pack of 500 (₹4,429)"
       },
       {
         "qty": 1000,
         "rate": 8667,
+        "price": 8667,
+        "mrp": 20000,
+        "packMrp": 20000,
+        "discount": 57,
         "label": "Pack of 1000 (₹8,667)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 500,
         "qty": 25,
-        "rate": 9.45,
-        "label": "Pack of 25 (₹236)"
+        "rate": 236,
+        "label": "Pack of 25 (₹236)",
+        "price": 236,
+        "discount": 53
       },
       {
+        "mrp": 1000,
         "qty": 50,
-        "rate": 9.1,
-        "label": "Pack of 50 (₹455)"
+        "rate": 455,
+        "label": "Pack of 50 (₹455)",
+        "price": 455,
+        "discount": 55
       },
       {
+        "mrp": 10000,
         "qty": 500,
-        "rate": 8.86,
-        "label": "Pack of 500 (₹4,429)"
+        "rate": 4429,
+        "label": "Pack of 500 (₹4,429)",
+        "price": 4429,
+        "discount": 56
       },
       {
+        "mrp": 20000,
         "qty": 1000,
-        "rate": 8.67,
-        "label": "Pack of 1000 (₹8,667)"
+        "rate": 8667,
+        "label": "Pack of 1000 (₹8,667)",
+        "price": 8667,
+        "discount": 57
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "6fd17b49-8c45-4be9-8b7c-2eba9356dec6",
@@ -9762,51 +13479,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 371,
+        "price": 371,
+        "mrp": 660,
+        "packMrp": 660,
+        "discount": 44,
         "label": "Pack of 25 (₹371)"
       },
       {
         "qty": 50,
         "rate": 733,
+        "price": 733,
+        "mrp": 1320,
+        "packMrp": 1320,
+        "discount": 44,
         "label": "Pack of 50 (₹733)"
       },
       {
         "qty": 500,
         "rate": 7238,
+        "price": 7238,
+        "mrp": 13200,
+        "packMrp": 13200,
+        "discount": 45,
         "label": "Pack of 500 (₹7,238)"
       },
       {
         "qty": 1000,
         "rate": 14190,
+        "price": 14190,
+        "mrp": 26400,
+        "packMrp": 26400,
+        "discount": 46,
         "label": "Pack of 1000 (₹14,190)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 660,
         "qty": 25,
-        "rate": 14.86,
-        "label": "Pack of 25 (₹371)"
+        "rate": 371,
+        "label": "Pack of 25 (₹371)",
+        "price": 371,
+        "discount": 44
       },
       {
+        "mrp": 1320,
         "qty": 50,
-        "rate": 14.67,
-        "label": "Pack of 50 (₹733)"
+        "rate": 733,
+        "label": "Pack of 50 (₹733)",
+        "price": 733,
+        "discount": 44
       },
       {
+        "mrp": 13200,
         "qty": 500,
-        "rate": 14.48,
-        "label": "Pack of 500 (₹7,238)"
+        "rate": 7238,
+        "label": "Pack of 500 (₹7,238)",
+        "price": 7238,
+        "discount": 45
       },
       {
+        "mrp": 26400,
         "qty": 1000,
-        "rate": 14.19,
-        "label": "Pack of 1000 (₹14,190)"
+        "rate": 14190,
+        "label": "Pack of 1000 (₹14,190)",
+        "price": 14190,
+        "discount": 46
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "14d2d1ea-37a5-4891-a077-6d0a4cf79557",
@@ -9839,51 +13586,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 236,
+        "price": 236,
+        "mrp": 400,
+        "packMrp": 400,
+        "discount": 41,
         "label": "Pack of 25 (₹236)"
       },
       {
         "qty": 50,
         "rate": 455,
+        "price": 455,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 43,
         "label": "Pack of 50 (₹455)"
       },
       {
         "qty": 500,
         "rate": 4429,
+        "price": 4429,
+        "mrp": 8000,
+        "packMrp": 8000,
+        "discount": 45,
         "label": "Pack of 500 (₹4,429)"
       },
       {
         "qty": 1000,
         "rate": 8667,
+        "price": 8667,
+        "mrp": 16000,
+        "packMrp": 16000,
+        "discount": 46,
         "label": "Pack of 1000 (₹8,667)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 400,
         "qty": 25,
-        "rate": 9.45,
-        "label": "Pack of 25 (₹236)"
+        "rate": 236,
+        "label": "Pack of 25 (₹236)",
+        "price": 236,
+        "discount": 41
       },
       {
+        "mrp": 800,
         "qty": 50,
-        "rate": 9.1,
-        "label": "Pack of 50 (₹455)"
+        "rate": 455,
+        "label": "Pack of 50 (₹455)",
+        "price": 455,
+        "discount": 43
       },
       {
+        "mrp": 8000,
         "qty": 500,
-        "rate": 8.86,
-        "label": "Pack of 500 (₹4,429)"
+        "rate": 4429,
+        "label": "Pack of 500 (₹4,429)",
+        "price": 4429,
+        "discount": 45
       },
       {
+        "mrp": 16000,
         "qty": 1000,
-        "rate": 8.67,
-        "label": "Pack of 1000 (₹8,667)"
+        "rate": 8667,
+        "label": "Pack of 1000 (₹8,667)",
+        "price": 8667,
+        "discount": 46
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "3fb285cd-4b40-4540-8d91-acfb79f29531",
@@ -9916,51 +13693,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 379,
+        "price": 379,
+        "mrp": 720,
+        "packMrp": 720,
+        "discount": 47,
         "label": "Pack of 25 (₹379)"
       },
       {
         "qty": 50,
         "rate": 743,
+        "price": 743,
+        "mrp": 1440,
+        "packMrp": 1440,
+        "discount": 48,
         "label": "Pack of 50 (₹743)"
       },
       {
         "qty": 500,
         "rate": 7143,
+        "price": 7143,
+        "mrp": 14400,
+        "packMrp": 14400,
+        "discount": 50,
         "label": "Pack of 500 (₹7,143)"
       },
       {
         "qty": 1000,
         "rate": 13524,
+        "price": 13524,
+        "mrp": 28800,
+        "packMrp": 28800,
+        "discount": 53,
         "label": "Pack of 1000 (₹13,524)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 720,
         "qty": 25,
-        "rate": 15.16,
-        "label": "Pack of 25 (₹379)"
+        "rate": 379,
+        "label": "Pack of 25 (₹379)",
+        "price": 379,
+        "discount": 47
       },
       {
+        "mrp": 1440,
         "qty": 50,
-        "rate": 14.86,
-        "label": "Pack of 50 (₹743)"
+        "rate": 743,
+        "label": "Pack of 50 (₹743)",
+        "price": 743,
+        "discount": 48
       },
       {
+        "mrp": 14400,
         "qty": 500,
-        "rate": 14.29,
-        "label": "Pack of 500 (₹7,143)"
+        "rate": 7143,
+        "label": "Pack of 500 (₹7,143)",
+        "price": 7143,
+        "discount": 50
       },
       {
+        "mrp": 28800,
         "qty": 1000,
-        "rate": 13.52,
-        "label": "Pack of 1000 (₹13,524)"
+        "rate": 13524,
+        "label": "Pack of 1000 (₹13,524)",
+        "price": 13524,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "53f65134-ebf2-4a05-a3e9-077d8330fb82",
@@ -9995,51 +13802,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 379,
+        "price": 379,
+        "mrp": 758,
+        "packMrp": 758,
+        "discount": 50,
         "label": "Pack of 50 (₹379)"
       },
       {
         "qty": 100,
         "rate": 741,
+        "price": 741,
+        "mrp": 1516,
+        "packMrp": 1516,
+        "discount": 51,
         "label": "Pack of 100 (₹741)"
       },
       {
         "qty": 500,
         "rate": 3571,
+        "price": 3571,
+        "mrp": 7580,
+        "packMrp": 7580,
+        "discount": 53,
         "label": "Pack of 500 (₹3,571)"
       },
       {
         "qty": 1000,
         "rate": 6952,
+        "price": 6952,
+        "mrp": 15160,
+        "packMrp": 15160,
+        "discount": 54,
         "label": "Pack of 1000 (₹6,952)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 758,
         "qty": 50,
-        "rate": 7.58,
-        "label": "Pack of 50 (₹379)"
+        "rate": 379,
+        "label": "Pack of 50 (₹379)",
+        "price": 379,
+        "discount": 50
       },
       {
+        "mrp": 1516,
         "qty": 100,
-        "rate": 7.41,
-        "label": "Pack of 100 (₹741)"
+        "rate": 741,
+        "label": "Pack of 100 (₹741)",
+        "price": 741,
+        "discount": 51
       },
       {
+        "mrp": 7580,
         "qty": 500,
-        "rate": 7.14,
-        "label": "Pack of 500 (₹3,571)"
+        "rate": 3571,
+        "label": "Pack of 500 (₹3,571)",
+        "price": 3571,
+        "discount": 53
       },
       {
+        "mrp": 15160,
         "qty": 1000,
-        "rate": 6.95,
-        "label": "Pack of 1000 (₹6,952)"
+        "rate": 6952,
+        "label": "Pack of 1000 (₹6,952)",
+        "price": 6952,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "00519982-44ef-4186-a52f-bf7c48982a0b",
@@ -10072,51 +13909,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 236,
+        "price": 236,
+        "mrp": 472,
+        "packMrp": 472,
+        "discount": 50,
         "label": "Pack of 25 (₹236)"
       },
       {
         "qty": 50,
         "rate": 467,
+        "price": 467,
+        "mrp": 944,
+        "packMrp": 944,
+        "discount": 51,
         "label": "Pack of 50 (₹467)"
       },
       {
         "qty": 500,
         "rate": 4571,
+        "price": 4571,
+        "mrp": 9440,
+        "packMrp": 9440,
+        "discount": 52,
         "label": "Pack of 500 (₹4,571)"
       },
       {
         "qty": 1000,
         "rate": 9048,
+        "price": 9048,
+        "mrp": 18880,
+        "packMrp": 18880,
+        "discount": 52,
         "label": "Pack of 1000 (₹9,048)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 472,
         "qty": 25,
-        "rate": 9.45,
-        "label": "Pack of 25 (₹236)"
+        "rate": 236,
+        "label": "Pack of 25 (₹236)",
+        "price": 236,
+        "discount": 50
       },
       {
+        "mrp": 944,
         "qty": 50,
-        "rate": 9.33,
-        "label": "Pack of 50 (₹467)"
+        "rate": 467,
+        "label": "Pack of 50 (₹467)",
+        "price": 467,
+        "discount": 51
       },
       {
+        "mrp": 9440,
         "qty": 500,
-        "rate": 9.14,
-        "label": "Pack of 500 (₹4,571)"
+        "rate": 4571,
+        "label": "Pack of 500 (₹4,571)",
+        "price": 4571,
+        "discount": 52
       },
       {
+        "mrp": 18880,
         "qty": 1000,
-        "rate": 9.05,
-        "label": "Pack of 1000 (₹9,048)"
+        "rate": 9048,
+        "label": "Pack of 1000 (₹9,048)",
+        "price": 9048,
+        "discount": 52
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "cfa911d3-fdf2-4145-b3ba-166d34093927",
@@ -10150,51 +14017,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 379,
+        "price": 379,
+        "mrp": 758,
+        "packMrp": 758,
+        "discount": 50,
         "label": "Pack of 50 (₹379)"
       },
       {
         "qty": 100,
         "rate": 712,
+        "price": 712,
+        "mrp": 1516,
+        "packMrp": 1516,
+        "discount": 53,
         "label": "Pack of 100 (₹712)"
       },
       {
         "qty": 500,
         "rate": 3524,
+        "price": 3524,
+        "mrp": 7580,
+        "packMrp": 7580,
+        "discount": 54,
         "label": "Pack of 500 (₹3,524)"
       },
       {
         "qty": 1000,
         "rate": 6857,
+        "price": 6857,
+        "mrp": 15160,
+        "packMrp": 15160,
+        "discount": 55,
         "label": "Pack of 1000 (₹6,857)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 758,
         "qty": 50,
-        "rate": 7.58,
-        "label": "Pack of 50 (₹379)"
+        "rate": 379,
+        "label": "Pack of 50 (₹379)",
+        "price": 379,
+        "discount": 50
       },
       {
+        "mrp": 1516,
         "qty": 100,
-        "rate": 7.12,
-        "label": "Pack of 100 (₹712)"
+        "rate": 712,
+        "label": "Pack of 100 (₹712)",
+        "price": 712,
+        "discount": 53
       },
       {
+        "mrp": 7580,
         "qty": 500,
-        "rate": 7.05,
-        "label": "Pack of 500 (₹3,524)"
+        "rate": 3524,
+        "label": "Pack of 500 (₹3,524)",
+        "price": 3524,
+        "discount": 54
       },
       {
+        "mrp": 15160,
         "qty": 1000,
-        "rate": 6.86,
-        "label": "Pack of 1000 (₹6,857)"
+        "rate": 6857,
+        "label": "Pack of 1000 (₹6,857)",
+        "price": 6857,
+        "discount": 55
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "6883452e-6e66-439b-b1a7-bc28ea4a62d4",
@@ -10229,51 +14126,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 371,
+        "price": 371,
+        "mrp": 660,
+        "packMrp": 660,
+        "discount": 44,
         "label": "Pack of 25 (₹371)"
       },
       {
         "qty": 50,
         "rate": 712,
+        "price": 712,
+        "mrp": 1320,
+        "packMrp": 1320,
+        "discount": 46,
         "label": "Pack of 50 (₹712)"
       },
       {
         "qty": 500,
         "rate": 7349,
+        "price": 7349,
+        "mrp": 13200,
+        "packMrp": 13200,
+        "discount": 44,
         "label": "Pack of 500 (₹7,349)"
       },
       {
         "qty": 1000,
         "rate": 13810,
+        "price": 13810,
+        "mrp": 26400,
+        "packMrp": 26400,
+        "discount": 48,
         "label": "Pack of 1000 (₹13,810)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 660,
         "qty": 25,
-        "rate": 14.86,
-        "label": "Pack of 25 (₹371)"
+        "rate": 371,
+        "label": "Pack of 25 (₹371)",
+        "price": 371,
+        "discount": 44
       },
       {
+        "mrp": 1320,
         "qty": 50,
-        "rate": 14.25,
-        "label": "Pack of 50 (₹712)"
+        "rate": 712,
+        "label": "Pack of 50 (₹712)",
+        "price": 712,
+        "discount": 46
       },
       {
+        "mrp": 13200,
         "qty": 500,
-        "rate": 14.7,
-        "label": "Pack of 500 (₹7,349)"
+        "rate": 7349,
+        "label": "Pack of 500 (₹7,349)",
+        "price": 7349,
+        "discount": 44
       },
       {
+        "mrp": 26400,
         "qty": 1000,
-        "rate": 13.81,
-        "label": "Pack of 1000 (₹13,810)"
+        "rate": 13810,
+        "label": "Pack of 1000 (₹13,810)",
+        "price": 13810,
+        "discount": 48
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "e2689e2f-b8ce-4677-a183-4085e736380e",
@@ -10308,51 +14235,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 371,
+        "price": 371,
+        "mrp": 660,
+        "packMrp": 660,
+        "discount": 44,
         "label": "Pack of 25 (₹371)"
       },
       {
         "qty": 50,
         "rate": 733,
+        "price": 733,
+        "mrp": 1320,
+        "packMrp": 1320,
+        "discount": 44,
         "label": "Pack of 50 (₹733)"
       },
       {
         "qty": 500,
         "rate": 7238,
+        "price": 7238,
+        "mrp": 13200,
+        "packMrp": 13200,
+        "discount": 45,
         "label": "Pack of 500 (₹7,238)"
       },
       {
         "qty": 1000,
         "rate": 14286,
+        "price": 14286,
+        "mrp": 26400,
+        "packMrp": 26400,
+        "discount": 46,
         "label": "Pack of 1000 (₹14,286)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 660,
         "qty": 25,
-        "rate": 14.86,
-        "label": "Pack of 25 (₹371)"
+        "rate": 371,
+        "label": "Pack of 25 (₹371)",
+        "price": 371,
+        "discount": 44
       },
       {
+        "mrp": 1320,
         "qty": 50,
-        "rate": 14.67,
-        "label": "Pack of 50 (₹733)"
+        "rate": 733,
+        "label": "Pack of 50 (₹733)",
+        "price": 733,
+        "discount": 44
       },
       {
+        "mrp": 13200,
         "qty": 500,
-        "rate": 14.48,
-        "label": "Pack of 500 (₹7,238)"
+        "rate": 7238,
+        "label": "Pack of 500 (₹7,238)",
+        "price": 7238,
+        "discount": 45
       },
       {
+        "mrp": 26400,
         "qty": 1000,
-        "rate": 14.29,
-        "label": "Pack of 1000 (₹14,286)"
+        "rate": 14286,
+        "label": "Pack of 1000 (₹14,286)",
+        "price": 14286,
+        "discount": 46
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "5d061d5f-a762-4e89-b7f8-fcc475088d46",
@@ -10386,51 +14343,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 331,
+        "price": 331,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 53,
         "label": "Pack of 25 (₹331)"
       },
       {
         "qty": 50,
         "rate": 646,
+        "price": 646,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 54,
         "label": "Pack of 50 (₹646)"
       },
       {
         "qty": 500,
         "rate": 6286,
+        "price": 6286,
+        "mrp": 14000,
+        "packMrp": 14000,
+        "discount": 55,
         "label": "Pack of 500 (₹6,286)"
       },
       {
         "qty": 1000,
         "rate": 11905,
+        "price": 11905,
+        "mrp": 28000,
+        "packMrp": 28000,
+        "discount": 57,
         "label": "Pack of 1000 (₹11,905)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 25,
-        "rate": 13.26,
-        "label": "Pack of 25 (₹331)"
+        "rate": 331,
+        "label": "Pack of 25 (₹331)",
+        "price": 331,
+        "discount": 53
       },
       {
+        "mrp": 1400,
         "qty": 50,
-        "rate": 12.91,
-        "label": "Pack of 50 (₹646)"
+        "rate": 646,
+        "label": "Pack of 50 (₹646)",
+        "price": 646,
+        "discount": 54
       },
       {
+        "mrp": 14000,
         "qty": 500,
-        "rate": 12.57,
-        "label": "Pack of 500 (₹6,286)"
+        "rate": 6286,
+        "label": "Pack of 500 (₹6,286)",
+        "price": 6286,
+        "discount": 55
       },
       {
+        "mrp": 28000,
         "qty": 1000,
-        "rate": 11.9,
-        "label": "Pack of 1000 (₹11,905)"
+        "rate": 11905,
+        "label": "Pack of 1000 (₹11,905)",
+        "price": 11905,
+        "discount": 57
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "2e134833-ec4e-4813-b5fb-517e2ade47fb",
@@ -10463,51 +14450,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 408,
+        "price": 408,
+        "mrp": 814,
+        "packMrp": 814,
+        "discount": 50,
         "label": "Pack of 50 (₹408)"
       },
       {
         "qty": 100,
         "rate": 760,
+        "price": 760,
+        "mrp": 1628,
+        "packMrp": 1628,
+        "discount": 53,
         "label": "Pack of 100 (₹760)"
       },
       {
         "qty": 500,
         "rate": 3749,
+        "price": 3749,
+        "mrp": 8140,
+        "packMrp": 8140,
+        "discount": 54,
         "label": "Pack of 500 (₹3,749)"
       },
       {
         "qty": 1000,
         "rate": 7298,
+        "price": 7298,
+        "mrp": 16280,
+        "packMrp": 16280,
+        "discount": 55,
         "label": "Pack of 1000 (₹7,298)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 814,
         "qty": 50,
-        "rate": 8.15,
-        "label": "Pack of 50 (₹408)"
+        "rate": 408,
+        "label": "Pack of 50 (₹408)",
+        "price": 408,
+        "discount": 50
       },
       {
+        "mrp": 1628,
         "qty": 100,
-        "rate": 7.6,
-        "label": "Pack of 100 (₹760)"
+        "rate": 760,
+        "label": "Pack of 100 (₹760)",
+        "price": 760,
+        "discount": 53
       },
       {
+        "mrp": 8140,
         "qty": 500,
-        "rate": 7.5,
-        "label": "Pack of 500 (₹3,749)"
+        "rate": 3749,
+        "label": "Pack of 500 (₹3,749)",
+        "price": 3749,
+        "discount": 54
       },
       {
+        "mrp": 16280,
         "qty": 1000,
-        "rate": 7.3,
-        "label": "Pack of 1000 (₹7,298)"
+        "rate": 7298,
+        "label": "Pack of 1000 (₹7,298)",
+        "price": 7298,
+        "discount": 55
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "146e0604-b6c7-41fe-9318-85ea3b50e8b2",
@@ -10542,51 +14559,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 379,
+        "price": 379,
+        "mrp": 800,
+        "packMrp": 800,
+        "discount": 53,
         "label": "Pack of 50 (₹379)"
       },
       {
         "qty": 100,
         "rate": 741,
+        "price": 741,
+        "mrp": 1600,
+        "packMrp": 1600,
+        "discount": 54,
         "label": "Pack of 100 (₹741)"
       },
       {
         "qty": 500,
         "rate": 3619,
+        "price": 3619,
+        "mrp": 8000,
+        "packMrp": 8000,
+        "discount": 55,
         "label": "Pack of 500 (₹3,619)"
       },
       {
         "qty": 1000,
         "rate": 7095,
+        "price": 7095,
+        "mrp": 16000,
+        "packMrp": 16000,
+        "discount": 56,
         "label": "Pack of 1000 (₹7,095)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 800,
         "qty": 50,
-        "rate": 7.58,
-        "label": "Pack of 50 (₹379)"
+        "rate": 379,
+        "label": "Pack of 50 (₹379)",
+        "price": 379,
+        "discount": 53
       },
       {
+        "mrp": 1600,
         "qty": 100,
-        "rate": 7.41,
-        "label": "Pack of 100 (₹741)"
+        "rate": 741,
+        "label": "Pack of 100 (₹741)",
+        "price": 741,
+        "discount": 54
       },
       {
+        "mrp": 8000,
         "qty": 500,
-        "rate": 7.24,
-        "label": "Pack of 500 (₹3,619)"
+        "rate": 3619,
+        "label": "Pack of 500 (₹3,619)",
+        "price": 3619,
+        "discount": 55
       },
       {
+        "mrp": 16000,
         "qty": 1000,
-        "rate": 7.1,
-        "label": "Pack of 1000 (₹7,095)"
+        "rate": 7095,
+        "label": "Pack of 1000 (₹7,095)",
+        "price": 7095,
+        "discount": 56
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "5fa13f30-e574-41eb-a66e-a07c0cf415ca",
@@ -10620,51 +14667,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 236,
+        "price": 236,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 61,
         "label": "Pack of 25 (₹236)"
       },
       {
         "qty": 50,
         "rate": 457,
+        "price": 457,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 62,
         "label": "Pack of 50 (₹457)"
       },
       {
         "qty": 500,
         "rate": 4190,
+        "price": 4190,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 65,
         "label": "Pack of 500 (₹4,190)"
       },
       {
         "qty": 1000,
         "rate": 8762,
+        "price": 8762,
+        "mrp": 24000,
+        "packMrp": 24000,
+        "discount": 63,
         "label": "Pack of 1000 (₹8,762)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 25,
-        "rate": 9.45,
-        "label": "Pack of 25 (₹236)"
+        "rate": 236,
+        "label": "Pack of 25 (₹236)",
+        "price": 236,
+        "discount": 61
       },
       {
+        "mrp": 1200,
         "qty": 50,
-        "rate": 9.14,
-        "label": "Pack of 50 (₹457)"
+        "rate": 457,
+        "label": "Pack of 50 (₹457)",
+        "price": 457,
+        "discount": 62
       },
       {
+        "mrp": 12000,
         "qty": 500,
-        "rate": 8.38,
-        "label": "Pack of 500 (₹4,190)"
+        "rate": 4190,
+        "label": "Pack of 500 (₹4,190)",
+        "price": 4190,
+        "discount": 65
       },
       {
+        "mrp": 24000,
         "qty": 1000,
-        "rate": 8.76,
-        "label": "Pack of 1000 (₹8,762)"
+        "rate": 8762,
+        "label": "Pack of 1000 (₹8,762)",
+        "price": 8762,
+        "discount": 63
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "34f3e2ed-891c-405c-b12d-6678c2a57c83",
@@ -10698,51 +14775,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 362,
+        "price": 362,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 48,
         "label": "Pack of 25 (₹362)"
       },
       {
         "qty": 50,
         "rate": 714,
+        "price": 714,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 49,
         "label": "Pack of 50 (₹714)"
       },
       {
         "qty": 500,
         "rate": 7048,
+        "price": 7048,
+        "mrp": 14000,
+        "packMrp": 14000,
+        "discount": 50,
         "label": "Pack of 500 (₹7,048)"
       },
       {
         "qty": 1000,
         "rate": 14857,
+        "price": 14857,
+        "mrp": 28000,
+        "packMrp": 28000,
+        "discount": 47,
         "label": "Pack of 1000 (₹14,857)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 25,
-        "rate": 14.48,
-        "label": "Pack of 25 (₹362)"
+        "rate": 362,
+        "label": "Pack of 25 (₹362)",
+        "price": 362,
+        "discount": 48
       },
       {
+        "mrp": 1400,
         "qty": 50,
-        "rate": 14.29,
-        "label": "Pack of 50 (₹714)"
+        "rate": 714,
+        "label": "Pack of 50 (₹714)",
+        "price": 714,
+        "discount": 49
       },
       {
+        "mrp": 14000,
         "qty": 500,
-        "rate": 14.1,
-        "label": "Pack of 500 (₹7,048)"
+        "rate": 7048,
+        "label": "Pack of 500 (₹7,048)",
+        "price": 7048,
+        "discount": 50
       },
       {
+        "mrp": 28000,
         "qty": 1000,
-        "rate": 14.86,
-        "label": "Pack of 1000 (₹14,857)"
+        "rate": 14857,
+        "label": "Pack of 1000 (₹14,857)",
+        "price": 14857,
+        "discount": 47
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "72928e07-5430-4647-9791-7bb7f3b325e0",
@@ -10775,51 +14882,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 408,
+        "price": 408,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 42,
         "label": "Pack of 50 (₹408)"
       },
       {
         "qty": 100,
         "rate": 760,
+        "price": 760,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 46,
         "label": "Pack of 100 (₹760)"
       },
       {
         "qty": 500,
         "rate": 3749,
+        "price": 3749,
+        "mrp": 7000,
+        "packMrp": 7000,
+        "discount": 46,
         "label": "Pack of 500 (₹3,749)"
       },
       {
         "qty": 1000,
         "rate": 7298,
+        "price": 7298,
+        "mrp": 14000,
+        "packMrp": 14000,
+        "discount": 48,
         "label": "Pack of 1000 (₹7,298)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 50,
-        "rate": 8.15,
-        "label": "Pack of 50 (₹408)"
+        "rate": 408,
+        "label": "Pack of 50 (₹408)",
+        "price": 408,
+        "discount": 42
       },
       {
+        "mrp": 1400,
         "qty": 100,
-        "rate": 7.6,
-        "label": "Pack of 100 (₹760)"
+        "rate": 760,
+        "label": "Pack of 100 (₹760)",
+        "price": 760,
+        "discount": 46
       },
       {
+        "mrp": 7000,
         "qty": 500,
-        "rate": 7.5,
-        "label": "Pack of 500 (₹3,749)"
+        "rate": 3749,
+        "label": "Pack of 500 (₹3,749)",
+        "price": 3749,
+        "discount": 46
       },
       {
+        "mrp": 14000,
         "qty": 1000,
-        "rate": 7.3,
-        "label": "Pack of 1000 (₹7,298)"
+        "rate": 7298,
+        "label": "Pack of 1000 (₹7,298)",
+        "price": 7298,
+        "discount": 48
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "73df9ee8-d371-475b-be9e-ebd78b20bba4",
@@ -10852,51 +14989,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 236,
+        "price": 236,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 66,
         "label": "Pack of 25 (₹236)"
       },
       {
         "qty": 50,
         "rate": 467,
+        "price": 467,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 67,
         "label": "Pack of 50 (₹467)"
       },
       {
         "qty": 500,
         "rate": 4571,
+        "price": 4571,
+        "mrp": 14000,
+        "packMrp": 14000,
+        "discount": 67,
         "label": "Pack of 500 (₹4,571)"
       },
       {
         "qty": 1000,
         "rate": 9048,
+        "price": 9048,
+        "mrp": 28000,
+        "packMrp": 28000,
+        "discount": 68,
         "label": "Pack of 1000 (₹9,048)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 25,
-        "rate": 9.45,
-        "label": "Pack of 25 (₹236)"
+        "rate": 236,
+        "label": "Pack of 25 (₹236)",
+        "price": 236,
+        "discount": 66
       },
       {
+        "mrp": 1400,
         "qty": 50,
-        "rate": 9.33,
-        "label": "Pack of 50 (₹467)"
+        "rate": 467,
+        "label": "Pack of 50 (₹467)",
+        "price": 467,
+        "discount": 67
       },
       {
+        "mrp": 14000,
         "qty": 500,
-        "rate": 9.14,
-        "label": "Pack of 500 (₹4,571)"
+        "rate": 4571,
+        "label": "Pack of 500 (₹4,571)",
+        "price": 4571,
+        "discount": 67
       },
       {
+        "mrp": 28000,
         "qty": 1000,
-        "rate": 9.05,
-        "label": "Pack of 1000 (₹9,048)"
+        "rate": 9048,
+        "label": "Pack of 1000 (₹9,048)",
+        "price": 9048,
+        "discount": 68
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "4f078a11-4f96-422e-bfa5-d1d95abf6354",
@@ -10929,51 +15096,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 331,
+        "price": 331,
+        "mrp": 662,
+        "packMrp": 662,
+        "discount": 50,
         "label": "Pack of 50 (₹331)"
       },
       {
         "qty": 100,
         "rate": 648,
+        "price": 648,
+        "mrp": 1324,
+        "packMrp": 1324,
+        "discount": 51,
         "label": "Pack of 100 (₹648)"
       },
       {
         "qty": 500,
         "rate": 3199,
+        "price": 3199,
+        "mrp": 6620,
+        "packMrp": 6620,
+        "discount": 52,
         "label": "Pack of 500 (₹3,199)"
       },
       {
         "qty": 1000,
         "rate": 6280,
+        "price": 6280,
+        "mrp": 13240,
+        "packMrp": 13240,
+        "discount": 53,
         "label": "Pack of 1000 (₹6,280)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 662,
         "qty": 50,
-        "rate": 6.63,
-        "label": "Pack of 50 (₹331)"
+        "rate": 331,
+        "label": "Pack of 50 (₹331)",
+        "price": 331,
+        "discount": 50
       },
       {
+        "mrp": 1324,
         "qty": 100,
-        "rate": 6.48,
-        "label": "Pack of 100 (₹648)"
+        "rate": 648,
+        "label": "Pack of 100 (₹648)",
+        "price": 648,
+        "discount": 51
       },
       {
+        "mrp": 6620,
         "qty": 500,
-        "rate": 6.4,
-        "label": "Pack of 500 (₹3,199)"
+        "rate": 3199,
+        "label": "Pack of 500 (₹3,199)",
+        "price": 3199,
+        "discount": 52
       },
       {
+        "mrp": 13240,
         "qty": 1000,
-        "rate": 6.28,
-        "label": "Pack of 1000 (₹6,280)"
+        "rate": 6280,
+        "label": "Pack of 1000 (₹6,280)",
+        "price": 6280,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "82b5d1f8-405c-4aa6-a3aa-9b1ccd5044df",
@@ -11006,51 +15203,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 189,
+        "price": 189,
+        "mrp": 376,
+        "packMrp": 376,
+        "discount": 50,
         "label": "Pack of 25 (₹189)"
       },
       {
         "qty": 50,
         "rate": 312,
+        "price": 312,
+        "mrp": 752,
+        "packMrp": 752,
+        "discount": 59,
         "label": "Pack of 50 (₹312)"
       },
       {
         "qty": 500,
         "rate": 3048,
+        "price": 3048,
+        "mrp": 7520,
+        "packMrp": 7520,
+        "discount": 59,
         "label": "Pack of 500 (₹3,048)"
       },
       {
         "qty": 1000,
         "rate": 5905,
+        "price": 5905,
+        "mrp": 15040,
+        "packMrp": 15040,
+        "discount": 61,
         "label": "Pack of 1000 (₹5,905)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 376,
         "qty": 25,
-        "rate": 7.54,
-        "label": "Pack of 25 (₹189)"
+        "rate": 189,
+        "label": "Pack of 25 (₹189)",
+        "price": 189,
+        "discount": 50
       },
       {
+        "mrp": 752,
         "qty": 50,
-        "rate": 6.25,
-        "label": "Pack of 50 (₹312)"
+        "rate": 312,
+        "label": "Pack of 50 (₹312)",
+        "price": 312,
+        "discount": 59
       },
       {
+        "mrp": 7520,
         "qty": 500,
-        "rate": 6.1,
-        "label": "Pack of 500 (₹3,048)"
+        "rate": 3048,
+        "label": "Pack of 500 (₹3,048)",
+        "price": 3048,
+        "discount": 59
       },
       {
+        "mrp": 15040,
         "qty": 1000,
-        "rate": 5.9,
-        "label": "Pack of 1000 (₹5,905)"
+        "rate": 5905,
+        "label": "Pack of 1000 (₹5,905)",
+        "price": 5905,
+        "discount": 61
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "2453d990-59b9-41f4-8277-d7298f9d4d99",
@@ -11083,51 +15310,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 379,
+        "price": 379,
+        "mrp": 700,
+        "packMrp": 700,
+        "discount": 46,
         "label": "Pack of 25 (₹379)"
       },
       {
         "qty": 50,
         "rate": 743,
+        "price": 743,
+        "mrp": 1400,
+        "packMrp": 1400,
+        "discount": 47,
         "label": "Pack of 50 (₹743)"
       },
       {
         "qty": 500,
         "rate": 7333,
+        "price": 7333,
+        "mrp": 14000,
+        "packMrp": 14000,
+        "discount": 48,
         "label": "Pack of 500 (₹7,333)"
       },
       {
         "qty": 1000,
         "rate": 14286,
+        "price": 14286,
+        "mrp": 28000,
+        "packMrp": 28000,
+        "discount": 49,
         "label": "Pack of 1000 (₹14,286)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 700,
         "qty": 25,
-        "rate": 15.16,
-        "label": "Pack of 25 (₹379)"
+        "rate": 379,
+        "label": "Pack of 25 (₹379)",
+        "price": 379,
+        "discount": 46
       },
       {
+        "mrp": 1400,
         "qty": 50,
-        "rate": 14.86,
-        "label": "Pack of 50 (₹743)"
+        "rate": 743,
+        "label": "Pack of 50 (₹743)",
+        "price": 743,
+        "discount": 47
       },
       {
+        "mrp": 14000,
         "qty": 500,
-        "rate": 14.67,
-        "label": "Pack of 500 (₹7,333)"
+        "rate": 7333,
+        "label": "Pack of 500 (₹7,333)",
+        "price": 7333,
+        "discount": 48
       },
       {
+        "mrp": 28000,
         "qty": 1000,
-        "rate": 14.29,
-        "label": "Pack of 1000 (₹14,286)"
+        "rate": 14286,
+        "label": "Pack of 1000 (₹14,286)",
+        "price": 14286,
+        "discount": 49
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "5222115c-6918-4283-bc6a-575755eca2dd",
@@ -11162,51 +15419,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 331,
+        "price": 331,
+        "mrp": 662,
+        "packMrp": 662,
+        "discount": 50,
         "label": "Pack of 50 (₹331)"
       },
       {
         "qty": 100,
         "rate": 648,
+        "price": 648,
+        "mrp": 1324,
+        "packMrp": 1324,
+        "discount": 51,
         "label": "Pack of 100 (₹648)"
       },
       {
         "qty": 500,
         "rate": 3199,
+        "price": 3199,
+        "mrp": 6620,
+        "packMrp": 6620,
+        "discount": 52,
         "label": "Pack of 500 (₹3,199)"
       },
       {
         "qty": 1000,
         "rate": 6280,
+        "price": 6280,
+        "mrp": 13240,
+        "packMrp": 13240,
+        "discount": 53,
         "label": "Pack of 1000 (₹6,280)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 662,
         "qty": 50,
-        "rate": 6.63,
-        "label": "Pack of 50 (₹331)"
+        "rate": 331,
+        "label": "Pack of 50 (₹331)",
+        "price": 331,
+        "discount": 50
       },
       {
+        "mrp": 1324,
         "qty": 100,
-        "rate": 6.48,
-        "label": "Pack of 100 (₹648)"
+        "rate": 648,
+        "label": "Pack of 100 (₹648)",
+        "price": 648,
+        "discount": 51
       },
       {
+        "mrp": 6620,
         "qty": 500,
-        "rate": 6.4,
-        "label": "Pack of 500 (₹3,199)"
+        "rate": 3199,
+        "label": "Pack of 500 (₹3,199)",
+        "price": 3199,
+        "discount": 52
       },
       {
+        "mrp": 13240,
         "qty": 1000,
-        "rate": 6.28,
-        "label": "Pack of 1000 (₹6,280)"
+        "rate": 6280,
+        "label": "Pack of 1000 (₹6,280)",
+        "price": 6280,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "9b4e6194-783e-49c9-b058-7ecd52e96ec2",
@@ -11240,51 +15527,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 331,
+        "price": 331,
+        "mrp": 662,
+        "packMrp": 662,
+        "discount": 50,
         "label": "Pack of 50 (₹331)"
       },
       {
         "qty": 100,
         "rate": 648,
+        "price": 648,
+        "mrp": 1324,
+        "packMrp": 1324,
+        "discount": 51,
         "label": "Pack of 100 (₹648)"
       },
       {
         "qty": 500,
         "rate": 3199,
+        "price": 3199,
+        "mrp": 6620,
+        "packMrp": 6620,
+        "discount": 52,
         "label": "Pack of 500 (₹3,199)"
       },
       {
         "qty": 1000,
         "rate": 6280,
+        "price": 6280,
+        "mrp": 13240,
+        "packMrp": 13240,
+        "discount": 53,
         "label": "Pack of 1000 (₹6,280)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 662,
         "qty": 50,
-        "rate": 6.63,
-        "label": "Pack of 50 (₹331)"
+        "rate": 331,
+        "label": "Pack of 50 (₹331)",
+        "price": 331,
+        "discount": 50
       },
       {
+        "mrp": 1324,
         "qty": 100,
-        "rate": 6.48,
-        "label": "Pack of 100 (₹648)"
+        "rate": 648,
+        "label": "Pack of 100 (₹648)",
+        "price": 648,
+        "discount": 51
       },
       {
+        "mrp": 6620,
         "qty": 500,
-        "rate": 6.4,
-        "label": "Pack of 500 (₹3,199)"
+        "rate": 3199,
+        "label": "Pack of 500 (₹3,199)",
+        "price": 3199,
+        "discount": 52
       },
       {
+        "mrp": 13240,
         "qty": 1000,
-        "rate": 6.28,
-        "label": "Pack of 1000 (₹6,280)"
+        "rate": 6280,
+        "label": "Pack of 1000 (₹6,280)",
+        "price": 6280,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "3ea77483-6d1a-4cb7-8e5a-7a6f5f180668",
@@ -11317,51 +15634,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 312,
+        "price": 312,
+        "mrp": 624,
+        "packMrp": 624,
+        "discount": 50,
         "label": "Pack of 50 (₹312)"
       },
       {
         "qty": 100,
         "rate": 610,
+        "price": 610,
+        "mrp": 1248,
+        "packMrp": 1248,
+        "discount": 51,
         "label": "Pack of 100 (₹610)"
       },
       {
         "qty": 500,
         "rate": 3048,
+        "price": 3048,
+        "mrp": 6240,
+        "packMrp": 6240,
+        "discount": 51,
         "label": "Pack of 500 (₹3,048)"
       },
       {
         "qty": 1000,
         "rate": 5905,
+        "price": 5905,
+        "mrp": 12480,
+        "packMrp": 12480,
+        "discount": 53,
         "label": "Pack of 1000 (₹5,905)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 624,
         "qty": 50,
-        "rate": 6.25,
-        "label": "Pack of 50 (₹312)"
+        "rate": 312,
+        "label": "Pack of 50 (₹312)",
+        "price": 312,
+        "discount": 50
       },
       {
+        "mrp": 1248,
         "qty": 100,
-        "rate": 6.1,
-        "label": "Pack of 100 (₹610)"
+        "rate": 610,
+        "label": "Pack of 100 (₹610)",
+        "price": 610,
+        "discount": 51
       },
       {
+        "mrp": 6240,
         "qty": 500,
-        "rate": 6.1,
-        "label": "Pack of 500 (₹3,048)"
+        "rate": 3048,
+        "label": "Pack of 500 (₹3,048)",
+        "price": 3048,
+        "discount": 51
       },
       {
+        "mrp": 12480,
         "qty": 1000,
-        "rate": 5.9,
-        "label": "Pack of 1000 (₹5,905)"
+        "rate": 5905,
+        "label": "Pack of 1000 (₹5,905)",
+        "price": 5905,
+        "discount": 53
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "145df82f-44b3-4b0d-a5b9-48a8c50a5c70",
@@ -11395,51 +15742,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 236,
+        "price": 236,
+        "mrp": 472,
+        "packMrp": 472,
+        "discount": 50,
         "label": "Pack of 25 (₹236)"
       },
       {
         "qty": 50,
         "rate": 467,
+        "price": 467,
+        "mrp": 944,
+        "packMrp": 944,
+        "discount": 51,
         "label": "Pack of 50 (₹467)"
       },
       {
         "qty": 500,
         "rate": 4571,
+        "price": 4571,
+        "mrp": 9440,
+        "packMrp": 9440,
+        "discount": 52,
         "label": "Pack of 500 (₹4,571)"
       },
       {
         "qty": 1000,
         "rate": 9048,
+        "price": 9048,
+        "mrp": 18880,
+        "packMrp": 18880,
+        "discount": 52,
         "label": "Pack of 1000 (₹9,048)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 472,
         "qty": 25,
-        "rate": 9.45,
-        "label": "Pack of 25 (₹236)"
+        "rate": 236,
+        "label": "Pack of 25 (₹236)",
+        "price": 236,
+        "discount": 50
       },
       {
+        "mrp": 944,
         "qty": 50,
-        "rate": 9.33,
-        "label": "Pack of 50 (₹467)"
+        "rate": 467,
+        "label": "Pack of 50 (₹467)",
+        "price": 467,
+        "discount": 51
       },
       {
+        "mrp": 9440,
         "qty": 500,
-        "rate": 9.14,
-        "label": "Pack of 500 (₹4,571)"
+        "rate": 4571,
+        "label": "Pack of 500 (₹4,571)",
+        "price": 4571,
+        "discount": 52
       },
       {
+        "mrp": 18880,
         "qty": 1000,
-        "rate": 9.05,
-        "label": "Pack of 1000 (₹9,048)"
+        "rate": 9048,
+        "label": "Pack of 1000 (₹9,048)",
+        "price": 9048,
+        "discount": 52
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "5a537f6d-1802-4fd9-8c5d-1b6e230745ba",
@@ -11473,51 +15850,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 25,
         "rate": 312,
+        "price": 312,
+        "mrp": 624,
+        "packMrp": 624,
+        "discount": 50,
         "label": "Pack of 25 (₹312)"
       },
       {
         "qty": 50,
         "rate": 610,
+        "price": 610,
+        "mrp": 1248,
+        "packMrp": 1248,
+        "discount": 51,
         "label": "Pack of 50 (₹610)"
       },
       {
         "qty": 500,
         "rate": 5905,
+        "price": 5905,
+        "mrp": 12480,
+        "packMrp": 12480,
+        "discount": 53,
         "label": "Pack of 500 (₹5,905)"
       },
       {
         "qty": 1000,
         "rate": 11429,
+        "price": 11429,
+        "mrp": 24960,
+        "packMrp": 24960,
+        "discount": 54,
         "label": "Pack of 1000 (₹11,429)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 624,
         "qty": 25,
-        "rate": 12.5,
-        "label": "Pack of 25 (₹312)"
+        "rate": 312,
+        "label": "Pack of 25 (₹312)",
+        "price": 312,
+        "discount": 50
       },
       {
+        "mrp": 1248,
         "qty": 50,
-        "rate": 12.19,
-        "label": "Pack of 50 (₹610)"
+        "rate": 610,
+        "label": "Pack of 50 (₹610)",
+        "price": 610,
+        "discount": 51
       },
       {
+        "mrp": 12480,
         "qty": 500,
-        "rate": 11.81,
-        "label": "Pack of 500 (₹5,905)"
+        "rate": 5905,
+        "label": "Pack of 500 (₹5,905)",
+        "price": 5905,
+        "discount": 53
       },
       {
+        "mrp": 24960,
         "qty": 1000,
-        "rate": 11.43,
-        "label": "Pack of 1000 (₹11,429)"
+        "rate": 11429,
+        "label": "Pack of 1000 (₹11,429)",
+        "price": 11429,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "a8549b86-956b-4584-b90d-27a61026283d",
@@ -11551,51 +15958,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 379,
+        "price": 379,
+        "mrp": 758,
+        "packMrp": 758,
+        "discount": 50,
         "label": "Pack of 50 (₹379)"
       },
       {
         "qty": 100,
         "rate": 752,
+        "price": 752,
+        "mrp": 1516,
+        "packMrp": 1516,
+        "discount": 50,
         "label": "Pack of 100 (₹752)"
       },
       {
         "qty": 500,
         "rate": 3748,
+        "price": 3748,
+        "mrp": 7580,
+        "packMrp": 7580,
+        "discount": 51,
         "label": "Pack of 500 (₹3,748)"
       },
       {
         "qty": 1000,
         "rate": 6999,
+        "price": 6999,
+        "mrp": 15160,
+        "packMrp": 15160,
+        "discount": 54,
         "label": "Pack of 1000 (₹6,999)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 758,
         "qty": 50,
-        "rate": 7.58,
-        "label": "Pack of 50 (₹379)"
+        "rate": 379,
+        "label": "Pack of 50 (₹379)",
+        "price": 379,
+        "discount": 50
       },
       {
+        "mrp": 1516,
         "qty": 100,
-        "rate": 7.52,
-        "label": "Pack of 100 (₹752)"
+        "rate": 752,
+        "label": "Pack of 100 (₹752)",
+        "price": 752,
+        "discount": 50
       },
       {
+        "mrp": 7580,
         "qty": 500,
-        "rate": 7.5,
-        "label": "Pack of 500 (₹3,748)"
+        "rate": 3748,
+        "label": "Pack of 500 (₹3,748)",
+        "price": 3748,
+        "discount": 51
       },
       {
+        "mrp": 15160,
         "qty": 1000,
-        "rate": 7,
-        "label": "Pack of 1000 (₹6,999)"
+        "rate": 6999,
+        "label": "Pack of 1000 (₹6,999)",
+        "price": 6999,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "a3a7b6b0-5390-4196-aa67-b6b8803ab120",
@@ -11628,51 +16065,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 331,
+        "price": 331,
+        "mrp": 662,
+        "packMrp": 662,
+        "discount": 50,
         "label": "Pack of 50 (₹331)"
       },
       {
         "qty": 100,
         "rate": 617,
+        "price": 617,
+        "mrp": 1324,
+        "packMrp": 1324,
+        "discount": 53,
         "label": "Pack of 100 (₹617)"
       },
       {
         "qty": 500,
         "rate": 3048,
+        "price": 3048,
+        "mrp": 6620,
+        "packMrp": 6620,
+        "discount": 54,
         "label": "Pack of 500 (₹3,048)"
       },
       {
         "qty": 1000,
         "rate": 5905,
+        "price": 5905,
+        "mrp": 13240,
+        "packMrp": 13240,
+        "discount": 55,
         "label": "Pack of 1000 (₹5,905)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 662,
         "qty": 50,
-        "rate": 6.63,
-        "label": "Pack of 50 (₹331)"
+        "rate": 331,
+        "label": "Pack of 50 (₹331)",
+        "price": 331,
+        "discount": 50
       },
       {
+        "mrp": 1324,
         "qty": 100,
-        "rate": 6.17,
-        "label": "Pack of 100 (₹617)"
+        "rate": 617,
+        "label": "Pack of 100 (₹617)",
+        "price": 617,
+        "discount": 53
       },
       {
+        "mrp": 6620,
         "qty": 500,
-        "rate": 6.1,
-        "label": "Pack of 500 (₹3,048)"
+        "rate": 3048,
+        "label": "Pack of 500 (₹3,048)",
+        "price": 3048,
+        "discount": 54
       },
       {
+        "mrp": 13240,
         "qty": 1000,
-        "rate": 5.9,
-        "label": "Pack of 1000 (₹5,905)"
+        "rate": 5905,
+        "label": "Pack of 1000 (₹5,905)",
+        "price": 5905,
+        "discount": 55
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "86dac147-3aa2-48ec-8bc4-723de58a5b70",
@@ -11705,51 +16172,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 312,
+        "price": 312,
+        "mrp": 428,
+        "packMrp": 428,
+        "discount": 27,
         "label": "Pack of 50 (₹312)"
       },
       {
         "qty": 100,
         "rate": 610,
+        "price": 610,
+        "mrp": 856,
+        "packMrp": 856,
+        "discount": 29,
         "label": "Pack of 100 (₹610)"
       },
       {
         "qty": 500,
         "rate": 2761,
+        "price": 2761,
+        "mrp": 4280,
+        "packMrp": 4280,
+        "discount": 35,
         "label": "Pack of 500 (₹2,761)"
       },
       {
         "qty": 1000,
         "rate": 5699,
+        "price": 5699,
+        "mrp": 8560,
+        "packMrp": 8560,
+        "discount": 33,
         "label": "Pack of 1000 (₹5,699)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 428,
         "qty": 50,
-        "rate": 6.25,
-        "label": "Pack of 50 (₹312)"
+        "rate": 312,
+        "label": "Pack of 50 (₹312)",
+        "price": 312,
+        "discount": 27
       },
       {
+        "mrp": 856,
         "qty": 100,
-        "rate": 6.1,
-        "label": "Pack of 100 (₹610)"
+        "rate": 610,
+        "label": "Pack of 100 (₹610)",
+        "price": 610,
+        "discount": 29
       },
       {
+        "mrp": 4280,
         "qty": 500,
-        "rate": 5.52,
-        "label": "Pack of 500 (₹2,761)"
+        "rate": 2761,
+        "label": "Pack of 500 (₹2,761)",
+        "price": 2761,
+        "discount": 35
       },
       {
+        "mrp": 8560,
         "qty": 1000,
-        "rate": 5.7,
-        "label": "Pack of 1000 (₹5,699)"
+        "rate": 5699,
+        "label": "Pack of 1000 (₹5,699)",
+        "price": 5699,
+        "discount": 33
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "c14cb6ab-b52b-411a-9562-fb398bf5e6de",
@@ -11784,51 +16281,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 284,
+        "price": 284,
+        "mrp": 566,
+        "packMrp": 566,
+        "discount": 50,
         "label": "Pack of 50 (₹284)"
       },
       {
         "qty": 100,
         "rate": 569,
+        "price": 569,
+        "mrp": 1132,
+        "packMrp": 1132,
+        "discount": 50,
         "label": "Pack of 100 (₹569)"
       },
       {
         "qty": 500,
         "rate": 2799,
+        "price": 2799,
+        "mrp": 5660,
+        "packMrp": 5660,
+        "discount": 51,
         "label": "Pack of 500 (₹2,799)"
       },
       {
         "qty": 1000,
         "rate": 5499,
+        "price": 5499,
+        "mrp": 11320,
+        "packMrp": 11320,
+        "discount": 51,
         "label": "Pack of 1000 (₹5,499)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 566,
         "qty": 50,
-        "rate": 5.68,
-        "label": "Pack of 50 (₹284)"
+        "rate": 284,
+        "label": "Pack of 50 (₹284)",
+        "price": 284,
+        "discount": 50
       },
       {
+        "mrp": 1132,
         "qty": 100,
-        "rate": 5.69,
-        "label": "Pack of 100 (₹569)"
+        "rate": 569,
+        "label": "Pack of 100 (₹569)",
+        "price": 569,
+        "discount": 50
       },
       {
+        "mrp": 5660,
         "qty": 500,
-        "rate": 5.6,
-        "label": "Pack of 500 (₹2,799)"
+        "rate": 2799,
+        "label": "Pack of 500 (₹2,799)",
+        "price": 2799,
+        "discount": 51
       },
       {
+        "mrp": 11320,
         "qty": 1000,
-        "rate": 5.5,
-        "label": "Pack of 1000 (₹5,499)"
+        "rate": 5499,
+        "label": "Pack of 1000 (₹5,499)",
+        "price": 5499,
+        "discount": 51
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": true
+    "flag_best_seller": true,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "4431f897-ccab-406e-8d17-2a69608c8022",
@@ -11863,51 +16390,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 329,
+        "price": 329,
+        "mrp": 624,
+        "packMrp": 624,
+        "discount": 47,
         "label": "Pack of 50 (₹329)"
       },
       {
         "qty": 100,
         "rate": 619,
+        "price": 619,
+        "mrp": 1248,
+        "packMrp": 1248,
+        "discount": 50,
         "label": "Pack of 100 (₹619)"
       },
       {
         "qty": 500,
         "rate": 2999,
+        "price": 2999,
+        "mrp": 6240,
+        "packMrp": 6240,
+        "discount": 52,
         "label": "Pack of 500 (₹2,999)"
       },
       {
         "qty": 1000,
         "rate": 5799,
+        "price": 5799,
+        "mrp": 12480,
+        "packMrp": 12480,
+        "discount": 54,
         "label": "Pack of 1000 (₹5,799)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 624,
         "qty": 50,
-        "rate": 6.58,
-        "label": "Pack of 50 (₹329)"
+        "rate": 329,
+        "label": "Pack of 50 (₹329)",
+        "price": 329,
+        "discount": 47
       },
       {
+        "mrp": 1248,
         "qty": 100,
-        "rate": 6.19,
-        "label": "Pack of 100 (₹619)"
+        "rate": 619,
+        "label": "Pack of 100 (₹619)",
+        "price": 619,
+        "discount": 50
       },
       {
+        "mrp": 6240,
         "qty": 500,
-        "rate": 6,
-        "label": "Pack of 500 (₹2,999)"
+        "rate": 2999,
+        "label": "Pack of 500 (₹2,999)",
+        "price": 2999,
+        "discount": 52
       },
       {
+        "mrp": 12480,
         "qty": 1000,
-        "rate": 5.8,
-        "label": "Pack of 1000 (₹5,799)"
+        "rate": 5799,
+        "label": "Pack of 1000 (₹5,799)",
+        "price": 5799,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": true,
     "flag_mega_sale": false,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "0ede844e-1e81-438d-9400-b6e7030eecf1",
@@ -11940,51 +16497,81 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 50,
         "rate": 284,
+        "price": 284,
+        "mrp": 600,
+        "packMrp": 600,
+        "discount": 53,
         "label": "Pack of 50 (₹284)"
       },
       {
         "qty": 100,
         "rate": 569,
+        "price": 569,
+        "mrp": 1200,
+        "packMrp": 1200,
+        "discount": 53,
         "label": "Pack of 100 (₹569)"
       },
       {
         "qty": 500,
         "rate": 2799,
+        "price": 2799,
+        "mrp": 6000,
+        "packMrp": 6000,
+        "discount": 53,
         "label": "Pack of 500 (₹2,799)"
       },
       {
         "qty": 1000,
         "rate": 5499,
+        "price": 5499,
+        "mrp": 12000,
+        "packMrp": 12000,
+        "discount": 54,
         "label": "Pack of 1000 (₹5,499)"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 600,
         "qty": 50,
-        "rate": 5.68,
-        "label": "Pack of 50 (₹284)"
+        "rate": 284,
+        "label": "Pack of 50 (₹284)",
+        "price": 284,
+        "discount": 53
       },
       {
+        "mrp": 1200,
         "qty": 100,
-        "rate": 5.69,
-        "label": "Pack of 100 (₹569)"
+        "rate": 569,
+        "label": "Pack of 100 (₹569)",
+        "price": 569,
+        "discount": 53
       },
       {
+        "mrp": 6000,
         "qty": 500,
-        "rate": 5.6,
-        "label": "Pack of 500 (₹2,799)"
+        "rate": 2799,
+        "label": "Pack of 500 (₹2,799)",
+        "price": 2799,
+        "discount": 53
       },
       {
+        "mrp": 12000,
         "qty": 1000,
-        "rate": 5.5,
-        "label": "Pack of 1000 (₹5,499)"
+        "rate": 5499,
+        "label": "Pack of 1000 (₹5,499)",
+        "price": 5499,
+        "discount": 54
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": false,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 5,
+    "gst_percentage": 5
   },
   {
     "id": "17e30771-1fd2-4262-8cbf-c165c0cadd2c",
@@ -12006,7 +16593,8 @@ export const PRODUCTS: Product[] = [
     "startingAt": 999,
     "mrp": 1599,
     "moq": 1,
-    "badgeClass": "new",
+    "badge": "HOT DEAL",
+    "badgeClass": "bestseller",
     "rating": 4.7,
     "reviews": 45,
     "specs": [
@@ -12019,21 +16607,30 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 1,
         "rate": 999,
+        "price": 999,
+        "mrp": 1599,
+        "packMrp": 1599,
+        "discount": 38,
         "label": "3+1 STARTUP COMBO"
       }
     ],
     "bulk_pricing": [
       {
+        "mrp": 1599,
         "qty": 1,
         "rate": 999,
-        "label": "3+1 STARTUP COMBO"
+        "label": "3+1 STARTUP COMBO",
+        "price": 999,
+        "discount": 38
       }
     ],
     "price_tiers": [],
-    "flag_hot_deal": false,
-    "flag_mega_sale": false,
+    "flag_hot_deal": true,
+    "flag_mega_sale": true,
     "flag_new_arrival": true,
-    "flag_best_seller": false
+    "flag_best_seller": true,
+    "gst_rate": 18,
+    "gst_percentage": 18
   },
   {
     "id": "570f9649-dfd3-47b3-976a-0ea8b1704bcf",
@@ -12067,50 +16664,80 @@ export const PRODUCTS: Product[] = [
       {
         "qty": 100,
         "rate": 300,
-        "label": "100 pcs Pack"
-      },
-      {
-        "qty": 200,
-        "rate": 300,
-        "label": "200 pcs Pack"
-      },
-      {
-        "qty": 500,
-        "rate": 300,
-        "label": "500 pcs Pack"
-      },
-      {
-        "qty": 1000,
-        "rate": 300,
-        "label": "1000 pcs Pack"
-      }
-    ],
-    "bulk_pricing": [
-      {
-        "qty": 100,
-        "rate": 300,
+        "price": 300,
+        "mrp": 550,
+        "packMrp": 550,
+        "discount": 45,
         "label": "100 pcs Pack"
       },
       {
         "qty": 200,
         "rate": 550,
+        "price": 550,
+        "mrp": 1100,
+        "packMrp": 1100,
+        "discount": 50,
         "label": "200 pcs Pack"
       },
       {
         "qty": 500,
         "rate": 1200,
+        "price": 1200,
+        "mrp": 2750,
+        "packMrp": 2750,
+        "discount": 56,
         "label": "500 pcs Pack"
       },
       {
         "qty": 1000,
         "rate": 1500,
+        "price": 1500,
+        "mrp": 5500,
+        "packMrp": 5500,
+        "discount": 73,
         "label": "1000 pcs Pack"
+      }
+    ],
+    "bulk_pricing": [
+      {
+        "mrp": 550,
+        "qty": 100,
+        "rate": 300,
+        "label": "100 pcs Pack",
+        "price": 300,
+        "discount": 45
+      },
+      {
+        "mrp": 1100,
+        "qty": 200,
+        "rate": 550,
+        "label": "200 pcs Pack",
+        "price": 550,
+        "discount": 50
+      },
+      {
+        "mrp": 2750,
+        "qty": 500,
+        "rate": 1200,
+        "label": "500 pcs Pack",
+        "price": 1200,
+        "discount": 56
+      },
+      {
+        "mrp": 5500,
+        "qty": 1000,
+        "rate": 1500,
+        "label": "1000 pcs Pack",
+        "price": 1500,
+        "discount": 73
       }
     ],
     "price_tiers": [],
     "flag_hot_deal": false,
     "flag_mega_sale": true,
     "flag_new_arrival": false,
-    "flag_best_seller": false
+    "flag_best_seller": false,
+    "gst_rate": 18,
+    "gst_percentage": 18
   }
 ];

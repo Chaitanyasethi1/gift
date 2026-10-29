@@ -207,7 +207,8 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({ produc
     if (rawGst !== null && rawGst !== undefined && rawGst !== '') {
       return typeof rawGst === 'number' ? rawGst : (parseFloat(String(rawGst).replace(/[^0-9.]/g, '')) || 18);
     }
-    return 18;
+    const isBox = /corrugated|3-ply|3 ply|cardboard box|flap box|shipping box|carton/i.test(`${product.title || ''} ${product.slug || ''} ${(product as any).categoryLabel || ''}`);
+    return isBox ? 5 : 18;
   }, [product]);
 
   const gst = subtotal * (gstRate / 100);

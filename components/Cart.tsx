@@ -275,7 +275,9 @@ export const Cart: React.FC<CartProps> = ({ onOpenCheckoutModal }) => {
                         </span>
                       )}
                       <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
-                        <span style={{ color: '#0284C7', fontWeight: 600 }}>{item.gstRate ?? 18}% GST</span>
+                        <span style={{ color: '#0284C7', fontWeight: 600 }}>
+                          {item.gstRate ?? (/corrugated|3-ply|3 ply|cardboard box|flap box|shipping box|carton/i.test(`${item.title || ''} ${(item as any).category || ''}`) ? 5 : 18)}% GST
+                        </span>
                       </div>
                     </div>
                   </div>

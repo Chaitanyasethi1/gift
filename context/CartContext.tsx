@@ -294,10 +294,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // calculated accurately on post-discount taxable amounts
   const gstAmount = useMemo(() => {
     return cart.reduce((sum, item) => {
+      const isCorrugated = /corrugated|3-ply|3 ply|cardboard box|flap box|shipping box|carton/i.test(`${item.title || ''} ${(item as any).category || ''}`);
+      const fallbackRate = isCorrugated ? 5 : 18;
       const rawRate = item.gstRate as any;
       const rate = (rawRate !== null && rawRate !== undefined && rawRate !== '')
-        ? (typeof rawRate === 'number' ? rawRate : (parseFloat(String(rawRate).replace(/[^0-9.]/g, '')) ?? 18))
-        : 18;
+        ? (typeof rawRate === 'number' ? rawRate : (parseFloat(String(rawRate).replace(/[^0-9.]/g, '')) ?? fallbackRate))
+        : fallbackRate;
 
       const itemGross = item.price * item.qty;
       const itemDisc = itemDiscounts[item.id] || 0;

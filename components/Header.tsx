@@ -235,46 +235,17 @@ export function Header() {
   }, [searchQuery, allProducts]);
 
   const handleMouseEnter = (title: string) => {
-    if (dropdownTimeoutRef.current) {
-      clearTimeout(dropdownTimeoutRef.current);
-      dropdownTimeoutRef.current = null;
-    }
-    if (dropdownEnterTimeoutRef.current) {
-      clearTimeout(dropdownEnterTimeoutRef.current);
-    }
-    
-    // If another menu is already open, switch smoothly with 70ms
-    if (activeDropdown && activeDropdown !== title) {
-      dropdownEnterTimeoutRef.current = setTimeout(() => {
-        setActiveDropdown(title);
-      }, 70);
-    } else if (!activeDropdown) {
-      // First open requires intentional hover (140ms) so accidental mouse passing doesn't trigger dropdowns
-      dropdownEnterTimeoutRef.current = setTimeout(() => {
-        setActiveDropdown(title);
-      }, 140);
-    }
+    setActiveDropdown(title);
   };
 
   const handleMouseLeave = () => {
-    if (dropdownEnterTimeoutRef.current) {
-      clearTimeout(dropdownEnterTimeoutRef.current);
-      dropdownEnterTimeoutRef.current = null;
-    }
-    if (dropdownTimeoutRef.current) {
-      clearTimeout(dropdownTimeoutRef.current);
-    }
-    dropdownTimeoutRef.current = setTimeout(() => {
-      setActiveDropdown(null);
-    }, 320); // 320ms generous buffer prevents fluttering
+    setActiveDropdown(null);
   };
 
   const handleCategoryToggle = (e: React.MouseEvent, category: NavCategory) => {
     if (category.items && category.items.length > 0) {
       e.preventDefault();
       e.stopPropagation();
-      if (dropdownEnterTimeoutRef.current) clearTimeout(dropdownEnterTimeoutRef.current);
-      if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
       setActiveDropdown(prev => prev === category.title ? null : category.title);
     }
   };
@@ -551,12 +522,9 @@ export function Header() {
         }
 
         .dark-nav-wrapper {
-          overflow-x: auto;
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-        }
-        .dark-nav-wrapper::-webkit-scrollbar {
-          display: none;
+          overflow: visible !important;
+          position: relative;
+          z-index: 999;
         }
 
         /* Desktop Navigation Item & Dropdown Bridge */
@@ -590,27 +558,45 @@ export function Header() {
           left: 0;
           background: #ffffff;
           min-width: 260px;
-          box-shadow: 0 14px 30px rgba(0,0,0,0.18), 0 4px 10px rgba(0,0,0,0.06);
+          box-shadow: 0 16px 36px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.08);
           padding: 8px 0;
-          z-index: 999;
+          z-index: 99999;
           border-radius: 10px;
           border: 1px solid #E2E8F0;
-          animation: dropSlideDown 0.15s ease-out;
+          display: none;
+          pointer-events: none;
+        }
+
+        .nav-item-root:hover .nav-dropdown-panel,
+        .nav-item-root.active-menu .nav-dropdown-panel,
+        .nav-dropdown-panel.is-open {
+          display: block !important;
+          pointer-events: auto !important;
+        }
+
+        .nav-item-root:hover .nav-link-btn,
+        .nav-item-root.active-menu .nav-link-btn {
+          color: #FDBA74;
+        }
+
+        .nav-item-root:hover .nav-arrow,
+        .nav-item-root.active-menu .nav-arrow {
+          transform: rotate(180deg) !important;
+        }
+
+        .nav-item-root:nth-last-child(-n+3) .nav-dropdown-panel {
+          left: auto;
+          right: 0;
         }
 
         .nav-dropdown-panel::before {
           content: '';
           position: absolute;
-          top: -24px;
-          left: -30px;
-          right: -30px;
-          height: 28px;
+          top: -20px;
+          left: -20px;
+          right: -20px;
+          height: 24px;
           background: transparent;
-        }
-
-        @keyframes dropSlideDown {
-          from { opacity: 0; transform: translateY(-4px); }
-          to { opacity: 1; transform: translateY(0); }
         }
 
         .dropdown-sub-link {
@@ -967,12 +953,13 @@ export function Header() {
       </header>
 
       {/* 4. Desktop Dark Navigation Bar with Smooth Dropdowns (Hidden on Mobile) */}
-      <nav ref={navWrapperRef} className="dark-nav-wrapper" style={{ background: '#1E293B', color: '#fff', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 'clamp(14px, 2vw, 28px)', padding: '0 15px', flexWrap: 'nowrap' }}>
+      <nav ref={navWrapperRef} className="dark-nav-wrapper" style={{ background: '#1E293B', color: '#fff', borderTop: '1px solid rgba(255,255,255,0.06)', overflow: 'visible', position: 'relative', zIndex: 999 }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 'clamp(14px, 2vw, 28px)', padding: '0 15px', flexWrap: 'nowrap', overflow: 'visible' }}>
           
           {navCategories.map((category) => {
             const isOpen = activeDropdown === category.title;
             const hasItems = category.items && category.items.length > 0;
+            const isWide = (category.items?.length || 0) > 7;
             return (
               <div 
                 key={category.title}
@@ -988,33 +975,29 @@ export function Header() {
                 >
                   <span>{category.title}</span>
                   {hasItems && (
-                    <span style={{ fontSize: '0.65rem', opacity: 0.8, transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>▼</span>
+                    <span className="nav-arrow" style={{ fontSize: '0.65rem', opacity: 0.8, transition: 'transform 0.15s ease' }}>▼</span>
                   )}
                 </button>
 
-                {isOpen && hasItems && (
+                {hasItems && (
                   <div 
-                    className="nav-dropdown-panel"
-                    onMouseEnter={() => {
-                      if (dropdownTimeoutRef.current) {
-                        clearTimeout(dropdownTimeoutRef.current);
-                        dropdownTimeoutRef.current = null;
-                      }
-                    }}
-                    onMouseLeave={handleMouseLeave}
+                    className={`nav-dropdown-panel ${isOpen ? 'is-open' : ''}`}
+                    style={isWide ? { minWidth: '520px', width: 'max-content', maxWidth: '640px', padding: '10px' } : undefined}
                   >
-                    {category.items.map((subItem) => (
-                      <Link 
-                        key={subItem.label} 
-                        href={subItem.link}
-                        className="dropdown-sub-link"
-                        onClick={() => setActiveDropdown(null)}
-                      >
-                        {subItem.icon && <span style={{ fontSize: '1rem' }}>{subItem.icon}</span>}
-                        <span>{subItem.label}</span>
-                      </Link>
-                    ))}
-                    <div style={{ borderTop: '1px solid #F1F5F9', marginTop: 4, paddingTop: 4 }}>
+                    <div style={isWide ? { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '4px' } : undefined}>
+                      {category.items.map((subItem) => (
+                        <Link 
+                          key={subItem.label} 
+                          href={subItem.link}
+                          className="dropdown-sub-link"
+                          onClick={() => setActiveDropdown(null)}
+                        >
+                          {subItem.icon && <span style={{ fontSize: '1rem' }}>{subItem.icon}</span>}
+                          <span>{subItem.label}</span>
+                        </Link>
+                      ))}
+                    </div>
+                    <div style={{ borderTop: '1px solid #F1F5F9', marginTop: 6, paddingTop: 6 }}>
                       <Link
                         href={category.link}
                         className="dropdown-sub-link"

@@ -92,9 +92,11 @@ const ProductCardComponent: React.FC<ProductCardProps> = ({ product }) => {
   const targetSlug = product.slug || product.id;
 
   const parseGst = (val: any) => {
-    if (val === null || val === undefined || val === '') return 18;
+    const isBox = /corrugated|3-ply|3 ply|cardboard box|flap box|shipping box|carton/i.test(`${product.name || product.title || ''} ${product.slug || ''} ${(product as any).categoryLabel || ''}`);
+    const defaultGst = isBox ? 5 : 18;
+    if (val === null || val === undefined || val === '') return defaultGst;
     const num = typeof val === 'number' ? val : parseFloat(String(val).replace(/[^0-9.]/g, ''));
-    return isNaN(num) ? 18 : num;
+    return isNaN(num) ? defaultGst : num;
   };
 
   const handleAddClick = (e: React.MouseEvent) => {

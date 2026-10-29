@@ -239,7 +239,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
     images: parsedImages,
     price: basePrice,
     startingAt: basePrice,
-    gst_rate: Number(product.gst_rate ?? product.gst_percentage ?? 18),
+    gst_rate: Number(product.gst_rate ?? product.gst_percentage ?? (/corrugated|3-ply|3 ply|cardboard box|flap box|shipping box|carton/i.test(`${product.name || ''} ${product.slug || ''} ${categoryName || ''}`) ? 5 : 18)),
     moq: Number(product.moq || 50),
     sizes: product.sizes || [],
     variants: parsedVariants,
@@ -249,7 +249,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
       : [
           `MRP: ₹${product.mrp || Math.round(basePrice * 1.5)}`,
           `Selling Price: ₹${basePrice}`,
-          `GST: ${product.gst_rate ?? product.gst_percentage ?? 18}%`,
+          `GST: ${product.gst_rate ?? product.gst_percentage ?? (/corrugated|3-ply|3 ply|cardboard box|flap box|shipping box|carton/i.test(`${product.name || ''} ${product.slug || ''} ${categoryName || ''}`) ? 5 : 18)}%`,
           `Stock Available: ${product.stock_quantity ?? 1000}`,
           `Customization: Printing Available`
         ],
