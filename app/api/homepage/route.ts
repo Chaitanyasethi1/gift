@@ -7,8 +7,15 @@ export const dynamic = 'force-dynamic';
 
 // In-memory cache for fast instant reflection across server sessions
 let cachedConfig: HomepageConfig = { ...initialHomepageConfig };
+let lastHomepageFetchTime = 0;
+const HOMEPAGE_CACHE_TTL = 60 * 1000;
 
 export async function GET() {
+  const now = Date.now();
+  if (lastHomepageFetchTime > 0 && (now - lastHomepageFetchTime) < HOMEPAGE_CACHE_TTL) {
+    return NextResponse.json(cachedConfig);
+  }
+
   try {
     let resolvedConfig = { ...cachedConfig };
 
@@ -61,6 +68,7 @@ export async function GET() {
     }
 
     cachedConfig = { ...resolvedConfig };
+    lastHomepageFetchTime = now;
     return NextResponse.json(resolvedConfig);
   } catch (err: any) {
     return NextResponse.json(cachedConfig);

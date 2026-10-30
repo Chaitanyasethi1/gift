@@ -4,12 +4,13 @@ import Link from 'next/link';
 import { ProductGrid } from '@/components/ProductGrid';
 import { ComboSlider } from '@/components/ComboSlider';
 import { CountdownTimer } from '@/components/CountdownTimer';
-import { createClient } from '@/utils/supabase/server';
+import { supabase } from '@/lib/supabase';
+import { getAllProducts } from '@/lib/catalog';
 import { PRODUCTS } from '@/data/products';
 import { HomeCategories } from '@/components/HomeCategories';
 import { siteConfig } from '@/data/siteConfig';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: 'AS Print Gallery — Corrugated Boxes & Packaging Factory in Ghaziabad, Delhi NCR',
@@ -76,17 +77,18 @@ export default async function HomePage() {
   let serverSlideInterval = undefined;
 
   try {
-    const supabase = createClient();
-    const { data: dbProducts } = await supabase.from('products').select('*').eq('is_active', true);
+    const [dbProducts, { data: siteSettings }] = await Promise.all([
+      getAllProducts(),
+      supabase
+        .from('site_settings')
+        .select('homepage_config')
+        .eq('id', 1)
+        .maybeSingle()
+    ]);
+
     if (dbProducts && dbProducts.length > 0) {
       productsList = dbProducts;
     }
-
-    const { data: siteSettings } = await supabase
-      .from('site_settings')
-      .select('homepage_config')
-      .eq('id', 1)
-      .maybeSingle();
 
     if (siteSettings?.homepage_config) {
 

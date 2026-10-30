@@ -1,6 +1,6 @@
 import { PRODUCTS, Product } from '@/data/products';
 import { initialCategories, CategoryItem } from '@/data/categoriesData';
-import { createClient } from '@/utils/supabase/server';
+import { supabase } from '@/lib/supabase';
 
 export interface CategoryMeta {
   id: string;
@@ -42,19 +42,30 @@ export const SPECIAL_COLLECTIONS: Record<string, { name: string; desc: string; i
   }
 };
 
+// In-memory cache to eliminate multiple redundant remote Supabase round-trips
+let cachedCategories: CategoryItem[] = [];
+let categoriesCacheTime = 0;
+let cachedProducts: any[] = [];
+let productsCacheTime = 0;
+const CACHE_TTL_MS = 60 * 1000; // 60 seconds
+
 /**
  * Fetch all categories combining Supabase and fallback static categories.
  */
 export async function getAllCategories(): Promise<CategoryItem[]> {
+  const now = Date.now();
+  if (cachedCategories.length > 0 && (now - categoriesCacheTime) < CACHE_TTL_MS) {
+    return cachedCategories;
+  }
+
   try {
-    const supabase = createClient();
     const { data, error } = await supabase
       .from('categories')
       .select('*')
       .order('sort_order', { ascending: true });
 
     if (!error && data && data.length > 0) {
-      return data.map(c => ({
+      cachedCategories = data.map(c => ({
         id: c.id,
         name: c.name,
         slug: c.slug,
@@ -63,10 +74,14 @@ export async function getAllCategories(): Promise<CategoryItem[]> {
         show_in_menu: c.show_in_menu !== false,
         show_in_home: !!c.show_in_home
       }));
+      categoriesCacheTime = now;
+      return cachedCategories;
     }
   } catch (err) {
     console.warn('Supabase categories fetch fallback:', err);
   }
+
+  if (cachedCategories.length > 0) return cachedCategories;
   return initialCategories;
 }
 
@@ -74,8 +89,12 @@ export async function getAllCategories(): Promise<CategoryItem[]> {
  * Fetch all active products combining Supabase and static PRODUCTS.
  */
 export async function getAllProducts(): Promise<any[]> {
+  const now = Date.now();
+  if (cachedProducts.length > 0 && (now - productsCacheTime) < CACHE_TTL_MS) {
+    return cachedProducts;
+  }
+
   try {
-    const supabase = createClient();
     const { data, error } = await supabase
       .from('products')
       .select('*')
@@ -83,12 +102,15 @@ export async function getAllProducts(): Promise<any[]> {
       .order('created_at', { ascending: false });
 
     if (!error && data && data.length > 0) {
-      // If store has active products in Supabase, return them as the primary source of truth
-      return data;
+      cachedProducts = data;
+      productsCacheTime = now;
+      return cachedProducts;
     }
   } catch (err) {
     console.warn('Supabase products fetch fallback:', err);
   }
+
+  if (cachedProducts.length > 0) return cachedProducts;
   return PRODUCTS;
 }
 

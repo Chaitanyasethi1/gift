@@ -9,7 +9,7 @@ interface CategoryPageProps {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const category = await resolveCategory(params.slug);

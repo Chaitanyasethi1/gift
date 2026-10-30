@@ -108,15 +108,19 @@ const NAV_CATEGORIES: NavCategory[] = [
   }
 ];
 
+let clientCachedProducts: any[] | null = null;
+let clientCachedNavCategories: NavCategory[] | null = null;
+let clientCachedTicker: { text: string; active: boolean } | null = null;
+
 export function Header() {
   const router = useRouter();
   const { cartCount, setIsCartOpen, setIsCategoryDrawerOpen } = useCart();
-  const [tickerText, setTickerText] = useState(initialHomepageConfig.tickerText);
-  const [tickerActive, setTickerActive] = useState(initialHomepageConfig.tickerActive);
+  const [tickerText, setTickerText] = useState(() => clientCachedTicker?.text ?? initialHomepageConfig.tickerText);
+  const [tickerActive, setTickerActive] = useState(() => clientCachedTicker?.active ?? initialHomepageConfig.tickerActive);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [allProducts, setAllProducts] = useState<any[]>(PRODUCTS);
-  const [navCategories, setNavCategories] = useState<NavCategory[]>(NAV_CATEGORIES);
+  const [allProducts, setAllProducts] = useState<any[]>(() => clientCachedProducts || PRODUCTS);
+  const [navCategories, setNavCategories] = useState<NavCategory[]>(() => clientCachedNavCategories || NAV_CATEGORIES);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -127,61 +131,72 @@ export function Header() {
 
   useEffect(() => {
     // 1. Fetch Ticker Text & Active Products for Instant Search Indexing
-    fetch('/api/homepage')
-      .then(res => res.json())
-      .then(data => {
-        if (data) {
-          if (data.tickerText !== undefined) setTickerText(data.tickerText);
-          if (data.tickerActive !== undefined) setTickerActive(data.tickerActive);
-        }
-      })
-      .catch(() => {});
+    if (!clientCachedTicker) {
+      fetch('/api/homepage')
+        .then(res => res.json())
+        .then(data => {
+          if (data) {
+            const text = data.tickerText !== undefined ? data.tickerText : initialHomepageConfig.tickerText;
+            const active = data.tickerActive !== undefined ? data.tickerActive : initialHomepageConfig.tickerActive;
+            clientCachedTicker = { text, active };
+            setTickerText(text);
+            setTickerActive(active);
+          }
+        })
+        .catch(() => {});
+    }
 
-    fetch('/api/products')
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setAllProducts(data);
-        }
-      })
-      .catch(() => {});
+    if (!clientCachedProducts) {
+      fetch('/api/products')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            clientCachedProducts = data;
+            setAllProducts(data);
+          }
+        })
+        .catch(() => {});
+    }
 
     // 2. Dynamically Fetch Categories & Subcategories from Admin
-    fetch('/api/categories')
-      .then(res => res.json())
-      .then(data => {
-        if (data?.categories && Array.isArray(data.categories) && data.categories.length > 0) {
-          const all: any[] = data.categories;
-          const main = all
-            .filter(c => (!c.parent_id || c.parent_id === 'null' || c.parent_id === '') && c.show_in_menu !== false)
-            .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
-          
-          if (main.length > 0) {
-            const mapped: NavCategory[] = main.map(m => {
-              const subs = all
-                .filter(s => s.parent_id === m.id && s.show_in_menu !== false)
-                .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
-              
-              return {
-                title: m.name,
-                link: `/category/${m.slug}`,
-                items: subs.length > 0
-                  ? subs.map(s => ({
-                      label: s.name,
-                      link: `/category/${s.slug}`,
-                      icon: '📦'
-                    }))
-                  : [{ label: `All ${m.name}`, link: `/category/${m.slug}`, icon: '🛍️' }]
-              };
-            });
+    if (!clientCachedNavCategories) {
+      fetch('/api/categories')
+        .then(res => res.json())
+        .then(data => {
+          if (data?.categories && Array.isArray(data.categories) && data.categories.length > 0) {
+            const all: any[] = data.categories;
+            const main = all
+              .filter(c => (!c.parent_id || c.parent_id === 'null' || c.parent_id === '') && c.show_in_menu !== false)
+              .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+            
+            if (main.length > 0) {
+              const mapped: NavCategory[] = main.map(m => {
+                const subs = all
+                  .filter(s => s.parent_id === m.id && s.show_in_menu !== false)
+                  .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+                
+                return {
+                  title: m.name,
+                  link: `/category/${m.slug}`,
+                  items: subs.length > 0
+                    ? subs.map(s => ({
+                        label: s.name,
+                        link: `/category/${s.slug}`,
+                        icon: '📦'
+                      }))
+                    : [{ label: `All ${m.name}`, link: `/category/${m.slug}`, icon: '🛍️' }]
+                };
+              });
 
-            if (mapped.length > 0) {
-              setNavCategories(mapped);
+              if (mapped.length > 0) {
+                clientCachedNavCategories = mapped;
+                setNavCategories(mapped);
+              }
             }
           }
-        }
-      })
-      .catch(() => {});
+        })
+        .catch(() => {});
+    }
   }, []);
 
   // Click Outside to Close Search Autocomplete & Nav Dropdowns

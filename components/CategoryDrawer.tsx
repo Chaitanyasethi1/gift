@@ -95,14 +95,17 @@ const DEFAULT_CATEGORIES: NavCategory[] = [
   }
 ];
 
+let drawerCachedCategories: NavCategory[] | null = null;
+
 export const CategoryDrawer: React.FC = () => {
   const pathname = usePathname();
   const { isCategoryDrawerOpen, setIsCategoryDrawerOpen, setIsQuoteModalOpen } = useCart();
-  const [categories, setCategories] = useState<NavCategory[]>(DEFAULT_CATEGORIES);
+  const [categories, setCategories] = useState<NavCategory[]>(() => drawerCachedCategories || DEFAULT_CATEGORIES);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0); // First open by default
 
   // Sync categories dynamically if updated from admin API
   useEffect(() => {
+    if (drawerCachedCategories) return;
     fetch('/api/categories')
       .then(res => res.json())
       .then(data => {
@@ -131,6 +134,7 @@ export const CategoryDrawer: React.FC = () => {
               };
             });
             if (mapped.length > 0) {
+              drawerCachedCategories = mapped;
               setCategories(mapped);
             }
           }
