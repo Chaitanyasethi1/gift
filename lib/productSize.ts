@@ -110,6 +110,12 @@ export function getCategorySizeLabel(categoryName?: string, categorySlug?: strin
   if (cat.includes('container')) {
     return 'Container Size';
   }
+  if (cat.includes('sticker')) {
+    return 'Sticker Size';
+  }
+  if (cat.includes('card')) {
+    return 'Card Size';
+  }
   // Default for corrugated boxes, cartons, flap boxes, gift boxes
   return 'Box Size';
 }

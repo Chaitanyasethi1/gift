@@ -63,6 +63,7 @@ const DEFAULT_CATEGORIES: NavCategory[] = [
     link: '/category/stickers',
     items: [
       { label: 'Product & Packaging', link: '/category/product-stickers', icon: '💧' },
+      { label: 'Thank You Stickers', link: '/category/thank-you-stickers', icon: '⭐' },
       { label: 'School & Stationery', link: '/category/round-stickers', icon: '⚪' },
       { label: 'Barcode & QR', link: '/category/custom-stickers', icon: '✂️' },
       { label: 'Food & Bakery', link: '/category/packaging-labels', icon: '🔒' },
@@ -73,11 +74,11 @@ const DEFAULT_CATEGORIES: NavCategory[] = [
     title: 'Advertising',
     link: '/category/advertising',
     items: [
-      { label: 'Visiting Cards & Thank You Cards', link: '/category/visiting-cards', icon: '📇' },
-      { label: 'Key Chain', link: '/category/thank-you-cards', icon: '🔑' },
-      { label: 'Bill Book', link: '/category/qr-code-cards', icon: '📖' },
+      { label: 'Visiting Cards', link: '/category/visiting-cards', icon: '📇' },
+      { label: 'Thank You Cards', link: '/category/thank-you-cards', icon: '💌' },
       { label: 'Rubber Stamps', link: '/category/rubber-stamps', icon: '💮' },
-      { label: 'Letterheads', link: '/category/letterheads', icon: '📄' }
+      { label: 'Letterheads', link: '/category/letterheads', icon: '📄' },
+      { label: 'Bill Book', link: '/category/qr-code-cards', icon: '📖' }
     ]
   },
   {

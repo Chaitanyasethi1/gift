@@ -46,18 +46,18 @@ export const initialCategories: CategoryItem[] = [
   // 4. Stickers
   { id: '44444444-4444-4444-4444-444444444444', name: 'Stickers', slug: 'stickers', parent_id: null, sort_order: 4, show_in_menu: true, show_in_home: false },
   { id: 'st-1', name: 'Product Stickers', slug: 'product-stickers', parent_id: '44444444-4444-4444-4444-444444444444', sort_order: 1, show_in_menu: true, show_in_home: false },
-  { id: 'st-2', name: 'Round Stickers', slug: 'round-stickers', parent_id: '44444444-4444-4444-4444-444444444444', sort_order: 2, show_in_menu: true, show_in_home: false },
-  { id: 'st-3', name: 'Custom Stickers', slug: 'custom-stickers', parent_id: '44444444-4444-4444-4444-444444444444', sort_order: 3, show_in_menu: true, show_in_home: false },
-  { id: 'st-4', name: 'Packaging Labels', slug: 'packaging-labels', parent_id: '44444444-4444-4444-4444-444444444444', sort_order: 4, show_in_menu: true, show_in_home: false },
+  { id: '89d08a3b-d6e2-4b5a-97cc-67efb775debf', name: 'Thank You Stickers', slug: 'thank-you-stickers', parent_id: '44444444-4444-4444-4444-444444444444', sort_order: 2, show_in_menu: true, show_in_home: true },
+  { id: 'st-2', name: 'Round Stickers', slug: 'round-stickers', parent_id: '44444444-4444-4444-4444-444444444444', sort_order: 3, show_in_menu: true, show_in_home: false },
+  { id: 'st-3', name: 'Custom Stickers', slug: 'custom-stickers', parent_id: '44444444-4444-4444-4444-444444444444', sort_order: 4, show_in_menu: true, show_in_home: false },
+  { id: 'st-4', name: 'Packaging Labels', slug: 'packaging-labels', parent_id: '44444444-4444-4444-4444-444444444444', sort_order: 5, show_in_menu: true, show_in_home: false },
 
   // 5. Advertising
   { id: '55555555-5555-5555-5555-555555555555', name: 'Advertising', slug: 'advertising', parent_id: null, sort_order: 5, show_in_menu: true, show_in_home: false },
-  { id: 'bm-1', name: 'Visiting Cards', slug: 'visiting-cards', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 1, show_in_menu: true, show_in_home: false },
-  { id: 'bm-2', name: 'Thank You Cards', slug: 'thank-you-cards', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 2, show_in_menu: true, show_in_home: false },
+  { id: '0bd2d048-1c31-4092-af52-281efcec2c2f', name: 'Visiting Cards', slug: 'visiting-cards', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 1, show_in_menu: true, show_in_home: false },
+  { id: '0d9e88a0-a5b4-4790-bfce-df3b807d1c1f', name: 'Thank You Cards', slug: 'thank-you-cards', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 2, show_in_menu: true, show_in_home: false },
   { id: 'bm-3', name: 'Rubber Stamps', slug: 'rubber-stamps', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 3, show_in_menu: true, show_in_home: false },
   { id: 'bm-4', name: 'Letterheads', slug: 'letterheads', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 4, show_in_menu: true, show_in_home: false },
-  { id: 'bm-5', name: 'QR Code Cards', slug: 'qr-code-cards', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 5, show_in_menu: true, show_in_home: false },
-  { id: '89d08a3b-d6e2-4b5a-97cc-67efb775debf', name: 'Stickers & Thank You Cards', slug: 'stickers-and-thank-you-cards', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 6, show_in_menu: true, show_in_home: false },
+  { id: 'bm-5', name: 'Bill Book', slug: 'qr-code-cards', parent_id: '55555555-5555-5555-5555-555555555555', sort_order: 5, show_in_menu: true, show_in_home: false },
 
   // 6. Disposable Products
   { id: '66666666-6666-6666-6666-666666666666', name: 'Disposable Products', slug: 'disposable-products', parent_id: null, sort_order: 6, show_in_menu: true, show_in_home: false },

@@ -123,8 +123,14 @@ export const CATEGORY_ALIASES: Record<string, string> = {
   'bubble-wrap': 'paper-bubble-wrap-protection',
   'multicolor-gift-boxes-hamper-boxes': 'multicolor-gift-box',
   'gift-box': 'multicolor-gift-box',
-  'stickers-thank-you-cards': 'stickers-and-thank-you-cards',
-  'thank-you-cards': 'stickers-and-thank-you-cards'
+  'stickers-and-thank-you-cards': 'thank-you-stickers',
+  'stickers-thank-you-cards': 'thank-you-stickers',
+  'thank-you-stickers': 'thank-you-stickers',
+  'thank-you-card': 'thank-you-cards',
+  'thank-you-cards': 'thank-you-cards',
+  'visiting-cards-thankyou-cards': 'visiting-cards',
+  'visiting-card': 'visiting-cards',
+  'visiting-cards': 'visiting-cards'
 };
 
 /**
