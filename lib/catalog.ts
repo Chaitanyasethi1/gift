@@ -92,6 +92,41 @@ export async function getAllProducts(): Promise<any[]> {
   return PRODUCTS;
 }
 
+export const CATEGORY_ALIASES: Record<string, string> = {
+  'packaging-boxes': 'packaging-material',
+  'packaging-material': 'packaging-boxes',
+  '3-ply-box': 'craft-3-ply-box',
+  '3-ply-boxes': 'craft-3-ply-box',
+  'corrugated-boxes': 'craft-3-ply-box',
+  '3-ply-white-box': '3-ply-white-corrugated-boxes',
+  'flap-box': 'brown-flap-box',
+  'white-flap-box': 'white-flap-box',
+  'rigid-boxes': 'rigid-boxes',
+  'food-packaging': 'food-packaging',
+  'disposable': 'disposable-products',
+  'paper-courier-mailers': 'paper-bags-mailers',
+  'pizza-packaging': 'pizza-boxes',
+  'courier-polybags-mailer-bags': 'polybag',
+  'courier-polybags': 'polybag',
+  'polybags': 'polybag',
+  'meesho-marketplace-polybags': 'meesho-polybags',
+  'marketplace-polybags': 'meesho-polybags',
+  'zip-lock-stand-up-pouches': 'zip-lock-pouch-bags',
+  'zip-lock-pouches': 'zip-lock-pouch-bags',
+  'stand-up-pouches': 'zip-lock-pouch-bags',
+  'bopp-packaging-tape-fragile-tape': 'tape',
+  'bopp-tape': 'tape',
+  'packaging-tape': 'tape',
+  'thermal-label-paper-barcode-rolls': 'thermal-label-paper',
+  'thermal-labels': 'thermal-label-paper',
+  'paper-bubble-wrap-honeycomb-rolls': 'paper-bubble-wrap-protection',
+  'bubble-wrap': 'paper-bubble-wrap-protection',
+  'multicolor-gift-boxes-hamper-boxes': 'multicolor-gift-box',
+  'gift-box': 'multicolor-gift-box',
+  'stickers-thank-you-cards': 'stickers-and-thank-you-cards',
+  'thank-you-cards': 'stickers-and-thank-you-cards'
+};
+
 /**
  * Normalize and resolve category information by slug.
  * Supports main categories, subcategories, aliases, and special collections.
@@ -120,22 +155,7 @@ export async function resolveCategory(slug: string): Promise<CategoryMeta | null
 
   // 2. If not found, check known aliases
   if (!category) {
-    const aliasMap: Record<string, string> = {
-      'packaging-boxes': 'packaging-material',
-      'packaging-material': 'packaging-boxes',
-      '3-ply-box': 'craft-3-ply-box',
-      '3-ply-boxes': 'craft-3-ply-box',
-      'corrugated-boxes': 'craft-3-ply-box',
-      '3-ply-white-box': '3-ply-white-corrugated-boxes',
-      'flap-box': 'brown-flap-box',
-      'white-flap-box': 'white-flap-box',
-      'rigid-boxes': 'rigid-boxes',
-      'food-packaging': 'food-packaging',
-      'disposable': 'disposable-products',
-      'paper-courier-mailers': 'paper-bags-mailers',
-      'pizza-packaging': 'pizza-boxes'
-    };
-    const mapped = aliasMap[normalizedSlug];
+    const mapped = CATEGORY_ALIASES[normalizedSlug];
     if (mapped) {
       category = allCategories.find(c => c.slug.toLowerCase() === mapped || c.id === mapped);
     }
@@ -233,22 +253,7 @@ export async function getProductsForCategory(categorySlug: string): Promise<any[
   // 2. Database category resolution
   let category = allCategories.find(c => c.slug.toLowerCase() === normalizedSlug || c.id === normalizedSlug);
   if (!category) {
-    const aliasMap: Record<string, string> = {
-      'packaging-boxes': 'packaging-material',
-      'packaging-material': 'packaging-boxes',
-      '3-ply-box': 'craft-3-ply-box',
-      '3-ply-boxes': 'craft-3-ply-box',
-      'corrugated-boxes': 'craft-3-ply-box',
-      '3-ply-white-box': '3-ply-white-corrugated-boxes',
-      'flap-box': 'brown-flap-box',
-      'white-flap-box': 'white-flap-box',
-      'rigid-boxes': 'rigid-boxes',
-      'food-packaging': 'food-packaging',
-      'disposable': 'disposable-products',
-      'paper-courier-mailers': 'paper-bags-mailers',
-      'pizza-packaging': 'pizza-boxes'
-    };
-    const mapped = aliasMap[normalizedSlug];
+    const mapped = CATEGORY_ALIASES[normalizedSlug];
     if (mapped) {
       category = allCategories.find(c => c.slug.toLowerCase() === mapped || c.id === mapped);
     }

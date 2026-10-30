@@ -6,6 +6,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { ProductCard } from '@/components/ProductCard';
 import { CategoryMeta } from '@/lib/catalog';
 import { 
+  parseAndCleanSize, 
+  sortSizes, 
+  getCategorySizeLabel, 
+  ExtractedProductSize 
+} from '@/lib/productSize';
+import { 
   ChevronRightIcon, 
   XIcon, 
   SlidersHorizontalIcon, 
@@ -45,6 +51,7 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
   const initialDiscount = searchParams?.get('discount') ? Number(searchParams.get('discount')) : 0;
   const initialRating = searchParams?.get('rating') ? Number(searchParams.get('rating')) : 0;
   const initialSearch = searchParams?.get('q') || '';
+  const initialSize = searchParams?.get('size') || '';
 
   // State hooks
   const [sort, setSort] = useState<string>(initialSort);
@@ -55,6 +62,25 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
   const [minDiscount, setMinDiscount] = useState<number>(initialDiscount);
   const [minRating, setMinRating] = useState<number>(initialRating);
   const [searchQuery, setSearchQuery] = useState<string>(initialSearch);
+  const [selectedSize, setSelectedSize] = useState<string>(initialSize);
+
+  // Dynamic Sizes extracted from the products on this specific page/category
+  const availableSizes = useMemo(() => {
+    if (!initialProducts || initialProducts.length === 0) return [];
+    const map = new Map<string, ExtractedProductSize>();
+    for (const p of initialProducts) {
+      const s = parseAndCleanSize(p);
+      if (s && !map.has(s.raw)) {
+        map.set(s.raw, s);
+      }
+    }
+    return sortSizes(Array.from(map.values()));
+  }, [initialProducts]);
+
+  // Contextual Size Label based on category (Box Size, Bag Size, Pouch Size, etc.)
+  const sizeLabel = useMemo(() => {
+    return getCategorySizeLabel(category?.name || pageTitle, category?.slug);
+  }, [category, pageTitle]);
 
   // Mobile drawer state
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
@@ -68,7 +94,8 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
     newStock: boolean,
     newDisc: number,
     newRate: number,
-    newQ: string
+    newQ: string,
+    newSize: string
   ) => {
     const params = new URLSearchParams();
     if (newSort && newSort !== 'popular') params.set('sort', newSort);
@@ -79,6 +106,7 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
     if (newDisc > 0) params.set('discount', String(newDisc));
     if (newRate > 0) params.set('rating', String(newRate));
     if (newQ) params.set('q', newQ);
+    if (newSize) params.set('size', newSize);
 
     const queryString = params.toString();
     const currentPath = window.location.pathname;
@@ -89,8 +117,15 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
 
   // Update URL whenever filters or sort change
   useEffect(() => {
-    syncUrlParams(sort, minPrice, maxPrice, selectedSubcat, inStockOnly, minDiscount, minRating, searchQuery);
-  }, [sort, minPrice, maxPrice, selectedSubcat, inStockOnly, minDiscount, minRating, searchQuery, syncUrlParams]);
+    syncUrlParams(sort, minPrice, maxPrice, selectedSubcat, inStockOnly, minDiscount, minRating, searchQuery, selectedSize);
+  }, [sort, minPrice, maxPrice, selectedSubcat, inStockOnly, minDiscount, minRating, searchQuery, selectedSize, syncUrlParams]);
+
+  // Reset selected size if not in available sizes for current category
+  useEffect(() => {
+    if (selectedSize && availableSizes.length > 0 && !availableSizes.some(s => s.raw === selectedSize)) {
+      setSelectedSize('');
+    }
+  }, [availableSizes, selectedSize]);
 
   // Determine subcategory options
   const subcategoryOptions = useMemo(() => {
@@ -120,6 +155,14 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
   // Filter and sort products
   const processedProducts = useMemo(() => {
     let list = [...initialProducts];
+
+    // 0. Size filter
+    if (selectedSize) {
+      list = list.filter(p => {
+        const s = parseAndCleanSize(p);
+        return s && s.raw === selectedSize;
+      });
+    }
 
     // 1. Text search query
     if (searchQuery.trim()) {
@@ -226,12 +269,13 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
     });
 
     return list;
-  }, [initialProducts, searchQuery, selectedSubcat, minPrice, maxPrice, inStockOnly, minDiscount, minRating, sort]);
+  }, [initialProducts, searchQuery, selectedSubcat, minPrice, maxPrice, inStockOnly, minDiscount, minRating, sort, selectedSize]);
 
   // Count active filters
   const activeFiltersCount = useMemo(() => {
     let count = 0;
     if (selectedSubcat) count++;
+    if (selectedSize) count++;
     if (minPrice !== '') count++;
     if (maxPrice !== '') count++;
     if (inStockOnly) count++;
@@ -239,9 +283,10 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
     if (minRating > 0) count++;
     if (searchQuery) count++;
     return count;
-  }, [selectedSubcat, minPrice, maxPrice, inStockOnly, minDiscount, minRating, searchQuery]);
+  }, [selectedSubcat, selectedSize, minPrice, maxPrice, inStockOnly, minDiscount, minRating, searchQuery]);
 
   const clearAllFilters = () => {
+    setSelectedSize('');
     setMinPrice('');
     setMaxPrice('');
     setSelectedSubcat('');
@@ -337,6 +382,14 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
             {activeFiltersCount > 0 ? (
               <>
                 <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#475569' }}>Active Filters:</span>
+                {selectedSize && (
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE', padding: '4px 10px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 700 }}>
+                    {sizeLabel}: {selectedSize}
+                    <button type="button" onClick={() => setSelectedSize('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#1D4ED8', padding: 0, display: 'flex' }} aria-label="Remove size filter">
+                      <XIcon size={13} />
+                    </button>
+                  </span>
+                )}
                 {selectedSubcat && (
                   <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE', padding: '4px 10px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 700 }}>
                     {subcategoryOptions.find(s => s.slug === selectedSubcat)?.name || selectedSubcat}
@@ -390,33 +443,69 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
             )}
           </div>
 
-          {/* Desktop Sort Dropdown */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <label htmlFor="catalog-sort" style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', whiteSpace: 'nowrap' }}>
-              Sort by:
-            </label>
-            <select
-              id="catalog-sort"
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-              style={{
-                padding: '8px 12px',
-                borderRadius: '8px',
-                border: '1.5px solid #CBD5E1',
-                background: '#FFFFFF',
-                fontSize: '0.88rem',
-                fontWeight: 600,
-                color: '#0F172A',
-                cursor: 'pointer'
-              }}
-            >
-              <option value="popular">Popularity / Best Sellers</option>
-              <option value="price_asc">Price: Low to High</option>
-              <option value="price_desc">Price: High to Low</option>
-              <option value="newest">Newest First</option>
-              <option value="name_asc">Name: A to Z</option>
-              <option value="discount_desc">Discount: Highest First</option>
-            </select>
+          {/* Controls: Size Filter & Sort Dropdown */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+            {/* Dynamic Category Size Selector (Box Size / Bag Size etc.) */}
+            {availableSizes.length > 0 && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <select
+                  id="catalog-size-select"
+                  value={selectedSize}
+                  onChange={(e) => setSelectedSize(e.target.value)}
+                  aria-label={sizeLabel}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '8px',
+                    border: selectedSize ? '1.5px solid #1D4ED8' : '1.5px solid #CBD5E1',
+                    background: selectedSize ? '#EFF6FF' : '#FFFFFF',
+                    fontSize: '0.88rem',
+                    fontWeight: 600,
+                    color: selectedSize ? '#1D4ED8' : '#0F172A',
+                    cursor: 'pointer',
+                    outline: 'none',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.03)',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  <option value="">{sizeLabel}</option>
+                  {availableSizes.map(sz => (
+                    <option key={sz.raw} value={sz.raw}>
+                      {sz.label || sz.raw}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            {/* Desktop Sort Dropdown */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <label htmlFor="catalog-sort" style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', whiteSpace: 'nowrap' }}>
+                Sort by:
+              </label>
+              <select
+                id="catalog-sort"
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+                style={{
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  border: '1.5px solid #CBD5E1',
+                  background: '#FFFFFF',
+                  fontSize: '0.88rem',
+                  fontWeight: 600,
+                  color: '#0F172A',
+                  cursor: 'pointer',
+                  outline: 'none'
+                }}
+              >
+                <option value="popular">Popularity / Best Sellers</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="newest">Newest First</option>
+                <option value="name_asc">Name: A to Z</option>
+                <option value="discount_desc">Discount: Highest First</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -543,6 +632,76 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
                           <span>{sub.name}</span>
                           {isSelected && <CheckIcon size={14} color="#1D4ED8" />}
                         </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Category-Specific Size Filter */}
+              {availableSizes.length > 0 && (
+                <div style={{ marginBottom: '22px', paddingBottom: '20px', borderBottom: '1px solid #F1F5F9' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <h4 style={{ fontSize: '0.8rem', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>
+                      {sizeLabel} ({availableSizes.length})
+                    </h4>
+                    {selectedSize && (
+                      <span style={{ fontSize: '0.72rem', color: '#1D4ED8', fontWeight: 700, cursor: 'pointer' }} onClick={() => setSelectedSize('')}>
+                        Clear
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Dropdown in Sidebar */}
+                  <div style={{ marginBottom: '10px' }}>
+                    <select
+                      value={selectedSize}
+                      onChange={(e) => setSelectedSize(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '8px 10px',
+                        borderRadius: '8px',
+                        border: selectedSize ? '1.5px solid #1D4ED8' : '1.5px solid #E2E8F0',
+                        background: selectedSize ? '#EFF6FF' : '#F8FAFC',
+                        fontSize: '0.84rem',
+                        fontWeight: 600,
+                        color: selectedSize ? '#1D4ED8' : '#0F172A',
+                        cursor: 'pointer',
+                        outline: 'none'
+                      }}
+                    >
+                      <option value="">All {sizeLabel}s</option>
+                      {availableSizes.map(sz => (
+                        <option key={sz.raw} value={sz.raw}>
+                          {sz.label || sz.raw}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Quick Select Buttons */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                    {availableSizes.slice(0, 8).map(sz => {
+                      const isSel = selectedSize === sz.raw;
+                      return (
+                        <button
+                          key={sz.raw}
+                          type="button"
+                          onClick={() => setSelectedSize(isSel ? '' : sz.raw)}
+                          style={{
+                            padding: '4px 8px',
+                            borderRadius: '6px',
+                            border: isSel ? '1.5px solid #1D4ED8' : '1px solid #E2E8F0',
+                            background: isSel ? '#1D4ED8' : '#F8FAFC',
+                            color: isSel ? '#FFFFFF' : '#334155',
+                            fontSize: '0.73rem',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease'
+                          }}
+                        >
+                          {sz.raw}
+                        </button>
                       );
                     })}
                   </div>
@@ -949,6 +1108,73 @@ export const CategoryCatalog: React.FC<CategoryCatalogProps> = ({
                           <span>{sub.name}</span>
                           {isSelected && <CheckIcon size={14} color="#1D4ED8" />}
                         </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Mobile Category-Specific Size Filter */}
+              {availableSizes.length > 0 && (
+                <div style={{ marginBottom: '22px', paddingBottom: '18px', borderBottom: '1px solid #F1F5F9' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <h4 style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>
+                      {sizeLabel} ({availableSizes.length})
+                    </h4>
+                    {selectedSize && (
+                      <span style={{ fontSize: '0.72rem', color: '#1D4ED8', fontWeight: 700, cursor: 'pointer' }} onClick={() => setSelectedSize('')}>
+                        Clear
+                      </span>
+                    )}
+                  </div>
+
+                  <div style={{ marginBottom: '10px' }}>
+                    <select
+                      value={selectedSize}
+                      onChange={(e) => setSelectedSize(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '9px 12px',
+                        borderRadius: '8px',
+                        border: selectedSize ? '1.5px solid #1D4ED8' : '1.5px solid #E2E8F0',
+                        background: selectedSize ? '#EFF6FF' : '#F8FAFC',
+                        fontSize: '0.86rem',
+                        fontWeight: 600,
+                        color: selectedSize ? '#1D4ED8' : '#0F172A',
+                        cursor: 'pointer',
+                        outline: 'none'
+                      }}
+                    >
+                      <option value="">All {sizeLabel}s</option>
+                      {availableSizes.map(sz => (
+                        <option key={sz.raw} value={sz.raw}>
+                          {sz.label || sz.raw}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                    {availableSizes.slice(0, 8).map(sz => {
+                      const isSel = selectedSize === sz.raw;
+                      return (
+                        <button
+                          key={sz.raw}
+                          type="button"
+                          onClick={() => setSelectedSize(isSel ? '' : sz.raw)}
+                          style={{
+                            padding: '5px 9px',
+                            borderRadius: '6px',
+                            border: isSel ? '1.5px solid #1D4ED8' : '1px solid #E2E8F0',
+                            background: isSel ? '#1D4ED8' : '#F8FAFC',
+                            color: isSel ? '#FFFFFF' : '#334155',
+                            fontSize: '0.75rem',
+                            fontWeight: 600,
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {sz.raw}
+                        </button>
                       );
                     })}
                   </div>
